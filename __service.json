@@ -1,0 +1,6 @@
+{
+  "runtime": "docker",
+  "port": 19009,
+  "healthz_path": "/healthz",
+  "dockerfile": "Dockerfile"
+}

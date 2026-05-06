@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internet of Agents | 樽石デジタル技術研究所合同会社 (TDRI)</title>
+  <meta name="description" content="Internet of Agents — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働する EntreprenAIs プラットフォームを TDRI が提供します。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="#hero">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#works">Roadmap</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <span class="hero__grid"></span>
+      <span class="hero__glow hero__glow--a"></span>
+      <span class="hero__glow hero__glow--b"></span>
+    </div>
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal" data-reveal>Internet of Agents</p>
+      <h1 class="hero__title">
+        <span class="reveal" data-reveal data-delay="100">エッジで自律する</span>
+        <span class="reveal hero__title--accent" data-reveal data-delay="200">AI エージェントの時代へ。</span>
+      </h1>
+      <p class="hero__lead reveal" data-reveal data-delay="350">
+        モノがつながる IoT から、エージェントが協調する IoA へ。
+      </p>
+      <div class="hero__cta reveal" data-reveal data-delay="500">
+        <a class="btn btn--primary" href="#mission">Read Vision &rarr;</a>
+        <a class="btn btn--ghost" href="#contact">Contact &darr;</a>
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>SCROLL</span>
+      <span class="hero__scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section id="mission" class="section section--dark">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>01 / Mission</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        <span class="accent">IoA</span> の実現プラットフォームを、エッジから組み立てる。
+      </h2>
+      <div class="mission__grid">
+        <p class="mission__lead reveal" data-reveal data-delay="200">
+          樽石デジタル技術研究所合同会社（TDRI）は、Internet of Agents（IoA）の実現プラットフォームを提供します。エージェントが安全に走り、互いに委譲し合う世界を、ソフトウェアとしてのインフラから設計しています。
+        </p>
+        <p class="mission__body reveal" data-reveal data-delay="300">
+          IoT が「モノをつないでデータを送る」ネットワークだったとすれば、IoA は「エージェント同士が依頼・委譲・交渉を行う」自律協調のネットワークです。中央クラウドだけに依存せず、エッジに分散した AI ノードがその場で考え、その場で決め、必要なときだけ協調する。TDRI はそのための実行基盤を、EntreprenAIs プラットフォームとして研究開発しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach (3 pillars) -->
+  <section id="approach" class="section">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>02 / Approach</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        IoA を支える 3 つの柱
+      </h2>
+      <div class="cards">
+        <article class="card reveal" data-reveal data-delay="150">
+          <p class="card__num">A.</p>
+          <h3 class="card__title">Edge-First</h3>
+          <p class="card__lead">エッジに分散するエージェントノード</p>
+          <p class="card__body">
+            Desktop / Server / Connect の 3 形態で、エージェントノードを
+            手元のデバイスから現場のサーバーまで分散配置します。
+          </p>
+        </article>
+        <article class="card reveal" data-reveal data-delay="250">
+          <p class="card__num">B.</p>
+          <h3 class="card__title">Zero Emission</h3>
+          <p class="card__lead">グリーン電力で持続稼働する推論</p>
+          <p class="card__body">
+            太陽光とバッテリーの余剰電力時間帯にローカル LLM 推論を集中させ、
+            エージェントの稼働を化石燃料から切り離していきます。
+          </p>
+        </article>
+        <article class="card reveal" data-reveal data-delay="350">
+          <p class="card__num">C.</p>
+          <h3 class="card__title">Agent-to-Agent</h3>
+          <p class="card__lead">エージェント同士の自律協調</p>
+          <p class="card__body">
+            A2A プロトコルでエージェント同士が依頼・委譲・交渉を自律的に行い、
+            人間は方針と価値観の決定に集中できる構造をつくります。
+          </p>
+        </article>
+      </div>
+
+      <!-- Product Preview — A2A in action -->
+      <div class="preview reveal" data-reveal data-delay="450">
+        <figure class="preview__device">
+          <div class="preview__phone">
+            <span class="preview__notch" aria-hidden="true"></span>
+            <img
+              class="preview__img"
+              src="/img/chat-preview-iphone.png"
+              alt="EntreprenAIs chat-app — FC が C-Suite Agent と対話する画面"
+              loading="lazy"
+              width="380"
+              height="800"
+            />
+          </div>
+        </figure>
+        <figcaption class="preview__caption">
+          <p class="preview__eyebrow">Product Preview</p>
+          <h3 class="preview__title">FC が C-Suite Agent と話す日常</h3>
+          <p class="preview__body">
+            自然言語の問いかけに、エージェントが自律的に調査タスクを起動し、
+            進捗カードでリアルタイムに状態を返す。これが EntreprenAIs の A2A チャット UX です。
+          </p>
+        </figcaption>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap (timeline) -->
+  <section id="works" class="section section--dark">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>03 / Roadmap</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        IoA への道のり
+      </h2>
+      <ol class="timeline">
+        <li class="timeline__item reveal" data-reveal data-delay="150">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Now</span>
+            <h3 class="timeline__title">Desktop + Connect</h3>
+          </div>
+          <p class="timeline__body">
+            個人のワークステーションを「経営ノード」として接続する EntreprenAIs Connect の
+            Phase 1 / Phase 2 を進行中。エッジに最初のエージェントノードを根付かせています。
+          </p>
+        </li>
+        <li class="timeline__item reveal" data-reveal data-delay="250">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Next</span>
+            <h3 class="timeline__title">Zero Emission Option / A2A</h3>
+          </div>
+          <p class="timeline__body">
+            グリーン電力余剰時間帯に推論を寄せる Zero Emission Option の PoC、
+            エージェント間プロトコル A2A の標準化、チャットルーム UX の整備を進めます。
+          </p>
+        </li>
+        <li class="timeline__item reveal" data-reveal data-delay="350">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Future</span>
+            <h3 class="timeline__title">Carbon-Aware Cluster &amp; IoA Mesh</h3>
+          </div>
+          <p class="timeline__body">
+            Carbon-Aware にスケジュールされる Edge-First K8s クラスタと、
+            エージェントが越境して協調する IoA メッシュ、そしてエージェント市場へ。
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section section--accent">
+    <div class="section__inner contact">
+      <p class="section__num reveal" data-reveal>04 / Contact</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        お問い合わせ
+      </h2>
+      <p class="contact__lead reveal" data-reveal data-delay="200">
+        IoA / Zero Emission Option に関する共同研究・導入相談・採用は、代表者の LinkedIn からご連絡ください。
+      </p>
+      <a class="contact__mail reveal" data-reveal data-delay="300" href="https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/" target="_blank" rel="noopener noreferrer">
+        LinkedIn — 樽石将人
+      </a>
+      <p class="contact__note reveal" data-reveal data-delay="400">
+        ※ 本サイトは TDRI のコーポレートサイトです。返信にはお時間をいただく場合があります。専用問い合わせメールアドレスは準備中です。
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石デジタル技術研究所合同会社</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <p class="footer__copy">&copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot; This site is part of EntreprenAIs IoA platform.</p>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
