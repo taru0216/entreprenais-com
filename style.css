@@ -1594,3 +1594,122 @@ body.fleet-page {
   color: var(--ink);
   font-weight: 600;
 }
+
+/* ============================================================
+   BUILD — /eai/ 05 / Build セクション
+   「すぐに作って、長く運用する」体験。3 枚のダークカードと
+   Showcase への CTA。
+   ============================================================ */
+.fleet__section--build {
+  background: var(--paper);
+}
+.build__lead {
+  max-width: 60ch;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+.build__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.build__highlights li {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.5rem 1.5rem 1.6rem;
+  border-radius: 16px;
+  border: 1px solid rgba(110, 114, 240, 0.18);
+}
+.build__highlights strong {
+  display: block;
+  font-family: var(--jp);
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.005em;
+}
+.build__highlights span {
+  display: block;
+  font-size: 0.88rem;
+  color: rgba(247, 246, 241, 0.78);
+  line-height: 1.85;
+}
+.build__cta {
+  margin: 0;
+}
+
+/* ============================================================
+   SHOWCASE PAGE — /eai/showcase/ 事例ギャラリー
+   .preview__phone (LP の SSOT) を再利用しつつ、各事例ごとに
+   2 カラム (デバイスモック + キャプション) で構成。
+   ============================================================ */
+.hero--showcase {
+  min-height: 60vh;
+}
+.showcase-item {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  margin-bottom: 4rem;
+}
+.showcase-item:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 820px) {
+  .showcase-item {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+}
+.showcase-item__device {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.showcase-item__caption {
+  max-width: 44ch;
+}
+.showcase-item__eyebrow {
+  font-family: var(--inter, "Inter", sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  margin: 0 0 0.5rem;
+}
+.showcase-item__title {
+  font-family: var(--jp);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+.showcase-item__body {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin: 0 0 1.5rem;
+}
+.showcase-item__cta {
+  margin: 0;
+}
+.showcase-item__placeholder {
+  color: rgba(247, 246, 241, 0.7);
+  font-style: italic;
+  max-width: 60ch;
+}
+.fleet__section--dark .showcase-item__title {
+  color: var(--paper);
+}
+.fleet__section--dark .showcase-item__body {
+  color: rgba(247, 246, 241, 0.78);
+}
