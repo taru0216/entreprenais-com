@@ -800,3 +800,176 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.85;
   margin: 0;
 }
+
+/* ============================================================
+   Footer link variant — for Privacy Policy etc.
+   ============================================================ */
+.footer__link {
+  color: rgba(247, 246, 241, 0.7);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.footer__link:hover {
+  color: var(--paper);
+  border-bottom-color: rgba(247, 246, 241, 0.5);
+}
+
+/* ============================================================
+   Legal pages (Privacy Policy etc.) — long-form document layout
+   ------------------------------------------------------------
+   Reuses ink/paper/indigo palette + Noto Sans JP / Inter fonts.
+   No scroll-reveal animations; simple typographic flow.
+   ============================================================ */
+body.legal-page {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.legal {
+  padding: 8rem var(--gutter) 6rem;
+  background: var(--paper);
+}
+.legal__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.legal__eyebrow {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.2rem;
+  display: inline-block;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.legal__eyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1rem;
+  height: 1px;
+  background: var(--accent-bright);
+}
+
+.legal__title {
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0 0 1rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.legal__meta {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 2.5rem;
+}
+
+.legal__intro {
+  font-size: 1rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  margin: 0 0 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.legal__section {
+  margin: 0 0 2.8rem;
+}
+.legal__section:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+.legal__h2 {
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin: 0 0 1.1rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--accent);
+}
+
+.legal__h3 {
+  font-family: var(--jp);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 1.6rem 0 0.6rem;
+}
+
+.legal p {
+  font-size: 0.96rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+}
+
+.legal__list {
+  list-style: disc;
+  padding-left: 1.4rem;
+  margin: 0 0 1rem;
+}
+.legal__list li {
+  font-size: 0.94rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+}
+.legal__list li:last-child {
+  margin-bottom: 0;
+}
+
+.legal code {
+  font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+  font-size: 0.88em;
+  background: var(--paper-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  padding: 0.05em 0.4em;
+  color: var(--ink);
+}
+
+.legal__link {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(42, 45, 124, 0.35);
+  padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.legal__link:hover {
+  color: var(--accent-bright);
+  border-bottom-color: var(--accent-bright);
+}
+
+.legal__back {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 720px) {
+  .legal {
+    padding: 6rem var(--gutter) 4rem;
+  }
+  .legal__h2 {
+    padding-left: 0.7rem;
+  }
+}
