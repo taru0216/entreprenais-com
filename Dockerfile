@@ -16,6 +16,8 @@ COPY img/ /srv/img/
 COPY privacy/ /srv/privacy/
 COPY eai/ /srv/eai/
 # eai/ の再帰コピーで eai/showcase/ も /srv/eai/showcase/ に展開される (#15)
+COPY sites/ /srv/sites/
+# sites/ 配下に代行開発した暫定公開サイトを配置（#17 島田クレープ等）
 
 # SEO assets (#13)
 COPY robots.txt /srv/robots.txt
