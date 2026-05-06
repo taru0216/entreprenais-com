@@ -179,13 +179,14 @@
 
   .hero-eyebrow {
     font-size: 0.7rem;
-    letter-spacing: 0.4em;
+    letter-spacing: 0.3em;
     color: var(--warm-gold);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
+    word-break: keep-all;
   }
 
   .hero-eyebrow::before {
@@ -198,12 +199,15 @@
 
   .hero-title {
     font-family: 'Shippori Mincho B1', serif;
-    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-size: clamp(2.6rem, 7vw, 6rem);
     font-weight: 800;
     color: var(--cream);
-    line-height: 1.1;
-    letter-spacing: 0.05em;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
     margin-bottom: 1rem;
+    /* 日本語タイトルが「島田クレー / プ」のように途中で改行しないよう CJK 単位の改行を抑制 */
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .hero-title .accent {
@@ -316,12 +320,14 @@
 
   .section-title {
     font-family: 'Shippori Mincho B1', serif;
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-size: clamp(1.7rem, 3.5vw, 2.8rem);
     font-weight: 800;
     color: var(--indigo);
-    line-height: 1.4;
+    line-height: 1.45;
     margin-bottom: 2rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .section-title em {
@@ -444,11 +450,13 @@
 
   .story-title {
     font-family: 'Shippori Mincho B1', serif;
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
     font-weight: 800;
     color: var(--cream);
-    line-height: 1.4;
-    letter-spacing: 0.04em;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .story-title em {
