@@ -1717,3 +1717,22 @@ body.fleet-page {
   color: var(--paper);
   font-weight: 700;
 }
+
+/* ============================================================
+   モバイルでの Hero CTA: 1 行に収まるように padding/letter-spacing/font 調整
+   ============================================================ */
+@media (max-width: 480px) {
+  .hero__cta,
+  .fleet__hero-cta {
+    flex-wrap: nowrap;
+    gap: 0.6rem;
+  }
+  .hero__cta .btn,
+  .fleet__hero-cta .btn {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    flex: 1 1 0;
+    white-space: nowrap;
+  }
+}
