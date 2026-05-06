@@ -1562,17 +1562,32 @@ body.fleet-page {
   margin-left: 0.05em;
 }
 .cards__note {
-  max-width: 60ch;
-  margin: 2.5rem 0 0;
-  font-size: 0.85rem;
-  line-height: 1.85;
+  max-width: 56ch;
+  margin: 3rem 0 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent-bright);
+  background: rgba(110, 114, 240, 0.04);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.78rem;
+  line-height: 1.95;
   color: var(--ink-soft);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
+  font-style: normal;
 }
-.cards__note-mark {
+.cards__note-label {
+  font-family: var(--inter, "Inter", sans-serif);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--accent-bright);
-  font-weight: 700;
-  margin-right: 0.25em;
+  margin: 0 0 0.5rem;
+}
+.cards__note-body {
+  margin: 0 0 0.5rem;
+}
+.cards__note-body:last-child {
+  margin-bottom: 0;
 }
 .cards__note strong {
   color: var(--ink);

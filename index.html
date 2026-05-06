@@ -122,9 +122,15 @@
         </article>
       </div>
 
-      <p class="cards__note reveal" data-reveal data-delay="500">
-        <span class="cards__note-mark" aria-hidden="true">*</span> 現在 EntreprenAIs はコア SDK として <strong>Claude（クラウド型 LLM）</strong>を採用しており、その稼働電力源までは把握できません。Zero Emission Option が指すのは、<strong>エッジ側で動くローカル LLM 基盤</strong>と <strong>Internet of Agents アーキテクチャの実行基盤</strong>を Zero Emission 化することで、クラウド推論部分は対象外です。プラットフォームの長期ビジョンは <strong>「ローカル LLM 利用率を最大化し、Zero Emission に近づけていく」</strong>こと。
-      </p>
+      <aside class="cards__note reveal" data-reveal data-delay="500" aria-label="Zero Emission Option に関する補足">
+        <p class="cards__note-label">補足</p>
+        <p class="cards__note-body">
+          EntreprenAIs は現在、AI の頭脳部分にクラウドの大規模言語モデル（<strong>Claude</strong>）を利用しています。クラウド側の電力源までは私たちでは管理できないため、Zero Emission Option が対象とするのは <strong>エッジ側のローカル LLM 基盤</strong>と、エージェント同士をつなぐ仕組み（<strong>Internet of Agents</strong>）の方です。
+        </p>
+        <p class="cards__note-body">
+          私たちの長期目標は、エッジで動くローカル LLM の利用比率を高め、AI の稼働そのものを再生可能エネルギーで賄える状態に近づけていくことです。
+        </p>
+      </aside>
 
       <!-- Product Preview — A2A in action -->
       <div class="preview reveal" data-reveal data-delay="450">
