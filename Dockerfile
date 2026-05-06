@@ -14,6 +14,7 @@ COPY style.css /srv/style.css
 COPY main.js /srv/main.js
 COPY img/ /srv/img/
 COPY privacy/ /srv/privacy/
+COPY eai/ /srv/eai/
 
 EXPOSE 8080
 
