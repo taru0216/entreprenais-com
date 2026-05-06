@@ -16,6 +16,16 @@ COPY img/ /srv/img/
 COPY privacy/ /srv/privacy/
 COPY eai/ /srv/eai/
 
+# SEO assets (#13)
+COPY robots.txt /srv/robots.txt
+COPY sitemap.xml /srv/sitemap.xml
+COPY site.webmanifest /srv/site.webmanifest
+COPY og.png /srv/og.png
+COPY favicon.svg /srv/favicon.svg
+COPY favicon-16.png /srv/favicon-16.png
+COPY favicon-32.png /srv/favicon-32.png
+COPY apple-touch-icon.png /srv/apple-touch-icon.png
+
 EXPOSE 8080
 
 ENTRYPOINT ["entrypoint.sh"]
