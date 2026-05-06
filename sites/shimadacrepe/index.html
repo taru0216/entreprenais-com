@@ -167,6 +167,9 @@
     padding: 0 6rem;
     max-width: 900px;
     animation: fadeUp 1.2s ease forwards;
+    /* Fail-safe: animation が動かない環境でも表示が保たれるよう opacity 1 を default にしておく。
+       fadeUp の from が 0 で上書きするので動く環境では従来通り fade-in する。 */
+    opacity: 1;
   }
 
   @keyframes fadeUp {
@@ -958,9 +961,11 @@
   }
 
   /* ── SCROLL REVEAL ── */
+  /* Fail-safe: 既定で表示。JS が走らなくても／IntersectionObserver が遅れても文字が必ず読める。
+     IntersectionObserver が .visible を付ければ追加で transform が打ち消されるが、表示自体は最初から保証する。 */
   .reveal {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
