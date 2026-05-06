@@ -13,6 +13,7 @@ COPY index.html /srv/index.html
 COPY style.css /srv/style.css
 COPY main.js /srv/main.js
 COPY img/ /srv/img/
+COPY privacy/ /srv/privacy/
 
 EXPOSE 8080
 
