@@ -1713,3 +1713,7 @@ body.fleet-page {
 .fleet__section--dark .showcase-item__body {
   color: rgba(247, 246, 241, 0.78);
 }
+.fleet__section--dark .showcase-item__body strong {
+  color: var(--paper);
+  font-weight: 700;
+}
