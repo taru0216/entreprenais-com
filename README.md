@@ -1,7 +1,12 @@
 # entreprenais-com
 
-樽石デジタル技術研究所 (TDRI) / EntreprenAIs コーポレートサイトの **Docker 配布版**。
-`caddy:2-alpine` をベースに `_content/` 配下の静的アセットを配信する。
+樽石デジタル技術研究所 (TDRI) / EntreprenAIs コーポレートサイトの **SSOT** リポジトリ (#1412)。
+本 repo がそのまま:
+
+1. **GitHub Pages** で apex (`https://entreprenais.com/`) を配信する
+2. **Docker** image (caddy:2-alpine) としてランタイム配布される
+
+の 2 経路で静的アセットを公開する。
 
 ## 起動 (本番 / Docker)
 
@@ -23,12 +28,17 @@ docker run --rm -p 8080:8080 \
 
 | ファイル | 役割 |
 |---------|------|
+| `index.html` / `style.css` / `main.js` / `img/` | 静的アセット (root 直接配置) |
+| `CNAME` | GitHub Pages 用 custom domain (`entreprenais.com`) |
 | `Dockerfile` | `caddy:2-alpine` ベースの production image |
 | `Caddyfile` | リバースプロキシ + `/healthz` |
 | `entrypoint.sh` | `AUTH_USER` / `AUTH_PASS` で Basic 認証を有効化 |
 | `__service.json` | EntreprenAIs ランタイム (eai-ext-docker) 用の宣言 |
 | `__post_bootstrap.sh` | docker-static template の post-bootstrap hook (no-op) |
-| `_content/` | 静的アセット (Caddy が `/srv/` 配下から配信) |
+
+> **配置ルール**: GitHub Pages は repo root を `/` に展開して配信するため、HTML/CSS/JS/画像は
+> root 直接配置とする。Docker ビルド時に `Dockerfile` が必要分のみ `/srv/` にコピーする
+> (`Dockerfile`, `Caddyfile`, `__*` は image に含めない)。
 
 ## EntreprenAIs ランタイム連携
 
@@ -43,11 +53,6 @@ docker run --rm -p 8080:8080 \
   "dockerfile": "Dockerfile"
 }
 ```
-
-## 関連プロジェクト
-
-- [`taruishi-llc-homepage`](https://github.com/taru0216/taruishi-llc-homepage): GitHub Pages で apex (`entreprenais.com`) を担当する静的配信
-- 本リポジトリ: ランタイム配布用の Docker image ソース (Caddy)
 
 ## ライセンス
 
