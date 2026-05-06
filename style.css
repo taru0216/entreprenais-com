@@ -1550,3 +1550,31 @@ body.fleet-page {
   .fleet__flow-arrow { transform: rotate(90deg); }
   .fleet__flow-row--return { justify-content: flex-start; }
 }
+
+/* ============================================================
+   Zero Emission のカード参照記号 + 注釈段落
+   ============================================================ */
+.card__ref {
+  font-size: 0.65em;
+  color: var(--accent-bright);
+  vertical-align: super;
+  font-weight: 600;
+  margin-left: 0.05em;
+}
+.cards__note {
+  max-width: 60ch;
+  margin: 2.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+.cards__note-mark {
+  color: var(--accent-bright);
+  font-weight: 700;
+  margin-right: 0.25em;
+}
+.cards__note strong {
+  color: var(--ink);
+  font-weight: 600;
+}

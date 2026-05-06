@@ -107,7 +107,7 @@
           <h3 class="card__title">Zero Emission</h3>
           <p class="card__lead">グリーン電力で持続稼働する推論</p>
           <p class="card__body">
-            太陽光とバッテリーの余剰電力時間帯にローカル LLM 推論を集中させ、
+            太陽光とバッテリーの余剰電力時間帯にローカル LLM<sup class="card__ref">*</sup> 推論を集中させ、
             エージェントの稼働を化石燃料から切り離していきます。
           </p>
         </article>
@@ -121,6 +121,10 @@
           </p>
         </article>
       </div>
+
+      <p class="cards__note reveal" data-reveal data-delay="500">
+        <span class="cards__note-mark" aria-hidden="true">*</span> 現在 EntreprenAIs はコア SDK として <strong>Claude（クラウド型 LLM）</strong>を採用しており、その稼働電力源までは把握できません。Zero Emission Option が指すのは、<strong>エッジ側で動くローカル LLM 基盤</strong>と <strong>Internet of Agents アーキテクチャの実行基盤</strong>を Zero Emission 化することで、クラウド推論部分は対象外です。プラットフォームの長期ビジョンは <strong>「ローカル LLM 利用率を最大化し、Zero Emission に近づけていく」</strong>こと。
+      </p>
 
       <!-- Product Preview — A2A in action -->
       <div class="preview reveal" data-reveal data-delay="450">
