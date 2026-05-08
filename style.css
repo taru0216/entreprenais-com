@@ -1736,3 +1736,162 @@ body.fleet-page {
     white-space: nowrap;
   }
 }
+
+/* ============================================================
+   04 / Showcase — 稼働中の AI エージェント事例カード (#20)
+   ------------------------------------------------------------
+   Light background (.section). Card grid with status badge,
+   tags list, and CTA. Reuses ink/paper/indigo palette.
+   ============================================================ */
+
+.showcase-lead {
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  color: var(--ink-soft);
+  line-height: 1.85;
+  margin: -2.5rem 0 3.5rem;
+  max-width: 56ch;
+}
+
+.showcase-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual card — extends the .card visual language */
+.showcase-card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 22px;
+  padding: 2rem 2rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.showcase-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 22px 50px -28px rgba(42, 45, 124, 0.35);
+}
+
+/* Top indigo ribbon (matches .card::before hover effect, always visible here) */
+.showcase-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.6rem;
+  right: 1.6rem;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+  border-radius: 999px;
+  opacity: 0.7;
+  transition: opacity 0.4s var(--ease);
+}
+.showcase-card:hover::before {
+  opacity: 1;
+}
+
+/* Header row: status badge */
+.showcase-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.showcase-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3a9a72;
+  background: rgba(58, 154, 114, 0.1);
+  border: 1px solid rgba(58, 154, 114, 0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+
+.showcase-card__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3a9a72;
+  animation: showcasePulse 2s ease-in-out infinite;
+  flex: none;
+}
+@keyframes showcasePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* Title */
+.showcase-card__title {
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+
+/* Body */
+.showcase-card__body {
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+/* Tags */
+.showcase-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+.showcase-card__tags li {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(42, 45, 124, 0.07);
+  border: 1px solid rgba(42, 45, 124, 0.18);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+/* CTA row */
+.showcase-card__cta {
+  margin-top: auto;
+}
+
+/* "AI に聞く" button: override cursor + reset browser button defaults */
+.showcase-card__btn-open {
+  cursor: pointer;
+  font-family: var(--serif);
+  border: none;
+}
+
+@media (max-width: 640px) {
+  .showcase-cards {
+    grid-template-columns: 1fr;
+  }
+  .showcase-lead {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-card__status-dot { animation: none; }
+}

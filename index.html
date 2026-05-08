@@ -94,6 +94,7 @@
         <li><a href="#mission">Mission</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#works">Roadmap</a></li>
+        <li><a href="#showcase">Showcase</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -264,10 +265,78 @@
     </div>
   </section>
 
+  <!-- Showcase — 稼働中の AI エージェント -->
+  <section id="showcase" class="section">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>04 / Showcase</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        稼働中の AI エージェント
+      </h2>
+      <p class="showcase-lead reveal" data-reveal data-delay="150">
+        EntreprenAIs Runtime で動作する実際のエージェントたち
+      </p>
+      <div class="showcase-cards">
+
+        <!-- Card 1: 問い合わせ AI -->
+        <article class="showcase-card reveal" data-reveal data-delay="200">
+          <div class="showcase-card__header">
+            <span class="showcase-card__status" aria-label="稼働中">
+              <span class="showcase-card__status-dot" aria-hidden="true"></span>
+              稼働中
+            </span>
+          </div>
+          <h3 class="showcase-card__title">問い合わせ AI</h3>
+          <p class="showcase-card__body">
+            このサイトに埋め込まれた公開問い合わせエージェント。
+            エッジで動くローカル LLM（ollama）で推論し、
+            entreprenas.com の情報にもとづいて質問に回答します。
+          </p>
+          <ul class="showcase-card__tags" aria-label="技術タグ">
+            <li>EntreprenAIs Contact AI</li>
+            <li>Edge inference</li>
+            <li>MacBook 稼働</li>
+          </ul>
+          <div class="showcase-card__cta">
+            <button class="btn btn--primary showcase-card__btn-open" type="button"
+              onclick="document.querySelector('.eai-widget-btn, [data-eai-widget], #eai-chat-widget, .scratch-widget-open') && document.querySelector('.eai-widget-btn, [data-eai-widget], #eai-chat-widget, .scratch-widget-open').click()"
+              aria-label="右下の AI チャットウィジェットを開く">
+              AI に聞く &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2: C-Suite Agent Fleet -->
+        <article class="showcase-card reveal" data-reveal data-delay="300">
+          <div class="showcase-card__header">
+            <span class="showcase-card__status" aria-label="稼働中">
+              <span class="showcase-card__status-dot" aria-hidden="true"></span>
+              稼働中
+            </span>
+          </div>
+          <h3 class="showcase-card__title">C-Suite Agent Fleet</h3>
+          <p class="showcase-card__body">
+            経営判断・コード実装・法務・財務を担う 8 体の経営 AI エージェントチーム。
+            FC（Fleet Commander）の日常業務を並列支援し、
+            チャットで自律的にタスクを実行します。
+          </p>
+          <ul class="showcase-card__tags" aria-label="技術タグ">
+            <li>経営 AI</li>
+            <li>Multi-agent</li>
+            <li>Edge-First</li>
+          </ul>
+          <div class="showcase-card__cta">
+            <a class="btn btn--ghost" href="/eai/">詳細を見る &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section id="contact" class="section section--accent">
     <div class="section__inner contact">
-      <p class="section__num reveal" data-reveal>04 / Contact</p>
+      <p class="section__num reveal" data-reveal>05 / Contact</p>
       <h2 class="section__title reveal" data-reveal data-delay="100">
         お問い合わせ
       </h2>
