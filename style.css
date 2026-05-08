@@ -1699,6 +1699,23 @@ body.fleet-page {
   color: var(--ink-soft);
   margin: 0 0 1.5rem;
 }
+.showcase-item__tags {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.showcase-item__tags li {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: rgba(42, 45, 124, 0.08);
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+}
 .showcase-item__cta {
   margin: 0;
 }
