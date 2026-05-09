@@ -396,6 +396,15 @@
     function showOfflineBadge() {
       if (document.getElementById('__eai-offline-badge')) return;
 
+      // GA4: AI オフライン表示を計測（PV相当）
+      if (window.gtag) {
+        gtag('event', 'ai_offline', {
+          event_category: 'contact_agent',
+          event_label: 'offline_badge_shown',
+          non_interaction: true
+        });
+      }
+
       var style = document.createElement('style');
       style.textContent = [
         '#__eai-offline-badge {',
@@ -444,6 +453,29 @@
 
       document.body.appendChild(badge);
       document.body.appendChild(toast);
+
+      // 本文内の「AI に聞く」ボタンをオフライン状態に変更
+      ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
+        var btns = document.querySelectorAll('.' + cls);
+        btns.forEach(function(btn) {
+          btn.textContent = 'AI お休み中';
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+          btn.onclick = null;
+        });
+      });
+    }
+
+    // ページロード時にアクティブチェック（widget.js の到達可否を確認）
+    function checkAiOnline(cb) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', WIDGET_URL, true);
+      xhr.timeout = 5000;
+      xhr.onload = function() { cb(xhr.status < 400); };
+      xhr.onerror = function() { cb(false); };
+      xhr.ontimeout = function() { cb(false); };
+      xhr.send();
     }
 
     // widget.js を動的ロード（onerror で offline バッジ表示）
@@ -458,8 +490,17 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadWidget);
+      document.addEventListener('DOMContentLoaded', function() {
+        // ページロード時にヘルスチェックしてボタンを即時制御
+        checkAiOnline(function(online) {
+          if (!online) showOfflineBadge();
+        });
+        loadWidget();
+      });
     } else {
+      checkAiOnline(function(online) {
+        if (!online) showOfflineBadge();
+      });
       loadWidget();
     }
   })();
