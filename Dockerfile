@@ -14,6 +14,7 @@ COPY style.css /srv/style.css
 COPY main.js /srv/main.js
 COPY img/ /srv/img/
 COPY privacy/ /srv/privacy/
+COPY terms/ /srv/terms/
 COPY eai/ /srv/eai/
 # eai/ の再帰コピーで eai/showcase/ も /srv/eai/showcase/ に展開される (#15)
 COPY sites/ /srv/sites/
