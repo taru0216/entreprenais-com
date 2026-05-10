@@ -61,4 +61,23 @@
     };
     window.addEventListener("scroll", onMove, { passive: true });
   }
+
+  // ============ AI widget open buttons (#71: inline onclick を addEventListener に移行) ============
+  // showcase-card__btn-open と contact__ai-btn の onclick を外部 JS に移動し、
+  // CSP の script-src 'unsafe-inline' 依存を削減する。
+  // 注: inline <script> ブロック（GA4・widget offline fallback）は別途対応が必要なため
+  //     'unsafe-inline' は _headers で引き続き許可中。
+  function openWidgetBtn() {
+    var widgetBtn = document.querySelector(".__eai-widget-btn");
+    if (widgetBtn) {
+      widgetBtn.click();
+    }
+  }
+
+  document.querySelectorAll(".showcase-card__btn-open, .contact__ai-btn").forEach(function (btn) {
+    // オフライン状態（btn.disabled=true）では onclick を付与しない
+    if (!btn.disabled) {
+      btn.addEventListener("click", openWidgetBtn);
+    }
+  });
 })();
