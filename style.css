@@ -1728,6 +1728,7 @@ body.fleet-page {
    ============================================================ */
 .fleet__section--compliance {
   background: var(--ink);
+  color: var(--paper);
 }
 .compliance__lead {
   max-width: 60ch;
@@ -1804,6 +1805,7 @@ body.fleet-page {
 
 .fleet__section--accounting {
   background: var(--ink);
+  color: var(--paper);
 }
 
 .fleet__section--trust {
