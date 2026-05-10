@@ -157,8 +157,8 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 8rem var(--gutter) 6rem;
+  align-items: flex-start;
+  padding: 10rem var(--gutter) 6rem;
   overflow: hidden;
   background: var(--paper);
 }
@@ -2245,7 +2245,8 @@ body.fleet-page {
    HERO NEWS PILL — ファーストビューの最新ニュースバッジ
    ============================================================ */
 .hero__news-pill {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 0.45em;
   margin-bottom: 1.6rem;
