@@ -38,6 +38,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* External transmission table — privacy page */
+    .legal__table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0 1.6rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .legal__table th,
+    .legal__table td {
+      border: 1px solid rgba(255,255,255,.1);
+      padding: .65rem .9rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    .legal__table thead th {
+      background: rgba(255,255,255,.06);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .legal__table small {
+      display: block;
+      opacity: .7;
+      font-size: .82em;
+      margin-top: .2rem;
+    }
+    .legal__note {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: .6rem;
+    }
+  </style>
 
   <!-- Google Analytics 4 (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
@@ -75,7 +108,7 @@
       <p class="legal__eyebrow">Privacy Policy</p>
       <h1 class="legal__title">プライバシーポリシー</h1>
       <p class="legal__meta">
-        制定日: 2026-05-06 / 最終改定日: 2026-05-06
+        制定日: 2026-05-06 / 最終改定日: 2026-05-10
       </p>
       <p class="legal__intro">
         樽石デジタル技術研究所合同会社（以下「当社」といいます）は、本ウェブサイト（<code>entreprenais.com</code> 配下のページ。以下「本サイト」といいます）における個人情報および個人関連情報の取り扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます）を定めます。当社は、個人情報の保護に関する法律（以下「個人情報保護法」または「APPI」といいます）その他の関連法令およびガイドラインを遵守し、適切な取り扱いに努めます。
@@ -108,6 +141,18 @@
         <p>
           本サイト経由でお客様から直接ご連絡いただいた場合（外部リンク先サービスの利用を含みます）、お客様が任意に提供された氏名、所属、連絡先その他の情報を取得することがあります。本サイトには現時点で問い合わせフォームを設置しておらず、ご連絡は外部サービス（LinkedIn など）を経由いただいています。当該外部サービスにおける情報の取り扱いは、各サービスのプライバシーポリシーに従います。
         </p>
+        <h3 class="legal__h3">2.3 AI チャット機能で収集する情報</h3>
+        <p>
+          本サイトが提供する AI エージェントチャット機能（EntreprenAIs コンタクト AI 等）をご利用になった場合、以下の情報が収集・処理されることがあります。
+        </p>
+        <ul class="legal__list">
+          <li>お客様がチャット入力フォームに入力したテキスト（問い合わせ内容・質問文等）</li>
+          <li>会話の流れを維持するために利用するセッション識別子</li>
+          <li>AI の応答品質向上・安全性確保を目的として処理されるチャット履歴</li>
+        </ul>
+        <p>
+          AI チャットで収集する情報の利用目的は、第 3 条に定めるとおりです。AI エージェントの基盤として利用する AI モデルプロバイダー（Anthropic, Inc. 等）のデータ取り扱いについては、当該プロバイダーのプライバシーポリシーも併せてご確認ください。
+        </p>
       </section>
 
       <section class="legal__section">
@@ -131,13 +176,42 @@
           <li>法令に基づく場合</li>
           <li>人の生命、身体または財産の保護のために必要があり、お客様の同意を得ることが困難である場合</li>
         </ul>
+        <h3 class="legal__h3">4.1 外部送信先の公表（電気通信事業法第27条の12対応）</h3>
         <p>
-          ただし、前項 2.1 のとおり、本サイトでは GA4 を利用しているため、Cookie 識別子・IP アドレス等の情報が Google のサーバーに自動的に送信されます。これらの情報の取り扱いについては Google のプライバシーポリシーが適用されます。Google による情報の取り扱いの詳細および GA4 の仕組みについては、以下をご参照ください。
+          本サイトでは、電気通信事業法第27条の12（外部送信規律）に基づき、利用者の端末から第三者の情報収集サーバーへ情報を送信する機能について、以下のとおり公表します。
+        </p>
+        <table class="legal__table">
+          <thead>
+            <tr>
+              <th>機能名</th>
+              <th>外部送信先</th>
+              <th>送信される主な情報</th>
+              <th>利用目的</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google Analytics 4（GA4）<br><small>計測 ID: G-ND9RLH0NT3</small></td>
+              <td>Google LLC<br><small>（米国）</small></td>
+              <td>
+                閲覧ページ URL・参照元 URL、Cookie 識別子（<code>_ga</code>等）、
+                ブラウザ種別・OS・デバイス情報、訪問日時・滞在時間、
+                IP アドレス（送信後ただちに匿名化）
+              </td>
+              <td>アクセス解析・サービス改善</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          上記情報の取り扱いについては Google のプライバシーポリシーが適用されます。詳細および GA4 の仕組みについては、以下をご参照ください。
         </p>
         <ul class="legal__list">
           <li><a class="legal__link" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google プライバシー ポリシー</a></li>
           <li><a class="legal__link" href="https://marketingplatform.google.com/about/analytics/terms/jp/" target="_blank" rel="noopener noreferrer">Google アナリティクス利用規約</a></li>
         </ul>
+        <p>
+          GA4 による外部送信を停止する方法については、第 5 条「5.1 GA4 によるトラッキングを無効化する方法」をご参照ください。
+        </p>
       </section>
 
       <section class="legal__section">
@@ -193,6 +267,7 @@
         </p>
         <h3 class="legal__h3">改定履歴</h3>
         <ul class="legal__list">
+          <li>2026-05-10: 電気通信事業法第27条の12対応として外部送信先（GA4）を表形式で明記（4.1 節追加）。AI チャット機能で収集する情報を明記（2.3 節追加）。事業者住所欄を追加（10 節更新）。</li>
           <li>2026-05-06: 初版制定。Google Analytics 4 の利用を明示。</li>
         </ul>
       </section>
@@ -202,8 +277,12 @@
         <ul class="legal__list">
           <li>商号: 樽石デジタル技術研究所合同会社（Taruishi Digital Research Institute, LLC. 略称: TDRI）</li>
           <li>代表者: 樽石 将人</li>
+          <li>所在地: <!-- PLACEHOLDER_ADDRESS — FC 確認後に正式住所を記入してください --></li>
           <li>事業内容: AI エージェント経営フレームワーク（EntreprenAIs プラットフォーム）の研究開発</li>
         </ul>
+        <p class="legal__note">
+          ※ 所在地欄は現在準備中です。お問い合わせは第 8 条の連絡窓口をご利用ください。
+        </p>
       </section>
 
       <p class="legal__back">
