@@ -36,10 +36,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- SRI 非適用 (#70): Google Fonts は動的 URL のためハッシュ固定不可。CSP の style-src / font-src allowlist で保護。 -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 
   <!-- Google Analytics 4 (gtag.js) -->
+  <!-- SRI 非適用 (#70): gtag/js は動的バージョンロード CDN のためハッシュ固定不可。CSP の script-src allowlist で保護。 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
