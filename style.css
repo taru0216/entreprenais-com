@@ -2242,28 +2242,48 @@ body.fleet-page {
 }
 
 /* ============================================================
-   HERO NEWS PILL — ファーストビューの最新ニュースバッジ
+   HERO NEWS PILL — 右上の最新ニュースバッジ
    ============================================================ */
 .hero__news-pill {
-  display: flex;
-  width: fit-content;
+  position: absolute;
+  top: 5rem;
+  right: var(--gutter);
+  z-index: 2;
+  display: inline-flex;
   align-items: center;
-  gap: 0.45em;
-  margin-bottom: 1.6rem;
-  padding: 0.35em 1em;
+  gap: 0.6em;
+  padding: 0.35em 0.9em;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
-  font-family: var(--jp);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--accent);
+  border: 1px solid var(--line-soft);
+  background: transparent;
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
   text-decoration: none;
-  letter-spacing: 0.02em;
-  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.hero__news-pill time {
+  font-feature-settings: "tnum";
+}
+
+.hero__news-pill span:first-of-type {
+  color: var(--ink);
+  font-weight: 500;
 }
 
 .hero__news-pill:hover {
-  background: color-mix(in srgb, var(--accent) 16%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.hero__news-pill:hover span:first-of-type {
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .hero__news-pill time {
+    display: none;
+  }
 }
