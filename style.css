@@ -616,7 +616,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.5rem;
 }
 .footer__brand {
@@ -1053,6 +1053,54 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 720px) {
   .footer__meta {
     align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   Footer navigation — site sections and standalone pages
+   ============================================================ */
+.footer__nav {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.footer__nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer__nav-heading {
+  margin: 0 0 0.4rem;
+  font-family: var(--serif);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 246, 241, 0.4);
+}
+.footer__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.footer__nav-link {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  color: rgba(247, 246, 241, 0.65);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.footer__nav-link:hover {
+  color: var(--paper);
+  border-bottom-color: rgba(247, 246, 241, 0.5);
+}
+@media (max-width: 720px) {
+  .footer__nav {
+    gap: 1.5rem;
   }
 }
 
