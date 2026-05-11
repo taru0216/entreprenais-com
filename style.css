@@ -2084,7 +2084,7 @@ body.fleet-page {
 @media (max-width: 720px) {
   .hero {
     align-items: flex-start;
-    padding-top: 7.5rem; /* nav(~3.75rem) + news-pill(top:5rem + 高さ:~2.5rem) をクリア */
+    padding-top: 14rem; /* FC 実機（Pixel 7）確認済み確定値 (#108) */
   }
 }
 
