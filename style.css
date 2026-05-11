@@ -2364,21 +2364,21 @@ body.fleet-page {
    将来的に GitHub・カレンダー連携なども並べられる構造。
    ============================================================ */
 .fleet__section--integrations {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
 }
 .fleet__section--integrations .section__num {
-  color: rgba(247, 246, 241, 0.55);
+  color: rgba(10, 12, 35, 0.45);
 }
 .fleet__section--integrations .section__title {
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .integrations__lead {
   max-width: 60ch;
   font-size: 1.02rem;
   line-height: 1.85;
-  color: rgba(247, 246, 241, 0.78);
+  color: rgba(10, 12, 35, 0.7);
   margin: 0 0 3rem;
 }
 
@@ -2392,15 +2392,15 @@ body.fleet-page {
    Integration Card — single app integration card
    ============================================================ */
 .integration-card {
-  background: rgba(247, 246, 241, 0.04);
-  border: 1px solid rgba(110, 114, 240, 0.22);
+  background: #fff;
+  border: 1px solid rgba(10, 12, 35, 0.1);
   border-radius: 28px;
   padding: clamp(1.8rem, 3vw, 2.8rem);
   transition: border-color 0.4s var(--ease), background 0.3s;
 }
 .integration-card:hover {
-  border-color: rgba(110, 114, 240, 0.45);
-  background: rgba(247, 246, 241, 0.06);
+  border-color: rgba(10, 12, 35, 0.2);
+  background: #f8f7f2;
 }
 
 /* Header row: icon + name + status */
@@ -2415,8 +2415,8 @@ body.fleet-page {
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: rgba(247, 246, 241, 0.08);
-  border: 1px solid rgba(247, 246, 241, 0.1);
+  background: rgba(10, 12, 35, 0.05);
+  border: 1px solid rgba(10, 12, 35, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2434,7 +2434,7 @@ body.fleet-page {
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: -0.01em;
-  color: var(--paper);
+  color: var(--ink);
   margin: 0;
   line-height: 1.2;
 }
@@ -2475,7 +2475,7 @@ body.fleet-page {
   font-weight: 700;
   font-size: clamp(1.15rem, 2vw, 1.5rem);
   letter-spacing: -0.005em;
-  color: var(--paper);
+  color: var(--ink);
   margin: 0 0 1.8rem;
   line-height: 1.4;
 }
@@ -2499,7 +2499,7 @@ body.fleet-page {
 
 .integration-card__desc p {
   font-size: 0.96rem;
-  color: rgba(247, 246, 241, 0.82);
+  color: rgba(10, 12, 35, 0.75);
   line-height: 1.9;
   margin: 0 0 1rem;
 }
@@ -2507,7 +2507,7 @@ body.fleet-page {
   margin-bottom: 1.4rem;
 }
 .integration-card__desc strong {
-  color: var(--paper);
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -2515,7 +2515,7 @@ body.fleet-page {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid rgba(247, 246, 241, 0.12);
+  border-top: 1px solid rgba(10, 12, 35, 0.1);
   padding-top: 1.2rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2524,7 +2524,7 @@ body.fleet-page {
 .integration-card__features li {
   font-size: 0.86rem;
   line-height: 1.55;
-  color: rgba(247, 246, 241, 0.72);
+  color: rgba(10, 12, 35, 0.65);
   padding-left: 1.1rem;
   position: relative;
 }
@@ -2554,7 +2554,7 @@ body.fleet-page {
   font-family: var(--serif);
   font-size: 0.85rem;
   letter-spacing: 0.06em;
-  color: rgba(247, 246, 241, 0.4);
+  color: rgba(10, 12, 35, 0.4);
   margin: 0;
 }
 
