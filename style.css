@@ -1841,49 +1841,91 @@ body.fleet-page {
     grid-template-columns: 1fr;
   }
 }
-.trust__card {
+/* Trust & Bridges — information barrier featured card */
+.trust__barrier {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: flex-start;
   background: var(--ink);
   color: var(--paper);
-  padding: 2.2rem 2rem;
-  border-radius: 24px;
-  border: 1px solid rgba(110, 114, 240, 0.18);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: transform 0.4s var(--ease);
+  padding: 2.4rem 2.2rem;
+  border-radius: 28px;
+  border: 1px solid rgba(110, 114, 240, 0.22);
+  max-width: 860px;
 }
-.trust__card:hover {
-  transform: translateY(-4px);
-}
-.trust__icon {
-  font-size: 2rem;
+.trust__barrier-icon {
+  font-size: 2.4rem;
   line-height: 1;
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(110, 114, 240, 0.16);
+  background: rgba(110, 114, 240, 0.18);
 }
-.trust__title {
+.trust__barrier-content {
+  flex: 1;
+  min-width: 0;
+}
+.trust__barrier-title {
   font-family: var(--jp);
   font-weight: 700;
-  font-size: 1.2rem;
-  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  margin: 0 0 1rem;
   letter-spacing: -0.005em;
+  color: var(--paper);
 }
-.trust__body {
-  font-size: 0.95rem;
-  color: rgba(247, 246, 241, 0.78);
-  line-height: 1.85;
-  margin: 0;
+.trust__barrier-body {
+  font-size: 0.96rem;
+  color: rgba(247, 246, 241, 0.82);
+  line-height: 1.9;
+  margin: 0 0 1.2rem;
 }
-.trust__body strong {
+.trust__barrier-body strong {
   color: var(--paper);
   font-weight: 600;
 }
-.trust__screenshot { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 12px; margin: 1.5rem auto 0; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+.trust__barrier-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem 1.5rem;
+  border-top: 1px solid rgba(247, 246, 241, 0.12);
+  padding-top: 1.2rem;
+}
+.trust__barrier-list li {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: rgba(247, 246, 241, 0.72);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.trust__barrier-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 1px;
+  background: var(--accent-bright);
+}
+.trust__barrier-list strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+@media (max-width: 600px) {
+  .trust__barrier {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .trust__barrier-list {
+    grid-template-columns: 1fr;
+  }
+}
 
 @media (max-width: 720px) {
   .fleet__hero { padding: 7rem var(--gutter) 4rem; }
@@ -2312,4 +2354,210 @@ body.fleet-page {
   .hero__news-pill time {
     display: none;
   }
+}
+
+/* ============================================================
+   INTEGRATIONS — アプリ連携セクション (#122)
+   ------------------------------------------------------------
+   iPhone 風デザイン + アプリ連携カード。
+   Slack 連携を iPhone モックアップで紹介。
+   将来的に GitHub・カレンダー連携なども並べられる構造。
+   ============================================================ */
+.fleet__section--integrations {
+  background: var(--ink);
+  color: var(--paper);
+}
+.fleet__section--integrations .section__num {
+  color: rgba(247, 246, 241, 0.55);
+}
+.fleet__section--integrations .section__title {
+  color: var(--paper);
+}
+
+.integrations__lead {
+  max-width: 60ch;
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: rgba(247, 246, 241, 0.78);
+  margin: 0 0 3rem;
+}
+
+.integrations__list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+/* ============================================================
+   Integration Card — single app integration card
+   ============================================================ */
+.integration-card {
+  background: rgba(247, 246, 241, 0.04);
+  border: 1px solid rgba(110, 114, 240, 0.22);
+  border-radius: 28px;
+  padding: clamp(1.8rem, 3vw, 2.8rem);
+  transition: border-color 0.4s var(--ease), background 0.3s;
+}
+.integration-card:hover {
+  border-color: rgba(110, 114, 240, 0.45);
+  background: rgba(247, 246, 241, 0.06);
+}
+
+/* Header row: icon + name + status */
+.integration-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.integration-card__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(247, 246, 241, 0.08);
+  border: 1px solid rgba(247, 246, 241, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.integration-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.integration-card__name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.integration-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3a9a72;
+  background: rgba(58, 154, 114, 0.1);
+  border: 1px solid rgba(58, 154, 114, 0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  width: fit-content;
+}
+
+.integration-card__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3a9a72;
+  flex: none;
+  animation: integrationPulse 2.2s ease-in-out infinite;
+}
+@keyframes integrationPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* Tagline */
+.integration-card__tagline {
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  letter-spacing: -0.005em;
+  color: var(--paper);
+  margin: 0 0 1.8rem;
+  line-height: 1.4;
+}
+
+/* Body: iPhone mockup (left) + description (right)
+   Reuses .feature grid pattern for visual consistency */
+.integration-card__body {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .integration-card__body {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+.integration-card__desc p {
+  font-size: 0.96rem;
+  color: rgba(247, 246, 241, 0.82);
+  line-height: 1.9;
+  margin: 0 0 1rem;
+}
+.integration-card__desc p:last-of-type {
+  margin-bottom: 1.4rem;
+}
+.integration-card__desc strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.integration-card__features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(247, 246, 241, 0.12);
+  padding-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem 1.2rem;
+}
+.integration-card__features li {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: rgba(247, 246, 241, 0.72);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.integration-card__features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 1px;
+  background: var(--accent-bright);
+}
+@media (max-width: 600px) {
+  .integration-card__features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Coming soon placeholder */
+.integrations__coming-soon {
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px dashed rgba(110, 114, 240, 0.25);
+  border-radius: 20px;
+}
+.integrations__coming-soon-text {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: rgba(247, 246, 241, 0.4);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .integration-card__status-dot { animation: none; }
 }

@@ -419,29 +419,100 @@
         <p class="section__num">05 / Trust &amp; Bridges</p>
         <h2 class="section__title">情報の壁を守りながら、関係者とつながる。</h2>
         <p class="trust__lead">
-          AI エージェントは社内情報を厳密に分類し、外部チャネルへ機密が滲み出ないように設計されています。その上で Slack などの関係者向けチャネルと安全に橋渡しします。
+          AI エージェントは社内情報を厳密に分類し、外部チャネルへ機密が滲み出ないように設計されています。情報隔壁がアーキテクチャレベルで担保されているから、外部サービスと安全につながれます。
         </p>
 
-        <div class="trust__grid">
-          <article class="trust__card">
-            <div class="trust__icon trust__icon--barrier" aria-hidden="true">&#x1F6E1;</div>
-            <h3 class="trust__title">情報隔壁 — NDA を守る AI</h3>
-            <p class="trust__body">
-              すべての社内情報は <strong>CL0 / CL1 / CL2 / CL3</strong> の機密度ラベルで分類され、エージェントは外部チャネルへ <strong>CL1 以上を出さない / 必要に応じて抽象化する</strong> ルールをアーキテクチャレベルで遵守します。特定顧客・第三者情報の混在を防ぐ <strong>情報隔壁</strong> をソフトウェア境界として持っています。
+        <div class="trust__barrier">
+          <div class="trust__barrier-icon" aria-hidden="true">&#x1F6E1;</div>
+          <div class="trust__barrier-content">
+            <h3 class="trust__barrier-title">情報隔壁 — NDA を守る AI</h3>
+            <p class="trust__barrier-body">
+              すべての社内情報は <strong>CL0 / CL1 / CL2 / CL3</strong> の機密度ラベルで分類されます。エージェントは外部チャネルへ <strong>CL1 以上を出さない / 必要に応じて抽象化する</strong> ルールをアーキテクチャレベルで遵守します。特定顧客・第三者情報の混在を防ぐ <strong>情報隔壁</strong> をソフトウェア境界として持っています。
             </p>
+            <ul class="trust__barrier-list">
+              <li><strong>CL0</strong>: 公開情報 — 外部チャネルへ自由に流通可</li>
+              <li><strong>CL1</strong>: 社内限定 — 要約・抽象化のみ外部共有可</li>
+              <li><strong>CL2</strong>: 機密 — 外部流通禁止・暗号化保存</li>
+              <li><strong>CL3</strong>: 最機密 — エージェント参照不可</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="fleet__section fleet__section--integrations" id="integrations">
+      <div class="fleet__inner">
+        <p class="section__num">05.5 / Integrations</p>
+        <h2 class="section__title">アプリ連携</h2>
+        <p class="integrations__lead">
+          情報隔壁を守りながら、使い慣れたツールと安全につなぐ。C-Suite Agent Fleet は既存の業務ツールと統合し、AI の力を日常の場所に届けます。
+        </p>
+
+        <div class="integrations__list">
+
+          <!-- Slack 連携 -->
+          <article class="integration-card" id="integration-slack">
+            <div class="integration-card__header">
+              <div class="integration-card__icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <rect x="5" y="5" width="6" height="6" rx="2" fill="#E01E5A"/>
+                  <rect x="5" y="13" width="6" height="10" rx="2" fill="#E01E5A"/>
+                  <rect x="13" y="5" width="10" height="6" rx="2" fill="#36C5F0"/>
+                  <rect x="13" y="13" width="6" height="6" rx="2" fill="#2EB67D"/>
+                  <rect x="21" y="13" width="2" height="6" rx="1" fill="#2EB67D"/>
+                  <rect x="13" y="21" width="6" height="2" rx="1" fill="#ECB22E"/>
+                  <rect x="21" y="21" width="2" height="2" rx="1" fill="#ECB22E"/>
+                </svg>
+              </div>
+              <div class="integration-card__meta">
+                <h3 class="integration-card__name">Slack</h3>
+                <span class="integration-card__status">
+                  <span class="integration-card__status-dot" aria-hidden="true"></span>
+                  稼働中
+                </span>
+              </div>
+            </div>
+
+            <p class="integration-card__tagline">オープンな会話に、AI が参加する。</p>
+
+            <div class="integration-card__body">
+              <figure class="integration-card__device feature__device">
+                <div class="feature__phone phone-mock">
+                  <span class="feature__notch phone-mock__notch" aria-hidden="true"></span>
+                  <img
+                    class="feature__img phone-mock__img"
+                    src="../img/slack-screenshot.png"
+                    alt="EntreprenAIs — Slack チャンネルで AI エージェントが会話に参加している様子"
+                    loading="lazy"
+                    width="720"
+                    height="998"
+                  />
+                </div>
+              </figure>
+
+              <div class="integration-card__desc">
+                <p>
+                  情報隔壁の仕組みにより、<strong>関係者が参加する Slack チャンネルに経営 AI を参加させる</strong>ことができます。たとえば<strong>経営会議に参加した AI エージェントが、公開可能な情報を瞬時に判断して関係者の Slack に発信</strong>——といった運用も実現可能です。
+                </p>
+                <p>
+                  報連相・意思決定の情報がオープンに流れる場所に AI が常時居ることで、<strong>組織の情報共有が格段にやりやすくなります</strong>。
+                </p>
+                <ul class="integration-card__features">
+                  <li>Slack チャンネルへの自律投稿</li>
+                  <li>メンション対応・質問への自動回答</li>
+                  <li>情報隔壁チェック済みの安全な発信</li>
+                  <li>会議サマリー・Action Items の自動共有</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
-          <article class="trust__card">
-            <div class="trust__icon trust__icon--slack" aria-hidden="true">&#x1F4AC;</div>
-            <h3 class="trust__title">Slack 連携 — オープンな会話に AI が参加する</h3>
-            <p class="trust__body">
-              情報隔壁の仕組みにより、<strong>関係者が参加する Slack チャンネルに経営 AI を参加させる</strong>ことができます。たとえば<strong>経営会議に参加した AI エージェントが、公開可能な情報を瞬時に判断して関係者の Slack に発信</strong>——といった運用も実現可能です。
-            </p>
-            <p class="trust__body">
-              報連相・意思決定の情報がオープンに流れる場所に AI が常時居ることで、<strong>組織の情報共有が格段にやりやすくなります</strong>。
-            </p>
-            <img src="../img/slack-screenshot.png" alt="Slack でのエージェント会話デモ" class="trust__screenshot" width="720" height="998" loading="lazy">
-          </article>
+          <!-- Coming soon プレースホルダー -->
+          <div class="integrations__coming-soon">
+            <p class="integrations__coming-soon-text">GitHub・カレンダー連携など、順次対応予定</p>
+          </div>
+
         </div>
       </div>
     </section>
