@@ -1883,6 +1883,7 @@ body.fleet-page {
   color: var(--paper);
   font-weight: 600;
 }
+.trust__screenshot { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 12px; margin: 1.5rem auto 0; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
 
 @media (max-width: 720px) {
   .fleet__hero { padding: 7rem var(--gutter) 4rem; }
