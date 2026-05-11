@@ -157,8 +157,8 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
-  padding: 10rem var(--gutter) 6rem;
+  align-items: center;
+  padding: 8rem var(--gutter) 4rem;
   overflow: hidden;
   background: var(--paper);
 }
