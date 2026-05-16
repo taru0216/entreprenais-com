@@ -12,18 +12,6 @@
     "external": false
   },
   {
-    "date": "2026-05-15",
-    "title": "元グーグル・エンジニアがたった1人で作った「再エネ研究所」。震災で感じた“反省”が原動力に",
-    "url": "https://www.businessinsider.jp/article/251038/",
-    "thumbnail": null,
-    "image_type": null,
-    "badge": "Media",
-    "summary": "Business Insider Japan に代表・樽石将人のインタビュー記事が掲載されました。",
-    "cta": "Business Insider Japan で読む",
-    "source": "Business Insider Japan",
-    "external": true
-  },
-  {
     "date": "2026-05-10",
     "title": "EntreprenAIs、提供を開始",
     "url": "/news/launch/",
@@ -34,5 +22,17 @@
     "cta": "続きを読む",
     "source": null,
     "external": false
+  },
+  {
+    "date": "2022-03-02",
+    "title": "元グーグル・エンジニアがたった1人で作った「再エネ研究所」。震災で感じた“反省”が原動力に",
+    "url": "https://www.businessinsider.jp/article/251038/",
+    "thumbnail": null,
+    "image_type": null,
+    "badge": "Media",
+    "summary": "Business Insider Japan に代表・樽石将人のインタビュー記事が掲載されました。",
+    "cta": "Business Insider Japan で読む",
+    "source": "Business Insider Japan",
+    "external": true
   }
 ]
