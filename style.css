@@ -28,6 +28,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* fixed .nav height (padding:1rem*2 + logo:28px) */
   -webkit-text-size-adjust: 100%;
 }
 
