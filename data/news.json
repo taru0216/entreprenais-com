@@ -1,0 +1,35 @@
+[
+  {
+    "date": "2026-05-16",
+    "title": "チャットルームに3つの新機能を追加 — C-Suite可視化・A2A招待・ルーム別エージェント管理",
+    "url": "/news/chatroom-update/",
+    "thumbnail": "/img/chat-chatroom-modal.png",
+    "badge": "Update",
+    "summary": "eai チャットルームに、C-Suite 8体のリアルタイム在室確認、外部 A2A エージェントの URL 招待、ルーム別エージェント管理の3機能を追加しました。",
+    "cta": "続きを読む",
+    "source": null,
+    "external": false
+  },
+  {
+    "date": "2026-05-15",
+    "title": "元グーグル・エンジニアがたった1人で作った「再エネ研究所」。震災で感じた"反省"が原動力に",
+    "url": "https://www.businessinsider.jp/article/251038/",
+    "thumbnail": null,
+    "badge": "Media",
+    "summary": "Business Insider Japan に代表・樽石将人のインタビュー記事が掲載されました。",
+    "cta": "Business Insider Japan で読む",
+    "source": "Business Insider Japan",
+    "external": true
+  },
+  {
+    "date": "2026-05-10",
+    "title": "EntreprenAIs、提供を開始",
+    "url": "/news/launch/",
+    "thumbnail": "/og.png",
+    "badge": "Press",
+    "summary": "CTO・COO・CISO・CFO・CLO・CPO・CHRO・Auditor の 8 体の経営 AI エージェントが自律協調する EntreprenAIs の提供を開始しました。",
+    "cta": "続きを読む",
+    "source": null,
+    "external": false
+  }
+]

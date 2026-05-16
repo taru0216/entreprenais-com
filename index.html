@@ -41,6 +41,154 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 
+  <!-- News section styles (LP) -->
+  <style>
+    .news-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .news-list--lp {
+      margin-bottom: 2.5rem;
+    }
+    .news-card {
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--line-soft);
+      border-radius: 22px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1.6rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .news-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 1.6rem;
+      right: 1.6rem;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 42px -22px rgba(42, 45, 124, 0.30);
+    }
+    .news-card:hover::before {
+      opacity: 0.85;
+    }
+    .news-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .news-card__date {
+      font-family: var(--serif);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .news-card__badge {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(42, 45, 124, 0.08);
+      border: 1px solid rgba(42, 45, 124, 0.22);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+    .news-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      line-height: 1.45;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .news-card__summary {
+      font-size: 0.93rem;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .news-card__cta {
+      margin-top: 0.5rem;
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s var(--ease);
+    }
+    .news-card:hover .news-card__cta {
+      color: var(--accent-bright);
+    }
+    .news-card__thumb {
+      flex: none;
+      width: 90px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 12px;
+      background: var(--paper-soft);
+      display: block;
+    }
+    .news-card__thumb-placeholder {
+      flex: none;
+      width: 90px;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      background: var(--paper-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      opacity: 0.38;
+    }
+    .news-card__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .news-more {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+    @media (max-width: 720px) {
+      .news-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.4rem 1.5rem;
+      }
+      .news-card__thumb,
+      .news-card__thumb-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+      }
+    }
+  </style>
+
   <!-- Google Analytics 4 (gtag.js) -->
   <!-- SRI 非適用 (#70): gtag/js は動的バージョンロード CDN のためハッシュ固定不可。CSP の script-src allowlist で保護。 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
@@ -408,6 +556,22 @@
     </div>
   </section>
 
+  <!-- News -->
+  <section id="news" class="section" style="display:none" aria-hidden="true">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>05.5 / News</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        ニュース
+      </h2>
+      <ul class="news-list news-list--lp" id="lp-news-list">
+        <!-- Dynamically populated from /data/news.json -->
+      </ul>
+      <div class="news-more reveal" data-reveal data-delay="300">
+        <a class="btn btn--ghost" href="/news/">すべてのニュースを見る &rarr;</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section id="contact" class="section section--accent">
     <div class="section__inner contact">
@@ -580,6 +744,64 @@
       });
       loadWidget();
     }
+  })();
+  </script>
+
+  <!-- LP News section: fetch latest 3 items from /data/news.json -->
+  <script>
+  (function () {
+    'use strict';
+    var section = document.getElementById('news');
+    var list = document.getElementById('lp-news-list');
+    if (!section || !list) return;
+
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + escHtml(item.thumbnail) + '" alt="' + escHtml(item.title) + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      var cardClass = item.thumbnail ? 'news-card news-card--has-thumb' : 'news-card';
+      li.innerHTML = '<a class="' + cardClass + '" href="' + escHtml(item.url) + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + escHtml(item.date) + '</span>'
+        +     '<span class="news-card__badge">' + escHtml(item.badge) + '</span>'
+        +   '</div>'
+        +   '<h3 class="news-card__title">' + escHtml(item.title) + '</h3>'
+        +   '<p class="news-card__summary">' + escHtml(item.summary) + '</p>'
+        +   '<span class="news-card__cta">' + escHtml(item.cta) + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items.slice(0, 3);
+        latest.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+        // Show the section only after successful load
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep section hidden on error — do not disrupt LP UX
+      });
   })();
   </script>
 

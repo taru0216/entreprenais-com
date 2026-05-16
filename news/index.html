@@ -253,63 +253,55 @@
       <p class="news-index__eyebrow">News</p>
       <h1 class="news-index__title">ニュース</h1>
 
-      <ul class="news-list">
-
-        <li>
-          <a class="news-card news-card--has-thumb" href="/news/chatroom-update/">
-            <img class="news-card__thumb" src="/img/chat-chatroom-modal.png" alt="チャットルーム画面プレビュー" loading="lazy" />
-            <div class="news-card__body">
-              <div class="news-card__meta">
-                <span class="news-card__date">2026-05-16</span>
-                <span class="news-card__badge">Update</span>
-              </div>
-              <h2 class="news-card__title">チャットルームに3つの新機能を追加 — C-Suite可視化・A2A招待・ルーム別エージェント管理</h2>
-              <p class="news-card__summary">
-                eai チャットルームに、C-Suite 8体のリアルタイム在室確認、外部 A2A エージェントの URL 招待、ルーム別エージェント管理の3機能を追加しました。
-              </p>
-              <span class="news-card__cta">続きを読む &rarr;</span>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a class="news-card" href="https://www.businessinsider.jp/article/251038/" target="_blank" rel="noopener noreferrer">
-            <div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>
-            <div class="news-card__body">
-              <div class="news-card__meta">
-                <span class="news-card__date">2026-05-15</span>
-                <span class="news-card__badge">Media</span>
-              </div>
-              <h2 class="news-card__title">元グーグル・エンジニアがたった1人で作った「再エネ研究所」。震災で感じた"反省"が原動力に</h2>
-              <p class="news-card__summary">
-                Business Insider Japan に代表・樽石将人のインタビュー記事が掲載されました。
-              </p>
-              <span class="news-card__cta">Business Insider Japan で読む &rarr;</span>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a class="news-card news-card--has-thumb" href="/news/launch/">
-            <img class="news-card__thumb" src="/og.png" alt="EntreprenAIs" loading="lazy" />
-            <div class="news-card__body">
-              <div class="news-card__meta">
-                <span class="news-card__date">2026-05-10</span>
-                <span class="news-card__badge">Press</span>
-              </div>
-              <h2 class="news-card__title">EntreprenAIs、提供を開始</h2>
-              <p class="news-card__summary">
-                CTO・COO・CISO・CFO・CLO・CPO・CHRO・Auditor の 8 体の経営 AI エージェントが自律協調する EntreprenAIs の提供を開始しました。
-              </p>
-              <span class="news-card__cta">続きを読む &rarr;</span>
-            </div>
-          </a>
-        </li>
-
+      <ul class="news-list" id="news-list">
+        <!-- Dynamically populated from /data/news.json -->
       </ul>
 
     </div>
   </main>
+
+  <script>
+  (function () {
+    'use strict';
+    var list = document.getElementById('news-list');
+
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + item.thumbnail + '" alt="' + item.title + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      var cardClass = item.thumbnail ? 'news-card news-card--has-thumb' : 'news-card';
+      li.innerHTML = '<a class="' + cardClass + '" href="' + item.url + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + item.date + '</span>'
+        +     '<span class="news-card__badge">' + item.badge + '</span>'
+        +   '</div>'
+        +   '<h2 class="news-card__title">' + item.title + '</h2>'
+        +   '<p class="news-card__summary">' + item.summary + '</p>'
+        +   '<span class="news-card__cta">' + item.cta + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        items.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+      })
+      .catch(function () {
+        list.innerHTML = '<li style="padding:2rem 0;color:var(--muted);font-family:var(--serif);font-size:0.9rem;">ニュースを読み込めませんでした。しばらく後にもう一度お試しください。</li>';
+      });
+  })();
+  </script>
 
   <!-- Footer -->
   <footer class="footer">
