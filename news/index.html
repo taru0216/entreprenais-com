@@ -90,8 +90,9 @@
       border-radius: 22px;
       padding: 1.6rem 2rem;
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1.6rem;
       text-decoration: none;
       color: inherit;
       transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
@@ -172,41 +173,29 @@
       color: var(--accent-bright);
     }
 
-    /* Article body image — full-width photo */
-    .article-image {
-      width: 100%;
-      max-height: 200px;
+    /* Thumbnail — internal links with real image */
+    .news-card__thumb {
+      flex: none;
+      width: 100px;
+      aspect-ratio: 3 / 4;
       object-fit: cover;
       border-radius: 12px;
-      margin-bottom: 0.75rem;
+      background: var(--paper-soft);
       display: block;
     }
-
-    /* iPhone mock frame for screenshot images */
-    .iphone-mock {
-      background: #1a1a1a;
-      border-radius: 40px;
-      padding: 12px;
-      box-shadow: 0 0 0 2px #3a3a3a, 0 20px 40px rgba(0, 0, 0, 0.3);
-      max-width: 220px;
-      margin: 0 auto 1rem;
+    /* Placeholder shown for external links without a thumbnail */
+    .news-card__thumb-placeholder {
+      flex: none;
+      width: 100px;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      background: var(--paper-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      opacity: 0.38;
     }
-    .iphone-mock::before {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 8px;
-      background: #3a3a3a;
-      border-radius: 4px;
-      margin: 0 auto 8px;
-    }
-    .iphone-mock img {
-      border-radius: 28px;
-      width: 100%;
-      display: block;
-    }
-
-    /* Card body — text area below image */
     .news-card__body {
       flex: 1;
       min-width: 0;
@@ -220,10 +209,14 @@
         padding: 6rem var(--gutter) 4rem;
       }
       .news-card {
+        flex-direction: column;
+        gap: 1rem;
         padding: 1.4rem 1.5rem;
       }
-      .iphone-mock {
-        max-width: 180px;
+      .news-card__thumb,
+      .news-card__thumb-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
       }
     }
   </style>
@@ -272,20 +265,15 @@
     'use strict';
     var list = document.getElementById('news-list');
 
-    function renderImage(article) {
-      if (!article.thumbnail) return '';
-      if (article.image_type === 'screenshot') {
-        return '<div class="iphone-mock"><img src="' + article.thumbnail + '" alt="' + article.title + '" loading="lazy" /></div>';
-      }
-      return '<img class="article-image" src="' + article.thumbnail + '" alt="' + article.title + '" loading="lazy" />';
-    }
-
     function renderCard(item) {
       var li = document.createElement('li');
-      var imageHtml = renderImage(item);
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + item.thumbnail + '" alt="' + item.title + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
       var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
-      li.innerHTML = '<a class="news-card" href="' + item.url + '"' + extAttrs + '>'
-        + imageHtml
+      var cardClass = item.thumbnail ? 'news-card news-card--has-thumb' : 'news-card';
+      li.innerHTML = '<a class="' + cardClass + '" href="' + item.url + '"' + extAttrs + '>'
+        + thumbHtml
         + '<div class="news-card__body">'
         +   '<div class="news-card__meta">'
         +     '<span class="news-card__date">' + item.date + '</span>'
