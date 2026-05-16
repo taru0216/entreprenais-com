@@ -581,5 +581,32 @@
     }
   })();
   </script>
+
+  <!-- Anchor scroll offset fix for mobile browsers (#1494)
+       iOS Safari / Android Chrome fire the hash scroll before CSS is applied on
+       cross-page navigation, so scroll-padding-top is ignored.
+       This script re-scrolls to the target after 'load' (CSS guaranteed applied),
+       compensating for the fixed nav height dynamically. -->
+  <script>
+  (function () {
+    'use strict';
+    if (!location.hash) return;
+    window.addEventListener('load', function () {
+      var hash = location.hash;
+      var target = document.querySelector(hash);
+      if (!target) return;
+      var nav = document.querySelector('.nav');
+      var navH = nav ? nav.getBoundingClientRect().height : 0;
+      var offset = 16; // extra breathing room (px)
+      var targetTop = target.getBoundingClientRect().top + window.scrollY;
+      // Disable smooth scroll temporarily to avoid fighting with browser's own scroll
+      var htmlEl = document.documentElement;
+      var prevBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto';
+      window.scrollTo({ top: targetTop - navH - offset, behavior: 'instant' });
+      htmlEl.style.scrollBehavior = prevBehavior;
+    });
+  })();
+  </script>
 </body>
 </html>
