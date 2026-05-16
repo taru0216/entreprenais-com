@@ -196,7 +196,7 @@
         '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
         '  font-size: 13px; line-height: 1.5;',
         '  box-shadow: 0 4px 16px rgba(13,15,18,0.25); z-index: 9999;',
-        '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
+        '  opacity: 0; transition: opacity 0.25s; pointer-events: auto;',
         '}',
         '#__eai-offline-toast.visible { opacity: 1; }',
       ].join('\n');
@@ -210,11 +210,11 @@
 
       var toast = document.createElement('div');
       toast.id = '__eai-offline-toast';
-      toast.textContent = '🌙 AI はお休み中です。しばらくしてからお試しください。';
+      toast.innerHTML = '🌙 AI はお休み中です。太陽が出るまでお待ちください。<a href="./terms.html#article4" style="color:inherit;text-decoration:underline;margin-left:4px;">詳細</a>';
 
       badge.addEventListener('click', function () {
         toast.classList.add('visible');
-        setTimeout(function () { toast.classList.remove('visible'); }, 3500);
+        setTimeout(function () { toast.classList.remove('visible'); }, 5000);
       });
 
       document.body.appendChild(badge);
