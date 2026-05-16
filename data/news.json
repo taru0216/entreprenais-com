@@ -1,12 +1,12 @@
 [
   {
     "date": "2026-05-16",
-    "title": "チャットルームに3つの新機能を追加 — C-Suite可視化・A2A招待・ルーム別エージェント管理",
+    "title": "チャットルームに2つの新機能を追加 — C-Suite可視化・IoAゲスト招待",
     "url": "/news/chatroom-update/",
     "thumbnail": "/img/chat-chatroom-modal.png",
     "image_type": "screenshot",
     "badge": "Update",
-    "summary": "eai チャットルームに、C-Suite 8体のリアルタイム在室確認、外部 A2A エージェントの URL 招待、ルーム別エージェント管理の3機能を追加しました。",
+    "summary": "eai チャットルームに、C-Suite 8体のリアルタイム在室確認、IoA プラットフォーム上のエージェントへのゲスト招待の2機能を追加しました。",
     "cta": "続きを読む",
     "source": null,
     "external": false
