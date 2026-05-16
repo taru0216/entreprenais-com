@@ -1,0 +1,613 @@
+/* 海士町AIアンバサダー デモサイト — スタイルシート */
+
+:root {
+  --deep-blue: #1a4a6b;
+  --mid-blue: #2a6496;
+  --light-blue: #4a90c4;
+  --ocean-blue: #0d3554;
+  --sand: #f5e6c8;
+  --sand-dark: #e8d5a8;
+  --forest-green: #2d6a4f;
+  --forest-light: #40916c;
+  --white: #ffffff;
+  --text-dark: #1a2a3a;
+  --text-muted: #5a7a8a;
+  --shadow: rgba(26, 74, 107, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  line-height: 1.7;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(26, 74, 107, 0.65);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--light-blue), var(--forest-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.logo-text {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.logo-sub {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.7rem;
+  font-weight: 400;
+  display: block;
+}
+
+.site-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.site-nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.site-nav a:hover {
+  color: var(--sand);
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  background:
+    linear-gradient(160deg, rgba(13, 53, 84, 0.85) 0%, rgba(26, 74, 107, 0.75) 40%, rgba(45, 106, 79, 0.6) 100%),
+    url('https://storage.googleapis.com/ama-town-portal/media/assets/iju-saiyou/about_ama_banner-2.webp') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wave decoration */
+.hero::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--white);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+/* Animated wave patterns */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 70%, rgba(74, 144, 196, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(64, 145, 108, 0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(245, 230, 200, 0.15);
+  border: 1px solid rgba(245, 230, 200, 0.3);
+  color: var(--sand);
+  padding: 0.4rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  color: var(--white);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--sand);
+}
+
+.hero-sub {
+  color: rgba(255,255,255,0.8);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 0.75rem;
+  font-weight: 300;
+}
+
+.hero-tagline {
+  color: rgba(245, 230, 200, 0.9);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--sand);
+  color: var(--deep-blue);
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(245, 230, 200, 0.3);
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245, 230, 200, 0.4);
+}
+
+/* ===== SECTION COMMON ===== */
+section {
+  padding: 5rem 2rem;
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  color: var(--light-blue);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 540px;
+  margin-bottom: 3rem;
+}
+
+/* ===== ABOUT (ISLANDS) ===== */
+.about {
+  background: var(--white);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(26, 74, 107, 0.03) 0%, rgba(45, 106, 79, 0.03) 100%);
+  border: 1px solid rgba(26, 74, 107, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px var(--shadow);
+}
+
+.card-photo {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ===== AI DEMO ===== */
+.ai-demo {
+  background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--deep-blue) 60%, var(--forest-green) 100%);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-demo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(ellipse at 10% 50%, rgba(74, 144, 196, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 20%, rgba(64, 145, 108, 0.15) 0%, transparent 50%);
+}
+
+.ai-demo .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.ai-demo .section-label {
+  color: var(--sand);
+}
+
+.ai-demo .section-title {
+  color: var(--white);
+}
+
+.ai-demo .section-desc {
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .demo-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-info h3 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--sand);
+}
+
+.demo-info p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.demo-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.demo-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+}
+
+.demo-features li span {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+/* Chat widget */
+.chat-widget-container {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.chat-widget-header {
+  background: rgba(255,255,255,0.1);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--light-blue), var(--forest-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.chat-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+}
+
+.chat-status {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.chat-online {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #4ade80;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.chat-messages {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 240px;
+}
+
+.chat-msg {
+  max-width: 85%;
+}
+
+.chat-msg.from-ai {
+  align-self: flex-start;
+}
+
+.chat-msg.from-user {
+  align-self: flex-end;
+}
+
+.chat-bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.from-ai .chat-bubble {
+  background: rgba(255,255,255,0.12);
+  color: var(--white);
+  border-bottom-left-radius: 4px;
+}
+
+.from-user .chat-bubble {
+  background: var(--sand);
+  color: var(--deep-blue);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-input-area {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.chat-input-area input {
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2rem;
+  padding: 0.625rem 1rem;
+  color: var(--white);
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.chat-input-area input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.chat-send-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--sand);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--deep-blue);
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+
+.chat-send-btn:hover {
+  transform: scale(1.1);
+}
+
+.widget-notice {
+  text-align: center;
+  padding: 0.75rem 1.25rem 1rem;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ===== RE100 ===== */
+.re100 {
+  background: linear-gradient(to right, rgba(245, 230, 200, 0.3), rgba(245, 230, 200, 0.1));
+  border-top: 1px solid rgba(26, 74, 107, 0.1);
+  border-bottom: 1px solid rgba(26, 74, 107, 0.1);
+  padding: 3rem 2rem;
+}
+
+.re100-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.re100-badge {
+  background: var(--forest-green);
+  color: var(--white);
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.re100-text {
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.re100-text strong {
+  color: var(--forest-green);
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: var(--ocean-blue);
+  color: rgba(255,255,255,0.7);
+  padding: 3rem 2rem;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 600px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .site-nav {
+    display: none;
+  }
+}
+
+.footer-logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.footer-logo span {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.75rem;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-right p {
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.footer-right a {
+  color: var(--sand);
+  text-decoration: none;
+  font-size: 0.8rem;
+}
