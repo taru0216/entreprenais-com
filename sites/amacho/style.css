@@ -611,3 +611,15 @@ section {
   text-decoration: none;
   font-size: 0.8rem;
 }
+
+/* ===== DEMO DISCLAIMER ===== */
+.demo-disclaimer {
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: center;
+  padding: 10px 16px;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
