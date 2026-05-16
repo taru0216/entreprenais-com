@@ -513,7 +513,7 @@ section {
   color: rgba(255,255,255,0.4);
 }
 
-/* ===== RE100 ===== */
+/* ===== 再エネ100%稼働 ===== */
 .re100 {
   background: linear-gradient(to right, rgba(245, 230, 200, 0.3), rgba(245, 230, 200, 0.1));
   border-top: 1px solid rgba(26, 74, 107, 0.1);
