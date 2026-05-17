@@ -21,7 +21,9 @@ COPY sites/ /srv/sites/
 # sites/ 配下に代行開発した暫定公開サイトを配置（#17 島田クレープ等）
 COPY data/ /srv/data/
 COPY news/ /srv/news/
-COPY scripts/ /srv/scripts/
+
+# feed.xml は GitHub Actions で事前生成されたファイルをコピー
+COPY feed.xml /srv/feed.xml
 
 # SEO assets (#13)
 COPY robots.txt /srv/robots.txt
@@ -32,10 +34,6 @@ COPY favicon.svg /srv/favicon.svg
 COPY favicon-16.png /srv/favicon-16.png
 COPY favicon-32.png /srv/favicon-32.png
 COPY apple-touch-icon.png /srv/apple-touch-icon.png
-
-# news.json を SSoT として feed.xml を自動生成（静的 feed.xml は廃止）
-RUN apk add --no-cache python3 && \
-    python3 /srv/scripts/gen-feed.py > /srv/feed.xml
 
 EXPOSE 8080
 
