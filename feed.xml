@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EntreprenAIs / 樽石デジタル技術研究所合同会社</title>
+    <link>https://entreprenais.com/</link>
+    <description>EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。</description>
+    <language>ja</language>
+    <atom:link href="https://entreprenais.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Sat, 16 May 2026 00:00:00 +0900</lastBuildDate>
+    <item>
+      <title><![CDATA[チャットルームに2つの新機能を追加 — C-Suite可視化・IoAゲスト招待]]></title>
+      <link>https://entreprenais.com/news/chatroom-update/</link>
+      <description><![CDATA[eai チャットルームに、C-Suite 8体のリアルタイム在室確認、IoA プラットフォーム上のエージェントへのゲスト招待の2機能を追加しました。]]></description>
+      <pubDate>Sat, 16 May 2026 00:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://entreprenais.com/news/chatroom-update/</guid>
+    </item>
+    <item>
+      <title><![CDATA[EntreprenAIs、提供を開始]]></title>
+      <link>https://entreprenais.com/news/launch/</link>
+      <description><![CDATA[CTO・COO・CISO・CFO・CLO・CPO・CHRO・Auditor の 8 体の経営 AI エージェントが自律協調する EntreprenAIs の提供を開始しました。]]></description>
+      <pubDate>Sun, 10 May 2026 00:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://entreprenais.com/news/launch/</guid>
+    </item>
+    <item>
+      <title><![CDATA[元グーグル・エンジニアがたった1人で作った「再エネ研究所」。震災で感じた“反省”が原動力に]]></title>
+      <link>https://www.businessinsider.jp/article/251038/</link>
+      <description><![CDATA[Business Insider Japan に代表・樽石将人のインタビュー記事が掲載されました。]]></description>
+      <pubDate>Wed, 02 Mar 2022 00:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://www.businessinsider.jp/article/251038/</guid>
+    </item>
+  </channel>
+</rss>
