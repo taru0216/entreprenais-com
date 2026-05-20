@@ -1,0 +1,5 @@
+{
+  "defaultLocale": "ja",
+  "locales": ["ja", "en", "zh"],
+  "translatorAgent": "# TODO: GHA + eai translator agent"
+}
