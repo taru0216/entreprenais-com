@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>murmure cafe et table — 新宿三丁目</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep-slate: #3B4A5A;
+      --muted-blue: #6B8FA8;
+      --warm-beige: #F7F3EE;
+      --light-sand: #EDE8DF;
+      --text-dark: #1C2530;
+      --text-mid: #4A5568;
+      --text-light: #7A8BA0;
+      --accent: #9B7D5A;
+      --accent-warm: #C4956A;
+      --wine: #7B3F5E;
+    }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--warm-beige);
+      color: var(--text-dark);
+      line-height: 1.7;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--deep-slate);
+      color: #fff;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+
+    .logo-sub {
+      font-size: 0.68rem;
+      opacity: 0.75;
+      letter-spacing: 0.14em;
+      margin-top: 0.1rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #fff; text-decoration: underline; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+      font-style: italic;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      opacity: 0.92;
+      margin-bottom: 1.6rem;
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 0.35rem 1.2rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== PHOTO STRIP ===== */
+    .photo-strip {
+      background: var(--deep-slate);
+      overflow: hidden;
+    }
+
+    .photo-strip-inner {
+      display: flex;
+      height: 200px;
+    }
+
+    .photo-strip-inner img {
+      flex: 1;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: filter 0.3s, flex 0.3s;
+    }
+
+    .photo-strip-inner img:hover {
+      filter: brightness(1);
+      flex: 2;
+    }
+
+    /* ===== INFO BAR ===== */
+    .info-bar {
+      background: var(--light-sand);
+      border-top: 3px solid var(--accent-warm);
+    }
+
+    .info-bar section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-card {
+      text-align: center;
+    }
+
+    .info-card .ic-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+    .info-card .ic-label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+    .info-card .ic-value {
+      font-size: 0.92rem;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--deep-slate);
+      border-left: 5px solid var(--accent-warm);
+      padding-left: 0.75rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .section-subtitle {
+      font-size: 0.93rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    /* ===== MENU GRID ===== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .menu-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(59,74,90,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(59,74,90,0.18);
+    }
+
+    .menu-card-img {
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .menu-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .menu-card:hover .menu-card-img img {
+      transform: scale(1.05);
+    }
+
+    .menu-card-img-emoji {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: linear-gradient(135deg, var(--light-sand), #e0d5c8);
+    }
+
+    .menu-card-body { padding: 1rem 1.1rem 1.2rem; }
+
+    .menu-card-name {
+      font-size: 0.98rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .menu-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .menu-card-price {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--wine);
+    }
+
+    .badge-osusume {
+      display: inline-block;
+      background: var(--wine);
+      color: #fff;
+      font-size: 0.68rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    /* ===== COURSE SECTION ===== */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .course-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(59,74,90,0.1);
+      border-top: 4px solid var(--muted-blue);
+      text-align: center;
+    }
+
+    .course-card h3 {
+      font-size: 1rem;
+      color: var(--deep-slate);
+      margin-bottom: 0.5rem;
+    }
+
+    .course-card .course-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--wine);
+      margin: 0.5rem 0;
+    }
+
+    .course-card p {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-bg { background: var(--light-sand); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero-content h1 { font-size: 2rem; }
+      nav { display: none; }
+      .hero { height: 380px; }
+      .hero-bg { grid-template-columns: 1fr; }
+      .hero-bg img:not(:first-child) { display: none; }
+    }
+
+    .about-text p {
+      color: var(--text-mid);
+      margin-bottom: 1rem;
+      font-size: 0.93rem;
+    }
+
+    .about-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .about-photos img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      aspect-ratio: 1;
+      box-shadow: 0 4px 12px rgba(59,74,90,0.15);
+    }
+
+    .about-photos img.wide {
+      grid-column: span 2;
+      aspect-ratio: 2 / 1;
+    }
+
+    .about-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .about-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.92rem;
+      color: var(--text-mid);
+    }
+
+    .feat-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ===== ATMOSPHERE GALLERY ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(59,74,90,0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 16px rgba(59,74,90,0.22);
+    }
+
+    /* ===== ACCESS ===== */
+    .access-bg { background: var(--deep-slate); color: #fff; }
+
+    .access-bg .section-title {
+      color: #fff;
+      border-left-color: var(--accent-warm);
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .access-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .access-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .access-table th, .access-table td {
+      padding: 0.7rem 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .access-table th {
+      color: var(--muted-blue);
+      font-weight: normal;
+      white-space: nowrap;
+      width: 32%;
+    }
+
+    .access-table td { color: rgba(255,255,255,0.88); }
+
+    .map-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.55rem 1.4rem;
+      background: var(--accent-warm);
+      color: #fff;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+
+    .map-link:hover { background: var(--accent); }
+
+    .access-photo {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #141c26;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    .divider { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 0; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo-text">murmure cafe et table</div>
+      <div class="logo-sub">CAFE · ITALIAN · WINE BAR — SHINJUKU</div>
+    </div>
+    <nav>
+      <a href="#menu">メニュー</a>
+      <a href="#about">お店について</a>
+      <a href="#gallery">ギャラリー</a>
+      <a href="#access">アクセス</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <img src="images/interior.jpg" alt="店内の様子">
+    <img src="images/wine-tart.jpg" alt="ワインとタルト">
+    <img src="images/img2.jpg" alt="料理">
+  </div>
+  <div class="hero-content">
+    <h1>murmure</h1>
+    <p class="hero-tagline">新宿三丁目駅 1分。ソムリエ厳選のナチュラルワインと、こだわりのカフェ＆イタリアン。</p>
+    <div class="hero-badges">
+      <span class="hero-badge">ランチ ¥1,000〜</span>
+      <span class="hero-badge">ディナー ¥4,000〜</span>
+      <span class="hero-badge">全席禁煙</span>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="photo-strip-inner">
+    <img src="images/tart.jpg" alt="デリタルト">
+    <img src="images/sparkling.jpg" alt="スパークリングワイン">
+    <img src="images/food1.jpg" alt="料理">
+    <img src="images/glass.jpg" alt="グラス">
+    <img src="images/cutlery.jpg" alt="カトラリー">
+  </div>
+</div>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+  <section>
+    <div class="info-card">
+      <div class="ic-icon">🕐</div>
+      <div class="ic-label">営業時間</div>
+      <div class="ic-value">12:00 〜 22:00</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon">📅</div>
+      <div class="ic-label">定休日</div>
+      <div class="ic-value">火曜日</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon">🪑</div>
+      <div class="ic-label">席数</div>
+      <div class="ic-value">26席</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon">🍷</div>
+      <div class="ic-label">ディナー予算</div>
+      <div class="ic-value">¥4,000〜¥4,999</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon">🚇</div>
+      <div class="ic-label">最寄り駅</div>
+      <div class="ic-value">新宿三丁目 徒歩1分</div>
+    </div>
+  </section>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <h2 class="section-title">メニュー</h2>
+  <p class="section-subtitle">スペシャリティコーヒー、こだわりのタルト、そしてソムリエ厳選のナチュラルワインをお楽しみください。</p>
+  <div class="menu-grid">
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/tart.jpg" alt="デリタルト">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">デリタルト<span class="badge-osusume">人気</span></div>
+        <div class="menu-card-desc">日替わりのこだわりタルト。スペシャリティコーヒーとの相性を追求した一品。</div>
+        <div class="menu-card-price">¥ 1,078</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/sparkling.jpg" alt="スパークリングワイン">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">スパークリングワイン<span class="badge-osusume">おすすめ</span></div>
+        <div class="menu-card-desc">ソムリエが厳選したナチュラルスパークリング。爽やかな泡で乾杯を。</div>
+        <div class="menu-card-price">¥ 1,100</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/wine-tart.jpg" alt="ワインとタルトのセット">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">ワイン × タルト ペアリング</div>
+        <div class="menu-card-desc">スパークリングワインとデリタルトの絶妙なペアリングセット。</div>
+        <div class="menu-card-price">¥ 2,178</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/food1.jpg" alt="料理">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">前菜 / パスタ / 肉料理</div>
+        <div class="menu-card-desc">ワインに寄り添うイタリアンを中心とした逸品料理を気軽にお楽しみいただけます。</div>
+        <div class="menu-card-price">各種 時価</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img-emoji">☕</div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">オーガニックスペシャリティコーヒー</div>
+        <div class="menu-card-desc">オーガニック豆を使用したスペシャリティコーヒー。タルトとの相性を追求しています。</div>
+        <div class="menu-card-price">ランチ帯よりご提供</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/glass.jpg" alt="ドリンク">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">自然派ワイン（グラス）</div>
+        <div class="menu-card-desc">併設ショップから選べるナチュラルワイン。ソムリエオーナーが一本一本厳選。</div>
+        <div class="menu-card-price">グラス ¥900〜</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COURSE -->
+  <h3 class="section-title" style="margin-top: 3rem;">コース料理</h3>
+  <p class="section-subtitle">4名〜8名でのご利用に。ドリンク付きでゆったりとお楽しみください。</p>
+  <div class="course-grid">
+    <div class="course-card">
+      <h3>2時間コース</h3>
+      <div class="course-price">¥ 5,000</div>
+      <p>4〜8名 / ドリンク4杯付<br>前菜〜デザートまで</p>
+    </div>
+    <div class="course-card">
+      <h3>飲み放題付き 2時間コース</h3>
+      <div class="course-price">¥ 6,000</div>
+      <p>ナチュラルワイン含む<br>飲み放題プラン</p>
+    </div>
+    <div class="course-card">
+      <h3>飲み放題付き 2.5時間コース</h3>
+      <div class="course-price">¥ 6,500</div>
+      <p>ゆったり 2時間30分<br>飲み放題プレミアム</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<div class="about-bg">
+  <section id="about">
+    <h2 class="section-title">お店について</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>新宿三丁目駅A1出口からわずか徒歩1分。大伸第2ビルの5Fに広がる、北欧風の落ち着いた隠れ家空間です。</p>
+        <p>ソムリエ資格を持つオーナーが厳選した自然派ワインと、オーガニック豆のスペシャリティコーヒー。昼間はこだわりのタルトとともにゆったりとしたカフェ時間を、夜はワインに合う逸品料理とともに大人のダイニング時間をお楽しみいただけます。</p>
+        <p>「murmure（ミュルミュール）」はフランス語で「ささやき、さざめき」を意味します。日常の喧騒を忘れ、静かに流れる時間の中で、大切な人とのひとときをお過ごしください。</p>
+        <ul class="about-features">
+          <li><span class="feat-icon">🍷</span><div>ソムリエオーナー厳選の自然派ワイン。併設ショップから直接グラスでお楽しみいただけます。</div></li>
+          <li><span class="feat-icon">☕</span><div>オーガニック豆を使用したスペシャリティコーヒー。タルトとのマリアージュを追求しています。</div></li>
+          <li><span class="feat-icon">🪴</span><div>北欧風の家具が並ぶベージュ基調の空間。落ち着いた雰囲気で、特別な時間をご提供します。</div></li>
+          <li><span class="feat-icon">🚭</span><div>全席禁煙。清潔で快適な環境でお食事をお楽しみいただけます。</div></li>
+        </ul>
+      </div>
+      <div class="about-photos">
+        <img src="images/interior.jpg" alt="店内の様子" class="wide">
+        <img src="images/img1.jpg" alt="店内・料理">
+        <img src="images/img3.jpg" alt="雰囲気">
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr class="divider">
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h2 class="section-title">ギャラリー</h2>
+  <p class="section-subtitle">店内の雰囲気と料理・ドリンクをご覧ください。</p>
+  <div class="gallery-grid">
+    <img src="images/img1.jpg" alt="murmure の雰囲気 1">
+    <img src="images/img2.jpg" alt="murmure の料理">
+    <img src="images/img3.jpg" alt="murmure の雰囲気 2">
+    <img src="images/tart.jpg" alt="デリタルト">
+    <img src="images/wine-tart.jpg" alt="ワインとタルト">
+    <img src="images/sparkling.jpg" alt="スパークリングワイン">
+    <img src="images/food1.jpg" alt="料理">
+    <img src="images/glass.jpg" alt="ドリンク">
+    <img src="images/cutlery.jpg" alt="テーブルセッティング">
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ACCESS -->
+<div class="access-bg">
+  <section id="access">
+    <h2 class="section-title">アクセス・営業情報</h2>
+    <div class="access-grid">
+      <table class="access-table">
+        <tr>
+          <th>店名</th>
+          <td>murmure cafe et table</td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <td>カフェ / イタリアン / ワインバー</td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td>東京都新宿区新宿3-31-1<br>大伸第2ビル 5F</td>
+        </tr>
+        <tr>
+          <th>最寄り駅</th>
+          <td>新宿三丁目駅 A1出口より徒歩1分</td>
+        </tr>
+        <tr>
+          <th>営業時間</th>
+          <td>12:00〜22:00<br><small style="color:var(--muted-blue)">L.O. 料理21:00 / ドリンク21:30</small></td>
+        </tr>
+        <tr>
+          <th>定休日</th>
+          <td>火曜日</td>
+        </tr>
+        <tr>
+          <th>席数</th>
+          <td>26席（最大予約12名）</td>
+        </tr>
+        <tr>
+          <th>予算目安</th>
+          <td>ランチ ¥1,000〜¥1,999<br>ディナー ¥4,000〜¥4,999</td>
+        </tr>
+        <tr>
+          <th>喫煙</th>
+          <td>全席禁煙</td>
+        </tr>
+        <tr>
+          <th>駐車場</th>
+          <td>なし</td>
+        </tr>
+        <tr>
+          <th>電話</th>
+          <td>03-6273-2876</td>
+        </tr>
+      </table>
+      <div>
+        <img src="images/interior.jpg" alt="店内の様子" class="access-photo" style="margin-bottom:1.2rem;">
+        <a
+          href="https://maps.google.com/?q=東京都新宿区新宿3-31-1+大伸第2ビル+5F"
+          target="_blank"
+          rel="noopener"
+          class="map-link"
+        >Google Map で開く</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:0.4rem; font-style:italic; font-size:1rem; color:rgba(255,255,255,0.8);">murmure cafe et table</p>
+  <p>&copy; 2026 murmure cafe et table — 新宿三丁目の隠れ家カフェダイニング</p>
+  <p style="margin-top:0.4rem;"><a href="https://tabelog.com/tokyo/A1304/A130401/13319225/" target="_blank" rel="noopener">食べログページ</a></p>
+</footer>
+
+</body>
+</html>
