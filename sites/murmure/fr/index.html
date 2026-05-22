@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>murmure cafe et table — Shinjuku-Sanchome</title>
+  <meta name="description" content="murmure cafe et table — à 1 minute de la gare Shinjuku-Sanchome. Vins naturels sélectionnés par un sommelier, café de spécialité &amp; cuisine italienne." />
+  <link rel="canonical" href="https://entreprenais.com/sites/murmure/fr/" />
+
+  <link rel="alternate" hreflang="ja" href="../" />
+  <link rel="alternate" hreflang="en" href="../en/" />
+  <link rel="alternate" hreflang="zh" href="../zh/" />
+  <link rel="alternate" hreflang="ko" href="../ko/" />
+  <link rel="alternate" hreflang="zh-TW" href="../zh-TW/" />
+  <link rel="alternate" hreflang="th" href="../th/" />
+  <link rel="alternate" hreflang="vi" href="../vi/" />
+  <link rel="alternate" hreflang="fr" href="./" />
+  <link rel="alternate" hreflang="x-default" href="../" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --deep-slate: #3B4A5A; --muted-blue: #6B8FA8; --warm-beige: #F7F3EE;
+      --light-sand: #EDE8DF; --text-dark: #1C2530; --text-mid: #4A5568;
+      --text-light: #7A8BA0; --accent: #9B7D5A; --accent-warm: #C4956A; --wine: #7B3F5E;
+    }
+    body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; background: var(--warm-beige); color: var(--text-dark); line-height: 1.7; }
+    header { background: var(--deep-slate); color: #fff; padding: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .header-inner { max-width: 960px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-text { font-size: 1.3rem; font-weight: bold; letter-spacing: 0.08em; font-style: italic; }
+    .logo-sub { font-size: 0.68rem; opacity: 0.75; letter-spacing: 0.14em; margin-top: 0.1rem; }
+    .header-right { display: flex; align-items: center; gap: 2rem; }
+    nav { display: flex; gap: 1.5rem; }
+    nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.88rem; letter-spacing: 0.05em; transition: color 0.2s; }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    .lang-dropdown { position: relative; }
+    .lang-dropdown-btn { color: rgba(255,255,255,0.85); font-size: 0.78rem; padding: 0.25rem 0.6rem; border-radius: 4px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .lang-dropdown-btn:hover { color: #fff; background: rgba(255,255,255,0.15); }
+    .lang-dropdown-menu { display: none; position: absolute; right: 0; top: calc(100% + 6px); background: var(--deep-slate); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; min-width: 160px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; overflow: hidden; }
+    .lang-dropdown-menu a { display: block; padding: 0.55rem 1rem; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.82rem; transition: background 0.15s, color 0.15s; }
+    .lang-dropdown-menu a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .lang-dropdown-menu a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.15); font-weight: bold; }
+    .lang-dropdown:hover .lang-dropdown-menu, .lang-dropdown:focus-within .lang-dropdown-menu { display: block; }
+    .hero { position: relative; height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+    .hero-bg { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); }
+    .hero-content { position: relative; z-index: 2; padding: 0 1.5rem; }
+    .hero-content h1 { font-size: 3.2rem; font-weight: bold; letter-spacing: 0.06em; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.5); margin-bottom: 0.4rem; }
+    .hero-tagline { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.6rem; letter-spacing: 0.04em; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .hero-badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; padding: 0.35rem 1.2rem; font-size: 0.82rem; letter-spacing: 0.08em; backdrop-filter: blur(4px); }
+    .photo-strip { background: var(--deep-slate); overflow: hidden; }
+    .photo-strip-inner { display: flex; height: 200px; }
+    .photo-strip-inner img { flex: 1; object-fit: cover; filter: brightness(0.85); transition: filter 0.3s, flex 0.3s; }
+    .photo-strip-inner img:hover { filter: brightness(1); flex: 2; }
+    .info-bar { background: var(--light-sand); border-top: 3px solid var(--accent-warm); }
+    .info-bar section { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; }
+    .info-card { text-align: center; }
+    .info-card .ic-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+    .info-card .ic-label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+    .info-card .ic-value { font-size: 0.92rem; font-weight: bold; color: var(--text-dark); }
+    section { max-width: 960px; margin: 0 auto; padding: 3.5rem 1.5rem; }
+    .section-title { font-size: 1.5rem; color: var(--deep-slate); border-left: 5px solid var(--accent-warm); padding-left: 0.75rem; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+    .section-subtitle { font-size: 0.93rem; color: var(--text-light); margin-bottom: 2rem; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+    .menu-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(59,74,90,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(59,74,90,0.18); }
+    .menu-card-img { height: 160px; overflow: hidden; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .menu-card:hover .menu-card-img img { transform: scale(1.05); }
+    .menu-card-img-emoji { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3rem; background: linear-gradient(135deg, var(--light-sand), #e0d5c8); }
+    .menu-card-body { padding: 1rem 1.1rem 1.2rem; }
+    .menu-card-name { font-size: 0.98rem; font-weight: bold; color: var(--text-dark); margin-bottom: 0.3rem; }
+    .menu-card-desc { font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.6rem; line-height: 1.5; }
+    .menu-card-price { font-size: 1.05rem; font-weight: bold; color: var(--wine); }
+    .badge-popular { display: inline-block; background: var(--wine); color: #fff; font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: 0.4rem; vertical-align: middle; }
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .course-card { background: #fff; border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(59,74,90,0.1); border-top: 4px solid var(--muted-blue); text-align: center; }
+    .course-card h3 { font-size: 1rem; color: var(--deep-slate); margin-bottom: 0.5rem; }
+    .course-card .course-price { font-size: 1.5rem; font-weight: bold; color: var(--wine); margin: 0.5rem 0; }
+    .course-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+    .about-bg { background: var(--light-sand); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } .hero-content h1 { font-size: 2rem; } nav { display: none; } .hero { height: 380px; } .hero-bg { grid-template-columns: 1fr; } .hero-bg img:not(:first-child) { display: none; } }
+    .about-text p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.93rem; }
+    .about-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .about-photos img { width: 100%; border-radius: 10px; object-fit: cover; aspect-ratio: 1; box-shadow: 0 4px 12px rgba(59,74,90,0.15); }
+    .about-photos img.wide { grid-column: span 2; aspect-ratio: 2 / 1; }
+    .about-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .about-features li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; color: var(--text-mid); }
+    .feat-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(59,74,90,0.12); transition: transform 0.2s, box-shadow 0.2s; }
+    .gallery-grid img:hover { transform: scale(1.03); box-shadow: 0 6px 16px rgba(59,74,90,0.22); }
+    .access-bg { background: var(--deep-slate); color: #fff; }
+    .access-bg .section-title { color: #fff; border-left-color: var(--accent-warm); }
+    .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 640px) { .access-grid { grid-template-columns: 1fr; } .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    .access-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .access-table th, .access-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left; vertical-align: top; }
+    .access-table th { color: var(--muted-blue); font-weight: normal; white-space: nowrap; width: 32%; }
+    .access-table td { color: rgba(255,255,255,0.88); }
+    .map-link { display: inline-block; margin-top: 1rem; padding: 0.55rem 1.4rem; background: var(--accent-warm); color: #fff; border-radius: 999px; text-decoration: none; font-size: 0.85rem; letter-spacing: 0.04em; transition: background 0.2s; }
+    .map-link:hover { background: var(--accent); }
+    .access-photo { width: 100%; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+    footer { background: #141c26; color: rgba(255,255,255,0.6); text-align: center; padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.05em; }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .divider { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo-text">murmure cafe et table</div>
+      <div class="logo-sub">CAFE · ITALIAN · WINE BAR — SHINJUKU</div>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="#menu">Menu</a>
+        <a href="#about">À propos</a>
+        <a href="#gallery">Galerie</a>
+        <a href="#access">Accès</a>
+      </nav>
+      <div class="lang-dropdown">
+        <button class="lang-dropdown-btn" aria-haspopup="true">
+          Français ▾
+        </button>
+        <div class="lang-dropdown-menu" role="menu">
+          <a href="../" hreflang="ja" role="menuitem">日本語</a>
+          <a href="../en/" hreflang="en" role="menuitem">English</a>
+          <a href="../zh/" hreflang="zh" role="menuitem">中文（简体）</a>
+          <a href="../ko/" hreflang="ko" role="menuitem">한국어</a>
+          <a href="../zh-TW/" hreflang="zh-TW" role="menuitem">中文（繁體）</a>
+          <a href="../th/" hreflang="th" role="menuitem">ภาษาไทย</a>
+          <a href="../vi/" hreflang="vi" role="menuitem">Tiếng Việt</a>
+          <a href="./" hreflang="fr" aria-current="page" role="menuitem">Français</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-bg">
+    <img src="../images/interior.jpg" alt="Intérieur du restaurant">
+    <img src="../images/wine-tart.jpg" alt="Vin et tarte">
+    <img src="../images/img2.jpg" alt="Cuisine">
+  </div>
+  <div class="hero-content">
+    <h1>murmure</h1>
+    <p class="hero-tagline">À 1 minute à pied de la gare Shinjuku-Sanchome. Vins naturels sélectionnés par un sommelier, café de spécialité &amp; cuisine italienne.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">Déjeuner à partir de ¥1&#8239;000</span>
+      <span class="hero-badge">Dîner à partir de ¥4&#8239;000</span>
+      <span class="hero-badge">Non-fumeur</span>
+    </div>
+  </div>
+</div>
+
+<div class="photo-strip">
+  <div class="photo-strip-inner">
+    <img src="../images/tart.jpg" alt="Tarte du jour">
+    <img src="../images/sparkling.jpg" alt="Vin pétillant">
+    <img src="../images/food1.jpg" alt="Cuisine">
+    <img src="../images/glass.jpg" alt="Verre de vin">
+    <img src="../images/cutlery.jpg" alt="Couverts">
+  </div>
+</div>
+
+<div class="info-bar">
+  <section>
+    <div class="info-card"><div class="ic-icon">🕐</div><div class="ic-label">Horaires</div><div class="ic-value">12:00 – 22:00</div></div>
+    <div class="info-card"><div class="ic-icon">📅</div><div class="ic-label">Fermeture</div><div class="ic-value">Mardi</div></div>
+    <div class="info-card"><div class="ic-icon">🪑</div><div class="ic-label">Couverts</div><div class="ic-value">26 places</div></div>
+    <div class="info-card"><div class="ic-icon">🍷</div><div class="ic-label">Budget dîner</div><div class="ic-value">¥4&#8239;000–¥4&#8239;999</div></div>
+    <div class="info-card"><div class="ic-icon">🚇</div><div class="ic-label">Gare la plus proche</div><div class="ic-value">Shinjuku-Sanchome 1 min</div></div>
+  </section>
+</div>
+
+<section id="menu">
+  <h2 class="section-title">Menu</h2>
+  <p class="section-subtitle">Savourez café de spécialité, tartes artisanales et vins naturels sélectionnés par notre sommelier.</p>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="../images/tart.jpg" alt="Tarte du jour"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Tarte du Jour<span class="badge-popular">Populaire</span></div>
+        <div class="menu-card-desc">Tarte artisanale renouvelée chaque jour, conçue pour accompagner parfaitement le café de spécialité.</div>
+        <div class="menu-card-price">¥ 1&#8239;078</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="../images/sparkling.jpg" alt="Vin pétillant"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Vin Pétillant Naturel<span class="badge-popular">Recommandé</span></div>
+        <div class="menu-card-desc">Pétillant naturel sélectionné par notre sommelier. Des bulles légères pour trinquer avec plaisir.</div>
+        <div class="menu-card-price">¥ 1&#8239;100</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="../images/wine-tart.jpg" alt="Accord vin et tarte"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Accord Vin &times; Tarte</div>
+        <div class="menu-card-desc">Un duo exquis : vin pétillant et tarte du jour en parfaite harmonie.</div>
+        <div class="menu-card-price">¥ 2&#8239;178</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="../images/food1.jpg" alt="Cuisine"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Entrées / Pâtes / Viandes</div>
+        <div class="menu-card-desc">Cuisine d'inspiration italienne pensée pour sublimer nos vins naturels. À déguster à toute heure.</div>
+        <div class="menu-card-price">Prix du marché</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img-emoji">☕</div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Café de Spécialité Biologique</div>
+        <div class="menu-card-desc">Café de spécialité issu de grains biologiques, idéalement accordé avec nos tartes artisanales.</div>
+        <div class="menu-card-price">Disponible dès le déjeuner</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="../images/glass.jpg" alt="Boissons"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Vin Naturel au Verre</div>
+        <div class="menu-card-desc">Vins naturels de notre boutique attenante, choisis un à un par notre propriétaire-sommelier.</div>
+        <div class="menu-card-price">Verre à partir de ¥900</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-title" style="margin-top: 3rem;">Menus Groupe</h3>
+  <p class="section-subtitle">Idéal pour 4 à 8 personnes. Détendez-vous avec boissons incluses.</p>
+  <div class="course-grid">
+    <div class="course-card"><h3>Menu 2 heures</h3><div class="course-price">¥ 5&#8239;000</div><p>4–8 personnes / 4 boissons incluses<br>Entrées jusqu'au dessert</p></div>
+    <div class="course-card"><h3>Menu 2 h avec boissons à volonté</h3><div class="course-price">¥ 6&#8239;000</div><p>Vins naturels compris<br>Formule boissons à volonté</p></div>
+    <div class="course-card"><h3>Menu 2 h 30 avec boissons à volonté</h3><div class="course-price">¥ 6&#8239;500</div><p>2 heures 30 minutes de détente<br>Boissons à volonté premium</p></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<div class="about-bg">
+  <section id="about">
+    <h2 class="section-title">À propos</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>À 1 minute à pied de la sortie A1 de la gare Shinjuku-Sanchome. Niché au 5e étage du Daishin No.2 Building, notre établissement est un refuge discret d'inspiration nordique.</p>
+        <p>Notre propriétaire-sommelier sélectionne chaque vin naturel avec le plus grand soin, servi avec un café de spécialité issu de grains biologiques. Le midi, profitez d'un moment de café paisible accompagné de nos tartes artisanales ; le soir, laissez-vous séduire par une cuisine italienne raffinée accordée à nos vins.</p>
+        <p>« murmure » évoque en français le chuchotement, le léger bruit de l'eau qui s'écoule. Loin du tumulte du quotidien, venez savourer des instants précieux avec ceux qui vous sont chers.</p>
+        <ul class="about-features">
+          <li><span class="feat-icon">🍷</span><div>Vins naturels choisis par notre propriétaire-sommelier, à déguster au verre directement depuis notre boutique attenante.</div></li>
+          <li><span class="feat-icon">☕</span><div>Café de spécialité issu de grains biologiques, en accord parfait avec nos tartes artisanales.</div></li>
+          <li><span class="feat-icon">🪴</span><div>Un intérieur nordique aux tons beige. Une atmosphère sereine pour des moments véritablement uniques.</div></li>
+          <li><span class="feat-icon">🚭</span><div>Entièrement non-fumeur. Profitez de votre repas dans un cadre sain et confortable.</div></li>
+        </ul>
+      </div>
+      <div class="about-photos">
+        <img src="../images/interior.jpg" alt="Intérieur du restaurant" class="wide">
+        <img src="../images/img1.jpg" alt="Salle et cuisine">
+        <img src="../images/img3.jpg" alt="Ambiance">
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr class="divider">
+
+<section id="gallery">
+  <h2 class="section-title">Galerie</h2>
+  <p class="section-subtitle">Découvrez l'atmosphère de notre salle, nos plats et nos boissons.</p>
+  <div class="gallery-grid">
+    <img src="../images/img1.jpg" alt="Ambiance murmure 1">
+    <img src="../images/img2.jpg" alt="Cuisine murmure">
+    <img src="../images/img3.jpg" alt="Ambiance murmure 2">
+    <img src="../images/tart.jpg" alt="Tarte du jour">
+    <img src="../images/wine-tart.jpg" alt="Vin et tarte">
+    <img src="../images/sparkling.jpg" alt="Vin pétillant">
+    <img src="../images/food1.jpg" alt="Cuisine">
+    <img src="../images/glass.jpg" alt="Boissons">
+    <img src="../images/cutlery.jpg" alt="Mise en place">
+  </div>
+</section>
+
+<hr class="divider">
+
+<div class="access-bg">
+  <section id="access">
+    <h2 class="section-title">Accès &amp; Horaires</h2>
+    <div class="access-grid">
+      <table class="access-table">
+        <tr><th>Nom</th><td>murmure cafe et table</td></tr>
+        <tr><th>Genre</th><td>Café / Cuisine italienne / Bar à vins</td></tr>
+        <tr><th>Adresse</th><td>3-31-1 Shinjuku, Shinjuku-ku, Tokyo<br>Daishin No.2 Building 5F</td></tr>
+        <tr><th>Gare la plus proche</th><td>Shinjuku-Sanchome, sortie A1, 1 min à pied</td></tr>
+        <tr><th>Horaires</th><td>12:00–22:00<br><small style="color:var(--muted-blue)">D.C. Cuisine 21:00 / Boissons 21:30</small></td></tr>
+        <tr><th>Fermeture</th><td>Mardi</td></tr>
+        <tr><th>Couverts</th><td>26 places (réservation max. 12 personnes)</td></tr>
+        <tr><th>Budget</th><td>Déjeuner ¥1&#8239;000–¥1&#8239;999<br>Dîner ¥4&#8239;000–¥4&#8239;999</td></tr>
+        <tr><th>Tabac</th><td>Non-fumeur (tous les sièges)</td></tr>
+        <tr><th>Parking</th><td>Aucun</td></tr>
+        <tr><th>Téléphone</th><td>03-6273-2876</td></tr>
+      </table>
+      <div>
+        <img src="../images/interior.jpg" alt="Intérieur du restaurant" class="access-photo" style="margin-bottom:1.2rem;">
+        <a href="https://maps.google.com/?q=3-31-1+Shinjuku,+Shinjuku-ku,+Tokyo+Daishin+No.2+Building+5F" target="_blank" rel="noopener" class="map-link">Ouvrir dans Google Maps</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p style="margin-bottom:0.4rem; font-style:italic; font-size:1rem; color:rgba(255,255,255,0.8);">murmure cafe et table</p>
+  <p>&copy; 2026 murmure cafe et table — Café-restaurant discret à Shinjuku-Sanchome</p>
+  <p style="margin-top:0.4rem;"><a href="https://tabelog.com/tokyo/A1304/A130401/13319225/" target="_blank" rel="noopener">Page Tabelog</a></p>
+</footer>
+
+</body>
+</html>
