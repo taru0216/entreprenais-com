@@ -53,12 +53,12 @@
     <!-- HERO -->
     <section class="fleet__hero smo__hero">
       <div class="fleet__hero-inner">
-        <p class="fleet__eyebrow">EntreprenAIs — Strategic Management Office</p>
-        <h1 class="fleet__hero-title">
+        <p class="fleet__eyebrow smo-reveal">EntreprenAIs — Strategic Management Office</p>
+        <h1 class="smo__hero-title smo-reveal">
           戦略に革新を
         </h1>
-        <p class="smo__hero-sub">〜 経営を変える、8体のエージェントチーム 〜</p>
-        <div class="fleet__hero-cta">
+        <p class="smo__hero-sub smo-reveal">〜 経営を変える、8体のエージェントチーム 〜</p>
+        <div class="fleet__hero-cta smo-reveal">
           <a class="btn btn--primary" href="/#contact">お問い合わせ &rarr;</a>
           <a class="btn btn--ghost" href="/">ホームを見る &rarr;</a>
         </div>
@@ -68,29 +68,50 @@
     <!-- PROBLEM -->
     <section class="fleet__section smo__section--problem" id="problem">
       <div class="fleet__inner">
-        <p class="section__num">01 / Problem</p>
-        <h2 class="section__title">なぜ、戦略は思い通りにならないのか</h2>
+        <p class="section__num smo-reveal">01 / Problem</p>
+        <h2 class="section__title smo-reveal">なぜ、戦略は思い通りにならないのか</h2>
 
         <div class="smo__problem-grid">
 
-          <article class="smo__problem-card reveal">
-            <div class="smo__problem-icon" aria-hidden="true">&#x23F1;</div>
+          <article class="smo__problem-card smo-reveal" data-smo-delay="0">
+            <div class="smo__problem-icon" aria-hidden="true">
+              <!-- 時計 / 速度 -->
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                <circle cx="18" cy="19" r="12" stroke="currentColor" stroke-width="2"/>
+                <path d="M18 13v6l4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3 class="smo__problem-title">「情報が揃う頃には、世界が変わっている。」</h3>
             <p class="smo__problem-body">
               市場調査・競合分析——必要なデータが届く頃には、判断のタイミングを逃している。
             </p>
           </article>
 
-          <article class="smo__problem-card reveal">
-            <div class="smo__problem-icon" aria-hidden="true">&#x1F4E1;</div>
+          <article class="smo__problem-card smo-reveal" data-smo-delay="110">
+            <div class="smo__problem-icon" aria-hidden="true">
+              <!-- ギャップ / 断絶 -->
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                <path d="M5 11h10l3 7H5V11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M31 25H21l-3-7h13v7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M15 14.5h6M15 21.5h6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3 class="smo__problem-title">「決めたことが、届く頃には変わっている。」</h3>
             <p class="smo__problem-body">
               戦略と現場の間に距離があるほど、実行されるものは意図から離れていく。
             </p>
           </article>
 
-          <article class="smo__problem-card reveal">
-            <div class="smo__problem-icon" aria-hidden="true">&#x2696;&#xFE0F;</div>
+          <article class="smo__problem-card smo-reveal" data-smo-delay="220">
+            <div class="smo__problem-icon" aria-hidden="true">
+              <!-- ブロック / 待機 -->
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                <rect x="5" y="14" width="26" height="14" rx="3" stroke="currentColor" stroke-width="2"/>
+                <path d="M11 14V10a7 7 0 0 1 14 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="18" cy="21" r="2" fill="currentColor"/>
+              </svg>
+            </div>
             <h3 class="smo__problem-title">「法務・財務の確認が、意思決定を止める。」</h3>
             <p class="smo__problem-body">
               「弁護士に確認します」「CFOの承認を取ります」——その往復が、スピードを奪う。
@@ -104,15 +125,15 @@
     <!-- SOLUTION -->
     <section class="fleet__section fleet__section--dark smo__section--solution" id="solution">
       <div class="fleet__inner">
-        <p class="section__num">02 / Solution</p>
-        <h2 class="section__title">EntreprenAIs は、この3つを同時に解決します。</h2>
+        <p class="section__num smo-reveal">02 / Solution</p>
+        <h2 class="section__title smo-reveal">EntreprenAIs は、この3つを同時に解決します。</h2>
 
-        <p class="smo__solution-lead reveal">
+        <p class="smo__solution-lead smo-reveal">
           8体のエージェントチームが、戦略のブレストをしながら市場調査・法務確認・財務試算を並列実行。<br />
           <strong>意思決定が終わった瞬間に、実行が始まっている。</strong>
         </p>
 
-        <div class="smo__solution-flow reveal">
+        <div class="smo__solution-flow smo-reveal">
           <div class="smo__flow-item">
             <div class="smo__flow-step">01</div>
             <p class="smo__flow-label">ブレスト</p>
@@ -139,66 +160,119 @@
     <!-- C-SUITE FLEET -->
     <section class="fleet__section" id="fleet">
       <div class="fleet__inner">
-        <p class="section__num">03 / C-Suite Fleet</p>
-        <h2 class="section__title">8体の経営エージェント</h2>
-        <p class="smo__fleet-lead">
+        <p class="section__num smo-reveal">03 / C-Suite Fleet</p>
+        <h2 class="section__title smo-reveal">8体の経営エージェント</h2>
+        <p class="smo__fleet-lead smo-reveal">
           CTO・COO・CFO・CPO・CLO・CISO・CHRO・Auditor が揃う C-Suite Agent Fleet。<br />
           経営の専門知識を AI が分担し、人間は意思決定に集中できます。
         </p>
 
         <div class="fleet__grid">
 
-          <article class="fleet__card reveal" data-role="cto">
-            <div class="fleet__avatar fleet__avatar--cto" aria-hidden="true">CT</div>
+          <article class="fleet__card smo-reveal" data-role="cto">
+            <div class="smo__agent-icon smo__agent-icon--cto" aria-hidden="true">
+              <!-- 歯車 / 技術 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <circle cx="13" cy="13" r="3.5" stroke="white" stroke-width="1.8"/>
+                <path d="M13 4v2M13 20v2M4 13h2M20 13h2M6.34 6.34l1.42 1.42M18.24 18.24l1.42 1.42M6.34 19.66l1.42-1.42M18.24 7.76l1.42-1.42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-cto</p>
             <p class="fleet__role">Chief Technology Officer</p>
             <p class="fleet__bio">技術基盤と自動化で、経営の実行速度を支えるエージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="coo">
-            <div class="fleet__avatar fleet__avatar--coo" aria-hidden="true">CO</div>
+          <article class="fleet__card smo-reveal" data-role="coo">
+            <div class="smo__agent-icon smo__agent-icon--coo" aria-hidden="true">
+              <!-- フロー / 調整 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <rect x="3" y="10" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.8"/>
+                <rect x="17" y="5" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.8"/>
+                <rect x="17" y="15" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.8"/>
+                <path d="M9 13h4M13 8h4M13 18h4M13 8v10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-coo</p>
             <p class="fleet__role">Chief Operating Officer</p>
             <p class="fleet__bio">Fleet のチームリーダー。タスクを分解し、各エージェントに配分する。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="cfo">
-            <div class="fleet__avatar fleet__avatar--cfo" aria-hidden="true">CF</div>
+          <article class="fleet__card smo-reveal" data-role="cfo">
+            <div class="smo__agent-icon smo__agent-icon--cfo" aria-hidden="true">
+              <!-- グラフ / 財務 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M4 20h18" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M7 20v-6M11 20v-10M15 20v-7M19 20v-13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-cfo</p>
             <p class="fleet__role">Chief Financial Officer</p>
             <p class="fleet__bio">財務・会計データを分析し、経営判断を数字で支える情報整理エージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="cpo">
-            <div class="fleet__avatar fleet__avatar--cpo" aria-hidden="true">CP</div>
+          <article class="fleet__card smo-reveal" data-role="cpo">
+            <div class="smo__agent-icon smo__agent-icon--cpo" aria-hidden="true">
+              <!-- ひし形 / プロダクト -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M13 4L22 13L13 22L4 13L13 4Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M13 9v8M9 13h8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-cpo</p>
             <p class="fleet__role">Chief Product Officer</p>
             <p class="fleet__bio">サービス・プロダクト戦略を描き、ロードマップに落とすエージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="clo">
-            <div class="fleet__avatar fleet__avatar--clo" aria-hidden="true">CL</div>
+          <article class="fleet__card smo-reveal" data-role="clo">
+            <div class="smo__agent-icon smo__agent-icon--clo" aria-hidden="true">
+              <!-- 天秤 / 法務 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M13 4v18M8 22h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M13 6l-7 4 3 6H7c0 2.2 2.7 4 6 4s6-1.8 6-4h-2l3-6-7-4Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-clo</p>
             <p class="fleet__role">Chief Legal Officer</p>
             <p class="fleet__bio">法務・コンプライアンスの観点から経営判断を支える情報提供エージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="ciso">
-            <div class="fleet__avatar fleet__avatar--ciso" aria-hidden="true">CI</div>
+          <article class="fleet__card smo-reveal" data-role="ciso">
+            <div class="smo__agent-icon smo__agent-icon--ciso" aria-hidden="true">
+              <!-- 盾 / セキュリティ -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M13 3L5 7v7c0 5 3.5 8.7 8 10 4.5-1.3 8-5 8-10V7L13 3Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M9.5 13l2.5 2.5 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-ciso</p>
             <p class="fleet__role">Chief Information Security Officer</p>
             <p class="fleet__bio">セキュリティリスクを統括し、安全な自律実行を支援するエージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="chro">
-            <div class="fleet__avatar fleet__avatar--chro" aria-hidden="true">CH</div>
+          <article class="fleet__card smo-reveal" data-role="chro">
+            <div class="smo__agent-icon smo__agent-icon--chro" aria-hidden="true">
+              <!-- チーム / 人 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <circle cx="13" cy="8" r="3" stroke="white" stroke-width="1.8"/>
+                <path d="M6 22c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="20" cy="9" r="2" stroke="white" stroke-width="1.5"/>
+                <path d="M20 15c2.21 0 4 1.79 4 4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-chro</p>
             <p class="fleet__role">Chief Human Resources Officer</p>
             <p class="fleet__bio">エージェント自身を「人材」と見立て、Fleet 全体のパフォーマンスを高めるエージェント。</p>
           </article>
 
-          <article class="fleet__card reveal" data-role="auditor">
-            <div class="fleet__avatar fleet__avatar--auditor" aria-hidden="true">AU</div>
+          <article class="fleet__card smo-reveal" data-role="auditor">
+            <div class="smo__agent-icon smo__agent-icon--auditor" aria-hidden="true">
+              <!-- チェックリスト / 監査 -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <rect x="5" y="3" width="16" height="20" rx="2" stroke="white" stroke-width="1.8"/>
+                <path d="M9 9h8M9 13h8M9 17h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M9 9l0 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
             <p class="fleet__name">eai-auditor</p>
             <p class="fleet__role">Auditor（監査役）</p>
             <p class="fleet__bio">C-Suite から独立し、Fleet Commander に直接報告する独立監査エージェント。</p>
@@ -211,10 +285,10 @@
     <!-- PROOF -->
     <section class="fleet__section smo__section--proof" id="proof">
       <div class="fleet__inner">
-        <p class="section__num">04 / Proof</p>
-        <h2 class="section__title">実績</h2>
+        <p class="section__num smo-reveal">04 / Proof</p>
+        <h2 class="section__title smo-reveal">実績</h2>
 
-        <blockquote class="smo__proof-quote reveal">
+        <blockquote class="smo__proof-quote smo-reveal">
           <p class="smo__proof-text">
             「市場調査から企画書まで、<strong class="smo__proof-accent">45分</strong>。<br />
             従来なら数ヶ月。」
@@ -225,7 +299,7 @@
           </footer>
         </blockquote>
 
-        <div class="smo__metrics reveal">
+        <div class="smo__metrics smo-reveal">
           <div class="smo__metric">
             <span class="smo__metric-num">45<span class="smo__metric-unit">分</span></span>
             <span class="smo__metric-label">市場調査 → 企画書</span>
@@ -245,10 +319,10 @@
     <!-- CTA -->
     <section class="fleet__section fleet__section--dark smo__section--cta" id="cta">
       <div class="fleet__inner">
-        <div class="smo__cta-inner reveal">
+        <div class="smo__cta-inner smo-reveal">
           <h2 class="smo__cta-title">今日の戦略を、今日実行する。</h2>
           <p class="smo__cta-lead">
-            EntreprenAIs C-Suite Fleet が、あなたの戦略を即日形にします。
+            EntreprenAIs が、あなたの経営チームになります。
           </p>
           <div class="smo__cta-actions">
             <a class="btn btn--primary" href="/#contact">お問い合わせ &rarr;</a>
@@ -286,5 +360,6 @@
   </footer>
 
   <script src="/main.js" defer></script>
+  <script src="/tmp/smo/smo.js" defer></script>
 </body>
 </html>
