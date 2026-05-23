@@ -1,0 +1,8 @@
+{
+  "// comment": "このファイルは .claude/settings.local.json のサンプルです。",
+  "// comment2": "クローン環境ごとに異なる設定（環境変数など）を .claude/settings.local.json にコピーして設定してください。",
+  "// comment3": ".claude/settings.local.json は .gitignore に登録されており Git には追跡されません。",
+  "env": {
+    "// ANTHROPIC_API_KEY": "sk-ant-your-api-key-here"
+  }
+}
