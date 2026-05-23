@@ -14,6 +14,17 @@
   padding-bottom: 6rem;
 }
 
+/* SMO Hero タイトル — fleet__hero-title より大きく印象的に */
+.smo__hero-title {
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0.5rem 0 1.2rem;
+}
+
 .smo__hero-sub {
   font-family: var(--jp);
   font-size: clamp(1rem, 1.8vw, 1.25rem);
@@ -56,7 +67,11 @@
 .smo__problem-icon {
   font-size: 2rem;
   line-height: 1;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--accent-bright);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .smo__problem-title {
@@ -331,7 +346,7 @@
    ============================================================ */
 
 /* ============================================================
-   reveal アニメーション無効化
+   reveal アニメーション無効化（style.css .reveal との競合回避）
    main.js の IntersectionObserver は .reveal を監視対象に含めていないため
    style.css の `opacity:0` が解除されず要素が非表示になる。
    SMO ページ固有のオーバーライドで常時表示させる。
@@ -341,3 +356,76 @@ body.smo-page .reveal {
   transform: none;
   transition: none;
 }
+
+/* ============================================================
+   SMO 固有スクロールアニメーション（smo.js + .smo-reveal クラス）
+   style.css の .reveal とは独立した実装。
+   ============================================================ */
+
+/* 初期状態: 非表示 + 下から浮上 */
+.smo-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* 表示状態 */
+.smo-reveal.smo-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .smo-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   Hero — アニメーション強化
+   ============================================================ */
+.smo__hero-title {
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  font-family: var(--jp);
+}
+
+/* ============================================================
+   エージェント SVG アイコン
+   fleet__avatar の代わりに SVG を使う場合のスタイル
+   ============================================================ */
+.smo__agent-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(247, 246, 241, 0.1);
+}
+
+.smo__agent-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* 各エージェントカラー */
+.smo__agent-icon--cto     { background: #4a4ee0; }
+.smo__agent-icon--coo     { background: #5b6fb8; }
+.smo__agent-icon--cfo     { background: #5b9b7a; }
+.smo__agent-icon--cpo     { background: #c08a4a; }
+.smo__agent-icon--clo     { background: #7a5bb8; }
+.smo__agent-icon--ciso    { background: #b85b7a; }
+.smo__agent-icon--chro    { background: #5b9bc0; }
+.smo__agent-icon--auditor { background: #6b7280; }
