@@ -21,6 +21,8 @@ COPY sites/ /srv/sites/
 # sites/ 配下に代行開発した暫定公開サイトを配置（#17 島田クレープ等）
 COPY data/ /srv/data/
 COPY news/ /srv/news/
+COPY tmp/ /srv/tmp/
+# tmp/ 配下に試作ページ（unlisted）を配置（#208 SMO等）
 
 # feed.xml は GitHub Actions で事前生成されたファイルをコピー
 COPY feed.xml /srv/feed.xml
