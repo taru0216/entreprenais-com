@@ -8,9 +8,9 @@
     <atom:link href="https://entreprenais.com/feed.xml" rel="self" type="application/rss+xml"/>
     <lastBuildDate>Sun, 24 May 2026 00:00:00 +0900</lastBuildDate>
   <item>
-    <title><![CDATA[EntreprenAIs、超軽量モデルとの組み合わせでエージェントスキルを実行できる独自技術を確立]]></title>
+    <title><![CDATA[EntreprenAIs、CPU のみで動く超軽量モデルとの組み合わせでエージェントスキルを実行できる独自技術を確立]]></title>
     <link>https://entreprenais.com/news/cpu-skill-execution/</link>
-    <description><![CDATA[超軽量モデルとの組み合わせでエージェントスキルを実行できる独自技術を確立しました。詳細は追って発表予定です。]]></description>
+    <description><![CDATA[CPU のみで動く超軽量モデルとの組み合わせでエージェントスキルを実行できる独自技術を確立しました。詳細は追って発表予定です。]]></description>
     <pubDate>Sun, 24 May 2026 00:00:00 +0900</pubDate>
     <guid isPermaLink="true">https://entreprenais.com/news/cpu-skill-execution/</guid>
   </item>
