@@ -1,12 +1,12 @@
 [
   {
     "date": "2026-05-24",
-    "title": "EntreprenAIs、CPU のみでエージェントスキルを実行する独自技術対応を達成",
+    "title": "EntreprenAIs、CPU のみでエージェントスキルを実行する独自技術を確立",
     "url": "/news/cpu-skill-execution/",
     "thumbnail": "/og.png",
     "image_type": "photo",
     "badge": "Update",
-    "summary": "超軽量モデルを活用し、GPU なしの CPU 環境でもエージェントスキルを実行できる独自技術への対応を達成しました。詳細は追って発表予定です。",
+    "summary": "超軽量モデルを活用し、GPU なしの CPU 環境でもエージェントスキルを実行できる独自技術を確立しました。詳細は追って発表予定です。",
     "cta": "続きを読む",
     "source": null,
     "external": false
