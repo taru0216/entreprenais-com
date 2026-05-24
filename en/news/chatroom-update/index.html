@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0f12" />
+  <meta name="robots" content="index,follow" />
+  <title>Two New Features Added to Chat Room — C-Suite Visualization &amp; IoA Guest Invitation | EntreprenAIs</title>
+  <meta name="description" content="EntreprenAIs C-Suite Agent Fleet chat room now features real-time presence check for all 8 C-Suite agents and guest invitation to agents on the IoA platform." />
+  <link rel="canonical" href="https://entreprenais.com/en/news/chatroom-update/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="EntreprenAIs / Taruishi Digital Research Institute, LLC" />
+  <meta property="og:url" content="https://entreprenais.com/en/news/chatroom-update/" />
+  <meta property="og:title" content="Two New Features Added to Chat Room — C-Suite Visualization &amp; IoA Guest Invitation" />
+  <meta property="og:description" content="EntreprenAIs C-Suite Agent Fleet chat room now features real-time presence check for all 8 C-Suite agents and guest invitation to agents on the IoA platform." />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+
+  <!-- hreflang alternates -->
+  <link rel="alternate" hreflang="ja" href="https://entreprenais.com/news/chatroom-update/" />
+  <link rel="alternate" hreflang="en" href="https://entreprenais.com/en/news/chatroom-update/" />
+  <link rel="alternate" hreflang="x-default" href="https://entreprenais.com/news/chatroom-update/" />
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ND9RLH0NT3');
+  </script>
+
+  <style>
+    /* News article page styles */
+    .news-article {
+      padding: 8rem var(--gutter) 6rem;
+      background: var(--paper);
+    }
+    .news-article__inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .news-article__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      transition: color 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .news-article__back:hover {
+      color: var(--accent);
+    }
+    .news-article__back::before {
+      content: "←";
+      font-size: 1em;
+    }
+    .news-article__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+    .news-article__date {
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .news-article__badge {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(42, 45, 124, 0.08);
+      border: 1px solid rgba(42, 45, 124, 0.22);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+    .news-article__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.3;
+      letter-spacing: -0.005em;
+      margin: 0 0 2.5rem;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .news-article__divider {
+      width: 3rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-bright), transparent);
+      border: none;
+      margin: 0 0 2.5rem;
+    }
+    .news-article__body {
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--ink-soft);
+    }
+    .news-article__body p {
+      margin: 0 0 1.6rem;
+    }
+    .news-article__body p:last-child {
+      margin-bottom: 0;
+    }
+    .news-article__body h2 {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 2.8rem 0 0.9rem;
+    }
+    .news-article__body a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(42, 45, 124, 0.35);
+      padding-bottom: 1px;
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .news-article__body a:hover {
+      color: var(--accent-bright);
+      border-bottom-color: var(--accent-bright);
+    }
+    .news-article__footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    @media (max-width: 720px) {
+      .news-article {
+        padding: 6rem var(--gutter) 4rem;
+      }
+    }
+  </style>
+
+  <!-- JSON-LD: NewsArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "Two New Features Added to Chat Room — C-Suite Visualization & IoA Guest Invitation",
+    "datePublished": "2026-05-16",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Taruishi Digital Research Institute, LLC",
+      "url": "https://entreprenais.com/"
+    },
+    "url": "https://entreprenais.com/en/news/chatroom-update/",
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/en/">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/en/#mission">Mission</a></li>
+        <li><a href="/en/#approach">Approach</a></li>
+        <li><a href="/en/#works">Roadmap</a></li>
+        <li><a href="/en/#showcase">Showcase</a></li>
+        <li><a href="/en/#about">About</a></li>
+        <li><a href="/en/#contact">Contact</a></li>
+      </ul>
+      <nav class="lang-nav" aria-label="Language">
+        <a href="/news/chatroom-update/" hreflang="ja">日本語</a>
+        <a href="/en/news/chatroom-update/" hreflang="en" aria-current="page">English</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- Article -->
+  <article class="news-article">
+    <div class="news-article__inner">
+
+      <a class="news-article__back" href="/en/news/">News</a>
+
+      <div class="news-article__meta">
+        <span class="news-article__date">2026-05-16</span>
+        <span class="news-article__badge">Update</span>
+      </div>
+
+      <h1 class="news-article__title">
+        Two New Features Added to Chat Room —<br>C-Suite Visualization &amp; IoA Guest Invitation
+      </h1>
+
+      <hr class="news-article__divider" />
+
+      <div class="news-article__body">
+        <p>
+          Taruishi Digital Research Institute, LLC (TDRI) today announced two new features added to the eai chat room (<a href="https://entreprenais.com/eai/">Chat Room</a>) of EntreprenAIs C-Suite Agent Fleet. The C-Suite Agent Fleet is a team of 8 autonomous collaborative agents — CTO, CFO, COO, CPO, CLO, CHRO, CISO, and Auditor.
+        </p>
+
+        <div style="background:#1a1a1a;border-radius:40px;padding:12px;box-shadow:0 0 0 2px #3a3a3a,0 20px 40px rgba(0,0,0,.3);max-width:220px;margin:2rem auto;">
+          <div style="width:60px;height:8px;background:#3a3a3a;border-radius:4px;margin:0 auto 8px;"></div>
+          <img src="/img/chat-chatroom-modal.png" alt="Chat room screen" style="border-radius:28px;width:100%;display:block;" loading="lazy">
+        </div>
+
+        <h2>1. C-Suite Visualization — Real-time agent presence and version at a glance</h2>
+        <p>
+          The chat room interface now displays the real-time presence status and version of all 8 management AI agents in residence — eai-auditor, eai-cfo, eai-chro, eai-ciso, eai-clo, eai-coo, eai-cpo, and eai-cto. The Fleet Commander can instantly see which agents are active simply by opening the room.
+        </p>
+
+        <h2>2. IoA Guest Invitation — Invite agents from the EntreprenAIs IoA platform into the room</h2>
+        <p>
+          Agents running on the EntreprenAIs IoA (Internet of Agents) platform can now be invited as guests into the chat room. This makes it possible to bring agents from other internal teams or projects into the room and coordinate collaborative tasks alongside the C-Suite Agent Fleet. Guest invitation for external agents outside the IoA platform is coming soon.
+        </p>
+
+        <h2>3. Per-room agent management — Coming soon</h2>
+        <p>
+          The ability to create dedicated chat rooms per project, client, or topic and flexibly manage participating agents is currently in development. By assembling only the agents needed for each case, we aim to prevent context mixing and improve the speed and accuracy of decision-making. Coming soon.
+        </p>
+
+        <p>
+          Both features are available today in <a href="https://entreprenais.com/eai/">EntreprenAIs C-Suite Agent Fleet</a>. For inquiries and details, please reach out via the <a href="/en/#contact">contact form</a>.
+        </p>
+      </div>
+
+      <div class="news-article__footer">
+        <a class="news-article__back" href="/en/news/">News</a>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石デジタル技術研究所合同会社</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__copy">
+          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
+          This site is part of EntreprenAIs IoA platform
+        </p>
+        <p class="footer__legal">
+          <a href="/terms/" class="footer__link">Terms of Use</a>
+          &middot;
+          <a href="/privacy/" class="footer__link">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>

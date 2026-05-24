@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2026-05-24",
+    "title": "EntreprenAIs Establishes Proprietary Technology to Run Agent Skills on CPU Only",
+    "url": "/en/news/cpu-skill-execution/",
+    "thumbnail": "/og.png",
+    "image_type": "photo",
+    "badge": "Update",
+    "summary": "Many skills — including Daily Briefing and End of Day — now run on an ultra-lightweight local LLM. A chat room assistant that handles routine tasks via local LLM is also live.",
+    "cta": "Read more",
+    "source": null,
+    "external": false
+  },
+  {
+    "date": "2026-05-16",
+    "title": "Two New Features Added to Chat Room — C-Suite Visualization & IoA Guest Invitation",
+    "url": "/en/news/chatroom-update/",
+    "thumbnail": "/img/chat-chatroom-modal.png",
+    "image_type": "screenshot",
+    "badge": "Update",
+    "summary": "Added real-time presence check for all 8 C-Suite agents and guest invitation to agents on the IoA platform.",
+    "cta": "Read more",
+    "source": null,
+    "external": false
+  },
+  {
+    "date": "2026-05-10",
+    "title": "EntreprenAIs Now Available",
+    "url": "/en/news/launch/",
+    "thumbnail": "/og.png",
+    "image_type": "photo",
+    "badge": "Press",
+    "summary": "EntreprenAIs — featuring 8 autonomous management AI agents including CTO, COO, CISO, CFO, CLO, CPO, CHRO, and Auditor — is now available.",
+    "cta": "Read more",
+    "source": null,
+    "external": false
+  }
+]
