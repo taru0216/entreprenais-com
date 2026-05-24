@@ -6,7 +6,14 @@
     <description>EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。</description>
     <language>ja</language>
     <atom:link href="https://entreprenais.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 16 May 2026 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 00:00:00 +0900</lastBuildDate>
+  <item>
+    <title><![CDATA[EntreprenAIs、CPU のみでエージェントスキルを実行する独自技術対応を達成]]></title>
+    <link>https://entreprenais.comNone</link>
+    <description><![CDATA[超軽量モデルを活用し、GPU なしの CPU 環境でもエージェントスキルを実行できる独自技術への対応を達成しました。詳細は追って発表予定です。]]></description>
+    <pubDate>Sun, 24 May 2026 00:00:00 +0900</pubDate>
+    <guid isPermaLink="true">https://entreprenais.comNone</guid>
+  </item>
   <item>
     <title><![CDATA[チャットルームに2つの新機能を追加 — C-Suite可視化・IoAゲスト招待]]></title>
     <link>https://entreprenais.com/news/chatroom-update/</link>
