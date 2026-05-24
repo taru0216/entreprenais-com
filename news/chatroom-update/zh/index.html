@@ -163,6 +163,16 @@
     "inLanguage": "zh"
   }
   </script>
+
+  <!-- Google Analytics 4 (gtag.js) -->
+  <!-- SRI 非適用 (#70): gtag/js は動的バージョンロード CDN のためハッシュ固定不可。CSP の script-src allowlist で保護。 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ND9RLH0NT3');
+  </script>
 </head>
 <body>
 
