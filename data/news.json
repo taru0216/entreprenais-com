@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-05-24",
+    "title": "EntreprenAIs、CPU のみでエージェントスキルを実行する独自技術対応を達成",
+    "url": null,
+    "thumbnail": null,
+    "image_type": null,
+    "badge": "Update",
+    "summary": "超軽量モデルを活用し、GPU なしの CPU 環境でもエージェントスキルを実行できる独自技術への対応を達成しました。詳細は追って発表予定です。",
+    "cta": null,
+    "source": null,
+    "external": false
+  },
+  {
     "date": "2026-05-16",
     "title": "チャットルームに2つの新機能を追加 — C-Suite可視化・IoAゲスト招待",
     "url": "/news/chatroom-update/",
