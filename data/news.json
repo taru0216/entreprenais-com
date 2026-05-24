@@ -6,7 +6,7 @@
     "thumbnail": "/og.png",
     "image_type": "photo",
     "badge": "Update",
-    "summary": "CPU のみで動く超軽量モデルとの組み合わせでエージェントスキルを実行できる独自技術を確立しました。詳細は追って発表予定です。",
+    "summary": "Daily Briefing・End of Day をはじめとする多くのスキルが 0.5b 程度の超軽量ローカル LLM で動作するようになりました。チャットルームへのアシスタント常駐も実現しています。",
     "cta": "続きを読む",
     "source": null,
     "external": false
