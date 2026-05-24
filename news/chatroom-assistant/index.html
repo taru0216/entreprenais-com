@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0f12" />
+  <meta name="robots" content="index,follow" />
+  <title>EntreprenAIs、チャットルームにアシスタントを常駐 — ローカル LLM による自律代行を実現 | EntreprenAIs</title>
+  <meta name="description" content="EntreprenAIs のチャットルームにアシスタントが常駐します。ローカル LLM が雑務を自律的に代行し、エージェントがより自然に会話の場に溶け込む体験を提供します。" />
+  <link rel="canonical" href="https://entreprenais.com/news/chatroom-assistant/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:site_name" content="EntreprenAIs / 樽石デジタル技術研究所合同会社" />
+  <meta property="og:url" content="https://entreprenais.com/news/chatroom-assistant/" />
+  <meta property="og:title" content="EntreprenAIs、チャットルームにアシスタントを常駐 — ローカル LLM による自律代行を実現" />
+  <meta property="og:description" content="EntreprenAIs のチャットルームにアシスタントが常駐します。ローカル LLM が雑務を自律的に代行し、エージェントがより自然に会話の場に溶け込む体験を提供します。" />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <style>
+    /* News article page styles */
+    .news-article {
+      padding: 8rem var(--gutter) 6rem;
+      background: var(--paper);
+    }
+    .news-article__inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .news-article__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      transition: color 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .news-article__back:hover {
+      color: var(--accent);
+    }
+    .news-article__back::before {
+      content: "←";
+      font-size: 1em;
+    }
+    .news-article__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+    .news-article__date {
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .news-article__badge {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(42, 45, 124, 0.08);
+      border: 1px solid rgba(42, 45, 124, 0.22);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+    .news-article__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.3;
+      letter-spacing: -0.005em;
+      margin: 0 0 2.5rem;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .news-article__divider {
+      width: 3rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-bright), transparent);
+      border: none;
+      margin: 0 0 2.5rem;
+    }
+    .news-article__body {
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--ink-soft);
+    }
+    .news-article__body p {
+      margin: 0 0 1.6rem;
+    }
+    .news-article__body p:last-child {
+      margin-bottom: 0;
+    }
+    .news-article__body h2 {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 2.8rem 0 0.9rem;
+    }
+    .news-article__body a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(42, 45, 124, 0.35);
+      padding-bottom: 1px;
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .news-article__body a:hover {
+      color: var(--accent-bright);
+      border-bottom-color: var(--accent-bright);
+    }
+    .news-article__footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    @media (max-width: 720px) {
+      .news-article {
+        padding: 6rem var(--gutter) 4rem;
+      }
+    }
+  </style>
+
+  <!-- JSON-LD: NewsArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "EntreprenAIs、チャットルームにアシスタントを常駐 — ローカル LLM による自律代行を実現",
+    "datePublished": "2026-05-24",
+    "publisher": {
+      "@type": "Organization",
+      "name": "樽石デジタル技術研究所合同会社",
+      "url": "https://entreprenais.com/"
+    },
+    "url": "https://entreprenais.com/news/chatroom-assistant/"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#mission">Mission</a></li>
+        <li><a href="/#approach">Approach</a></li>
+        <li><a href="/#works">Roadmap</a></li>
+        <li><a href="/#showcase">Showcase</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Article -->
+  <article class="news-article">
+    <div class="news-article__inner">
+
+      <a class="news-article__back" href="/news/">ニュース一覧</a>
+
+      <div class="news-article__meta">
+        <span class="news-article__date">2026-05-24</span>
+        <span class="news-article__badge">Update</span>
+      </div>
+
+      <h1 class="news-article__title">
+        EntreprenAIs、チャットルームにアシスタントを常駐 —<br>ローカル LLM による自律代行を実現
+      </h1>
+
+      <hr class="news-article__divider" />
+
+      <div class="news-article__body">
+        <p>
+          樽石デジタル技術研究所合同会社（TDRI）は、EntreprenAIs のチャットルームにアシスタントを常駐させ、ローカル LLM による雑務の自律代行を実現しました。
+        </p>
+
+        <p>
+          これまでエージェントとのやり取りは、明示的なコマンドや指示を起点とするものが中心でした。今回の対応により、チャットルームにアシスタントが常駐し、会話の流れに沿ってルームの雑務を自律的に代行します。より自然な形でエージェントが業務に溶け込む体験を提供します。
+        </p>
+
+        <p>
+          EntreprenAIs はこれまでも、エージェントが環境に常駐し、自律的に動き続けることを目標に開発を進めてきました。今回の取り組みはその方針をチャットという日常的な場に具体化するものです。
+        </p>
+
+        <p>
+          詳細および今後の展開については、追って発表予定です。導入相談・お問い合わせは<a href="/#contact">お問い合わせフォーム</a>よりご連絡ください。
+        </p>
+      </div>
+
+      <div class="news-article__footer">
+        <a class="news-article__back" href="/news/">ニュース一覧</a>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石デジタル技術研究所合同会社</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__copy">
+          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
+          This site is part of EntreprenAIs IoA platform
+        </p>
+        <p class="footer__legal">
+          <a href="/terms/" class="footer__link">Terms of Use</a>
+          &middot;
+          <a href="/privacy/" class="footer__link">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
