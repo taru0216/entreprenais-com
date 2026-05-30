@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'sites/taruishi-burger/**'
+      - '.github/workflows/deploy-taruishi-burger.yml'
   workflow_dispatch:
 
 permissions:
@@ -15,10 +16,6 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
-defaults:
-  run:
-    working-directory: sites/taruishi-burger
 
 jobs:
   build:
@@ -32,15 +29,36 @@ jobs:
           cache: 'npm'
           cache-dependency-path: sites/taruishi-burger/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Build taruishi-burger
+        working-directory: sites/taruishi-burger
+        run: npm ci && npm run build
 
-      - name: Build Astro site
-        run: npm run build
+      - name: Assemble full site
+        run: |
+          mkdir -p _site/sites/taruishi-burger
+          # Root static files
+          find . -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
+            -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
+            -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
+            -exec cp {} _site/ \;
+          # Root directories
+          for dir in img en zh news eai privacy terms data _i18n; do
+            [ -d "$dir" ] && cp -r "$dir" _site/
+          done
+          # Other sites (non-Astro static HTML)
+          for site in sites/*/; do
+            name=$(basename "$site")
+            if [ "$name" != "taruishi-burger" ]; then
+              mkdir -p "_site/sites/$name"
+              cp -r "$site"/* "_site/sites/$name/" 2>/dev/null || true
+            fi
+          done
+          # taruishi-burger Astro build
+          cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: sites/taruishi-burger/dist/
+          path: _site/
 
   deploy:
     needs: build
