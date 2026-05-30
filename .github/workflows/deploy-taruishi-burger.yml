@@ -16,10 +16,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-defaults:
-  run:
-    working-directory: sites/taruishi-burger
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,15 +28,46 @@ jobs:
           cache: 'npm'
           cache-dependency-path: sites/taruishi-burger/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Build taruishi-burger
+        working-directory: sites/taruishi-burger
+        run: npm ci && npm run build
 
-      - name: Build Astro site
-        run: npm run build
+      - name: Assemble full site
+        run: |
+          mkdir -p _site/sites/taruishi-burger
+
+          # ルートの静的ファイルをコピー
+          find . -maxdepth 1 -type f \( \
+            -name "*.html" -o -name "*.css" -o -name "*.js" \
+            -o -name "*.xml" -o -name "*.json" -o -name "*.txt" \
+            -o -name "*.ico" -o -name "*.svg" -o -name "*.png" \
+            -o -name "*.webmanifest" \
+          \) -exec cp {} _site/ \;
+
+          # ルートのディレクトリをコピー
+          for dir in img en zh news eai privacy terms data _i18n; do
+            [ -d "$dir" ] && cp -r "$dir" _site/
+          done
+
+          # _headers / _redirects はそのままコピー
+          [ -f "_headers" ]   && cp _headers   _site/
+          [ -f "_redirects" ] && cp _redirects _site/
+
+          # taruishi-burger の dist を sites/taruishi-burger/ に配置
+          cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
+
+          # 他の sites/ は素の HTML のままコピー
+          for site_dir in sites/*/; do
+            name=$(basename "$site_dir")
+            if [ "$name" != "taruishi-burger" ] && [ -f "${site_dir}index.html" ]; then
+              mkdir -p "_site/sites/$name"
+              cp -r "${site_dir}." "_site/sites/$name/"
+            fi
+          done
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: sites/taruishi-burger/dist/
+          path: _site/
 
   deploy:
     needs: build
