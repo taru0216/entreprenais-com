@@ -1,49 +1,16 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>樽石バーガー | キッチンカー</title>
-  <meta name="description" content="Weber グリルが焼く、本格スマッシュバーガー。樽石バーガーのキッチンカー。" />
+---
+// src/pages/index.astro — taruishi-burger-astro
+// 樽石バーガー キッチンカー ホームページ
+// Astro static site (astro-static テンプレート #5321)
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="キッチンカー"
+  description="Weber グリルが焼く、本格スマッシュバーガー。樽石バーガーのキッチンカー。"
+>
+
   <style>
-    /* ========== RESET & BASE ========== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --color-bg:        #0f0e0b;
-      --color-surface:   #1a1814;
-      --color-card:      #231f1a;
-      --color-border:    #2e2820;
-      --color-accent:    #e85d04;
-      --color-accent2:   #f48c06;
-      --color-gold:      #faa307;
-      --color-text:      #f0ebe4;
-      --color-muted:     #a09080;
-      --color-hero-from: #1a0a00;
-      --color-hero-to:   #0f0e0b;
-      --font-heading:    'Georgia', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-      --font-body:       'Helvetica Neue', 'Hiragino Sans', 'Meiryo', sans-serif;
-      --radius:          8px;
-      --max-w:           1100px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--color-accent); text-decoration: none; }
-    a:hover { color: var(--color-gold); }
-
-    img { max-width: 100%; height: auto; }
-
-    /* ========== NAV ========== */
+    /* NAV */
     nav {
       position: sticky;
       top: 0;
@@ -83,7 +50,7 @@
     }
     .nav-links a:hover { color: var(--color-text); }
 
-    /* ========== HERO ========== */
+    /* HERO */
     .hero {
       position: relative;
       min-height: 92vh;
@@ -93,129 +60,97 @@
       text-align: center;
       overflow: hidden;
     }
-
-    /* Hero background: real photo */
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('images/burger-completed-1.jpg');
+      background-image: url('/images/burger-completed-1.jpg');
       background-size: cover;
-      background-position: center 40%;
-      filter: brightness(0.38) saturate(1.1);
-      transform: scale(1.03);
-      transition: transform 8s ease-out;
+      background-position: center;
+      filter: brightness(0.35);
+      transition: opacity 0.5s;
     }
-    .hero-bg.loaded { transform: scale(1); }
-
-    /* Gradient overlays */
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(15,14,11,0.55) 0%, rgba(15,14,11,0.1) 40%, rgba(15,14,11,0.7) 80%, rgba(15,14,11,0.95) 100%),
-        radial-gradient(ellipse 70% 60% at 50% 80%, #7c2d0a22 0%, transparent 70%);
-      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        var(--color-hero-from) 0%,
+        transparent 30%,
+        transparent 70%,
+        var(--color-hero-to) 100%
+      );
     }
-
-    /* flame glow effect */
-    .hero::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 200px;
-      background: radial-gradient(ellipse 80% 60% at 50% 100%, #e85d0418 0%, transparent 70%);
-      pointer-events: none;
-      animation: flicker 3s ease-in-out infinite;
-      z-index: 2;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
-      50% { opacity: 0.7; transform: translateX(-50%) scale(1.06); }
-    }
-
     .hero-inner {
       position: relative;
-      z-index: 3;
-      max-width: 760px;
-      padding: 60px 24px;
+      z-index: 2;
+      max-width: 720px;
+      padding: 0 24px;
     }
     .hero-badge {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--color-accent);
       border: 1px solid var(--color-accent);
       border-radius: 99px;
-      padding: 4px 16px;
-      margin-bottom: 28px;
+      padding: 5px 16px;
+      margin-bottom: 24px;
     }
     .hero-title {
       font-family: var(--font-heading);
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: bold;
-      line-height: 1.15;
-      letter-spacing: 0.03em;
-      margin-bottom: 10px;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
     }
     .hero-title .brand {
       display: block;
-      background: linear-gradient(120deg, var(--color-accent) 0%, var(--color-gold) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--color-gold);
+      font-size: 0.6em;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
     }
     .hero-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--color-muted);
-      margin: 20px 0 40px;
-      font-weight: 400;
+      font-size: 1.05rem;
+      color: rgba(240, 235, 228, 0.78);
+      margin-bottom: 40px;
+      line-height: 1.8;
     }
-    .hero-subtitle em {
-      color: var(--color-text);
-      font-style: normal;
-      font-weight: 600;
-    }
+    .hero-subtitle em { color: var(--color-gold); font-style: normal; }
     .hero-cta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: linear-gradient(135deg, var(--color-accent), var(--color-accent2));
       color: #fff;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       padding: 16px 40px;
       border-radius: 99px;
-      border: none;
-      cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px #e85d0440;
+      box-shadow: 0 4px 20px #e85d0440;
     }
     .hero-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px #e85d0460;
       color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px #e85d0460;
     }
-    .hero-cta svg { width: 18px; height: 18px; }
-
-    /* Hero photo credit */
+    .hero-cta svg { width: 14px; height: 14px; }
     .hero-photo-credit {
       position: absolute;
       bottom: 20px;
-      right: 20px;
-      z-index: 3;
+      right: 24px;
       font-size: 0.65rem;
-      color: rgba(240,235,228,0.4);
+      color: rgba(240, 235, 228, 0.3);
       letter-spacing: 0.06em;
+      z-index: 2;
     }
 
-    /* ========== SECTION COMMON ========== */
+    /* SECTION COMMON */
     section { padding: 100px 24px; }
     .section-inner {
       max-width: var(--max-w);
@@ -224,87 +159,81 @@
     .section-label {
       font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--color-accent);
       margin-bottom: 12px;
     }
     .section-title {
       font-family: var(--font-heading);
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
       font-weight: bold;
-      line-height: 1.2;
       margin-bottom: 20px;
     }
-    .section-desc {
-      color: var(--color-muted);
-      max-width: 560px;
-      margin-bottom: 56px;
-      font-size: 0.95rem;
-    }
-
     .divider {
       width: 48px;
       height: 3px;
       background: linear-gradient(90deg, var(--color-accent), var(--color-gold));
-      border-radius: 2px;
-      margin: 12px 0 24px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+    }
+    .section-desc {
+      color: rgba(240, 235, 228, 0.7);
+      max-width: 600px;
+      margin-bottom: 48px;
     }
 
-    /* ========== MENU ========== */
+    /* MENU */
     #menu { background: var(--color-surface); }
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
     }
     .menu-card {
       background: var(--color-card);
       border: 1px solid var(--color-border);
-      border-radius: var(--radius);
+      border-radius: calc(var(--radius) * 1.5);
       overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .menu-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
     }
     .menu-thumb {
-      width: 100%;
-      height: 260px;
       position: relative;
+      height: 220px;
       overflow: hidden;
     }
     .menu-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      transition: transform 0.4s ease;
+      transition: transform 0.4s;
     }
-    .menu-card:hover .menu-thumb img {
-      transform: scale(1.04);
-    }
+    .menu-card:hover .menu-thumb img { transform: scale(1.04); }
     .menu-thumb-badge {
       position: absolute;
-      top: 14px;
-      left: 14px;
+      top: 12px;
+      left: 12px;
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: var(--color-accent);
-      color: #fff;
       padding: 4px 12px;
       border-radius: 99px;
-      backdrop-filter: blur(4px);
+      background: rgba(240, 235, 228, 0.15);
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
     }
     .menu-thumb-badge.gold {
       background: linear-gradient(135deg, #b8860b, var(--color-gold));
+      color: #0f0e0b;
+      border: none;
     }
-    .menu-body {
-      padding: 24px;
-    }
+    .menu-body { padding: 24px; }
     .menu-name {
       font-family: var(--font-heading);
       font-size: 1.2rem;
@@ -335,67 +264,49 @@
       color: var(--color-accent);
       border: 1px solid var(--color-accent);
       border-radius: 4px;
-      padding: 2px 8px;
+      padding: 3px 10px;
+      letter-spacing: 0.05em;
     }
 
-    /* ========== GALLERY ========== */
-    #gallery { background: var(--color-bg); }
+    /* GALLERY */
     .gallery-intro {
       display: flex;
+      gap: 48px;
+      margin-bottom: 48px;
       align-items: flex-start;
-      gap: 40px;
-      margin-bottom: 60px;
-      flex-wrap: wrap;
     }
-    .gallery-intro-text { flex: 1; min-width: 240px; }
-    .gallery-intro-meta {
-      flex: 0 0 auto;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 20px 28px;
-      min-width: 220px;
-    }
+    .gallery-intro-text { flex: 1; }
+    .gallery-intro-meta { flex-shrink: 0; }
     .gallery-meta-row {
       display: flex;
-      justify-content: space-between;
       gap: 16px;
-      font-size: 0.8rem;
-      color: var(--color-muted);
-      padding: 6px 0;
+      font-size: 0.85rem;
       border-bottom: 1px solid var(--color-border);
+      padding: 10px 0;
     }
-    .gallery-meta-row:last-child { border-bottom: none; }
+    .gallery-meta-row span { color: var(--color-muted); width: 60px; flex-shrink: 0; }
     .gallery-meta-row strong { color: var(--color-text); }
-
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
     .gallery-item {
       position: relative;
-      border-radius: var(--radius);
+      height: 200px;
       overflow: hidden;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
       cursor: pointer;
     }
     .gallery-item.featured {
-      grid-column: 1 / -1;
+      grid-column: span 2;
+      height: 320px;
     }
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease, filter 0.3s ease;
-    }
-    .gallery-item:not(.featured) {
-      aspect-ratio: 4/3;
-    }
-    .gallery-item.featured {
-      height: 440px;
+      transition: transform 0.4s, filter 0.3s;
     }
     .gallery-item:hover img {
       transform: scale(1.03);
@@ -447,153 +358,127 @@
       background: rgba(240,235,228,0.15);
       color: var(--color-muted);
       border: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
     }
 
-    /* ========== COMMITMENT ========== */
-    #commitment { background: var(--color-surface); }
+    /* COMMITMENT */
     .commit-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px;
     }
     .commit-card {
       background: var(--color-card);
       border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
+      border-radius: calc(var(--radius) * 1.5);
+      padding: 32px;
+      transition: border-color 0.2s;
     }
-    .commit-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--color-accent), var(--color-gold));
-    }
-    .commit-icon {
-      font-size: 2.2rem;
-      margin-bottom: 16px;
-    }
+    .commit-card:hover { border-color: var(--color-accent); }
+    .commit-icon { font-size: 2rem; margin-bottom: 16px; }
     .commit-title {
       font-family: var(--font-heading);
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: bold;
-      margin-bottom: 10px;
-      color: var(--color-text);
+      margin-bottom: 12px;
     }
     .commit-desc {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       color: var(--color-muted);
       line-height: 1.7;
     }
-    .commit-desc strong { color: var(--color-accent2); }
+    .commit-desc strong { color: var(--color-text); }
 
-    /* ========== LOCATION ========== */
-    #location { background: var(--color-bg); }
+    /* LOCATION */
+    #location { background: var(--color-surface); }
     .location-box {
       background: var(--color-card);
       border: 1px solid var(--color-border);
-      border-radius: var(--radius);
+      border-radius: calc(var(--radius) * 2);
       padding: 48px;
       text-align: center;
-      max-width: 600px;
+      max-width: 560px;
+      margin: 0 auto;
     }
-    .location-icon {
-      font-size: 3.5rem;
-      display: block;
-      margin-bottom: 16px;
-    }
+    .location-icon { font-size: 2.5rem; display: block; margin-bottom: 16px; }
     .location-status {
-      display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--color-gold);
-      border: 1px solid var(--color-gold);
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
       border-radius: 99px;
-      padding: 4px 14px;
+      display: inline-block;
+      padding: 4px 16px;
       margin-bottom: 20px;
     }
     .location-title {
       font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 12px;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
     }
     .location-desc {
-      color: var(--color-muted);
       font-size: 0.9rem;
+      color: var(--color-muted);
       line-height: 1.8;
-    }
-    .location-cta {
-      margin-top: 28px;
+      margin-bottom: 28px;
     }
     .location-cta-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--color-accent);
-      color: var(--color-accent);
-      padding: 12px 28px;
-      border-radius: 99px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      transition: background 0.2s, color 0.2s;
-    }
-    .location-cta-btn:hover {
       background: var(--color-accent);
       color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 28px;
+      border-radius: 99px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .location-cta-btn:hover {
+      color: #fff;
+      background: var(--color-accent2);
+      transform: translateY(-2px);
     }
 
-    /* ========== CONTACT ========== */
-    #contact { background: var(--color-surface); }
+    /* CONTACT */
+    #contact { background: var(--color-bg); }
     .contact-box {
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 48px;
       max-width: 560px;
+      margin: 0 auto;
     }
     .contact-note {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       color: var(--color-muted);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       line-height: 1.7;
     }
-    .form-group {
-      margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
     .form-label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
       color: var(--color-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
     }
     .form-input, .form-textarea {
       width: 100%;
-      background: var(--color-surface);
+      background: var(--color-card);
       border: 1px solid var(--color-border);
-      border-radius: 6px;
+      border-radius: var(--radius);
+      padding: 12px 16px;
       color: var(--color-text);
       font-family: var(--font-body);
       font-size: 0.95rem;
-      padding: 12px 16px;
       transition: border-color 0.2s;
-      outline: none;
     }
     .form-input:focus, .form-textarea:focus {
+      outline: none;
       border-color: var(--color-accent);
     }
-    .form-textarea {
-      height: 130px;
-      resize: vertical;
-    }
+    .form-textarea { min-height: 120px; resize: vertical; }
     .form-submit {
       display: inline-flex;
       align-items: center;
@@ -620,7 +505,7 @@
       margin-top: 14px;
     }
 
-    /* ========== FOOTER ========== */
+    /* FOOTER */
     footer {
       background: var(--color-surface);
       border-top: 1px solid var(--color-border);
@@ -645,7 +530,7 @@
       color: var(--color-border);
     }
 
-    /* ========== LIGHTBOX ========== */
+    /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
@@ -690,18 +575,16 @@
       color: var(--color-muted);
     }
 
-    /* ========== RESPONSIVE ========== */
+    /* RESPONSIVE */
     @media (max-width: 640px) {
       section { padding: 72px 20px; }
-      .location-box, .contact-box { padding: 32px 24px; }
+      .location-box { padding: 32px 24px; }
       .nav-links { display: none; }
       .gallery-grid { grid-template-columns: 1fr; }
       .gallery-item.featured { height: 260px; }
       .gallery-intro { flex-direction: column; }
     }
   </style>
-</head>
-<body>
 
   <!-- NAV -->
   <nav>
@@ -719,7 +602,7 @@
 
   <!-- HERO -->
   <section class="hero" id="home">
-    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-inner">
       <div class="hero-badge">Kitchen Car — Taruishi Burger</div>
@@ -732,7 +615,7 @@
         どこまでも肉に向き合う、キッチンカーの一杯。
       </p>
       <a href="#menu" class="hero-cta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M9 5l7 7-7 7"/></svg>
         メニューを見る
       </a>
     </div>
@@ -748,15 +631,9 @@
       <p class="section-desc">全パティは Weber PULSE の精密温度管理で焼き上げます。</p>
 
       <div class="menu-grid">
-
-        <!-- Angus Beef Cheeseburger — 実写 -->
         <div class="menu-card">
           <div class="menu-thumb">
-            <img
-              src="images/burger-completed-1.jpg"
-              alt="アンガスビーフチーズバーガー"
-              loading="eager"
-            />
+            <img src="/images/burger-completed-1.jpg" alt="アンガスビーフチーズバーガー" loading="eager" />
             <span class="menu-thumb-badge gold">No.1 Signature</span>
           </div>
           <div class="menu-body">
@@ -772,14 +649,9 @@
           </div>
         </div>
 
-        <!-- NittoBest Cheeseburger — 実写 -->
         <div class="menu-card">
           <div class="menu-thumb">
-            <img
-              src="images/burger-completed-2.jpg"
-              alt="NittoBest チーズバーガー"
-              loading="eager"
-            />
+            <img src="/images/burger-completed-2.jpg" alt="スタンダードチーズバーガー" loading="eager" />
             <span class="menu-thumb-badge">Standard</span>
           </div>
           <div class="menu-body">
@@ -794,12 +666,11 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- GALLERY — 実験記録 -->
+  <!-- GALLERY -->
   <section id="gallery">
     <div class="section-inner">
       <p class="section-label">Research Log — 2026.05.30</p>
@@ -824,11 +695,9 @@
       </div>
 
       <div class="gallery-grid">
-
-        <!-- D: アンガスビーフ — ダントツ1位・大きく表示 -->
         <div class="gallery-item featured" onclick="openLightbox(this)">
           <img
-            src="images/burger-completed-1.jpg"
+            src="/images/burger-completed-1.jpg"
             alt="D: アンガスビーフチーズバーガー完成 — 実験1位"
             loading="eager"
             data-caption="D: アンガスビーフチーズバーガー — 実験ダントツ1位 (2026.05.30)"
@@ -841,10 +710,9 @@
           </div>
         </div>
 
-        <!-- A: NittoBest -->
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="images/burger-completed-2.jpg"
+            src="/images/burger-completed-2.jpg"
             alt="A: NittoBest チーズバーガー完成"
             loading="eager"
             data-caption="A: NittoBest チーズバーガー (2026.05.30)"
@@ -857,10 +725,9 @@
           </div>
         </div>
 
-        <!-- B: Viande -->
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="images/burger-completed-3.jpg"
+            src="/images/burger-completed-3.jpg"
             alt="B: Viande チーズバーガー完成"
             loading="eager"
             data-caption="B: Viande チーズバーガー (2026.05.30)"
@@ -873,10 +740,9 @@
           </div>
         </div>
 
-        <!-- C: NittoBest 鉄板焼 — Weber PULSE焼き中の写真を流用 -->
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="images/weber-grilling.jpg"
+            src="/images/weber-grilling.jpg"
             alt="C: Weber PULSE でパティ焼き中"
             loading="eager"
             data-caption="C: Weber PULSE 温度管理 — パティ焼き工程 (2026.05.30)"
@@ -888,7 +754,6 @@
             <div class="gallery-caption-sub">温度プローブで芯温を常時モニタリング</div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -902,7 +767,6 @@
       <p class="section-desc">Weber PULSE × 品質仕入れ × 徹底した温度管理が、味の差をつくります。</p>
 
       <div class="commit-grid">
-
         <div class="commit-card">
           <div class="commit-icon">⚡</div>
           <div class="commit-title">Weber PULSE グリル</div>
@@ -932,7 +796,6 @@
             ジューシーな中心と香ばしい表面を両立します。
           </p>
         </div>
-
       </div>
     </div>
   </section>
@@ -977,7 +840,7 @@
           お気軽にお問い合わせください。通常3営業日以内にご返信します。
         </p>
 
-        <form onsubmit="handleSubmit(event)">
+        <form id="contact-form">
           <div class="form-group">
             <label class="form-label" for="name">お名前</label>
             <input class="form-input" type="text" id="name" name="name" placeholder="山田 太郎" required />
@@ -1016,13 +879,7 @@
     </div>
   </div>
 
-  <script>
-    // Hero bg loaded class for transition
-    window.addEventListener('load', function() {
-      var bg = document.getElementById('heroBg');
-      if (bg) bg.classList.add('loaded');
-    });
-
+  <script is:inline>
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
       anchor.addEventListener('click', function(e) {
@@ -1034,8 +891,8 @@
       });
     });
 
-    // Lightbox
-    function openLightbox(el) {
+    // Lightbox — is:inline で openLightbox をグローバルに公開
+    window.openLightbox = function(el) {
       var img = el.querySelector('img');
       var lb = document.getElementById('lightbox');
       var lbImg = document.getElementById('lightbox-img');
@@ -1045,19 +902,19 @@
       lbCap.textContent = img.dataset.caption || img.alt;
       lb.classList.add('active');
       document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox(e, force) {
+    };
+    window.closeLightbox = function(e, force) {
       if (force || (e && e.target === document.getElementById('lightbox'))) {
         document.getElementById('lightbox').classList.remove('active');
         document.body.style.overflow = '';
       }
-    }
+    };
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeLightbox(null, true);
+      if (e.key === 'Escape') window.closeLightbox(null, true);
     });
 
     // Contact form handler (demo — no backend)
-    function handleSubmit(e) {
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       var notice = document.getElementById('form-notice');
       var btn = e.target.querySelector('.form-submit');
@@ -1069,8 +926,7 @@
         btn.textContent = '送信完了';
         e.target.reset();
       }, 800);
-    }
+    });
   </script>
 
-</body>
-</html>
+</BaseLayout>
