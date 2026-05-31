@@ -3,6 +3,7 @@
 // 樽石バーガー キッチンカー ホームページ
 // Astro static site (astro-static テンプレート #5321)
 import BaseLayout from '../layouts/BaseLayout.astro';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout
   title="キッチンカー"
@@ -633,7 +634,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="menu-grid">
         <div class="menu-card">
           <div class="menu-thumb">
-            <img src="/images/burger-completed-1.jpg" alt="アンガスビーフチーズバーガー" loading="eager" />
+            <img src={`${BASE}/images/burger-completed-1.jpg`} alt="アンガスビーフチーズバーガー" loading="eager" />
             <span class="menu-thumb-badge gold">No.1 Signature</span>
           </div>
           <div class="menu-body">
@@ -651,7 +652,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="menu-card">
           <div class="menu-thumb">
-            <img src="/images/burger-completed-2.jpg" alt="スタンダードチーズバーガー" loading="eager" />
+            <img src={`${BASE}/images/burger-completed-2.jpg`} alt="スタンダードチーズバーガー" loading="eager" />
             <span class="menu-thumb-badge">Standard</span>
           </div>
           <div class="menu-body">
@@ -697,7 +698,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="gallery-grid">
         <div class="gallery-item featured" onclick="openLightbox(this)">
           <img
-            src="/images/burger-completed-1.jpg"
+            src={`${BASE}/images/burger-completed-1.jpg`}
             alt="D: アンガスビーフチーズバーガー完成 — 実験1位"
             loading="eager"
             data-caption="D: アンガスビーフチーズバーガー — 実験ダントツ1位 (2026.05.30)"
@@ -712,7 +713,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="/images/burger-completed-2.jpg"
+            src={`${BASE}/images/burger-completed-2.jpg`}
             alt="A: NittoBest チーズバーガー完成"
             loading="eager"
             data-caption="A: NittoBest チーズバーガー (2026.05.30)"
@@ -727,7 +728,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="/images/burger-completed-3.jpg"
+            src={`${BASE}/images/burger-completed-3.jpg`}
             alt="B: Viande チーズバーガー完成"
             loading="eager"
             data-caption="B: Viande チーズバーガー (2026.05.30)"
@@ -742,7 +743,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="gallery-item" onclick="openLightbox(this)">
           <img
-            src="/images/weber-grilling.jpg"
+            src={`${BASE}/images/weber-grilling.jpg`}
             alt="C: Weber PULSE でパティ焼き中"
             loading="eager"
             data-caption="C: Weber PULSE 温度管理 — パティ焼き工程 (2026.05.30)"
