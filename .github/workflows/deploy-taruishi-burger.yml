@@ -32,6 +32,8 @@ jobs:
       - name: Build taruishi-burger
         working-directory: sites/taruishi-burger
         run: npm ci && npm run build
+        env:
+          ASTRO_BASE: /sites/taruishi-burger
 
       - name: Assemble full site
         run: |

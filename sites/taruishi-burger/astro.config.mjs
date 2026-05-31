@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   output: 'static',
-  base: '/sites/taruishi-burger',
-  // content collections は src/content/ 配下に自動認識される
-  // テーマ (#5318)・多言語 (#5319)・マルチページ (#5320) はこの config を拡張して実装
+  // Docker (eai-systemctl): ASTRO_BASE 未設定 → base: '/' (ルート)
+  // GitHub Pages (sites/<name>/): deploy workflow で ASTRO_BASE=/sites/<name> を設定
+  base: process.env.ASTRO_BASE || '/',
 });
