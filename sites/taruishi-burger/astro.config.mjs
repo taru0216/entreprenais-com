@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   output: 'static',
+  base: '/sites/taruishi-burger',
   // content collections は src/content/ 配下に自動認識される
   // テーマ (#5318)・多言語 (#5319)・マルチページ (#5320) はこの config を拡張して実装
 });
