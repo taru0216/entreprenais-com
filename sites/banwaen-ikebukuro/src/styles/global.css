@@ -1,0 +1,28 @@
+:root {
+  --black: #000;
+  --white: #fff;
+  --orange: #f7970b;
+  --blue: #2d88d9;
+  --overlay: rgba(0,0,0,.3);
+  --overlay-dark: rgba(0,0,0,0.7);
+  --text: var(--white);
+  --text-muted: rgba(255,255,255,0.65);
+  --border-muted: rgba(255,255,255,0.15);
+  --red: #e74c3c;
+  --green: #06c755;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic Pro', -apple-system, sans-serif;
+  background: var(--black);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}

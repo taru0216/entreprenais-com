@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SourceBadge from '../../components/SourceBadge.astro';
+---
+
+<BaseLayout
+  title="萬和苑が大切にしていること — お客さまから学んだ、池袋の焼肉店の理念"
+  description="お客さまを原点に・平和を追求し・人間を尊重し・地域社会に貢献する。萬和苑 池袋店が、お客さまとの日々の積み重ねの中で育んできた理念をご紹介します。"
+  activePage="story"
+>
+  <style>
+    .story-hero {
+      padding: 8rem 1.5rem 3rem; text-align: center; max-width: 800px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.18em; color: var(--green);
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .story-hero h1 {
+      font-family: 'Noto Serif JP', serif; font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .story-hero p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .demo-notice {
+      background: rgba(247,151,11,0.1); border: 1px solid rgba(247,151,11,0.3);
+      border-radius: 10px; padding: 0.75rem 1.25rem;
+      margin: 0 1.5rem 3rem; max-width: 800px; margin-left: auto; margin-right: auto;
+      text-align: center; font-size: 0.8rem; color: var(--orange);
+    }
+
+    .story-content { max-width: 800px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .story-section { margin-bottom: 3rem; }
+    .story-section h2 {
+      font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--white); margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .story-text {
+      font-size: 0.95rem; line-height: 2; color: rgba(255,255,255,0.85);
+      white-space: pre-line;
+    }
+
+    .owner-profile {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted);
+      border-radius: 16px; padding: 2rem; margin-bottom: 3rem;
+      display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .owner-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #2d88d9, #1a5a9a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; flex-shrink: 0;
+    }
+    .owner-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .owner-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+    .line-cta {
+      background: rgba(6,199,85,0.08); border: 1px solid rgba(6,199,85,0.25);
+      border-radius: 12px; padding: 2rem; text-align: center; margin-top: 3rem;
+    }
+    .line-cta h3 { font-size: 1.1rem; font-weight: 700; color: #06c755; margin-bottom: 0.5rem; }
+    .line-cta p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .btn-line {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #06c755; color: var(--white); font-weight: 700; font-size: 0.9rem;
+      padding: 0.65rem 1.5rem; border-radius: 8px; text-decoration: none; transition: opacity 0.2s;
+    }
+    .btn-line:hover { opacity: 0.8; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .observe-anim { opacity: 0; transform: translateY(24px); }
+  </style>
+
+  <div class="story-hero">
+    <p class="section-label" style="opacity:0;transform:translateY(24px);animation:fadeUp 0.7s ease 0.1s both">Our Story</p>
+    <h1 style="opacity:0;transform:translateY(24px);animation:fadeUp 0.7s ease 0.3s both">萬和苑が大切にしていること</h1>
+    <p style="opacity:0;transform:translateY(24px);animation:fadeUp 0.7s ease 0.5s both">お客さまを原点に、平和を追求し、人間を尊重し、地域社会に貢献する——お客さまとの日々の積み重ねの中で育んできた理念をお伝えします。</p>
+  </div>
+
+  <div class="demo-notice">
+    ⚠️ デモ用サンプル — 以下のコンテンツは飲食店OSのデモとして生成されたサンプルです。実際の店主の声は LINE でご入力いただけます。
+  </div>
+
+  <div class="story-content">
+    <div class="owner-profile observe-anim" style="animation-delay:0.3s">
+      <div class="owner-avatar">👨‍🍳</div>
+      <div class="owner-info">
+        <SourceBadge source="owner_line" />
+        <h3>オーナー（デモ用プレースホルダー）</h3>
+        <p>韓国焼肉 萬和苑 池袋店</p>
+      </div>
+    </div>
+
+    <div class="story-section observe-anim">
+      <h2>お客さまが教えてくれた、この場所の意味</h2>
+      <div class="story-text">
+        （デモ用サンプルテキスト）
+
+        焼肉という料理には、人と人をつなぐ力があると感じています。家族や友人、同僚と囲む焼肉の席には、その方だけの特別な記憶が生まれます。
+
+        池袋という街を選んだのも、様々な国籍・年代の方が集まるこの街で、誰もが安心して過ごせる場所を作りたいと思ったからです。お客さまから「また来たい」とお声がけいただくたびに、その想いを確かめさせていただいています。
+      </div>
+    </div>
+
+    <div class="story-section observe-anim">
+      <h2>お客さまの声が育てたメニュー</h2>
+      <div class="story-text">
+        （デモ用サンプルテキスト）
+
+        「部位の違いが鮮明になった」「肉の質を落とさずにこの価格帯を実現している」——お客さまからいただく言葉が、私たちの次の一手を決めてきました。
+
+        ハラミ、トモサンカク、ザブトン——それぞれの部位の個性をお客さまに発見していただけるよう、スタッフ全員が丁寧に説明できる体制を続けています。これもまた、お客さまから学んだことです。
+      </div>
+    </div>
+
+    <div class="story-section observe-anim">
+      <h2>私たちが大切にしていること</h2>
+      <div class="story-text">
+        （デモ用サンプルテキスト）
+
+        お客さまを原点に、平和を追求し、人間を尊重し、地域社会に貢献する——これが萬和苑の理念です。
+
+        記念日のお祝いに、日常のちょっとした贅沢に、海外からのゲストのおもてなしに——どんな場面でも、お客さまが安心していられる時間を届けることを、これからも続けてまいります。
+      </div>
+    </div>
+
+    <div class="line-cta observe-anim">
+      <h3>お客さまの声をお聞かせください</h3>
+      <p>このページのコンテンツは、お客さまからいただいた声を反映しながら更新されます。ご感想は LINE でお気軽にお寄せください。</p>
+      <a href="https://line.me" target="_blank" class="btn-line">💬 LINE でメッセージを送る</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const delay = entry.target.style.animationDelay || '0s';
+            entry.target.style.animation = 'fadeUp 0.7s ease ' + delay + ' both';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.observe-anim').forEach(el => observer.observe(el));
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,14 @@
+:{$PORT:8080}
+
+# healthcheck
+@healthz path /healthz
+handle @healthz {
+	respond "ok" 200
+}
+
+# static files (Astro SSG)
+handle {
+	root * /srv
+	file_server
+	try_files {path} {path}/ /index.html
+}

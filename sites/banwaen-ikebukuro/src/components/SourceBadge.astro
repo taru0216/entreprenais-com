@@ -1,0 +1,58 @@
+---
+/**
+ * SourceBadge — コンテンツ出所メタデータバッジ
+ *
+ * source: "owner_line"   → 本人執筆バッジ（店主より）
+ * source: "retty_review" → AI が Retty レビューを記事化バッジ
+ * source: "ai_generated" → AI 生成バッジ
+ */
+interface Props {
+  source: 'owner_line' | 'retty_review' | 'ai_generated';
+}
+
+const { source } = Astro.props;
+
+const configs = {
+  owner_line: {
+    label: '店主より',
+    icon: '✍️',
+    className: 'badge-owner',
+  },
+  retty_review: {
+    label: 'AI が Retty レビューを記事化',
+    icon: '★',
+    className: 'badge-retty',
+  },
+  ai_generated: {
+    label: 'AI 生成',
+    icon: '🤖',
+    className: 'badge-ai',
+  },
+};
+
+const config = configs[source];
+---
+
+<style>
+  .source-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.65rem; border-radius: 4px; padding: 0.15rem 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .badge-retty {
+    background: rgba(231,76,60,0.15); color: #e74c3c;
+    border: 1px solid rgba(231,76,60,0.3);
+  }
+  .badge-owner {
+    background: rgba(6,199,85,0.12); color: #06c755;
+    border: 1px solid rgba(6,199,85,0.3);
+  }
+  .badge-ai {
+    background: rgba(45,136,217,0.12); color: #2d88d9;
+    border: 1px solid rgba(45,136,217,0.3);
+  }
+</style>
+
+<span class={`source-badge ${config.className}`}>
+  {config.icon} {config.label}
+</span>
