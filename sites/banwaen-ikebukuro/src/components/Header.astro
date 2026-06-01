@@ -1,0 +1,247 @@
+---
+interface Props {
+  activePage?: 'lp' | 'blog' | 'story';
+  lang?: string;
+}
+
+const { activePage = 'lp', lang = 'ja' } = Astro.props;
+
+const labels: Record<string, Record<string, string>> = {
+  ja: { home: 'ホーム（LP）', blog: '紹介記事', story: '店主の想い', reserve: '今すぐ予約' },
+  en: { home: 'Home', blog: 'Articles', story: 'Our Story', reserve: 'Reserve Now' },
+  ko: { home: '홈', blog: '리뷰 기사', story: '오너의 이야기', reserve: '지금 예약' },
+  'zh-cn': { home: '首页', blog: '介绍文章', story: '店主的故事', reserve: '立即预约' },
+  'zh-tw': { home: '首頁', blog: '介紹文章', story: '店主的故事', reserve: '立即預約' },
+  th: { home: 'หน้าแรก', blog: 'บทความ', story: 'เรื่องราวของเจ้าของ', reserve: 'จองเลย' },
+  vi: { home: 'Trang chủ', blog: 'Bài viết', story: 'Câu chuyện', reserve: 'Đặt ngay' },
+  id: { home: 'Beranda', blog: 'Artikel', story: 'Kisah Kami', reserve: 'Pesan Sekarang' },
+};
+
+const t = labels[lang] || labels.ja;
+const base = lang === 'ja' ? '' : `/${lang}`;
+---
+
+<style>
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background-color: var(--black); padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border-muted);
+  }
+  @media screen and (min-width: 768px) { header { padding: 16px 24px; } }
+
+  .header-logo {
+    font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700;
+    color: var(--white); letter-spacing: 0.05em; text-decoration: none;
+    flex-shrink: 0;
+  }
+  @media screen and (min-width: 768px) { .header-logo { font-size: 18px; } }
+
+  /* Desktop nav */
+  .header-nav { display: none; align-items: center; gap: 1rem; }
+  @media screen and (min-width: 768px) { .header-nav { display: flex; } }
+
+  .nav-link {
+    color: var(--text-muted); font-size: 13px; text-decoration: none;
+    transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-link:hover { color: var(--white); }
+  .nav-link.active { color: var(--orange); font-weight: 600; }
+
+  .btn-reserve {
+    background-color: var(--orange); color: var(--white); font-weight: 700;
+    font-size: 13px; padding: 0.4rem 1rem; border-radius: 8px;
+    text-decoration: none; transition: opacity 0.2s;
+    display: inline-flex; align-items: center;
+  }
+  .btn-reserve:hover { opacity: 0.75; }
+
+  /* Language switcher */
+  .lang-switcher { position: relative; display: inline-block; }
+  .lang-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid var(--border-muted);
+    color: var(--white); font-size: 13px; padding: 0.35rem 0.75rem;
+    border-radius: 6px; cursor: pointer; display: flex; align-items: center;
+    gap: 0.3rem; transition: all 0.2s; white-space: nowrap;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.15); }
+  .lang-dropdown {
+    display: none; position: absolute; right: 0; top: calc(100% + 6px);
+    background: #1a1a1a; border: 1px solid var(--border-muted); border-radius: 8px;
+    min-width: 160px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .lang-dropdown.open { display: block; }
+  .lang-option {
+    display: block; padding: 0.6rem 1rem; font-size: 13px;
+    color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    text-decoration: none;
+  }
+  .lang-option:hover, .lang-option.active { background: rgba(255,255,255,0.07); color: var(--white); }
+
+  /* Mobile right side: lang switcher + hamburger */
+  .mobile-controls {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  @media screen and (min-width: 768px) { .mobile-controls { display: none; } }
+
+  /* Hamburger button */
+  .hamburger-btn {
+    background: none; border: none; cursor: pointer; padding: 4px;
+    display: flex; flex-direction: column; justify-content: center;
+    align-items: center; gap: 5px; width: 32px; height: 32px;
+  }
+  .hamburger-btn span {
+    display: block; width: 22px; height: 2px;
+    background-color: var(--white); border-radius: 2px;
+    transition: all 0.25s ease;
+    transform-origin: center;
+  }
+  .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile menu drawer */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 53px; left: 0; right: 0; z-index: 99;
+    background-color: var(--black);
+    border-bottom: 1px solid var(--border-muted);
+    padding: 1rem 1.5rem 1.5rem;
+    flex-direction: column; gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  @media screen and (min-width: 768px) { .mobile-menu { display: none !important; } }
+
+  .mobile-nav-link {
+    color: var(--text-muted); font-size: 15px; text-decoration: none;
+    padding: 0.8rem 0; border-bottom: 1px solid var(--border-muted);
+    transition: color 0.2s; display: block;
+  }
+  .mobile-nav-link:hover { color: var(--white); }
+  .mobile-nav-link.active { color: var(--orange); font-weight: 600; }
+  .mobile-nav-link:last-of-type { border-bottom: none; }
+
+  .mobile-btn-reserve {
+    margin-top: 1rem;
+    background-color: var(--orange); color: var(--white); font-weight: 700;
+    font-size: 14px; padding: 0.7rem 1.5rem; border-radius: 8px;
+    text-decoration: none; transition: opacity 0.2s;
+    display: block; text-align: center;
+  }
+  .mobile-btn-reserve:hover { opacity: 0.75; }
+
+  /* Mobile lang switcher in drawer */
+  .mobile-lang-switcher { position: relative; }
+  .mobile-lang-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid var(--border-muted);
+    color: var(--white); font-size: 13px; padding: 0.35rem 0.75rem;
+    border-radius: 6px; cursor: pointer; display: flex; align-items: center;
+    gap: 0.3rem; transition: all 0.2s; white-space: nowrap; margin-top: 0.75rem;
+  }
+  .mobile-lang-btn:hover { background: rgba(255,255,255,0.15); }
+  .mobile-lang-dropdown {
+    display: none; position: absolute; left: 0; top: calc(100% + 6px);
+    background: #1a1a1a; border: 1px solid var(--border-muted); border-radius: 8px;
+    min-width: 160px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .mobile-lang-dropdown.open { display: block; }
+</style>
+
+<header>
+  <a class="header-logo" href={`${base}/`}>萬和苑 池袋店</a>
+
+  <!-- Desktop nav -->
+  <nav class="header-nav">
+    <a href={`${base}/`} class={`nav-link ${activePage === 'lp' ? 'active' : ''}`}>{t.home}</a>
+    <a href={`${base}/blog/`} class={`nav-link ${activePage === 'blog' ? 'active' : ''}`}>{t.blog}</a>
+    <a href={`${base}/story/`} class={`nav-link ${activePage === 'story' ? 'active' : ''}`}>{t.story}</a>
+    <div class="lang-switcher">
+      <button class="lang-btn" id="lang-btn">🌐 {lang.toUpperCase().replace('-CN','(簡)').replace('-TW','(繁)')} ▾</button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <a href="/" class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
+        <a href="/en/" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
+        <a href="/ko/" class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
+        <a href="/zh-cn/" class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
+        <a href="/zh-tw/" class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
+        <a href="/th/" class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
+        <a href="/vi/" class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
+        <a href="/id/" class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
+      </div>
+    </div>
+    <a href={`${base}/#reserve`} class="btn-reserve">{t.reserve}</a>
+  </nav>
+
+  <!-- Mobile: lang switcher + hamburger -->
+  <div class="mobile-controls">
+    <div class="lang-switcher">
+      <button class="lang-btn" id="lang-btn-mobile">🌐 {lang.toUpperCase().replace('-CN','(簡)').replace('-TW','(繁)')} ▾</button>
+      <div class="lang-dropdown" id="lang-dropdown-mobile">
+        <a href="/" class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
+        <a href="/en/" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
+        <a href="/ko/" class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
+        <a href="/zh-cn/" class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
+        <a href="/zh-tw/" class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
+        <a href="/th/" class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
+        <a href="/vi/" class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
+        <a href="/id/" class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
+      </div>
+    </div>
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu drawer -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href={`${base}/`} class={`mobile-nav-link ${activePage === 'lp' ? 'active' : ''}`}>{t.home}</a>
+  <a href={`${base}/blog/`} class={`mobile-nav-link ${activePage === 'blog' ? 'active' : ''}`}>{t.blog}</a>
+  <a href={`${base}/story/`} class={`mobile-nav-link ${activePage === 'story' ? 'active' : ''}`}>{t.story}</a>
+  <a href={`${base}/#reserve`} class="mobile-btn-reserve">{t.reserve}</a>
+</div>
+
+<script>
+  // Desktop lang switcher
+  const langBtn = document.getElementById('lang-btn');
+  const langDropdown = document.getElementById('lang-dropdown');
+  langBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdown?.classList.toggle('open');
+  });
+
+  // Mobile lang switcher
+  const langBtnMobile = document.getElementById('lang-btn-mobile');
+  const langDropdownMobile = document.getElementById('lang-dropdown-mobile');
+  langBtnMobile?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdownMobile?.classList.toggle('open');
+  });
+
+  // Hamburger menu
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburgerBtn?.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
+    mobileMenu?.classList.toggle('open');
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (!langBtn?.contains(e.target as Node) && !langDropdown?.contains(e.target as Node)) {
+      langDropdown?.classList.remove('open');
+    }
+    if (!langBtnMobile?.contains(e.target as Node) && !langDropdownMobile?.contains(e.target as Node)) {
+      langDropdownMobile?.classList.remove('open');
+    }
+  });
+
+  // Close mobile menu on nav link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburgerBtn?.classList.remove('open');
+      mobileMenu?.classList.remove('open');
+    });
+  });
+</script>

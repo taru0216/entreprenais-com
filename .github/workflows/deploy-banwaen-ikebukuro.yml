@@ -1,0 +1,74 @@
+name: Deploy banwaen-ikebukuro
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sites/banwaen-ikebukuro/**'
+      - '.github/workflows/deploy-banwaen-ikebukuro.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: sites/banwaen-ikebukuro/package-lock.json
+
+      - name: Build banwaen-ikebukuro
+        working-directory: sites/banwaen-ikebukuro
+        run: npm ci && npm run build
+        env:
+          ASTRO_BASE: /sites/banwaen-ikebukuro
+
+      - name: Assemble full site
+        run: |
+          mkdir -p _site/sites/banwaen-ikebukuro
+          # Root static files
+          find . -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
+            -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
+            -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
+            -exec cp {} _site/ \;
+          # Root directories
+          for dir in img en zh news eai privacy terms data _i18n; do
+            [ -d "$dir" ] && cp -r "$dir" _site/
+          done
+          # Other sites (non-Astro static HTML)
+          for site in sites/*/; do
+            name=$(basename "$site")
+            if [ "$name" != "banwaen-ikebukuro" ]; then
+              mkdir -p "_site/sites/$name"
+              cp -r "$site"/* "_site/sites/$name/" 2>/dev/null || true
+            fi
+          done
+          # banwaen-ikebukuro Astro build
+          cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

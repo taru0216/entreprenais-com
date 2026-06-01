@@ -1,0 +1,205 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SourceBadge from '../../components/SourceBadge.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const rettyPhotos = [
+  { src: '/images/retty/photo-01.jpg', alt: '萬和苑 池袋店 料理' },
+  { src: '/images/retty/photo-02.jpg', alt: '萬和苑 池袋店 焼肉' },
+  { src: '/images/retty/photo-03.jpg', alt: '萬和苑 池袋店 料理' },
+  { src: '/images/retty/photo-04.jpg', alt: '萬和苑 池袋店 焼肉' },
+  { src: '/images/retty/photo-05.jpg', alt: '萬和苑 池袋店 料理' },
+  { src: '/images/retty/photo-06.jpg', alt: '萬和苑 池袋店 内観' },
+  { src: '/images/retty/photo-07.jpg', alt: '萬和苑 池袋店 料理' },
+  { src: '/images/retty/photo-08.jpg', alt: '萬和苑 池袋店 料理' },
+];
+---
+
+<BaseLayout
+  title="お客さまが語る、萬和苑 池袋店 — 体験記 | 韓国焼肉 萬和苑 池袋店"
+  description="Retty に寄せられた実名口コミをもとに、お客さまが萬和苑 池袋店で体験したことを記録した体験記シリーズ。"
+  activePage="blog"
+>
+  <style>
+    .page-hero {
+      padding: 8rem 1.5rem 2.5rem; text-align: center; max-width: 900px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.18em; color: var(--orange);
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .page-hero h1 {
+      font-family: 'Noto Serif JP', serif; font-size: clamp(1.8rem,5vw,2.8rem);
+      font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .page-hero p { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+
+    /* Retty 写真ギャラリー */
+    .photo-gallery {
+      max-width: 960px; margin: 0 auto 2rem; padding: 0 1.5rem;
+      overflow: hidden;
+    }
+    .photo-gallery-track {
+      display: flex; gap: 0.75rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      padding-bottom: 0.5rem;
+    }
+    .photo-gallery-track::-webkit-scrollbar { display: none; }
+    .photo-gallery-item {
+      flex: 0 0 auto; width: 220px; height: 160px;
+      border-radius: 10px; overflow: hidden; scroll-snap-align: start;
+      border: 1px solid var(--border-muted);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .photo-gallery-item:hover {
+      transform: translateY(-3px); border-color: rgba(255,255,255,0.3);
+    }
+    .photo-gallery-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .photo-gallery-caption {
+      text-align: center; font-size: 0.72rem; color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+    .photo-gallery-caption a { color: var(--orange); text-decoration: none; }
+    .photo-gallery-caption a:hover { text-decoration: underline; }
+
+    .demo-notice {
+      background: rgba(247,151,11,0.1); border: 1px solid rgba(247,151,11,0.3);
+      border-radius: 10px; padding: 0.75rem 1.25rem;
+      margin: 0 1.5rem 2.5rem; max-width: 860px; margin-left: auto; margin-right: auto;
+      text-align: center; font-size: 0.8rem; color: var(--orange);
+    }
+
+    .articles-section { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.5rem; }
+
+    .article-card {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted);
+      border-radius: 14px; overflow: hidden; transition: all 0.25s; text-decoration: none; display: block;
+    }
+    .article-card:hover {
+      background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.3);
+      transform: translateY(-4px);
+    }
+    .article-card-img {
+      width: 100%; height: 160px; overflow: hidden; background: #1a1a1a;
+    }
+    .article-card-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s;
+    }
+    .article-card:hover .article-card-img img { transform: scale(1.05); }
+    .article-card-body { padding: 1.25rem; }
+    .article-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.4; color: var(--white); }
+    .article-excerpt {
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.75rem;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-meta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; color: var(--text-muted); }
+    .article-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--white); flex-shrink: 0;
+    }
+    .read-more { display: block; margin-top: 0.75rem; font-size: 0.78rem; color: var(--orange); font-weight: 600; }
+
+    .retty-cta { max-width: 700px; margin: 0 auto 4rem; padding: 0 1.5rem; text-align: center; }
+    .retty-cta-inner {
+      background: rgba(231,76,60,0.08); border: 1px solid rgba(231,76,60,0.2);
+      border-radius: 12px; padding: 2rem;
+    }
+    .retty-cta-inner h3 { font-size: 1.1rem; font-weight: 700; color: #e74c3c; margin-bottom: 0.5rem; }
+    .retty-cta-inner p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .btn-retty {
+      display: inline-flex; align-items: center; gap: 0.5rem; background: #e74c3c;
+      color: var(--white); font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.5rem;
+      border-radius: 8px; text-decoration: none; transition: opacity 0.2s;
+    }
+    .btn-retty:hover { opacity: 0.8; }
+
+    .bg-colors { --c1: #1a0800; --c2: #4a1a00; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .observe-anim { opacity: 0; transform: translateY(24px); }
+
+    @media (max-width: 600px) {
+      .photo-gallery-item { width: 180px; height: 135px; }
+    }
+  </style>
+
+  <div class="page-hero">
+    <p class="section-label observe-anim" style="animation-delay:0.1s">CUSTOMER STORIES</p>
+    <h1 style="opacity:0;transform:translateY(24px);animation:fadeUp 0.7s ease 0.3s both">お客さまが語る、萬和苑 池袋店</h1>
+    <p style="opacity:0;transform:translateY(24px);animation:fadeUp 0.7s ease 0.5s both">お客さまがこのお店で何を体験し、何を感じたか。Retty に寄せられた実名口コミをもとにした体験記録です。</p>
+  </div>
+
+  <!-- Retty 写真ギャラリー -->
+  <div class="photo-gallery observe-anim" style="animation-delay:0.65s">
+    <div class="photo-gallery-track">
+      {rettyPhotos.map((photo) => (
+        <div class="photo-gallery-item">
+          <img src={photo.src} alt={photo.alt} loading="lazy" />
+        </div>
+      ))}
+    </div>
+    <p class="photo-gallery-caption">
+      写真提供: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — 萬和苑 池袋店</a>（公式写真）
+    </p>
+  </div>
+
+  <div class="demo-notice observe-anim" style="animation-delay:0.7s">
+    ⚠️ デモ用サンプル — 以下の記事は飲食店OSのデモとして生成したサンプルコンテンツです。実際の来店口コミをもとにした体験記録の形式を示しています。
+  </div>
+
+  <div class="articles-section">
+    <div class="articles-grid">
+      {posts.map((post, idx) => (
+        <a class="article-card observe-anim" href={`/blog/${post.id}/`}>
+          <div class="article-card-img">
+            <img src={`/images/retty/photo-${String((idx % 8) + 1).padStart(2, '0')}.jpg`} alt="萬和苑 池袋店" loading="lazy" />
+          </div>
+          <div class="article-card-body">
+            <SourceBadge source={post.data.source} />
+            <div class="article-title">{post.data.title}</div>
+            <div class="article-excerpt">{post.data.description}</div>
+            <div class="article-meta">
+              <div class="article-avatar">{post.data.author.charAt(0)}</div>
+              <span>{post.data.author}{post.data.authorRole ? ` · ${post.data.authorRole}` : ''}</span>
+            </div>
+            <span class="read-more">続きを読む →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="retty-cta">
+    <div class="retty-cta-inner">
+      <h3>萬和苑 池袋店のご体験を Retty に投稿する</h3>
+      <p>実際にご来店いただいたお客さまの声が、次に訪れる方の参考になります。萬和苑への実名口コミを Retty にお寄せください。</p>
+      <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" class="btn-retty">★ Rettyで口コミを投稿</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const delay = entry.target.style.animationDelay || '0s';
+            entry.target.style.animation = 'fadeUp 0.7s ease ' + delay + ' both';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.observe-anim').forEach(el => observer.observe(el));
+    });
+  </script>
+</BaseLayout>

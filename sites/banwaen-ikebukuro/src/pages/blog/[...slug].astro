@@ -1,0 +1,132 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SourceBadge from '../../components/SourceBadge.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} — 韓国焼肉 萬和苑 池袋店`}
+  description={post.data.description}
+  activePage="blog"
+>
+  <style>
+    .article-container {
+      max-width: 800px; margin: 0 auto; padding: 7rem 1.5rem 4rem;
+    }
+    .article-breadcrumb {
+      font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2rem; display: flex; gap: 0.5rem; align-items: center;
+    }
+    .article-breadcrumb a { color: var(--text-muted); text-decoration: none; }
+    .article-breadcrumb a:hover { color: var(--white); }
+    .article-breadcrumb span { color: var(--border-muted); }
+
+    .article-emoji { font-size: 4rem; text-align: center; margin-bottom: 1.5rem; }
+    .article-header { margin-bottom: 2rem; }
+    .article-title {
+      font-family: 'Noto Serif JP', serif; font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 700; line-height: 1.3; margin-bottom: 1rem;
+    }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-muted); }
+    .article-author { display: flex; align-items: center; gap: 0.5rem; }
+    .article-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; color: var(--white);
+    }
+
+    .article-content {
+      line-height: 1.9; color: rgba(255,255,255,0.88);
+    }
+    .article-content h2 {
+      font-size: 1.4rem; font-weight: 700; color: var(--white);
+      margin: 2.5rem 0 1rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .article-content p { margin-bottom: 1.25rem; }
+    .article-content blockquote {
+      border-left: 3px solid var(--orange); padding: 0.5rem 1.25rem;
+      margin: 1.5rem 0; background: rgba(247,151,11,0.06);
+      border-radius: 0 8px 8px 0; color: var(--orange); font-size: 0.88rem;
+    }
+    .article-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem; }
+    .article-tag {
+      font-size: 0.72rem; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-muted); border-radius: 4px;
+      padding: 0.2rem 0.6rem; color: var(--text-muted);
+    }
+
+    .article-back {
+      display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 3rem;
+      font-size: 0.88rem; color: var(--orange); text-decoration: none; transition: opacity 0.2s;
+    }
+    .article-back:hover { opacity: 0.7; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .observe-anim { opacity: 0; transform: translateY(24px); }
+  </style>
+
+  <div class="article-container">
+    <div class="article-breadcrumb">
+      <a href="/">ホーム</a>
+      <span>›</span>
+      <a href="/blog/">お客さまの声</a>
+      <span>›</span>
+      <span>{post.data.title}</span>
+    </div>
+
+    {post.data.emoji && <div class="article-emoji observe-anim" style="animation-delay:0.1s">{post.data.emoji}</div>}
+
+    <header class="article-header observe-anim" style="animation-delay:0.2s">
+      <SourceBadge source={post.data.source} />
+      <h1 class="article-title">{post.data.title}</h1>
+      <div class="article-meta">
+        <div class="article-author">
+          <div class="article-avatar">{post.data.author.charAt(0)}</div>
+          <span>{post.data.author}{post.data.authorRole ? ` · ${post.data.authorRole}` : ''}</span>
+        </div>
+        <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+      </div>
+    </header>
+
+    <div class="article-content observe-anim" style="animation-delay:0.35s">
+      <Content />
+    </div>
+
+    {post.data.tags.length > 0 && (
+      <div class="article-tags observe-anim">
+        {post.data.tags.map((tag) => (
+          <span class="article-tag">#{tag}</span>
+        ))}
+      </div>
+    )}
+
+    <a href="/blog/" class="article-back observe-anim">← お客さまの声一覧に戻る</a>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const delay = entry.target.style.animationDelay || '0s';
+            entry.target.style.animation = 'fadeUp 0.7s ease ' + delay + ' both';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.observe-anim').forEach(el => observer.observe(el));
+    });
+  </script>
+</BaseLayout>

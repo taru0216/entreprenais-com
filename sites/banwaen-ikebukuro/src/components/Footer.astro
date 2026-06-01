@@ -1,0 +1,51 @@
+---
+interface Props {
+  lang?: string;
+}
+const { lang = 'ja' } = Astro.props;
+const base = lang === 'ja' ? '' : `/${lang}`;
+
+const labels: Record<string, Record<string, string>> = {
+  ja: { home: 'ホーム（LP）', blog: '紹介記事', story: '店主の想い', reserve: 'ご予約', info: '店舗情報', address: '東京都豊島区南池袋1-27-8 サンパレスビル6F-B' },
+  en: { home: 'Home', blog: 'Articles', story: 'Our Story', reserve: 'Reserve', info: 'Access', address: 'Sunpalace Bldg. 6F-B, 1-27-8 Minami-Ikebukuro, Toshima-ku, Tokyo' },
+  ko: { home: '홈', blog: '리뷰 기사', story: '오너의 이야기', reserve: '예약', info: '오시는 길', address: '도쿄도 토시마구 미나미이케부쿠로 1-27-8 선팰리스빌딩 6F-B' },
+  'zh-cn': { home: '首页', blog: '介绍文章', story: '店主的故事', reserve: '预约', info: '店铺信息', address: '东京都丰岛区南池袋1-27-8 太阳宫大厦6F-B' },
+  'zh-tw': { home: '首頁', blog: '介紹文章', story: '店主的故事', reserve: '預約', info: '店舖資訊', address: '東京都豐島區南池袋1-27-8 太陽宮大廈6F-B' },
+  th: { home: 'หน้าแรก', blog: 'บทความ', story: 'เรื่องราวของเจ้าของ', reserve: 'จอง', info: 'ข้อมูลร้าน', address: 'ซันพาเลซ บิลด์ดิ้ง 6F-B, 1-27-8 มินามิอิเคะบุคุโระ, โตชิมะ, โตเกียว' },
+  vi: { home: 'Trang chủ', blog: 'Bài viết', story: 'Câu chuyện', reserve: 'Đặt bàn', info: 'Địa chỉ', address: 'Tòa nhà Sunpalace 6F-B, 1-27-8 Minami-Ikebukuro, Toshima, Tokyo' },
+  id: { home: 'Beranda', blog: 'Artikel', story: 'Kisah Kami', reserve: 'Reservasi', info: 'Info Toko', address: 'Gedung Sunpalace 6F-B, 1-27-8 Minami-Ikebukuro, Toshima, Tokyo' },
+};
+
+const t = labels[lang] || labels.ja;
+---
+
+<style>
+  footer {
+    border-top: 1px solid var(--border-muted);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+  .footer-nav {
+    display: flex; gap: 1.5rem; justify-content: center;
+    margin-bottom: 1rem; flex-wrap: wrap;
+  }
+  .footer-nav a {
+    color: var(--text-muted); text-decoration: none; font-size: 0.78rem; transition: color 0.2s;
+  }
+  .footer-nav a:hover { color: var(--white); }
+  .footer-powered { margin-top: 0.5rem; color: rgba(247,151,11,0.5); font-size: 0.7rem; }
+</style>
+
+<footer>
+  <div class="footer-nav">
+    <a href={`${base}/`}>{t.home}</a>
+    <a href={`${base}/blog/`}>{t.blog}</a>
+    <a href={`${base}/story/`}>{t.story}</a>
+    <a href={`${base}/#reserve`}>{t.reserve}</a>
+    <a href={`${base}/#info`}>{t.info}</a>
+  </div>
+  <p>韓国焼肉 萬和苑 池袋店 — {t.address}</p>
+  <p class="footer-powered">Powered by 飲食店OS — Retty EntreprenAIs</p>
+</footer>
