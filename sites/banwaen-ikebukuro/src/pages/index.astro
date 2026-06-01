@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
@@ -161,14 +162,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <div class="image-section">
     <div class="image-scroll">
-      <div class="image-scroll-item"><img src="/images/retty/photo-01.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-02.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-03.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-04.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-05.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-06.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-07.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
-      <div class="image-scroll-item"><img src="/images/retty/photo-08.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-01.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-02.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-03.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-04.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-05.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-06.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-07.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-08.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
     </div>
     <p class="image-scroll-caption">写真提供: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — 萬和苑 池袋店</a></p>
   </div>
@@ -179,7 +180,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="section-subtitle">希少部位の食べ比べ、食べ放題55品——お客さまの声が積み重なって、今のメニューラインナップが生まれました。</p>
     <div class="menu-grid">
       <div class="menu-card">
-        <div class="menu-card-img"><img src="/images/retty/photo-01.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-01.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
         <div class="menu-card-body">
           <span class="menu-card-tag">希少部位</span>
           <h3>カルビ / ハラミ</h3>
@@ -187,7 +188,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
       <div class="menu-card">
-        <div class="menu-card-img"><img src="/images/retty/photo-03.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-03.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
         <div class="menu-card-body">
           <span class="menu-card-tag">食べ放題 55品</span>
           <h3>食べ放題コース</h3>
@@ -195,7 +196,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
       <div class="menu-card">
-        <div class="menu-card-img"><img src="/images/retty/photo-05.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-05.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
         <div class="menu-card-body">
           <span class="menu-card-tag">単品飲み放題</span>
           <h3>飲み放題 2時間</h3>
@@ -203,7 +204,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
       <div class="menu-card">
-        <div class="menu-card-img"><img src="/images/retty/photo-07.jpg" alt="萬和苑 池袋店" loading="lazy" /></div>
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-07.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
         <div class="menu-card-body">
           <span class="menu-card-tag">韓国定番</span>
           <h3>チゲ / ナムル</h3>
@@ -296,7 +297,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <!-- Blog CTA -->
       <div style="margin-top:2.5rem;text-align:center;">
         <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);margin-bottom:1rem;">お客さまの声から、私たちが日々学んでいること — AI 編集部が口コミを通じて発見した体験の記録</p>
-        <a href="/blog/" class="blog-cta-btn">記事を読む →</a>
+        <a href={`${base}/blog/`} class="blog-cta-btn">記事を読む →</a>
       </div>
     </div>
   </div>

@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
@@ -79,9 +80,9 @@ const { Content } = await render(post);
 
   <div class="article-container">
     <div class="article-breadcrumb">
-      <a href="/">ホーム</a>
+      <a href={`${base}/`}>ホーム</a>
       <span>›</span>
-      <a href="/blog/">お客さまの声</a>
+      <a href={`${base}/blog/`}>お客さまの声</a>
       <span>›</span>
       <span>{post.data.title}</span>
     </div>
@@ -112,7 +113,7 @@ const { Content } = await render(post);
       </div>
     )}
 
-    <a href="/blog/" class="article-back observe-anim">← お客さまの声一覧に戻る</a>
+    <a href={`${base}/blog/`} class="article-back observe-anim">← お客さまの声一覧に戻る</a>
   </div>
 
   <script is:inline>
