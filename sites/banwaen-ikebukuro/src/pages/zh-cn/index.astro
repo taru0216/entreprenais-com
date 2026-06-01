@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="万和苑 池袋店 — 东京池袋韩国烤肉餐厅"
+  description="希少部位与国产和牛，55种无限畅吃套餐。距池袋站步行2分钟。设有包间。"
+  activePage="lp"
+  lang="zh-cn"
+>
+  <style>
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 3rem; position: relative; overflow: hidden; background-color: var(--black); }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+    .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(0deg,#000,transparent 19.17%); }
+    .hero-content { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.3rem 0.9rem; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(2.8rem,9vw,5.5rem); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .hero-tagline { font-size: clamp(1rem,2.8vw,1.35rem); font-weight: 700; color: var(--white); margin-bottom: 2rem; }
+    .hero-tagline span { color: var(--orange); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .btn-primary { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 1rem; padding: 0.9rem 2.5rem; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-secondary { background: transparent; color: var(--white); font-weight: 600; font-size: 1rem; padding: 0.9rem 2rem; border-radius: 10px; border: 1px solid var(--border-muted); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; padding-top: 2rem; border-top: 1px solid var(--border-muted); width: 100%; max-width: 600px; margin: 0 auto; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--orange); }
+    .hero-stat-label { font-size: 0.72rem; color: var(--text-muted); }
+    .ai-banner { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 1rem 1.5rem; text-align: center; background: rgba(255,255,255,0.03); }
+    .ai-banner-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-muted); }
+    .ai-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.22rem 0.7rem; font-size: 0.72rem; color: var(--white); }
+    .ai-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #27ae60; display: inline-block; animation: pulse 2s infinite; }
+    section { padding: 60px 1.5rem; max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.18em; color: var(--orange); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: clamp(1.5rem,4vw,2.2rem); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; }
+    .image-section { margin-top: 48px; overflow: hidden; }
+    .image-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 1.5rem 1rem; scrollbar-width: none; }
+    .image-scroll::-webkit-scrollbar { display: none; }
+    .image-scroll-item { flex: 0 0 240px; height: 160px; border-radius: 8px; background-color: #1a1a1a; overflow: hidden; }
+    .image-scroll-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media screen and (min-width: 768px) { .image-scroll-item { flex: 0 0 320px; height: 200px; } }
+    .image-scroll-caption { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.5rem; padding: 0 1.5rem; }
+    .image-scroll-caption a { color: var(--orange); text-decoration: none; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .menu-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; overflow: hidden; transition: all 0.25s; }
+    .menu-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+    .menu-card-img { width: 100%; height: 180px; background: #1a1a1a; overflow: hidden; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .menu-card-body { padding: 1.25rem; }
+    .menu-card-tag { display: inline-block; font-size: 0.65rem; background: rgba(247,151,11,0.18); color: var(--orange); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: 0.5rem; }
+    .menu-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .menu-card p { font-size: 0.85rem; color: var(--text-muted); }
+    .features-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; background: rgba(255,255,255,0.02); }
+    .features-inner { max-width: 900px; margin: 0 auto; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .feature-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; padding: 1.75rem; transition: all 0.25s; }
+    .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--orange); margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .reviews-section { padding: 60px 1.5rem; }
+    .reviews-inner { max-width: 900px; margin: 0 auto; }
+    .retty-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg,#e74c3c,#c0392b); color: var(--white); border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .review-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; padding: 1.5rem; }
+    .review-stars { color: var(--orange); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .review-text { font-size: 0.88rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 1rem; }
+    .review-author { display: flex; align-items: center; gap: 0.75rem; }
+    .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#e74c3c,#c0392b); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: var(--white); }
+    .review-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .review-meta { font-size: 0.72rem; color: var(--text-muted); }
+    .info-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; }
+    .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border-muted); }
+    .info-table td { padding: 0.75rem 0; font-size: 0.9rem; vertical-align: top; }
+    .info-table td:first-child { color: var(--orange); font-weight: 600; width: 6rem; white-space: nowrap; }
+    .info-table td:last-child { color: var(--text-muted); }
+    .map-placeholder { background: #1a1a1a; border-radius: 8px; height: 250px; border: 1px solid var(--border-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+    .map-placeholder strong { font-size: 0.9rem; font-weight: 700; }
+    .map-placeholder span { font-size: 0.8rem; color: var(--text-muted); }
+    .reserve-section { padding: 60px 1.5rem; text-align: center; }
+    .reserve-inner { max-width: 400px; margin: 0 auto; }
+    .reserve-cta-group { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .btn-reserve-main { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 18px; height: 60px; border-radius: 10px; border: none; width: 100%; max-width: 400px; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+    .reserve-tel { font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .reserve-tel small { display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .line-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: var(--white); font-weight: 700; font-size: 0.9rem; border-radius: 50px; padding: 0.6rem 1.5rem; text-decoration: none; }
+    .os-banner { background: rgba(255,255,255,0.03); border: 1px solid var(--border-muted); border-radius: 12px; padding: 2.5rem; margin: 0 auto 60px; max-width: 700px; text-align: center; }
+    .os-banner-title { font-size: 1.25rem; font-weight: 700; color: var(--orange); margin-bottom: 0.75rem; }
+    .os-banner p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .os-features { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .os-feature-chip { background: rgba(247,151,11,0.12); border: 1px solid rgba(247,151,11,0.3); border-radius: 8px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: var(--orange); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+    .blog-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.4); color: #e74c3c; font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.5rem; border-radius: 8px; text-decoration: none; }
+  </style>
+
+  <div class="hero">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="https://img.retty.me/img_ebisu/restaurant/100001705704/archive/3520904-67ad5f166a029.jpg" alt="万和苑 池袋店" />
+      <div class="hero-bg-gradient"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Retty 餐厅 OS — 演示页面</div>
+      <h1>萬和苑</h1>
+      <p class="hero-sub">韩国烤肉 / 池袋</p>
+      <p class="hero-tagline">希少部位与国产和牛，<span>55种无限畅吃</span>极致体验</p>
+      <div class="hero-ctas">
+        <a href="#reserve" class="btn-primary">立即预约 →</a>
+        <a href="#menu" class="btn-secondary">查看菜单</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">55种</div><div class="hero-stat-label">无限畅吃菜品</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">70席</div><div class="hero-stat-label">含包间·吧台</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">步行2分</div><div class="hero-stat-label">距池袋站</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-banner">
+    <div class="ai-banner-inner">
+      <span>本页面由餐厅 OS</span>
+      <span class="ai-chip"><span class="dot"></span>AI 持续更新中</span>
+      <span class="ai-chip">LINE 联动</span>
+      <span class="ai-chip">多语言对应</span>
+      <span class="ai-chip">预约统一管理</span>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <div class="image-scroll">
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-01.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-02.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-03.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-04.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-05.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-06.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-07.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-08.jpg`} alt="万和苑 池袋店" loading="lazy" /></div>
+    </div>
+    <p class="image-scroll-caption">图片提供: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — 万和苑 池袋店</a></p>
+  </div>
+
+  <section id="menu">
+    <p class="section-label">Our Menu</p>
+    <h2 class="section-title">顾客票选的人气菜品</h2>
+    <p class="section-subtitle">希少部位比较品尝、55种无限畅吃——由顾客的声音塑造出的菜单阵容。</p>
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-01.jpg`} alt="牛肋/横膈膜" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">希少部位</span><h3>牛肋 / 横膈膜</h3><p>"部位的差异一目了然" — 顾客通过比较品尝，发现国产和牛希少部位的独特魅力。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-03.jpg`} alt="无限畅吃套餐" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">55种畅吃</span><h3>无限畅吃套餐</h3><p>"在这个价位实现了如此高的品质" — 广受回头客好评的55种无限畅吃套餐。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-05.jpg`} alt="无限畅饮" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">单品无限畅饮</span><h3>2小时无限畅饮</h3><p>起价1,815日元（含税）。生啤·调酒·马格利酒等丰富选择。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-07.jpg`} alt="韩国经典" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">韩国经典</span><h3>汤锅 / 凉拌菜</h3><p>顾客盛赞"感受到了韩国本地的味道"。收尾的牛肉汤饭·拌饭也是热门选择。</p></div></div>
+    </div>
+  </section>
+
+  <div class="features-section">
+    <div class="features-inner">
+      <p class="section-label">Restaurant OS</p>
+      <h2 class="section-title">将顾客的体验传递给更多人</h2>
+      <p class="section-subtitle">导入Retty餐厅OS后，以顾客声音为起点的店铺网站将由AI自动生成并持续更新。</p>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI 持续更新最新信息</h3><p>通过LINE发送菜单变更、季节限定、活动信息，AI即时更新页面。</p></div>
+        <div class="feature-card"><div class="feature-icon">📱</div><h3>LINE 联动即时反映</h3><p>员工用熟悉的LINE发布信息，无需IT技能，30秒页面即可更新。</p></div>
+        <div class="feature-card"><div class="feature-icon">🌍</div><h3>自动多语言对应</h3><p>日语输入内容自动翻译为英语、中文、韩语等。不错过任何海外顾客。</p></div>
+        <div class="feature-card"><div class="feature-icon">📊</div><h3>预约·口碑统一管理</h3><p>整合Retty实名口碑与预约数据，OS支持从集客到再次光顾的全流程。</p></div>
+        <div class="feature-card"><div class="feature-icon">⭐</div><h3>Retty 顶级用户联动</h3><p>自动展示持有实名口碑的Retty顶级用户的声音，大幅提升可信度。</p></div>
+        <div class="feature-card"><div class="feature-icon">📈</div><h3>用数据指导经营决策</h3><p>页面访问量·预约转化率·口碑评价趋势，在仪表板上实时掌握。</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-inner">
+      <p class="section-label">顾客评价</p>
+      <h2 class="section-title">顾客讲述的万和苑体验</h2>
+      <div class="retty-badge">★ Retty 顶级用户实名口碑</div>
+      <div class="reviews-grid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"没想到在池袋能吃到这么高性价比的烤肉。希少部位竟然也包含在无限畅吃里，太开心了。包间非常适合商务宴请。"</p><div class="review-author"><div class="review-avatar">T</div><div><div class="review-name">Takeshi M.</div><div class="review-meta">Retty 顶级用户 · 2026年5月</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"距车站2分钟却有最棒的氛围。是我在东京吃到最接近韩国本地味道的烤肉！横膈膜和五花肉特别好吃。工作人员服务也很周到，会反复光顾。"</p><div class="review-author"><div class="review-avatar">Y</div><div><div class="review-name">Yuki K.</div><div class="review-meta">Retty 高级用户 · 2026年4月</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"无限畅饮加无限畅吃的套餐性价比超高。公司聚餐时使用，所有人都非常满意。从6楼眺望的夜景也相当不错。下次还会来。"</p><div class="review-author"><div class="review-avatar">S</div><div><div class="review-name">Satomi H.</div><div class="review-meta">Retty 用户 · 2026年3月</div></div></div></div>
+      </div>
+      <div style="margin-top:2.5rem;text-align:center;">
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);margin-bottom:1rem;">从顾客的声音中，我们每天学到的 — AI编辑部通过口碑发现的体验记录</p>
+        <a href={`${base}/zh-cn/blog/`} class="blog-cta-btn">阅读文章 →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section" id="info">
+    <div class="info-inner">
+      <div>
+        <p class="section-label">Store Info</p>
+        <h2 class="section-title" style="font-size:1.5rem;">店铺信息</h2>
+        <br />
+        <table class="info-table">
+          <tr><td>店名</td><td>韩国烤肉 万和苑 池袋店</td></tr>
+          <tr><td>地址</td><td>东京都丰岛区南池袋1-27-8<br />太阳宫大厦 6F-B</td></tr>
+          <tr><td>交通</td><td>JR池袋站步行2分钟<br />东京地铁东池袋站步行8分钟</td></tr>
+          <tr><td>营业时间</td><td>周一~周五·节假日前一天<br />午餐 11:00~15:00 / 晚餐 17:00~24:00<br /><br />周六·周日·节假日<br />11:00~24:00（最后点餐 23:30）</td></tr>
+          <tr><td>座位数</td><td>70席（含包间·吧台）</td></tr>
+          <tr><td>吸烟</td><td>全席可吸烟（纸质·加热式均可）</td></tr>
+          <tr><td>支付</td><td>VISA / Master / AMEX / JCB 等</td></tr>
+          <tr><td>电话</td><td>050-5462-7577</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="section-label">Access Map</p>
+        <h2 class="section-title" style="font-size:1.5rem;">交通路线</h2>
+        <br />
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <strong>太阳宫大厦 6F-B</strong>
+          <span>丰岛区南池袋1-27-8</span>
+          <span style="font-size:0.72rem;margin-top:0.5rem;">池袋站东口步行2分钟</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserve-section" id="reserve">
+    <div class="reserve-inner">
+      <p class="section-label">Reservation</p>
+      <h2 class="section-title">预约</h2>
+      <p class="section-subtitle">支持网络预约、电话预约、LINE预约，欢迎随时联系。</p>
+      <div class="reserve-cta-group">
+        <a href="tel:0505462757" class="btn-reserve-main">立即电话预约</a>
+        <div class="reserve-tel">050-5462-7577<small>电话接受时间：营业时间内</small></div>
+        <a href="#" class="line-chip"><span style="font-size:1.1rem;">💬</span><span>LINE预约·咨询</span></a>
+        <a href="https://retty.me" target="_blank" class="btn-secondary">在Retty网络预约</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="os-banner">
+    <div class="os-banner-title">本页面是"餐厅 OS"的演示</div>
+    <p>使用Retty餐厅OS，AI将自动生成这样的<strong style="color:var(--text);">高品质官方网站</strong>。<br />LINE联动·多语言对应·预约统一管理·口碑活用，OS全面支持餐厅经营。</p>
+    <div class="os-features">
+      <span class="os-feature-chip">🤖 AI自动更新</span>
+      <span class="os-feature-chip">📱 LINE联动</span>
+      <span class="os-feature-chip">🌍 8种语言</span>
+      <span class="os-feature-chip">📊 预约管理</span>
+      <span class="os-feature-chip">⭐ 口碑活用</span>
+    </div>
+  </div>
+</BaseLayout>

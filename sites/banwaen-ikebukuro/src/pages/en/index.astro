@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Banwaen Ikebukuro — Korean BBQ in Ikebukuro, Tokyo"
+  description="Authentic Korean BBQ with rare cuts and all-you-can-eat 55 items. 2 min walk from Ikebukuro Station. Private rooms available."
+  activePage="lp"
+  lang="en"
+>
+  <style>
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 3rem; position: relative; overflow: hidden; background-color: var(--black); }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+    .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(0deg,#000,transparent 19.17%); }
+    .hero-content { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.3rem 0.9rem; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.5rem; letter-spacing: 0.08em; }
+    .hero h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(2.8rem,9vw,5.5rem); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 0.2em; }
+    .hero-tagline { font-size: clamp(1rem,2.8vw,1.35rem); font-weight: 700; color: var(--white); margin-bottom: 2rem; }
+    .hero-tagline span { color: var(--orange); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .btn-primary { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 1rem; padding: 0.9rem 2.5rem; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-secondary { background: transparent; color: var(--white); font-weight: 600; font-size: 1rem; padding: 0.9rem 2rem; border-radius: 10px; border: 1px solid var(--border-muted); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+    .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; padding-top: 2rem; border-top: 1px solid var(--border-muted); width: 100%; max-width: 600px; margin: 0 auto; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--orange); }
+    .hero-stat-label { font-size: 0.72rem; color: var(--text-muted); }
+    .ai-banner { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 1rem 1.5rem; text-align: center; background: rgba(255,255,255,0.03); }
+    .ai-banner-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-muted); }
+    .ai-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.22rem 0.7rem; font-size: 0.72rem; white-space: nowrap; color: var(--white); }
+    .ai-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #27ae60; display: inline-block; animation: pulse 2s infinite; }
+    section { padding: 60px 1.5rem; max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.18em; color: var(--orange); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: clamp(1.5rem,4vw,2.2rem); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; }
+    .image-section { margin-top: 48px; overflow: hidden; }
+    .image-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 1.5rem 1rem; scrollbar-width: none; }
+    .image-scroll::-webkit-scrollbar { display: none; }
+    .image-scroll-item { flex: 0 0 240px; height: 160px; border-radius: 8px; background-color: #1a1a1a; overflow: hidden; }
+    .image-scroll-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .image-scroll-item:hover img { transform: scale(1.05); }
+    @media screen and (min-width: 768px) { .image-scroll-item { flex: 0 0 320px; height: 200px; } }
+    .image-scroll-caption { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.5rem; padding: 0 1.5rem; }
+    .image-scroll-caption a { color: var(--orange); text-decoration: none; }
+    .image-scroll-caption a:hover { text-decoration: underline; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .menu-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; overflow: hidden; transition: all 0.25s; }
+    .menu-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.3); transform: translateY(-3px); }
+    .menu-card-img { width: 100%; height: 180px; background: #1a1a1a; overflow: hidden; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .menu-card:hover .menu-card-img img { transform: scale(1.05); }
+    .menu-card-body { padding: 1.25rem; }
+    .menu-card-tag { display: inline-block; font-size: 0.65rem; background: rgba(247,151,11,0.18); color: var(--orange); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .menu-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .menu-card p { font-size: 0.85rem; color: var(--text-muted); }
+    .features-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; background: rgba(255,255,255,0.02); }
+    .features-inner { max-width: 900px; margin: 0 auto; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .feature-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; padding: 1.75rem; transition: all 0.25s; }
+    .feature-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.3); }
+    .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--orange); margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .reviews-section { padding: 60px 1.5rem; }
+    .reviews-inner { max-width: 900px; margin: 0 auto; }
+    .retty-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg,#e74c3c,#c0392b); color: var(--white); border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .review-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; padding: 1.5rem; }
+    .review-stars { color: var(--orange); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .review-text { font-size: 0.88rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 1rem; }
+    .review-author { display: flex; align-items: center; gap: 0.75rem; }
+    .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#e74c3c,#c0392b); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: var(--white); }
+    .review-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .review-meta { font-size: 0.72rem; color: var(--text-muted); }
+    .info-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; }
+    .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border-muted); }
+    .info-table td { padding: 0.75rem 0; font-size: 0.9rem; vertical-align: top; }
+    .info-table td:first-child { color: var(--orange); font-weight: 600; width: 7rem; white-space: nowrap; }
+    .info-table td:last-child { color: var(--text-muted); }
+    .map-placeholder { background: #1a1a1a; border-radius: 8px; height: 250px; border: 1px solid var(--border-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+    .map-placeholder strong { font-size: 0.9rem; font-weight: 700; }
+    .map-placeholder span { font-size: 0.8rem; color: var(--text-muted); }
+    .reserve-section { padding: 60px 1.5rem; text-align: center; }
+    .reserve-inner { max-width: 400px; margin: 0 auto; }
+    .reserve-cta-group { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .btn-reserve-main { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 18px; height: 60px; border-radius: 10px; border: none; width: 100%; max-width: 400px; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+    .btn-reserve-main:hover { opacity: 0.75; }
+    .reserve-tel { font-size: 1.5rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
+    .reserve-tel small { display: block; font-size: 0.72rem; font-weight: 400; color: var(--text-muted); margin-top: 0.25rem; }
+    .line-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: var(--white); font-weight: 700; font-size: 0.9rem; border-radius: 50px; padding: 0.6rem 1.5rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; }
+    .line-chip:hover { opacity: 0.8; }
+    .os-banner { background: rgba(255,255,255,0.03); border: 1px solid var(--border-muted); border-radius: 12px; padding: 2.5rem; margin: 0 auto 60px; max-width: 700px; text-align: center; }
+    .os-banner-title { font-size: 1.25rem; font-weight: 700; color: var(--orange); margin-bottom: 0.75rem; }
+    .os-banner p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .os-features { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .os-feature-chip { background: rgba(247,151,11,0.12); border: 1px solid rgba(247,151,11,0.3); border-radius: 8px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: var(--orange); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+    .hero-content > *:nth-child(1){animation-delay:0.1s}
+    .hero-content > *:nth-child(2){animation-delay:0.22s}
+    .hero-content > *:nth-child(3){animation-delay:0.34s}
+    .hero-content > *:nth-child(4){animation-delay:0.46s}
+    .hero-content > *:nth-child(5){animation-delay:0.58s}
+    .hero-content > *:nth-child(6){animation-delay:0.7s}
+    .blog-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.4); color: #e74c3c; font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.5rem; border-radius: 8px; text-decoration: none; transition: all 0.2s; }
+    .blog-cta-btn:hover { background: rgba(231,76,60,0.25); }
+  </style>
+
+  <div class="hero">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="https://img.retty.me/img_ebisu/restaurant/100001705704/archive/3520904-67ad5f166a029.jpg" alt="Banwaen Ikebukuro" />
+      <div class="hero-bg-gradient"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Restaurant OS powered by Retty — Demo Page</div>
+      <h1>萬和苑</h1>
+      <p class="hero-sub">Korean BBQ / Ikebukuro</p>
+      <p class="hero-tagline">Rare cuts &amp; premium Wagyu, <span>55-item all-you-can-eat</span></p>
+      <div class="hero-ctas">
+        <a href="#reserve" class="btn-primary">Reserve Now →</a>
+        <a href="#menu" class="btn-secondary">View Menu</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">55</div><div class="hero-stat-label">AYCE Items</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">70</div><div class="hero-stat-label">Seats incl. private rooms</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">2 min</div><div class="hero-stat-label">from Ikebukuro Stn.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-banner">
+    <div class="ai-banner-inner">
+      <span>This page is continuously updated by</span>
+      <span class="ai-chip"><span class="dot"></span>AI Restaurant OS</span>
+      <span class="ai-chip">LINE Integration</span>
+      <span class="ai-chip">Multilingual</span>
+      <span class="ai-chip">Reservation Hub</span>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <div class="image-scroll">
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-01.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-02.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-03.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-04.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-05.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-06.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-07.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-08.jpg`} alt="Banwaen Ikebukuro" loading="lazy" /></div>
+    </div>
+    <p class="image-scroll-caption">Photos: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — Banwaen Ikebukuro</a></p>
+  </div>
+
+  <section id="menu">
+    <p class="section-label">Our Menu</p>
+    <h2 class="section-title">Popular Dishes, Chosen by Our Guests</h2>
+    <p class="section-subtitle">Rare cut comparisons, 55-item all-you-can-eat — our menu was shaped by what guests love most.</p>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-01.jpg`} alt="Kalbi / Harami" loading="lazy" /></div>
+        <div class="menu-card-body"><span class="menu-card-tag">Rare Cuts</span><h3>Kalbi / Harami</h3><p>"The difference between cuts became so clear" — guests discover premium domestic wagyu rare cuts through side-by-side tastings.</p></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-03.jpg`} alt="AYCE Course" loading="lazy" /></div>
+        <div class="menu-card-body"><span class="menu-card-tag">55-item AYCE</span><h3>All-You-Can-Eat Course</h3><p>"Incredible quality at this price" — our 55-item all-you-can-eat course is consistently praised by returning guests.</p></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-05.jpg`} alt="Unlimited Drinks" loading="lazy" /></div>
+        <div class="menu-card-body"><span class="menu-card-tag">Unlimited Drinks</span><h3>2-Hour All-You-Can-Drink</h3><p>From ¥1,815 (tax incl.). Draft beer, chu-hai, makgeolli and more — a full lineup to complement your meal.</p></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-img"><img src={`${base}/images/retty/photo-07.jpg`} alt="Korean Classics" loading="lazy" /></div>
+        <div class="menu-card-body"><span class="menu-card-tag">Korean Classics</span><h3>Jjigae / Namul</h3><p>Authentic Korean flavors guests rave about. Finish with gukbap or bibimbap — a crowd favourite.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="features-section">
+    <div class="features-inner">
+      <p class="section-label">Restaurant OS</p>
+      <h2 class="section-title">Bringing Every Guest's Experience to More People</h2>
+      <p class="section-subtitle">With Retty's Restaurant OS, AI auto-generates and continuously updates a site like this based on real guest voices.</p>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI Keeps Info Always Fresh</h3><p>Just send menu updates or events via LINE. AI updates the page instantly.</p></div>
+        <div class="feature-card"><div class="feature-icon">📱</div><h3>LINE Integration</h3><p>Staff use LINE they already know. No IT skills needed — pages update in 30 seconds.</p></div>
+        <div class="feature-card"><div class="feature-icon">🌍</div><h3>Auto Multilingual</h3><p>Japanese input auto-translated into English, Chinese, Korean and more. Capture every inbound visitor.</p></div>
+        <div class="feature-card"><div class="feature-icon">📊</div><h3>Unified Reservation &amp; Review Hub</h3><p>Retty real-name reviews and reservation data integrated in one OS — from discovery to repeat visits.</p></div>
+        <div class="feature-card"><div class="feature-icon">⭐</div><h3>Retty Top User Reviews</h3><p>Auto-publish verified real-name reviews from Retty top users. Trust and credibility at a glance.</p></div>
+        <div class="feature-card"><div class="feature-icon">📈</div><h3>Data-Driven Decisions</h3><p>Page views, reservation conversion, review trends — all in a real-time dashboard.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-inner">
+      <p class="section-label">Guest Reviews</p>
+      <h2 class="section-title">What Our Guests Say About Banwaen</h2>
+      <div class="retty-badge">★ Verified Real-Name Reviews from Retty Top Users</div>
+      <div class="reviews-grid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I never expected such incredible value BBQ in Ikebukuro. Rare cuts in the AYCE lineup is a dream. Got a private room for a business dinner — perfect."</p><div class="review-author"><div class="review-avatar">T</div><div><div class="review-name">Takeshi M.</div><div class="review-meta">Retty Top User · May 2026</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"2 minutes from the station but feels like a world apart. Closest to authentic Korean BBQ I've found in Tokyo. The harami and samgyeopsal were outstanding."</p><div class="review-author"><div class="review-avatar">Y</div><div><div class="review-name">Yuki K.</div><div class="review-meta">Retty Premium User · April 2026</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"The AYCE + all-you-can-drink combo is unbeatable value. Took the whole team for a work dinner and everyone was blown away. Night view from the 6th floor is a bonus."</p><div class="review-author"><div class="review-avatar">S</div><div><div class="review-name">Satomi H.</div><div class="review-meta">Retty User · March 2026</div></div></div></div>
+      </div>
+      <div style="margin-top:2.5rem;text-align:center;">
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);margin-bottom:1rem;">What we learn every day from our guests — stories discovered by the AI editorial team</p>
+        <a href={`${base}/en/blog/`} class="blog-cta-btn">Read Articles →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section" id="info">
+    <div class="info-inner">
+      <div>
+        <p class="section-label">Store Info</p>
+        <h2 class="section-title" style="font-size:1.5rem;">Restaurant Details</h2>
+        <br />
+        <table class="info-table">
+          <tr><td>Name</td><td>Banwaen Ikebukuro (Korean BBQ)</td></tr>
+          <tr><td>Address</td><td>1-27-8 Minami-Ikebukuro, Toshima-ku, Tokyo<br />Sunpalace Bldg. 6F-B</td></tr>
+          <tr><td>Access</td><td>2 min from JR Ikebukuro Station<br />8 min from Tokyo Metro Higashi-Ikebukuro Stn.</td></tr>
+          <tr><td>Hours</td><td>Mon–Fri &amp; Day before holidays<br />Lunch 11:00–15:00 / Dinner 17:00–24:00<br /><br />Sat, Sun &amp; Holidays<br />11:00–24:00 (L.O. 23:30)</td></tr>
+          <tr><td>Seats</td><td>70 (private rooms &amp; counter available)</td></tr>
+          <tr><td>Smoking</td><td>Smoking allowed (cigarettes &amp; heated tobacco)</td></tr>
+          <tr><td>Payment</td><td>VISA / Master / AMEX / JCB &amp; more</td></tr>
+          <tr><td>Tel</td><td>050-5462-7577</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="section-label">Access Map</p>
+        <h2 class="section-title" style="font-size:1.5rem;">Getting Here</h2>
+        <br />
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <strong>Sunpalace Bldg. 6F-B</strong>
+          <span>1-27-8 Minami-Ikebukuro, Toshima</span>
+          <span style="font-size:0.72rem;margin-top:0.5rem;">2 min from Ikebukuro Stn. East Exit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserve-section" id="reserve">
+    <div class="reserve-inner">
+      <p class="section-label">Reservation</p>
+      <h2 class="section-title">Book Your Table</h2>
+      <p class="section-subtitle">Online, phone, or LINE reservations available.</p>
+      <div class="reserve-cta-group">
+        <a href="tel:0505462757" class="btn-reserve-main">Call to Reserve</a>
+        <div class="reserve-tel">050-5462-7577<small>During business hours</small></div>
+        <a href="#" class="line-chip"><span style="font-size:1.1rem;">💬</span><span>Reserve via LINE</span></a>
+        <a href="https://retty.me" target="_blank" class="btn-secondary">Online Reservation via Retty</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="os-banner">
+    <div class="os-banner-title">This page is a "Restaurant OS" demo</div>
+    <p>With Retty's Restaurant OS, AI auto-generates a <strong style="color:var(--text);">high-quality restaurant website</strong> like this.<br />LINE integration, multilingual support, reservation management, and review utilization — the OS supports your entire operation.</p>
+    <div class="os-features">
+      <span class="os-feature-chip">🤖 AI Auto-Update</span>
+      <span class="os-feature-chip">📱 LINE Integration</span>
+      <span class="os-feature-chip">🌍 8 Languages</span>
+      <span class="os-feature-chip">📊 Reservation Mgmt</span>
+      <span class="os-feature-chip">⭐ Review Integration</span>
+    </div>
+  </div>
+</BaseLayout>

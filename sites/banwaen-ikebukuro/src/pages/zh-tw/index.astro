@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="萬和苑 池袋店 — 東京池袋韓國燒肉餐廳"
+  description="希少部位與國產和牛，55種無限暢吃套餐。距池袋站步行2分鐘。設有包廂。"
+  activePage="lp"
+  lang="zh-tw"
+>
+  <style>
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 3rem; position: relative; overflow: hidden; background-color: var(--black); }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+    .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(0deg,#000,transparent 19.17%); }
+    .hero-content { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.3rem 0.9rem; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(2.8rem,9vw,5.5rem); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .hero-tagline { font-size: clamp(1rem,2.8vw,1.35rem); font-weight: 700; color: var(--white); margin-bottom: 2rem; }
+    .hero-tagline span { color: var(--orange); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .btn-primary { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 1rem; padding: 0.9rem 2.5rem; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-secondary { background: transparent; color: var(--white); font-weight: 600; font-size: 1rem; padding: 0.9rem 2rem; border-radius: 10px; border: 1px solid var(--border-muted); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; padding-top: 2rem; border-top: 1px solid var(--border-muted); width: 100%; max-width: 600px; margin: 0 auto; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--orange); }
+    .hero-stat-label { font-size: 0.72rem; color: var(--text-muted); }
+    .ai-banner { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 1rem 1.5rem; text-align: center; background: rgba(255,255,255,0.03); }
+    .ai-banner-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-muted); }
+    .ai-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.22rem 0.7rem; font-size: 0.72rem; color: var(--white); }
+    .ai-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #27ae60; display: inline-block; animation: pulse 2s infinite; }
+    section { padding: 60px 1.5rem; max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.18em; color: var(--orange); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: clamp(1.5rem,4vw,2.2rem); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; }
+    .image-section { margin-top: 48px; overflow: hidden; }
+    .image-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 1.5rem 1rem; scrollbar-width: none; }
+    .image-scroll::-webkit-scrollbar { display: none; }
+    .image-scroll-item { flex: 0 0 240px; height: 160px; border-radius: 8px; background-color: #1a1a1a; overflow: hidden; }
+    .image-scroll-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media screen and (min-width: 768px) { .image-scroll-item { flex: 0 0 320px; height: 200px; } }
+    .image-scroll-caption { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.5rem; padding: 0 1.5rem; }
+    .image-scroll-caption a { color: var(--orange); text-decoration: none; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .menu-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; overflow: hidden; transition: all 0.25s; }
+    .menu-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+    .menu-card-img { width: 100%; height: 180px; background: #1a1a1a; overflow: hidden; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .menu-card-body { padding: 1.25rem; }
+    .menu-card-tag { display: inline-block; font-size: 0.65rem; background: rgba(247,151,11,0.18); color: var(--orange); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: 0.5rem; }
+    .menu-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .menu-card p { font-size: 0.85rem; color: var(--text-muted); }
+    .reserve-section { padding: 60px 1.5rem; text-align: center; }
+    .reserve-inner { max-width: 400px; margin: 0 auto; }
+    .reserve-cta-group { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .btn-reserve-main { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 18px; height: 60px; border-radius: 10px; border: none; width: 100%; max-width: 400px; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+    .reserve-tel { font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .reserve-tel small { display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .line-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: var(--white); font-weight: 700; font-size: 0.9rem; border-radius: 50px; padding: 0.6rem 1.5rem; text-decoration: none; }
+    .info-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; }
+    .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border-muted); }
+    .info-table td { padding: 0.75rem 0; font-size: 0.9rem; vertical-align: top; }
+    .info-table td:first-child { color: var(--orange); font-weight: 600; width: 6rem; white-space: nowrap; }
+    .info-table td:last-child { color: var(--text-muted); }
+    .map-placeholder { background: #1a1a1a; border-radius: 8px; height: 250px; border: 1px solid var(--border-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+    .map-placeholder strong { font-size: 0.9rem; font-weight: 700; }
+    .map-placeholder span { font-size: 0.8rem; color: var(--text-muted); }
+    .os-banner { background: rgba(255,255,255,0.03); border: 1px solid var(--border-muted); border-radius: 12px; padding: 2.5rem; margin: 0 auto 60px; max-width: 700px; text-align: center; }
+    .os-banner-title { font-size: 1.25rem; font-weight: 700; color: var(--orange); margin-bottom: 0.75rem; }
+    .os-banner p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .os-features { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .os-feature-chip { background: rgba(247,151,11,0.12); border: 1px solid rgba(247,151,11,0.3); border-radius: 8px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: var(--orange); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+  </style>
+
+  <div class="hero">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="https://img.retty.me/img_ebisu/restaurant/100001705704/archive/3520904-67ad5f166a029.jpg" alt="萬和苑 池袋店" />
+      <div class="hero-bg-gradient"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Retty 餐廳 OS — 示範頁面</div>
+      <h1>萬和苑</h1>
+      <p class="hero-sub">韓國燒肉 / 池袋</p>
+      <p class="hero-tagline">希少部位與國產和牛，<span>55種無限暢吃</span>極致體驗</p>
+      <div class="hero-ctas">
+        <a href="#reserve" class="btn-primary">立即預約 →</a>
+        <a href="#menu" class="btn-secondary">查看菜單</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">55種</div><div class="hero-stat-label">無限暢吃菜品</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">70席</div><div class="hero-stat-label">含包廂·吧台</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">步行2分</div><div class="hero-stat-label">距池袋站</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-banner">
+    <div class="ai-banner-inner">
+      <span>本頁面由餐廳 OS</span>
+      <span class="ai-chip"><span class="dot"></span>AI 持續更新中</span>
+      <span class="ai-chip">LINE 聯動</span>
+      <span class="ai-chip">多語言對應</span>
+      <span class="ai-chip">預約統一管理</span>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <div class="image-scroll">
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-01.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-02.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-03.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-04.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-05.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-06.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-07.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-08.jpg`} alt="萬和苑 池袋店" loading="lazy" /></div>
+    </div>
+    <p class="image-scroll-caption">圖片提供: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — 萬和苑 池袋店</a></p>
+  </div>
+
+  <section id="menu">
+    <p class="section-label">Our Menu</p>
+    <h2 class="section-title">顧客票選的人氣菜品</h2>
+    <p class="section-subtitle">希少部位比較品嚐、55種無限暢吃——由顧客的聲音塑造出的菜單陣容。</p>
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-01.jpg`} alt="牛肋/橫隔膜" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">希少部位</span><h3>牛肋 / 橫隔膜</h3><p>"部位的差異一目了然" — 顧客通過比較品嚐，發現國產和牛希少部位的獨特魅力。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-03.jpg`} alt="無限暢吃套餐" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">55種暢吃</span><h3>無限暢吃套餐</h3><p>"在這個價位實現了如此高的品質" — 廣受回頭客好評的55種無限暢吃套餐。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-05.jpg`} alt="無限暢飲" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">單品無限暢飲</span><h3>2小時無限暢飲</h3><p>起價1,815日元（含稅）。生啤·調酒·馬格利酒等豐富選擇。</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-07.jpg`} alt="韓國經典" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">韓國經典</span><h3>湯鍋 / 涼拌菜</h3><p>顧客盛讚"感受到了韓國本地的味道"。收尾的牛肉湯飯·拌飯也是熱門選擇。</p></div></div>
+    </div>
+  </section>
+
+  <div class="info-section" id="info">
+    <div class="info-inner">
+      <div>
+        <p class="section-label">Store Info</p>
+        <h2 class="section-title" style="font-size:1.5rem;">店鋪資訊</h2>
+        <br />
+        <table class="info-table">
+          <tr><td>店名</td><td>韓國燒肉 萬和苑 池袋店</td></tr>
+          <tr><td>地址</td><td>東京都豐島區南池袋1-27-8<br />太陽宮大廈 6F-B</td></tr>
+          <tr><td>交通</td><td>JR池袋站步行2分鐘<br />東京地鐵東池袋站步行8分鐘</td></tr>
+          <tr><td>營業時間</td><td>週一~週五·節假日前一天<br />午餐 11:00~15:00 / 晚餐 17:00~24:00<br /><br />週六·週日·節假日<br />11:00~24:00（最後點餐 23:30）</td></tr>
+          <tr><td>座位數</td><td>70席（含包廂·吧台）</td></tr>
+          <tr><td>吸煙</td><td>全席可吸煙（紙質·加熱式均可）</td></tr>
+          <tr><td>付款</td><td>VISA / Master / AMEX / JCB 等</td></tr>
+          <tr><td>電話</td><td>050-5462-7577</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="section-label">Access Map</p>
+        <h2 class="section-title" style="font-size:1.5rem;">交通路線</h2>
+        <br />
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <strong>太陽宮大廈 6F-B</strong>
+          <span>豐島區南池袋1-27-8</span>
+          <span style="font-size:0.72rem;margin-top:0.5rem;">池袋站東口步行2分鐘</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserve-section" id="reserve">
+    <div class="reserve-inner">
+      <p class="section-label">Reservation</p>
+      <h2 class="section-title">預約</h2>
+      <p class="section-subtitle">支援網路預約、電話預約、LINE預約，歡迎隨時聯絡。</p>
+      <div class="reserve-cta-group">
+        <a href="tel:0505462757" class="btn-reserve-main">立即電話預約</a>
+        <div class="reserve-tel">050-5462-7577<small>電話受理時間：營業時間內</small></div>
+        <a href="#" class="line-chip"><span style="font-size:1.1rem;">💬</span><span>LINE預約·諮詢</span></a>
+        <a href="https://retty.me" target="_blank" class="btn-secondary">在Retty網路預約</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="os-banner">
+    <div class="os-banner-title">本頁面是「餐廳 OS」的示範</div>
+    <p>使用Retty餐廳OS，AI將自動生成這樣的<strong style="color:var(--text);">高品質官網</strong>。<br />LINE聯動·多語言對應·預約統一管理·口碑活用，OS全面支援餐廳經營。</p>
+    <div class="os-features">
+      <span class="os-feature-chip">🤖 AI自動更新</span>
+      <span class="os-feature-chip">📱 LINE聯動</span>
+      <span class="os-feature-chip">🌍 8種語言</span>
+      <span class="os-feature-chip">📊 預約管理</span>
+      <span class="os-feature-chip">⭐ 口碑活用</span>
+    </div>
+  </div>
+</BaseLayout>

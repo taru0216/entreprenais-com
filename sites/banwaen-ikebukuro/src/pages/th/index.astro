@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="บันวาเอน อิเคบุคุโระ — ร้านบาร์บีคิวเกาหลีในอิเคบุคุโระ โตเกียว"
+  description="เนื้อหายากและวากิว 55 เมนูทานไม่อั้น เดิน 2 นาทีจากสถานีอิเคบุคุโระ มีห้องส่วนตัว"
+  activePage="lp"
+  lang="th"
+>
+  <style>
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 3rem; position: relative; overflow: hidden; background-color: var(--black); }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+    .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(0deg,#000,transparent 19.17%); }
+    .hero-content { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.3rem 0.9rem; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(2.8rem,9vw,5.5rem); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .hero-tagline { font-size: clamp(1rem,2.8vw,1.35rem); font-weight: 700; color: var(--white); margin-bottom: 2rem; }
+    .hero-tagline span { color: var(--orange); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .btn-primary { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 1rem; padding: 0.9rem 2.5rem; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-secondary { background: transparent; color: var(--white); font-weight: 600; font-size: 1rem; padding: 0.9rem 2rem; border-radius: 10px; border: 1px solid var(--border-muted); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; padding-top: 2rem; border-top: 1px solid var(--border-muted); width: 100%; max-width: 600px; margin: 0 auto; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--orange); }
+    .hero-stat-label { font-size: 0.72rem; color: var(--text-muted); }
+    .ai-banner { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 1rem 1.5rem; text-align: center; background: rgba(255,255,255,0.03); }
+    .ai-banner-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-muted); }
+    .ai-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border-muted); border-radius: 100px; padding: 0.22rem 0.7rem; font-size: 0.72rem; color: var(--white); }
+    .ai-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #27ae60; display: inline-block; animation: pulse 2s infinite; }
+    section { padding: 60px 1.5rem; max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; color: var(--orange); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: clamp(1.5rem,4vw,2.2rem); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; }
+    .image-section { margin-top: 48px; overflow: hidden; }
+    .image-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 1.5rem 1rem; scrollbar-width: none; }
+    .image-scroll::-webkit-scrollbar { display: none; }
+    .image-scroll-item { flex: 0 0 240px; height: 160px; border-radius: 8px; background-color: #1a1a1a; overflow: hidden; }
+    .image-scroll-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media screen and (min-width: 768px) { .image-scroll-item { flex: 0 0 320px; height: 200px; } }
+    .image-scroll-caption { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.5rem; padding: 0 1.5rem; }
+    .image-scroll-caption a { color: var(--orange); text-decoration: none; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .menu-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-muted); border-radius: 12px; overflow: hidden; transition: all 0.25s; }
+    .menu-card-img { width: 100%; height: 180px; background: #1a1a1a; overflow: hidden; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .menu-card-body { padding: 1.25rem; }
+    .menu-card-tag { display: inline-block; font-size: 0.65rem; background: rgba(247,151,11,0.18); color: var(--orange); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: 0.5rem; }
+    .menu-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .menu-card p { font-size: 0.85rem; color: var(--text-muted); }
+    .reserve-section { padding: 60px 1.5rem; text-align: center; }
+    .reserve-inner { max-width: 400px; margin: 0 auto; }
+    .reserve-cta-group { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .btn-reserve-main { background-color: var(--orange); color: var(--white); font-weight: 700; font-size: 18px; height: 60px; border-radius: 10px; border: none; width: 100%; max-width: 400px; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+    .reserve-tel { font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .reserve-tel small { display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .line-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: var(--white); font-weight: 700; font-size: 0.9rem; border-radius: 50px; padding: 0.6rem 1.5rem; text-decoration: none; }
+    .info-section { border-top: 1px solid var(--border-muted); border-bottom: 1px solid var(--border-muted); padding: 60px 1.5rem; }
+    .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border-muted); }
+    .info-table td { padding: 0.75rem 0; font-size: 0.9rem; vertical-align: top; }
+    .info-table td:first-child { color: var(--orange); font-weight: 600; width: 8rem; white-space: nowrap; }
+    .info-table td:last-child { color: var(--text-muted); }
+    .map-placeholder { background: #1a1a1a; border-radius: 8px; height: 250px; border: 1px solid var(--border-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+    .map-placeholder strong { font-size: 0.9rem; font-weight: 700; }
+    .map-placeholder span { font-size: 0.8rem; color: var(--text-muted); }
+    .os-banner { background: rgba(255,255,255,0.03); border: 1px solid var(--border-muted); border-radius: 12px; padding: 2.5rem; margin: 0 auto 60px; max-width: 700px; text-align: center; }
+    .os-banner-title { font-size: 1.25rem; font-weight: 700; color: var(--orange); margin-bottom: 0.75rem; }
+    .os-banner p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .os-features { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .os-feature-chip { background: rgba(247,151,11,0.12); border: 1px solid rgba(247,151,11,0.3); border-radius: 8px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: var(--orange); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+  </style>
+
+  <div class="hero">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="https://img.retty.me/img_ebisu/restaurant/100001705704/archive/3520904-67ad5f166a029.jpg" alt="บันวาเอน อิเคบุคุโระ" />
+      <div class="hero-bg-gradient"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Retty Restaurant OS — เพจสาธิต</div>
+      <h1>萬和苑</h1>
+      <p class="hero-sub">บาร์บีคิวเกาหลี / อิเคบุคุโระ</p>
+      <p class="hero-tagline">เนื้อหายากและวากิว, <span>ทานไม่อั้น 55 เมนู</span></p>
+      <div class="hero-ctas">
+        <a href="#reserve" class="btn-primary">จองเลย →</a>
+        <a href="#menu" class="btn-secondary">ดูเมนู</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">55 เมนู</div><div class="hero-stat-label">ทานไม่อั้น</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">70 ที่นั่ง</div><div class="hero-stat-label">รวมห้องส่วนตัว</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">เดิน 2 นาที</div><div class="hero-stat-label">จากสถานีอิเคบุคุโระ</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-banner">
+    <div class="ai-banner-inner">
+      <span>เพจนี้อัพเดทโดย</span>
+      <span class="ai-chip"><span class="dot"></span>AI ตลอดเวลา</span>
+      <span class="ai-chip">เชื่อมต่อ LINE</span>
+      <span class="ai-chip">หลายภาษา</span>
+      <span class="ai-chip">จัดการจอง</span>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <div class="image-scroll">
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-01.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-02.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-03.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-04.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-05.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-06.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-07.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+      <div class="image-scroll-item"><img src={`${base}/images/retty/photo-08.jpg`} alt="บันวาเอน อิเคบุคุโระ" loading="lazy" /></div>
+    </div>
+    <p class="image-scroll-caption">รูปภาพ: <a href="https://retty.me/area/PRE13/ARE662/SUB66202/100001705704/" target="_blank" rel="noopener">Retty — บันวาเอน อิเคบุคุโระ</a></p>
+  </div>
+
+  <section id="menu">
+    <p class="section-label">Our Menu</p>
+    <h2 class="section-title">เมนูยอดนิยม คัดสรรโดยลูกค้า</h2>
+    <p class="section-subtitle">ลิ้มลองเนื้อหายาก ทานไม่อั้น 55 เมนู — เมนูที่เกิดจากเสียงของลูกค้าจริงๆ</p>
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-01.jpg`} alt="คาลบี/ฮาราหมี" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">เนื้อหายาก</span><h3>คาลบี / ฮาราหมี</h3><p>ค้นพบความแตกต่างของเนื้อแต่ละส่วน ผ่านการทดลองชิมเนื้อวากิวสายพันธุ์ญี่ปุ่น</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-03.jpg`} alt="ชุดทานไม่อั้น" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">ทานไม่อั้น 55 เมนู</span><h3>ชุดทานไม่อั้น</h3><p>"คุณภาพสูงในราคานี้" — ชุดทานไม่อั้น 55 เมนู ที่ลูกค้ากลับมาซ้ำซาก</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-05.jpg`} alt="ดื่มไม่อั้น" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">ดื่มไม่อั้น</span><h3>ดื่มไม่อั้น 2 ชั่วโมง</h3><p>เริ่มต้น 1,815 เยน (รวมภาษี) เบียร์สด ชูไฮ มักกอลลี และอื่นๆ อีกมากมาย</p></div></div>
+      <div class="menu-card"><div class="menu-card-img"><img src={`${base}/images/retty/photo-07.jpg`} alt="อาหารเกาหลีดั้งเดิม" loading="lazy" /></div><div class="menu-card-body"><span class="menu-card-tag">อาหารเกาหลีดั้งเดิม</span><h3>จีจิเก / นามุล</h3><p>รสชาติเกาหลีแท้ที่ลูกค้าต่างยกย่อง ปิดท้ายด้วยกุ๊กบับหรือบิบิมบับ</p></div></div>
+    </div>
+  </section>
+
+  <div class="info-section" id="info">
+    <div class="info-inner">
+      <div>
+        <p class="section-label">Store Info</p>
+        <h2 class="section-title" style="font-size:1.5rem;">ข้อมูลร้าน</h2>
+        <br />
+        <table class="info-table">
+          <tr><td>ชื่อร้าน</td><td>บาร์บีคิวเกาหลี บันวาเอน อิเคบุคุโระ</td></tr>
+          <tr><td>ที่อยู่</td><td>1-27-8 มินามิอิเคบุคุโระ, โทชิมะ, โตเกียว<br />ซันพาเลซ บิลด์ดิ้ง 6F-B</td></tr>
+          <tr><td>การเดินทาง</td><td>เดิน 2 นาทีจากสถานี JR อิเคบุคุโระ<br />เดิน 8 นาทีจากสถานีฮิกาชิอิเคบุคุโระ</td></tr>
+          <tr><td>เวลาทำการ</td><td>จ.-ศ. และวันก่อนวันหยุด<br />กลางวัน 11:00–15:00 / เย็น 17:00–24:00<br /><br />เสาร์-อาทิตย์ และวันหยุด<br />11:00–24:00 (สั่งอาหารสุดท้าย 23:30)</td></tr>
+          <tr><td>ที่นั่ง</td><td>70 ที่นั่ง (ห้องส่วนตัวและเคาน์เตอร์)</td></tr>
+          <tr><td>การสูบบุหรี่</td><td>สูบได้ทุกที่นั่ง</td></tr>
+          <tr><td>การชำระเงิน</td><td>VISA / Master / AMEX / JCB และอื่นๆ</td></tr>
+          <tr><td>โทรศัพท์</td><td>050-5462-7577</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="section-label">Access Map</p>
+        <h2 class="section-title" style="font-size:1.5rem;">การเดินทาง</h2>
+        <br />
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <strong>ซันพาเลซ บิลด์ดิ้ง 6F-B</strong>
+          <span>1-27-8 มินามิอิเคบุคุโระ, โทชิมะ</span>
+          <span style="font-size:0.72rem;margin-top:0.5rem;">เดิน 2 นาทีจากทางออกตะวันออกสถานีอิเคบุคุโระ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserve-section" id="reserve">
+    <div class="reserve-inner">
+      <p class="section-label">Reservation</p>
+      <h2 class="section-title">จองโต๊ะ</h2>
+      <p class="section-subtitle">รับจองออนไลน์ โทรศัพท์ และ LINE ยินดีต้อนรับทุกท่าน</p>
+      <div class="reserve-cta-group">
+        <a href="tel:0505462757" class="btn-reserve-main">โทรจองเลย</a>
+        <div class="reserve-tel">050-5462-7577<small>ในเวลาทำการ</small></div>
+        <a href="#" class="line-chip"><span style="font-size:1.1rem;">💬</span><span>จองผ่าน LINE</span></a>
+        <a href="https://retty.me" target="_blank" class="btn-secondary">จองออนไลน์ผ่าน Retty</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="os-banner">
+    <div class="os-banner-title">เพจนี้คือตัวอย่าง "Restaurant OS"</div>
+    <p>ด้วย Retty Restaurant OS, AI จะสร้าง<strong style="color:var(--text);">เว็บไซต์ร้านอาหารคุณภาพสูง</strong>แบบนี้โดยอัตโนมัติ<br />เชื่อมต่อ LINE · หลายภาษา · จัดการการจอง · ใช้รีวิว</p>
+    <div class="os-features">
+      <span class="os-feature-chip">🤖 อัพเดทอัตโนมัติ</span>
+      <span class="os-feature-chip">📱 เชื่อมต่อ LINE</span>
+      <span class="os-feature-chip">🌍 8 ภาษา</span>
+      <span class="os-feature-chip">📊 จัดการจอง</span>
+      <span class="os-feature-chip">⭐ รีวิวจริง</span>
+    </div>
+  </div>
+</BaseLayout>
