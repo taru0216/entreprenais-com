@@ -7,15 +7,17 @@ const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const rettyPhotos = [
-  { src: '/images/retty/photo-01.jpg', alt: '萬和苑 池袋店 料理' },
-  { src: '/images/retty/photo-02.jpg', alt: '萬和苑 池袋店 焼肉' },
-  { src: '/images/retty/photo-03.jpg', alt: '萬和苑 池袋店 料理' },
-  { src: '/images/retty/photo-04.jpg', alt: '萬和苑 池袋店 焼肉' },
-  { src: '/images/retty/photo-05.jpg', alt: '萬和苑 池袋店 料理' },
-  { src: '/images/retty/photo-06.jpg', alt: '萬和苑 池袋店 内観' },
-  { src: '/images/retty/photo-07.jpg', alt: '萬和苑 池袋店 料理' },
-  { src: '/images/retty/photo-08.jpg', alt: '萬和苑 池袋店 料理' },
+  { src: `${base}/images/retty/photo-01.jpg`, alt: '萬和苑 池袋店 料理' },
+  { src: `${base}/images/retty/photo-02.jpg`, alt: '萬和苑 池袋店 焼肉' },
+  { src: `${base}/images/retty/photo-03.jpg`, alt: '萬和苑 池袋店 料理' },
+  { src: `${base}/images/retty/photo-04.jpg`, alt: '萬和苑 池袋店 焼肉' },
+  { src: `${base}/images/retty/photo-05.jpg`, alt: '萬和苑 池袋店 料理' },
+  { src: `${base}/images/retty/photo-06.jpg`, alt: '萬和苑 池袋店 内観' },
+  { src: `${base}/images/retty/photo-07.jpg`, alt: '萬和苑 池袋店 料理' },
+  { src: `${base}/images/retty/photo-08.jpg`, alt: '萬和苑 池袋店 料理' },
 ];
 ---
 
@@ -161,9 +163,9 @@ const rettyPhotos = [
   <div class="articles-section">
     <div class="articles-grid">
       {posts.map((post, idx) => (
-        <a class="article-card observe-anim" href={`/blog/${post.id}/`}>
+        <a class="article-card observe-anim" href={`${base}/blog/${post.id}/`}>
           <div class="article-card-img">
-            <img src={`/images/retty/photo-${String((idx % 8) + 1).padStart(2, '0')}.jpg`} alt="萬和苑 池袋店" loading="lazy" />
+            <img src={`${base}/images/retty/photo-${String((idx % 8) + 1).padStart(2, '0')}.jpg`} alt="萬和苑 池袋店" loading="lazy" />
           </div>
           <div class="article-card-body">
             <SourceBadge source={post.data.source} />

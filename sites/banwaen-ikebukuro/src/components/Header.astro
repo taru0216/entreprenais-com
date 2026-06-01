@@ -18,7 +18,8 @@ const labels: Record<string, Record<string, string>> = {
 };
 
 const t = labels[lang] || labels.ja;
-const base = lang === 'ja' ? '' : `/${lang}`;
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = lang === 'ja' ? siteBase : `${siteBase}/${lang}`;
 ---
 
 <style>
@@ -158,14 +159,14 @@ const base = lang === 'ja' ? '' : `/${lang}`;
     <div class="lang-switcher">
       <button class="lang-btn" id="lang-btn">🌐 {lang.toUpperCase().replace('-CN','(簡)').replace('-TW','(繁)')} ▾</button>
       <div class="lang-dropdown" id="lang-dropdown">
-        <a href="/" class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
-        <a href="/en/" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
-        <a href="/ko/" class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
-        <a href="/zh-cn/" class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
-        <a href="/zh-tw/" class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
-        <a href="/th/" class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
-        <a href="/vi/" class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
-        <a href="/id/" class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
+        <a href={`${siteBase}/`} class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
+        <a href={`${siteBase}/en/`} class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
+        <a href={`${siteBase}/ko/`} class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
+        <a href={`${siteBase}/zh-cn/`} class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
+        <a href={`${siteBase}/zh-tw/`} class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
+        <a href={`${siteBase}/th/`} class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
+        <a href={`${siteBase}/vi/`} class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
+        <a href={`${siteBase}/id/`} class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
       </div>
     </div>
     <a href={`${base}/#reserve`} class="btn-reserve">{t.reserve}</a>
@@ -176,14 +177,14 @@ const base = lang === 'ja' ? '' : `/${lang}`;
     <div class="lang-switcher">
       <button class="lang-btn" id="lang-btn-mobile">🌐 {lang.toUpperCase().replace('-CN','(簡)').replace('-TW','(繁)')} ▾</button>
       <div class="lang-dropdown" id="lang-dropdown-mobile">
-        <a href="/" class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
-        <a href="/en/" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
-        <a href="/ko/" class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
-        <a href="/zh-cn/" class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
-        <a href="/zh-tw/" class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
-        <a href="/th/" class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
-        <a href="/vi/" class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
-        <a href="/id/" class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
+        <a href={`${siteBase}/`} class={`lang-option ${lang === 'ja' ? 'active' : ''}`}>🇯🇵 日本語</a>
+        <a href={`${siteBase}/en/`} class={`lang-option ${lang === 'en' ? 'active' : ''}`}>🇺🇸 English</a>
+        <a href={`${siteBase}/ko/`} class={`lang-option ${lang === 'ko' ? 'active' : ''}`}>🇰🇷 한국어</a>
+        <a href={`${siteBase}/zh-cn/`} class={`lang-option ${lang === 'zh-cn' ? 'active' : ''}`}>🇨🇳 简体中文</a>
+        <a href={`${siteBase}/zh-tw/`} class={`lang-option ${lang === 'zh-tw' ? 'active' : ''}`}>🇹🇼 繁體中文</a>
+        <a href={`${siteBase}/th/`} class={`lang-option ${lang === 'th' ? 'active' : ''}`}>🇹🇭 ภาษาไทย</a>
+        <a href={`${siteBase}/vi/`} class={`lang-option ${lang === 'vi' ? 'active' : ''}`}>🇻🇳 Tiếng Việt</a>
+        <a href={`${siteBase}/id/`} class={`lang-option ${lang === 'id' ? 'active' : ''}`}>🇮🇩 Bahasa Indonesia</a>
       </div>
     </div>
     <button class="hamburger-btn" id="hamburger-btn" aria-label="メニューを開く">
