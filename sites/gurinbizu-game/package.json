@@ -1,0 +1,15 @@
+{
+  "name": "gurinbizu-game",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "prebuild": "if [ -f scripts/gen-feed.py ]; then python3 scripts/gen-feed.py > public/feed.xml; fi",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0"
+  }
+}
