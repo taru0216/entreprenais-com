@@ -87,7 +87,10 @@
 
   <style>
     /* ============================================================
-       Vertical page — page-specific styles
+       Vertical page — page-specific styles (#277)
+       デザインシステムは /style.css に準拠。
+       ボタンは .btn .btn--primary / .btn .btn--ghost を使用（トップページ統一）。
+       絵文字・アイコンフォント不使用（FCメッセージ #261 方針）。
        ============================================================ */
 
     /* Hero: dark ink background with accent glow */
@@ -173,46 +176,6 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-    }
-    .btn--primary-bright {
-      background: var(--accent-bright);
-      color: var(--paper);
-      border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.95rem 1.8rem;
-      font-family: var(--serif);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      transition: transform 0.25s var(--ease), background 0.25s var(--ease);
-    }
-    .btn--primary-bright:hover {
-      background: var(--accent-soft);
-      transform: translateY(-2px);
-    }
-    .btn--outline-white {
-      border: 1px solid rgba(247, 246, 241, 0.45);
-      color: var(--paper);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.95rem 1.8rem;
-      font-family: var(--serif);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
-    }
-    .btn--outline-white:hover {
-      background: rgba(247, 246, 241, 0.1);
-      border-color: rgba(247, 246, 241, 0.7);
-      transform: translateY(-2px);
     }
 
     /* Generic vertical section */
@@ -385,11 +348,6 @@
       color: var(--accent-soft);
       margin: 0 0 1rem;
     }
-    .value-card__icon {
-      font-size: 2rem;
-      margin: 0 0 1rem;
-      line-height: 1;
-    }
     .value-card__title {
       font-family: var(--jp);
       font-weight: 700;
@@ -552,7 +510,7 @@
       border-color: transparent;
       color: var(--paper);
     }
-    .pricing-card__model {
+    .pricing-card__plan {
       font-family: var(--serif);
       font-size: 0.72rem;
       letter-spacing: 0.28em;
@@ -560,7 +518,7 @@
       color: var(--muted);
       margin: 0 0 0.75rem;
     }
-    .pricing-card--featured .pricing-card__model { color: rgba(247, 246, 241, 0.5); }
+    .pricing-card--featured .pricing-card__plan { color: rgba(247, 246, 241, 0.5); }
     .pricing-card__name {
       font-family: var(--jp);
       font-weight: 700;
@@ -633,10 +591,6 @@
       align-items: center;
       gap: 1rem;
     }
-    .cta-card__icon {
-      font-size: 2rem;
-      line-height: 1;
-    }
     .cta-card__title {
       font-family: var(--jp);
       font-weight: 700;
@@ -651,14 +605,6 @@
       margin: 0;
       flex: 1;
     }
-
-    /* Nav on dark background tweaks for vertical hero */
-    .nav.on-dark-hero {
-      background: transparent;
-      color: var(--paper);
-    }
-    .nav.on-dark-hero .nav__brand,
-    .nav.on-dark-hero .nav__links a { color: var(--paper); }
 
     @media (max-width: 720px) {
       .vertical-hero { padding: 7rem var(--gutter) 4rem; }
@@ -697,18 +643,18 @@
       <div class="vertical-hero__glow vertical-hero__glow--a" aria-hidden="true"></div>
       <div class="vertical-hero__glow vertical-hero__glow--b" aria-hidden="true"></div>
       <div class="vertical-hero__inner">
-        <p class="vertical-hero__eyebrow">EntreprenAIs Vertical Agent Platform</p>
+        <p class="vertical-hero__eyebrow reveal" data-reveal>業務に特化したローカル AI</p>
         <h1 class="vertical-hero__title" id="hero-title">
-          AI は使う。<br />
-          <span class="accent-bright">秘密は守る。</span>
+          <span class="reveal" data-reveal data-delay="100">AI は使う。</span><br />
+          <span class="reveal accent-bright" data-reveal data-delay="200">秘密は守る。</span>
         </h1>
-        <p class="vertical-hero__lead">
+        <p class="vertical-hero__lead reveal" data-reveal data-delay="350">
           御社の Mac で動く業務エージェント。<br />
           データは一切、外に出ません。
         </p>
-        <div class="vertical-hero__cta">
-          <a class="btn--primary-bright" href="/#contact">資料を請求する &rarr;</a>
-          <a class="btn--outline-white" href="/#contact">PoC を相談する</a>
+        <div class="vertical-hero__cta reveal" data-reveal data-delay="500">
+          <a class="btn btn--primary" href="/#contact">資料を請求する &rarr;</a>
+          <a class="btn btn--ghost" href="/#contact">PoC を相談する</a>
         </div>
       </div>
     </section>
@@ -718,34 +664,36 @@
          ======================================================== -->
     <section class="v-section v-section--light" id="problem" aria-labelledby="problem-title">
       <div class="v-section__inner">
-        <p class="v-section__num">01 / 課題</p>
-        <h2 class="v-section__title" id="problem-title">汎用クラウド AI の3つの限界</h2>
-        <p class="v-section__lead">
-          ChatGPT や Copilot を試したが、現場に根付かない。その背景には構造的な3つの問題があります。
+        <p class="v-section__num reveal" data-reveal>01 / 課題</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="problem-title">
+          「AI を入れたのに、なぜ使われない？」
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          ChatGPT や Copilot を試したが、現場に根付かない。その背景には3つの構造的な問題があります。
         </p>
 
         <div class="problem-grid">
-          <article class="problem-card">
+          <article class="problem-card reveal" data-reveal data-delay="150">
             <p class="problem-card__num">01</p>
-            <h3 class="problem-card__title">利用率が上がらない</h3>
+            <h3 class="problem-card__title">「どう使えばいいか」わからない</h3>
             <p class="problem-card__body">
-              汎用 AI は「どんな業務にも使える」ことを売りにするが、「特定業務にハマる」使い方が見えにくい。現場の担当者は試行錯誤に疲れ、数週間後には誰も使わなくなる。
+              汎用 AI は何にでも使えるぶん、あなたの業務にハマる使い方が見えにくい。現場の担当者は試行錯誤に疲れ、数週間後には誰も使わなくなります。
             </p>
           </article>
 
-          <article class="problem-card">
+          <article class="problem-card reveal" data-reveal data-delay="250">
             <p class="problem-card__num">02</p>
-            <h3 class="problem-card__title">データがクラウドに流れる</h3>
+            <h3 class="problem-card__title">機密情報を入力できない</h3>
             <p class="problem-card__body">
-              顧客情報・仕入れ価格・従業員データを入力するたびに、外部サーバーへ送信される。NDA や個人情報保護法への配慮から、AI に聞きたいことを聞けない状況が生まれる。
+              顧客情報・仕入れ価格・従業員データを入力するたびに、外部サーバーへ送信されます。NDA や個人情報保護の観点から、AI に聞きたいことを聞けない状況が続きます。
             </p>
           </article>
 
-          <article class="problem-card">
+          <article class="problem-card reveal" data-reveal data-delay="350">
             <p class="problem-card__num">03</p>
-            <h3 class="problem-card__title">ROI が見えない</h3>
+            <h3 class="problem-card__title">費用対効果が見えない</h3>
             <p class="problem-card__body">
-              月額コストを払い続けても、利用率が低ければ投資対効果は出ない。「入れたけど効果が測れない」まま契約が続く。
+              月額コストを払い続けても、利用率が低ければ投資の価値は出ません。「入れたけど効果が測れない」まま契約が続く状況に悩んでいませんか。
             </p>
           </article>
         </div>
@@ -753,14 +701,16 @@
     </section>
 
     <!-- ========================================================
-         02 / ソリューション比較
+         02 / 比較
          ======================================================== -->
     <section class="v-section v-section--soft" id="comparison" aria-labelledby="comparison-title">
       <div class="v-section__inner">
-        <p class="v-section__num">02 / ソリューション比較</p>
-        <h2 class="v-section__title" id="comparison-title">汎用クラウド AI と EntreprenAIs の違い</h2>
-        <p class="v-section__lead">
-          アーキテクチャから設計を変えることで、クラウド AI が抱える3つの限界をすべて解決します。
+        <p class="v-section__num reveal" data-reveal>02 / 比較</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="comparison-title">
+          汎用クラウド AI と何が違うのか
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          アーキテクチャを変えると、あなたの現場でこれだけのことが変わります。
         </p>
 
         <div class="comparison-wrap">
@@ -769,7 +719,7 @@
               <tr>
                 <th>比較軸</th>
                 <th>汎用クラウド AI</th>
-                <th class="col-ours">EntreprenAIs <span class="badge-ours">当社</span></th>
+                <th class="col-ours">バーティカルエージェント <span class="badge-ours">当社</span></th>
               </tr>
             </thead>
             <tbody>
@@ -794,9 +744,9 @@
                 <td class="col-ours"><strong>外部送信なし（ローカル推論）</strong></td>
               </tr>
               <tr>
-                <td>単価感</td>
-                <td>汎用価格（競合多数・価格圧力）</td>
-                <td class="col-ours"><strong>プレミアム（セキュリティ×高利用率）</strong></td>
+                <td>ハードウェア投資</td>
+                <td>クラウド利用料（継続課金）</td>
+                <td class="col-ours"><strong>手持ちの Mac をそのまま活用</strong></td>
               </tr>
             </tbody>
           </table>
@@ -805,50 +755,48 @@
     </section>
 
     <!-- ========================================================
-         03 / 4つの価値
+         03 / あなたが手に入れる4つの変化
          ======================================================== -->
     <section class="v-section v-section--dark" id="value" aria-labelledby="value-title">
       <div class="v-section__inner">
-        <p class="v-section__num">03 / 4つの価値</p>
-        <h2 class="v-section__title" id="value-title">なぜ EntreprenAIs を選ぶか</h2>
-        <p class="v-section__lead">
-          セキュリティ・利用率・コスト効率・収益性 — 4つの視点から事業価値を最大化します。
+        <p class="v-section__num reveal" data-reveal>03 / 変化</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="value-title">
+          あなたが手に入れる4つの変化
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          バーティカルエージェントを入れると、現場がこう変わります。
         </p>
 
         <div class="value-grid">
-          <article class="value-card">
-            <p class="value-card__num">Value 01</p>
-            <p class="value-card__icon" aria-hidden="true">&#x1F512;</p>
-            <h3 class="value-card__title">セキュリティ</h3>
+          <article class="value-card reveal" data-reveal data-delay="150">
+            <p class="value-card__num">変化 01</p>
+            <h3 class="value-card__title">機密情報を安心して AI に聞けるようになる</h3>
             <p class="value-card__body">
-              Mac ローカルで推論が完結。顧客情報・仕入れ価格・従業員データがクラウドに出ない。NDA 対応・個人情報保護法への配慮が自然に担保されます。
+              データは Mac の外に一切出ません。顧客情報・仕入れ価格・従業員データも AI に入力できるようになり、NDA や個人情報保護を気にせず使い続けられます。
             </p>
           </article>
 
-          <article class="value-card">
-            <p class="value-card__num">Value 02</p>
-            <p class="value-card__icon" aria-hidden="true">&#x1F680;</p>
-            <h3 class="value-card__title">民主化</h3>
+          <article class="value-card reveal" data-reveal data-delay="250">
+            <p class="value-card__num">変化 02</p>
+            <h3 class="value-card__title">現場の担当者が毎日 AI を使うようになる</h3>
             <p class="value-card__body">
-              業務に密着したエージェントは「どう使うか」を迷わせない。現場の担当者が日常業務の中で自然に使い続ける設計で、利用率が劇的に上がります。
+              業務フローに沿って設計されたエージェントは「どう使うか」を担当者に考えさせません。日常業務の中で自然に使い続けられる設計で、利用率が劇的に上がります。
             </p>
           </article>
 
-          <article class="value-card">
-            <p class="value-card__num">Value 03</p>
-            <p class="value-card__icon" aria-hidden="true">&#x1F4BB;</p>
-            <h3 class="value-card__title">遊休資産の活用</h3>
+          <article class="value-card reveal" data-reveal data-delay="350">
+            <p class="value-card__num">変化 03</p>
+            <h3 class="value-card__title">手持ちの Mac がそのまま AI インフラになる</h3>
             <p class="value-card__body">
-              すでに持っている Mac がそのまま AI インフラになります。新規ハードウェア投資不要。サーバー費用ゼロで本格的な業務 AI を導入できます。
+              すでに持っている Mac をそのまま使えます。新しいサーバーを買う必要はありません。追加のハードウェア投資なしで、本格的な業務 AI を動かせます。
             </p>
           </article>
 
-          <article class="value-card">
-            <p class="value-card__num">Value 04</p>
-            <p class="value-card__icon" aria-hidden="true">&#x1F4B0;</p>
-            <h3 class="value-card__title">プレミアム単価</h3>
+          <article class="value-card reveal" data-reveal data-delay="450">
+            <p class="value-card__num">変化 04</p>
+            <h3 class="value-card__title">「安全に使える」と「現場に定着する」が両立する</h3>
             <p class="value-card__body">
-              「データが外に出ない」「利用率 70〜90%」という希少な組み合わせが、高単価設定を正当化します。汎用 AI との価格競争から抜け出せます。
+              汎用クラウド AI では手に入らない、「社外に出ない」×「使い続けられる」の組み合わせが、あなたの組織で実現できます。
             </p>
           </article>
         </div>
@@ -856,18 +804,20 @@
     </section>
 
     <!-- ========================================================
-         04 / 仕組み（ローカル LLM × Mac）
+         04 / データが外に出ない理由
          ======================================================== -->
     <section class="v-section v-section--accent" id="architecture" aria-labelledby="arch-title">
       <div class="v-section__inner">
-        <p class="v-section__num">04 / 仕組み</p>
-        <h2 class="v-section__title" id="arch-title">ローカル LLM × Mac で完結する推論アーキテクチャ</h2>
-        <p class="v-section__lead">
+        <p class="v-section__num reveal" data-reveal>04 / 仕組み</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="arch-title">
+          データが外に出ない理由
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
           すべてのデータ処理が御社の Mac の中で完結します。インターネット接続なしで推論が動き、会話履歴・業務データは一切外部に送信されません。
         </p>
 
-        <div class="arch-flow">
-          <div class="arch-flow__diagram" role="img" aria-label="データフロー図: 御社の Mac → ローカル LLM → バーティカルエージェント → 業務成果。すべて Mac の中で完結。">
+        <div class="arch-flow reveal" data-reveal data-delay="300">
+          <div class="arch-flow__diagram" role="img" aria-label="データフロー図: 御社の Mac の中でローカル LLM が推論し、バーティカルエージェントが業務成果を返す。すべて Mac の中で完結。">
             <div class="arch-node">
               <span class="arch-node__label">御社の Mac</span>
               <span class="arch-node__sub">業務データ<br />会話履歴</span>
@@ -892,10 +842,10 @@
           <ul class="arch-flow__points">
             <li>インターネット接続不要で推論が動く</li>
             <li>会話履歴・業務データは外部に送信されない</li>
-            <li>既存の Mac をそのまま AI インフラとして活用</li>
+            <li>既存の Mac をそのまま AI インフラとして活用できる</li>
             <li>業種ごとの特化モデルで精度を高められる</li>
-            <li>社内規定・NDA への配慮をアーキテクチャで担保</li>
-            <li>クラウド API コストゼロでスケール可能</li>
+            <li>社内規定・NDA への配慮をアーキテクチャで担保できる</li>
+            <li>クラウド API コストなしでスケールできる</li>
           </ul>
         </div>
       </div>
@@ -906,28 +856,30 @@
          ======================================================== -->
     <section class="v-section v-section--soft" id="cases" aria-labelledby="cases-title">
       <div class="v-section__inner">
-        <p class="v-section__num">05 / 導入事例</p>
-        <h2 class="v-section__title" id="cases-title">先行導入パートナーの事例</h2>
-        <p class="v-section__lead">
-          個別業種の業務フローに密着したエージェントが、現場の AI 活用を加速します。
-          （本事例は個人情報保護のため匿名で掲載しています）
+        <p class="v-section__num reveal" data-reveal>05 / 導入事例</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="cases-title">
+          先行導入パートナーの変化
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          業務フローに密着したエージェントが、現場の AI 活用を加速した事例です。
+          （個人情報保護のため匿名で掲載しています）
         </p>
 
         <div class="case-grid">
-          <article class="case-card">
+          <article class="case-card reveal" data-reveal data-delay="150">
             <p class="case-card__industry">飲食業</p>
-            <h3 class="case-card__title">飲食業向けバーティカルエージェント</h3>
+            <h3 class="case-card__title">店長・スタッフが日常業務で自然に使い続けている</h3>
             <p class="case-card__body">
-              仕入れ管理・メニュー分析・スタッフシフト提案・顧客対応下書きなど、飲食現場の業務フローに特化したエージェントを構築。店長・スタッフが日常業務の中で自然に使える設計を実現。
+              仕入れ管理・メニュー分析・スタッフシフト提案・顧客対応下書きなど、飲食現場の業務フローに特化したエージェントを構築。「どう使うか」を考えずに使える設計で、定着率が高まりました。
             </p>
             <span class="case-card__status">導入進行中</span>
           </article>
 
-          <article class="case-card">
+          <article class="case-card reveal" data-reveal data-delay="250">
             <p class="case-card__industry">複数業種 — 横展開計画</p>
-            <h3 class="case-card__title">バーティカルエージェントの業種横展開</h3>
+            <h3 class="case-card__title">あなたの業種にも、専用エージェントを</h3>
             <p class="case-card__body">
-              飲食業での実績をベースに、小売・サービス・医療・不動産など複数業種への展開を計画中。各業種の業務フロー・用語・コンプライアンス要件に対応したエージェントを順次提供予定。
+              飲食業での実績をベースに、小売・サービス・医療・不動産など複数業種への展開を計画中。あなたの業種の業務フロー・用語・コンプライアンス要件に対応したエージェントを順次提供します。
             </p>
             <span class="case-card__status">計画中</span>
           </article>
@@ -940,16 +892,18 @@
          ======================================================== -->
     <section class="v-section v-section--light" id="pricing" aria-labelledby="pricing-title">
       <div class="v-section__inner">
-        <p class="v-section__num">06 / 料金</p>
-        <h2 class="v-section__title" id="pricing-title">2つの提供モデル</h2>
-        <p class="v-section__lead">
-          事業者向けの再販モデルと、社内業務 AI としての従業員課金モデルをご用意しています。詳細はお問い合わせください。
+        <p class="v-section__num reveal" data-reveal>06 / 料金</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="pricing-title">
+          あなたの状況に合った2つのプラン
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          AI を提供したい事業者にも、社内で使いたい企業にも、それぞれに合ったプランがあります。詳細はお問い合わせください。
         </p>
 
         <div class="pricing-grid">
-          <article class="pricing-card">
-            <p class="pricing-card__model">Model A</p>
-            <h3 class="pricing-card__name">事業者向け再販モデル</h3>
+          <article class="pricing-card reveal" data-reveal data-delay="150">
+            <p class="pricing-card__plan">プラン A</p>
+            <h3 class="pricing-card__name">事業者向け再販プラン</h3>
             <p class="pricing-card__target">バーティカルエージェントを開発・提供したい事業者向け</p>
             <p class="pricing-card__price">¥300K〜</p>
             <p class="pricing-card__price-sub">初期費用 + ¥180K〜 / 月</p>
@@ -961,17 +915,17 @@
             </ul>
           </article>
 
-          <article class="pricing-card pricing-card--featured">
-            <p class="pricing-card__model">Model B</p>
-            <h3 class="pricing-card__name">社内業務エージェントモデル</h3>
+          <article class="pricing-card pricing-card--featured reveal" data-reveal data-delay="250">
+            <p class="pricing-card__plan">プラン B</p>
+            <h3 class="pricing-card__name">社内業務エージェントプラン</h3>
             <p class="pricing-card__target">自社スタッフの業務 AI として導入したい企業向け</p>
             <p class="pricing-card__price">¥5,000〜10,000</p>
             <p class="pricing-card__price-sub">/ 人 / 月</p>
             <ul class="pricing-card__features">
-              <li>業種・部署ごとの特化エージェント提供</li>
-              <li>社内 Mac へのローカル LLM 環境構築</li>
-              <li>スタッフ数に応じた従業員課金</li>
-              <li>データは社内のみ（外部送信なし）</li>
+              <li>業種・部署ごとの特化エージェントを使える</li>
+              <li>社内 Mac へのローカル LLM 環境を構築できる</li>
+              <li>スタッフ数に応じた従業員課金で始められる</li>
+              <li>データは社内のみ（外部送信なし）で安心して使える</li>
             </ul>
           </article>
         </div>
@@ -987,38 +941,37 @@
          ======================================================== -->
     <section class="v-section v-section--dark" id="cta" aria-labelledby="cta-title">
       <div class="v-section__inner">
-        <p class="v-section__num">07 / お問い合わせ</p>
-        <h2 class="v-section__title" id="cta-title">まずは話を聞かせてください。</h2>
-        <p class="v-section__lead">
-          「自社に合うか確認したい」「PoC から始めたい」「どんな業種で使えるか聞きたい」— どんな段階でもお気軽にどうぞ。初回相談は無料です。
+        <p class="v-section__num reveal" data-reveal>07 / お問い合わせ</p>
+        <h2 class="v-section__title reveal" data-reveal data-delay="100" id="cta-title">
+          まずは話を聞かせてください。
+        </h2>
+        <p class="v-section__lead reveal" data-reveal data-delay="200">
+          「自社に合うか確認したい」「PoC から始めたい」「どんな業種で使えるか聞きたい」— どんな段階でも、あなたのペースでどうぞ。初回相談は無料です。
         </p>
 
-        <div class="cta-grid">
+        <div class="cta-grid reveal" data-reveal data-delay="350">
           <div class="cta-card">
-            <p class="cta-card__icon" aria-hidden="true">&#x1F4CB;</p>
             <h3 class="cta-card__title">資料ダウンロード</h3>
             <p class="cta-card__body">
               製品概要・導入フロー・料金モデルをまとめた資料を無料でお送りします。
             </p>
-            <a class="btn--primary-bright" href="/#contact" style="margin-top:auto;">資料を請求する &rarr;</a>
+            <a class="btn btn--primary" href="/#contact" style="margin-top:auto;">資料を請求する &rarr;</a>
           </div>
 
           <div class="cta-card">
-            <p class="cta-card__icon" aria-hidden="true">&#x1F4AC;</p>
             <h3 class="cta-card__title">PoC 無料相談</h3>
             <p class="cta-card__body">
               御社の業務フローをヒアリングし、PoC の進め方・期間・費用感をご提案します。
             </p>
-            <a class="btn--outline-white" href="/#contact" style="margin-top:auto;">PoC を相談する</a>
+            <a class="btn btn--ghost" href="/#contact" style="margin-top:auto;">PoC を相談する</a>
           </div>
 
           <div class="cta-card">
-            <p class="cta-card__icon" aria-hidden="true">&#x1F4E7;</p>
             <h3 class="cta-card__title">お問い合わせ</h3>
             <p class="cta-card__body">
               ご質問・ご要望はこちらから。通常 1〜2 営業日以内にご返信します。
             </p>
-            <a class="btn--outline-white" href="/#contact" style="margin-top:auto;">お問い合わせ</a>
+            <a class="btn btn--ghost" href="/#contact" style="margin-top:auto;">お問い合わせ</a>
           </div>
         </div>
       </div>
