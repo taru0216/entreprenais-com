@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0f12" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>バーティカルエージェント | EntreprenAIs / 樽石デジタル技術研究所合同会社 (TDRI)</title>
+  <meta name="description" content="御社の Mac で動く業務エージェント。データは一切、外に出ません。AI は使う。秘密は守る。業種・業務特化のバーティカルエージェントプラットフォームで、汎用クラウド AI の限界を超える。" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://entreprenais.com/vertical/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:site_name" content="EntreprenAIs / 樽石デジタル技術研究所合同会社" />
+  <meta property="og:url" content="https://entreprenais.com/vertical/" />
+  <meta property="og:title" content="バーティカルエージェント | EntreprenAIs / 樽石デジタル技術研究所合同会社 (TDRI)" />
+  <meta property="og:description" content="御社の Mac で動く業務エージェント。データは一切、外に出ません。AI は使う。秘密は守る。" />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="バーティカルエージェント | EntreprenAIs / 樽石デジタル技術研究所合同会社 (TDRI)" />
+  <meta name="twitter:description" content="御社の Mac で動く業務エージェント。データは一切、外に出ません。AI は使う。秘密は守る。" />
+  <meta name="twitter:image" content="https://entreprenais.com/og.png" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- SRI 非適用 (#70): Google Fonts は動的 URL のためハッシュ固定不可。CSP の style-src / font-src allowlist で保護。 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Google Analytics 4 (gtag.js) -->
+  <!-- SRI 非適用 (#70): gtag/js は動的バージョンロード CDN のためハッシュ固定不可。CSP の script-src allowlist で保護。 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ND9RLH0NT3');
+  </script>
+
+  <!-- JSON-LD: WebPage + BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://entreprenais.com/vertical/#webpage",
+        "url": "https://entreprenais.com/vertical/",
+        "name": "バーティカルエージェント | EntreprenAIs / 樽石デジタル技術研究所合同会社 (TDRI)",
+        "description": "御社の Mac で動く業務エージェント。データは一切、外に出ません。AI は使う。秘密は守る。",
+        "isPartOf": { "@id": "https://entreprenais.com/#website" },
+        "inLanguage": "ja-JP"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://entreprenais.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "バーティカルエージェント",
+            "item": "https://entreprenais.com/vertical/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ============================================================
+       Vertical page — page-specific styles
+       ============================================================ */
+
+    /* Hero: dark ink background with accent glow */
+    .vertical-hero {
+      background: var(--ink);
+      color: var(--paper);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem var(--gutter) 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .vertical-hero__glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .vertical-hero__glow--a {
+      width: 520px;
+      height: 520px;
+      top: -180px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(74, 78, 224, 0.28), transparent 65%);
+    }
+    .vertical-hero__glow--b {
+      width: 360px;
+      height: 360px;
+      bottom: -120px;
+      left: -80px;
+      background: radial-gradient(circle, rgba(110, 114, 240, 0.2), transparent 65%);
+    }
+    .vertical-hero__inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .vertical-hero__eyebrow {
+      font-family: var(--serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin: 0 0 2rem;
+      display: inline-block;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .vertical-hero__eyebrow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1rem;
+      height: 1px;
+      background: var(--accent-soft);
+    }
+    .vertical-hero__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 6.5vw, 5rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.5rem;
+      color: var(--paper);
+    }
+    .vertical-hero__title .accent-bright {
+      color: var(--accent-soft);
+    }
+    .vertical-hero__lead {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      max-width: 38em;
+      margin: 0 0 3rem;
+      color: rgba(247, 246, 241, 0.75);
+      line-height: 1.8;
+      text-wrap: balance;
+      line-break: strict;
+    }
+    .vertical-hero__cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn--primary-bright {
+      background: var(--accent-bright);
+      color: var(--paper);
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.8rem;
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+    }
+    .btn--primary-bright:hover {
+      background: var(--accent-soft);
+      transform: translateY(-2px);
+    }
+    .btn--outline-white {
+      border: 1px solid rgba(247, 246, 241, 0.45);
+      color: var(--paper);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.8rem;
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
+    }
+    .btn--outline-white:hover {
+      background: rgba(247, 246, 241, 0.1);
+      border-color: rgba(247, 246, 241, 0.7);
+      transform: translateY(-2px);
+    }
+
+    /* Generic vertical section */
+    .v-section {
+      padding: 7rem var(--gutter);
+      position: relative;
+    }
+    .v-section--light { background: var(--paper); color: var(--ink); }
+    .v-section--dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .v-section--accent {
+      background:
+        radial-gradient(ellipse at top right, rgba(74, 78, 224, 0.14), transparent 60%),
+        var(--ink);
+      color: var(--paper);
+    }
+    .v-section--soft { background: var(--paper-soft); color: var(--ink); }
+    .v-section__inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .v-section__num {
+      font-family: var(--serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+    }
+    .v-section--dark .v-section__num,
+    .v-section--accent .v-section__num { color: rgba(247, 246, 241, 0.45); }
+    .v-section__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4.2vw, 3.2rem);
+      line-height: 1.3;
+      letter-spacing: -0.005em;
+      margin: 0 0 1rem;
+      max-width: 24ch;
+      text-wrap: balance;
+      line-break: strict;
+      overflow-wrap: anywhere;
+    }
+    .v-section--dark .v-section__title,
+    .v-section--accent .v-section__title { color: var(--paper); }
+    .v-section__lead {
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      max-width: 42em;
+      margin: 0 0 4rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+    .v-section--dark .v-section__lead,
+    .v-section--accent .v-section__lead { color: rgba(247, 246, 241, 0.75); }
+
+    /* Problem: 3 cards */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .problem-card {
+      background: var(--paper-soft);
+      border: 1px solid var(--line-soft);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+    }
+    .problem-card__num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent-soft);
+      line-height: 1;
+      margin: 0 0 1rem;
+      opacity: 0.5;
+    }
+    .problem-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin: 0 0 0.75rem;
+      color: var(--ink);
+    }
+    .problem-card__body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    /* Comparison table */
+    .comparison-wrap {
+      overflow-x: auto;
+      margin-top: 3rem;
+      border-radius: 1rem;
+      border: 1px solid var(--line-soft);
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      min-width: 520px;
+    }
+    .comparison-table th {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      font-family: var(--serif);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .comparison-table th:first-child { border-radius: 0; }
+    .comparison-table th.col-ours {
+      background: var(--accent);
+      color: var(--paper);
+    }
+    .comparison-table td {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--line-soft);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .comparison-table tr:nth-child(even) td { background: var(--paper-soft); }
+    .comparison-table td.col-ours {
+      background: rgba(42, 45, 124, 0.06);
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .comparison-table td.col-ours strong { color: var(--accent); }
+    .comparison-table td:first-child {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .badge-ours {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--paper);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* Value: 4 cards */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .value-card {
+      background: rgba(247, 246, 241, 0.06);
+      border: 1px solid rgba(247, 246, 241, 0.12);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+    }
+    .value-card__num {
+      font-family: var(--serif);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin: 0 0 1rem;
+    }
+    .value-card__icon {
+      font-size: 2rem;
+      margin: 0 0 1rem;
+      line-height: 1;
+    }
+    .value-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--paper);
+      margin: 0 0 0.75rem;
+    }
+    .value-card__body {
+      font-size: 0.93rem;
+      color: rgba(247, 246, 241, 0.7);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    /* Architecture flow */
+    .arch-flow {
+      margin-top: 3rem;
+      background: var(--ink-soft);
+      border: 1px solid rgba(247, 246, 241, 0.1);
+      border-radius: 1.25rem;
+      padding: 2.5rem;
+    }
+    .arch-flow__diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      flex-wrap: nowrap;
+    }
+    .arch-node {
+      background: rgba(247, 246, 241, 0.08);
+      border: 1px solid rgba(247, 246, 241, 0.18);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      flex: 0 0 auto;
+      min-width: 140px;
+    }
+    .arch-node--ours {
+      background: rgba(42, 45, 124, 0.4);
+      border-color: rgba(110, 114, 240, 0.5);
+    }
+    .arch-node__label {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--paper);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .arch-node__sub {
+      font-size: 0.75rem;
+      color: rgba(247, 246, 241, 0.55);
+      line-height: 1.4;
+    }
+    .arch-arrow {
+      font-size: 1.4rem;
+      color: var(--accent-soft);
+      padding: 0 0.75rem;
+      flex: 0 0 auto;
+    }
+    .arch-flow__points {
+      margin-top: 2rem;
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem 2rem;
+    }
+    .arch-flow__points li {
+      font-size: 0.92rem;
+      color: rgba(247, 246, 241, 0.75);
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+    .arch-flow__points li::before {
+      content: "✓";
+      color: var(--accent-soft);
+      font-weight: 700;
+      flex: none;
+      margin-top: 0.05em;
+    }
+
+    /* Case study */
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .case-card {
+      background: var(--paper-soft);
+      border: 1px solid var(--line-soft);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    }
+    .case-card__industry {
+      font-family: var(--serif);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.75rem;
+    }
+    .case-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin: 0 0 0.75rem;
+    }
+    .case-card__body {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0;
+    }
+    .case-card__status {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(42, 45, 124, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(42, 45, 124, 0.2);
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .pricing-card {
+      border: 1px solid var(--line-soft);
+      border-radius: 1.25rem;
+      padding: 2.5rem 2rem;
+      background: var(--paper);
+      position: relative;
+    }
+    .pricing-card--featured {
+      background: var(--ink);
+      border-color: transparent;
+      color: var(--paper);
+    }
+    .pricing-card__model {
+      font-family: var(--serif);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+    }
+    .pricing-card--featured .pricing-card__model { color: rgba(247, 246, 241, 0.5); }
+    .pricing-card__name {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+    }
+    .pricing-card--featured .pricing-card__name { color: var(--paper); }
+    .pricing-card__target {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0 0 2rem;
+    }
+    .pricing-card--featured .pricing-card__target { color: rgba(247, 246, 241, 0.6); }
+    .pricing-card__price {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.9rem;
+      color: var(--ink);
+      margin: 0 0 0.4rem;
+      line-height: 1.1;
+    }
+    .pricing-card--featured .pricing-card__price { color: var(--accent-soft); }
+    .pricing-card__price-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 2rem;
+    }
+    .pricing-card--featured .pricing-card__price-sub { color: rgba(247, 246, 241, 0.5); }
+    .pricing-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .pricing-card__features li {
+      font-size: 0.93rem;
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .pricing-card--featured .pricing-card__features li { color: rgba(247, 246, 241, 0.8); }
+    .pricing-card__features li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 700;
+      flex: none;
+    }
+    .pricing-card--featured .pricing-card__features li::before { color: var(--accent-soft); }
+
+    /* CTA section */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .cta-card {
+      border: 1px solid rgba(247, 246, 241, 0.15);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+      background: rgba(247, 246, 241, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cta-card__icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .cta-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--paper);
+      margin: 0;
+    }
+    .cta-card__body {
+      font-size: 0.88rem;
+      color: rgba(247, 246, 241, 0.65);
+      line-height: 1.65;
+      margin: 0;
+      flex: 1;
+    }
+
+    /* Nav on dark background tweaks for vertical hero */
+    .nav.on-dark-hero {
+      background: transparent;
+      color: var(--paper);
+    }
+    .nav.on-dark-hero .nav__brand,
+    .nav.on-dark-hero .nav__links a { color: var(--paper); }
+
+    @media (max-width: 720px) {
+      .vertical-hero { padding: 7rem var(--gutter) 4rem; }
+      .arch-flow__diagram { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .arch-arrow { transform: rotate(90deg); padding: 0.5rem 0; }
+    }
+  </style>
+</head>
+<body class="fleet-page">
+
+  <!-- Fixed nav -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#mission">Mission</a></li>
+        <li><a href="/eai/">C-Suite Fleet</a></li>
+        <li><a href="/vertical/" aria-current="page">Vertical</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ========================================================
+         Hero
+         ======================================================== -->
+    <section class="vertical-hero" aria-labelledby="hero-title">
+      <div class="vertical-hero__glow vertical-hero__glow--a" aria-hidden="true"></div>
+      <div class="vertical-hero__glow vertical-hero__glow--b" aria-hidden="true"></div>
+      <div class="vertical-hero__inner">
+        <p class="vertical-hero__eyebrow">EntreprenAIs Vertical Agent Platform</p>
+        <h1 class="vertical-hero__title" id="hero-title">
+          AI は使う。<br />
+          <span class="accent-bright">秘密は守る。</span>
+        </h1>
+        <p class="vertical-hero__lead">
+          御社の Mac で動く業務エージェント。<br />
+          データは一切、外に出ません。
+        </p>
+        <div class="vertical-hero__cta">
+          <a class="btn--primary-bright" href="/#contact">資料を請求する &rarr;</a>
+          <a class="btn--outline-white" href="/#contact">PoC を相談する</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         01 / 課題
+         ======================================================== -->
+    <section class="v-section v-section--light" id="problem" aria-labelledby="problem-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">01 / 課題</p>
+        <h2 class="v-section__title" id="problem-title">汎用クラウド AI の3つの限界</h2>
+        <p class="v-section__lead">
+          ChatGPT や Copilot を試したが、現場に根付かない。その背景には構造的な3つの問題があります。
+        </p>
+
+        <div class="problem-grid">
+          <article class="problem-card">
+            <p class="problem-card__num">01</p>
+            <h3 class="problem-card__title">利用率が上がらない</h3>
+            <p class="problem-card__body">
+              汎用 AI は「どんな業務にも使える」ことを売りにするが、「特定業務にハマる」使い方が見えにくい。現場の担当者は試行錯誤に疲れ、数週間後には誰も使わなくなる。
+            </p>
+          </article>
+
+          <article class="problem-card">
+            <p class="problem-card__num">02</p>
+            <h3 class="problem-card__title">データがクラウドに流れる</h3>
+            <p class="problem-card__body">
+              顧客情報・仕入れ価格・従業員データを入力するたびに、外部サーバーへ送信される。NDA や個人情報保護法への配慮から、AI に聞きたいことを聞けない状況が生まれる。
+            </p>
+          </article>
+
+          <article class="problem-card">
+            <p class="problem-card__num">03</p>
+            <h3 class="problem-card__title">ROI が見えない</h3>
+            <p class="problem-card__body">
+              月額コストを払い続けても、利用率が低ければ投資対効果は出ない。「入れたけど効果が測れない」まま契約が続く。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         02 / ソリューション比較
+         ======================================================== -->
+    <section class="v-section v-section--soft" id="comparison" aria-labelledby="comparison-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">02 / ソリューション比較</p>
+        <h2 class="v-section__title" id="comparison-title">汎用クラウド AI と EntreprenAIs の違い</h2>
+        <p class="v-section__lead">
+          アーキテクチャから設計を変えることで、クラウド AI が抱える3つの限界をすべて解決します。
+        </p>
+
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>比較軸</th>
+                <th>汎用クラウド AI</th>
+                <th class="col-ours">EntreprenAIs <span class="badge-ours">当社</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>データの場所</td>
+                <td>クラウドサーバー（外部）</td>
+                <td class="col-ours"><strong>御社の Mac（社内完結）</strong></td>
+              </tr>
+              <tr>
+                <td>業務への密着度</td>
+                <td>汎用（何でも使える・何にも刺さらない）</td>
+                <td class="col-ours"><strong>業種・業務特化エージェント</strong></td>
+              </tr>
+              <tr>
+                <td>利用率</td>
+                <td>20〜30%（業界平均）</td>
+                <td class="col-ours"><strong>70〜90%（目標値）</strong></td>
+              </tr>
+              <tr>
+                <td>情報漏洩リスク</td>
+                <td>入力データが外部送信される</td>
+                <td class="col-ours"><strong>外部送信なし（ローカル推論）</strong></td>
+              </tr>
+              <tr>
+                <td>単価感</td>
+                <td>汎用価格（競合多数・価格圧力）</td>
+                <td class="col-ours"><strong>プレミアム（セキュリティ×高利用率）</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         03 / 4つの価値
+         ======================================================== -->
+    <section class="v-section v-section--dark" id="value" aria-labelledby="value-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">03 / 4つの価値</p>
+        <h2 class="v-section__title" id="value-title">なぜ EntreprenAIs を選ぶか</h2>
+        <p class="v-section__lead">
+          セキュリティ・利用率・コスト効率・収益性 — 4つの視点から事業価値を最大化します。
+        </p>
+
+        <div class="value-grid">
+          <article class="value-card">
+            <p class="value-card__num">Value 01</p>
+            <p class="value-card__icon" aria-hidden="true">&#x1F512;</p>
+            <h3 class="value-card__title">セキュリティ</h3>
+            <p class="value-card__body">
+              Mac ローカルで推論が完結。顧客情報・仕入れ価格・従業員データがクラウドに出ない。NDA 対応・個人情報保護法への配慮が自然に担保されます。
+            </p>
+          </article>
+
+          <article class="value-card">
+            <p class="value-card__num">Value 02</p>
+            <p class="value-card__icon" aria-hidden="true">&#x1F680;</p>
+            <h3 class="value-card__title">民主化</h3>
+            <p class="value-card__body">
+              業務に密着したエージェントは「どう使うか」を迷わせない。現場の担当者が日常業務の中で自然に使い続ける設計で、利用率が劇的に上がります。
+            </p>
+          </article>
+
+          <article class="value-card">
+            <p class="value-card__num">Value 03</p>
+            <p class="value-card__icon" aria-hidden="true">&#x1F4BB;</p>
+            <h3 class="value-card__title">遊休資産の活用</h3>
+            <p class="value-card__body">
+              すでに持っている Mac がそのまま AI インフラになります。新規ハードウェア投資不要。サーバー費用ゼロで本格的な業務 AI を導入できます。
+            </p>
+          </article>
+
+          <article class="value-card">
+            <p class="value-card__num">Value 04</p>
+            <p class="value-card__icon" aria-hidden="true">&#x1F4B0;</p>
+            <h3 class="value-card__title">プレミアム単価</h3>
+            <p class="value-card__body">
+              「データが外に出ない」「利用率 70〜90%」という希少な組み合わせが、高単価設定を正当化します。汎用 AI との価格競争から抜け出せます。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         04 / 仕組み（ローカル LLM × Mac）
+         ======================================================== -->
+    <section class="v-section v-section--accent" id="architecture" aria-labelledby="arch-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">04 / 仕組み</p>
+        <h2 class="v-section__title" id="arch-title">ローカル LLM × Mac で完結する推論アーキテクチャ</h2>
+        <p class="v-section__lead">
+          すべてのデータ処理が御社の Mac の中で完結します。インターネット接続なしで推論が動き、会話履歴・業務データは一切外部に送信されません。
+        </p>
+
+        <div class="arch-flow">
+          <div class="arch-flow__diagram" role="img" aria-label="データフロー図: 御社の Mac → ローカル LLM → バーティカルエージェント → 業務成果。すべて Mac の中で完結。">
+            <div class="arch-node">
+              <span class="arch-node__label">御社の Mac</span>
+              <span class="arch-node__sub">業務データ<br />会話履歴</span>
+            </div>
+            <span class="arch-arrow" aria-hidden="true">&rarr;</span>
+            <div class="arch-node arch-node--ours">
+              <span class="arch-node__label">ローカル LLM</span>
+              <span class="arch-node__sub">社内専用モデル<br />外部送信なし</span>
+            </div>
+            <span class="arch-arrow" aria-hidden="true">&rarr;</span>
+            <div class="arch-node arch-node--ours">
+              <span class="arch-node__label">バーティカルエージェント</span>
+              <span class="arch-node__sub">業種・業務特化<br />専用 AI</span>
+            </div>
+            <span class="arch-arrow" aria-hidden="true">&rarr;</span>
+            <div class="arch-node">
+              <span class="arch-node__label">業務成果</span>
+              <span class="arch-node__sub">回答・分析<br />自動化</span>
+            </div>
+          </div>
+
+          <ul class="arch-flow__points">
+            <li>インターネット接続不要で推論が動く</li>
+            <li>会話履歴・業務データは外部に送信されない</li>
+            <li>既存の Mac をそのまま AI インフラとして活用</li>
+            <li>業種ごとの特化モデルで精度を高められる</li>
+            <li>社内規定・NDA への配慮をアーキテクチャで担保</li>
+            <li>クラウド API コストゼロでスケール可能</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         05 / 導入事例（匿名）
+         ======================================================== -->
+    <section class="v-section v-section--soft" id="cases" aria-labelledby="cases-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">05 / 導入事例</p>
+        <h2 class="v-section__title" id="cases-title">先行導入パートナーの事例</h2>
+        <p class="v-section__lead">
+          個別業種の業務フローに密着したエージェントが、現場の AI 活用を加速します。
+          （本事例は個人情報保護のため匿名で掲載しています）
+        </p>
+
+        <div class="case-grid">
+          <article class="case-card">
+            <p class="case-card__industry">飲食業</p>
+            <h3 class="case-card__title">飲食業向けバーティカルエージェント</h3>
+            <p class="case-card__body">
+              仕入れ管理・メニュー分析・スタッフシフト提案・顧客対応下書きなど、飲食現場の業務フローに特化したエージェントを構築。店長・スタッフが日常業務の中で自然に使える設計を実現。
+            </p>
+            <span class="case-card__status">導入進行中</span>
+          </article>
+
+          <article class="case-card">
+            <p class="case-card__industry">複数業種 — 横展開計画</p>
+            <h3 class="case-card__title">バーティカルエージェントの業種横展開</h3>
+            <p class="case-card__body">
+              飲食業での実績をベースに、小売・サービス・医療・不動産など複数業種への展開を計画中。各業種の業務フロー・用語・コンプライアンス要件に対応したエージェントを順次提供予定。
+            </p>
+            <span class="case-card__status">計画中</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         06 / 料金
+         ======================================================== -->
+    <section class="v-section v-section--light" id="pricing" aria-labelledby="pricing-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">06 / 料金</p>
+        <h2 class="v-section__title" id="pricing-title">2つの提供モデル</h2>
+        <p class="v-section__lead">
+          事業者向けの再販モデルと、社内業務 AI としての従業員課金モデルをご用意しています。詳細はお問い合わせください。
+        </p>
+
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <p class="pricing-card__model">Model A</p>
+            <h3 class="pricing-card__name">事業者向け再販モデル</h3>
+            <p class="pricing-card__target">バーティカルエージェントを開発・提供したい事業者向け</p>
+            <p class="pricing-card__price">¥300K〜</p>
+            <p class="pricing-card__price-sub">初期費用 + ¥180K〜 / 月</p>
+            <ul class="pricing-card__features">
+              <li>業種特化エージェントの設計・開発</li>
+              <li>ローカル LLM 環境の構築支援</li>
+              <li>継続運用・モデル更新サポート</li>
+              <li>再販ライセンスの提供</li>
+            </ul>
+          </article>
+
+          <article class="pricing-card pricing-card--featured">
+            <p class="pricing-card__model">Model B</p>
+            <h3 class="pricing-card__name">社内業務エージェントモデル</h3>
+            <p class="pricing-card__target">自社スタッフの業務 AI として導入したい企業向け</p>
+            <p class="pricing-card__price">¥5,000〜10,000</p>
+            <p class="pricing-card__price-sub">/ 人 / 月</p>
+            <ul class="pricing-card__features">
+              <li>業種・部署ごとの特化エージェント提供</li>
+              <li>社内 Mac へのローカル LLM 環境構築</li>
+              <li>スタッフ数に応じた従業員課金</li>
+              <li>データは社内のみ（外部送信なし）</li>
+            </ul>
+          </article>
+        </div>
+
+        <p style="margin-top:2rem; font-size:0.85rem; color:var(--muted); text-align:center;">
+          ※ 上記は参考価格です。要件・規模によって異なります。詳細はお問い合わせください。
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         07 / CTA
+         ======================================================== -->
+    <section class="v-section v-section--dark" id="cta" aria-labelledby="cta-title">
+      <div class="v-section__inner">
+        <p class="v-section__num">07 / お問い合わせ</p>
+        <h2 class="v-section__title" id="cta-title">まずは話を聞かせてください。</h2>
+        <p class="v-section__lead">
+          「自社に合うか確認したい」「PoC から始めたい」「どんな業種で使えるか聞きたい」— どんな段階でもお気軽にどうぞ。初回相談は無料です。
+        </p>
+
+        <div class="cta-grid">
+          <div class="cta-card">
+            <p class="cta-card__icon" aria-hidden="true">&#x1F4CB;</p>
+            <h3 class="cta-card__title">資料ダウンロード</h3>
+            <p class="cta-card__body">
+              製品概要・導入フロー・料金モデルをまとめた資料を無料でお送りします。
+            </p>
+            <a class="btn--primary-bright" href="/#contact" style="margin-top:auto;">資料を請求する &rarr;</a>
+          </div>
+
+          <div class="cta-card">
+            <p class="cta-card__icon" aria-hidden="true">&#x1F4AC;</p>
+            <h3 class="cta-card__title">PoC 無料相談</h3>
+            <p class="cta-card__body">
+              御社の業務フローをヒアリングし、PoC の進め方・期間・費用感をご提案します。
+            </p>
+            <a class="btn--outline-white" href="/#contact" style="margin-top:auto;">PoC を相談する</a>
+          </div>
+
+          <div class="cta-card">
+            <p class="cta-card__icon" aria-hidden="true">&#x1F4E7;</p>
+            <h3 class="cta-card__title">お問い合わせ</h3>
+            <p class="cta-card__body">
+              ご質問・ご要望はこちらから。通常 1〜2 営業日以内にご返信します。
+            </p>
+            <a class="btn--outline-white" href="/#contact" style="margin-top:auto;">お問い合わせ</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石デジタル技術研究所合同会社</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__copy">
+          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
+          This site is part of EntreprenAIs IoA platform
+        </p>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+          <ul class="footer__nav-list">
+            <li><a href="/news/" class="footer__link">News</a></li>
+            <li><a href="/eai/" class="footer__link">C-Suite Fleet</a></li>
+            <li><a href="/vertical/" class="footer__link">Vertical</a></li>
+            <li><a href="/terms/" class="footer__link">Terms of Use</a></li>
+            <li><a href="/privacy/" class="footer__link">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
