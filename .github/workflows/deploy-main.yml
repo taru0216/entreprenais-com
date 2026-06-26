@@ -1,0 +1,90 @@
+name: Deploy main site
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'sites/banwaen-ikebukuro/**'
+      - 'sites/taruishi-burger/**'
+      - '.github/workflows/deploy-banwaen-ikebukuro.yml'
+      - '.github/workflows/deploy-taruishi-burger.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: sites/banwaen-ikebukuro/package-lock.json
+
+      - name: Build banwaen-ikebukuro
+        working-directory: sites/banwaen-ikebukuro
+        run: npm ci && npm run build
+        env:
+          ASTRO_BASE: /sites/banwaen-ikebukuro
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: sites/taruishi-burger/package-lock.json
+
+      - name: Build taruishi-burger
+        working-directory: sites/taruishi-burger
+        run: npm ci && npm run build
+        env:
+          ASTRO_BASE: /sites/taruishi-burger
+
+      - name: Assemble full site
+        run: |
+          mkdir -p _site
+          # Root static files
+          find . -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
+            -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
+            -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
+            -exec cp {} _site/ \;
+          # Root directories (static content) — vertical/ added for #274
+          for dir in img en zh news eai privacy terms data _i18n vertical; do
+            [ -d "$dir" ] && cp -r "$dir" _site/
+          done
+          # Astro subsites (built output)
+          mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger
+          cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
+          cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
+          # Other static sites
+          for site in sites/*/; do
+            name=$(basename "$site")
+            if [ "$name" != "banwaen-ikebukuro" ] && [ "$name" != "taruishi-burger" ]; then
+              mkdir -p "_site/sites/$name"
+              cp -r "$site"/* "_site/sites/$name/" 2>/dev/null || true
+            fi
+          done
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
