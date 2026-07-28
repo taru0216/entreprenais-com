@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>宇都宮LRT AIアンバサダー — デモ</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f2f5f8; color: #1a1a1a; line-height: 1.7;
+  }
+  header {
+    background: #005baa; color: #fff; padding: 32px 20px; text-align: center;
+  }
+  header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+  header p { margin: 0; opacity: .9; font-size: .95rem; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
+  section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  section h2 { margin-top: 0; font-size: 1.15rem; color: #005baa; }
+  .badge { display: inline-block; background: #eef4fa; color: #005baa; border-radius: 2rem; padding: 2px 10px; font-size: .75rem; margin-left: 8px; }
+  .note { font-size: .82rem; color: #6b7280; }
+
+  /* LINE風モックアップ */
+  .line-mock { background: #7cc243; border-radius: 12px; overflow: hidden; max-width: 320px; margin: 16px auto; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  .line-mock-header { background: #4caf37; color: #fff; padding: 10px 14px; font-size: .85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .line-mock-body { background: #eaf7e0; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 160px; }
+  .line-bubble { max-width: 78%; padding: 8px 12px; border-radius: 12px; font-size: .82rem; }
+  .line-bubble.bot { align-self: flex-start; background: #fff; border-bottom-left-radius: 2px; }
+  .line-bubble.user { align-self: flex-end; background: #a4e37e; border-bottom-right-radius: 2px; }
+  .line-disclaimer {
+    background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 10px 14px;
+    font-size: .82rem; color: #7a5c00; margin-top: 12px;
+  }
+
+  /* ハイブリッド・アーキテクチャ図解（脊髄反射 vs 大脳思考） */
+  .hybrid-diagram {
+    display: flex; gap: 14px; margin: 18px 0; flex-wrap: wrap;
+  }
+  .hybrid-path {
+    flex: 1 1 220px; border-radius: 10px; padding: 16px; border: 1px solid;
+  }
+  .hybrid-path.reflex { background: #f0f9f0; border-color: #b7e4b7; }
+  .hybrid-path.brain { background: #eef4fa; border-color: #b9d3ec; }
+  .hybrid-path-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 4px; }
+  .hybrid-path h3 { margin: 0 0 8px; font-size: 1rem; }
+  .hybrid-path.reflex h3 { color: #2e7d32; }
+  .hybrid-path.brain h3 { color: #005baa; }
+  .hybrid-flow {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+    font-size: .82rem; font-weight: 600; background: rgba(255,255,255,.6);
+    border-radius: 6px; padding: 8px 10px; margin-bottom: 10px;
+  }
+  .hybrid-flow .arrow { opacity: .5; }
+  .hybrid-desc { font-size: .85rem; margin: 0 0 10px; }
+  .hybrid-metric {
+    font-size: .78rem; font-weight: 600; border-radius: 6px; padding: 6px 10px; display: inline-block;
+  }
+  .hybrid-path.reflex .hybrid-metric { background: #dff0d8; color: #2e7d32; }
+  .hybrid-path.brain .hybrid-metric { background: #dce8f5; color: #005baa; }
+  .hybrid-caption { font-size: .82rem; color: #6b7280; text-align: center; margin: 4px 0 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>宇都宮LRT AIアンバサダー <span class="badge">PoCデモ</span></h1>
+  <p>EntreprenAIsエージェント — 交通事業者向け問い合わせAIエージェントのデモサイト</p>
+</header>
+
+<main>
+  <section>
+    <h2>このデモについて</h2>
+    <p>
+      本サイトは、宇都宮ライトレールを題材にした問い合わせAIエージェント「EntreprenAIsエージェント」の
+      デモです。右下のチャットボタンから、運賃・運行状況などを実際に質問できます。
+    </p>
+    <p class="note">
+      掲載データ（路線・運賃・運行状況）はPoC用のサンプルであり、公式の正確な情報ではありません。
+      実際の運賃・時刻は<a href="https://www.miyarail.co.jp/" target="_blank" rel="noopener noreferrer">宇都宮ライトレール公式サイト</a>をご確認ください。
+    </p>
+  </section>
+
+  <section>
+    <h2>再生可能エネルギーで持続稼働するAIエージェント</h2>
+    <p>
+      このAIエージェントは、太陽光による自家発電と東京電力の「アクアエナジー100」（水力由来の
+      実質CO2フリー電力）を組み合わせた、実質再生可能エネルギー100%の施設で稼働するよう設計しています。
+      そのため、インターネットの先にある大きなAI（クラウドLLM）に問い合わせるのではなく、
+      この施設の中だけで答えを考える「ローカルLLM」を使っています。クラウドの先のAIがどんな
+      電気で動いているかは分かりませんが、ローカルLLMなら、この施設の再生可能エネルギーだけで
+      処理を完結できるからです。
+    </p>
+    <p>
+      ただし、ローカルLLMで考えるときは、たくさんの電気を使います。AIをずっと起動したままだと、
+      この再生可能エネルギーだけでは電気が足りなくなってしまいます。そこで、この電気の問題を
+      解決するために「CPUファースト・ハイブリッド・アーキテクチャ」という仕組みを開発しました。
+    </p>
+    <p>
+      定型的な質問（運賃計算・運行状況照会など）はCPU側の構造化データのみで低消費電力に即答し、
+      消費電力の大きいローカルLLMは未知の質問のときだけオンデマンドで起動します。
+      こうして処理の大半をCPUだけで完結させることで、エージェント全体の消費電力を抑え、
+      再生可能エネルギーによる持続稼働を実現しています。
+    </p>
+
+    <p>
+      これは人間の神経系にたとえると分かりやすい構造です。熱いものに触れて思わず手を引っ込めるとき、
+      私たちはいちいち「脳」で考えていません。「脊髄」だけで反射的に処理しているからこそ、一瞬で反応できます。
+      一方、初めて見るものについて考えたり判断したりするときは、「脳」をフルに使ってじっくり処理します。
+      このAIエージェントも同じ発想で、よくある定型質問は「脊髄反射」のようにCPUだけで即答し、
+      未知の質問だけ「脳」にあたるローカルLLMを呼び起こして考えます。
+    </p>
+
+    <div class="hybrid-diagram">
+      <div class="hybrid-path reflex">
+        <div class="hybrid-path-icon">⚡🦵</div>
+        <h3>脊髄反射型 = CPUだけで即答</h3>
+        <div class="hybrid-flow">
+          <span>質問</span><span class="arrow">→</span><span>脊髄</span><span class="arrow">→</span><span>反応</span>
+        </div>
+        <p class="hybrid-desc">
+          熱い物に触れた瞬間に手を引っ込めるのと同じ。脳を経由せず、定型的な質問
+          （運賃・運行状況など）を構造化データだけで即座に処理します。
+        </p>
+        <span class="hybrid-metric">実測 数ms・低消費電力</span>
+      </div>
+      <div class="hybrid-path brain">
+        <div class="hybrid-path-icon">🧠</div>
+        <h3>大脳思考型 = ローカルLLM</h3>
+        <div class="hybrid-flow">
+          <span>質問</span><span class="arrow">→</span><span>脳</span><span class="arrow">→</span><span>判断・応答</span>
+        </div>
+        <p class="hybrid-desc">
+          初めて見る物事をじっくり考えて判断するのと同じ。未知の質問のときだけ
+          ローカルLLMという「脳」をオンデマンドで起動し、考えて応答します。
+        </p>
+        <span class="hybrid-metric">実測 数百ms〜数秒・高消費電力（必要な時だけ）</span>
+      </div>
+    </div>
+    <p class="hybrid-caption">
+      チャット内の各応答の下に、実際に計測した処理経路（脊髄反射＝CPU／大脳思考＝ローカルLLM）と
+      応答時間（実測ミリ秒）が表示されます。
+    </p>
+  </section>
+
+  <section>
+    <h2>提供形態その1: ホームページ埋め込み型チャットボット</h2>
+    <p>右下の「AIに聞く」ボタンから、実際に動作するチャットをお試しください。</p>
+  </section>
+
+  <section>
+    <h2>提供形態その2: LINE公式アカウント連携（イメージ）</h2>
+    <div class="line-mock">
+      <div class="line-mock-header">💬 宇都宮LRT公式アカウント</div>
+      <div class="line-mock-body">
+        <div class="line-bubble user">宇都宮駅東口から本町一丁目までいくら？</div>
+        <div class="line-bubble bot">対距離制により、大人150円・小児80円です🚈</div>
+        <div class="line-bubble user">今遅延してる？</div>
+        <div class="line-bubble bot">現在、平常運行しています。</div>
+      </div>
+    </div>
+    <div class="line-disclaimer">
+      ⚠️ 実際のLINE公式アカウント連携は本デモの対象外です。上記はイメージを伝えるためのモックアップ画面であり、
+      実際にLINEアプリと連携して動作するものではありません。将来的な提供形態のイメージとして掲載しています。
+    </div>
+  </section>
+</main>
+
+<script src="https://utsunomiya-lrt-ambassador-04062ff8.pub.entreprenais.com/widget.js"></script>
+</body>
+</html>

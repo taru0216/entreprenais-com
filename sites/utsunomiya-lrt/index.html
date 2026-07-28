@@ -602,7 +602,10 @@
 </div>
 <script>
 (function () {
-  var DEMO_LP_URL = "https://utsunomiya-lrt-demo-04062ff8.pub.entreprenais.com/";
+  // 自己ホスト型Dockerコンテナ (pub.entreprenais.com) と、このentreprenais-comリポジトリ配下の
+  // 静的コピー (/sites/utsunomiya-lrt/about/) の両方から同一内容を閲覧可能にしてある。
+  // オーバーレイは外部サービスの稼働状況に依存しない後者を参照する。
+  var DEMO_LP_URL = "/sites/utsunomiya-lrt/about/";
   var btn = document.getElementById("eai-demo-about-btn");
   var overlay = document.getElementById("eai-demo-about-overlay");
   var closeBtn = document.getElementById("eai-demo-about-close");
