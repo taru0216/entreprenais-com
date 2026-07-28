@@ -57,8 +57,8 @@ jobs:
             -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
             -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
             -exec cp {} _site/ \;
-          # Root directories (static content) — vertical/ added for #274
-          for dir in img en zh news eai privacy terms data _i18n vertical; do
+          # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page
+          for dir in img en zh news eai agents privacy terms data _i18n vertical; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           # Astro subsites (built output)

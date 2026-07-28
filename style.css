@@ -2322,6 +2322,9 @@ body.fleet-page {
 /* CTA row */
 .showcase-card__cta {
   margin-top: auto;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 /* "AI に聞く" button: override cursor + reset browser button defaults */
@@ -2595,4 +2598,117 @@ body.fleet-page {
 
 @media (prefers-reduced-motion: reduce) {
   .integration-card__status-dot { animation: none; }
+}
+
+/* ============================================================
+   /agents/ — 問い合わせAIエージェント プロダクトページ
+   ============================================================ */
+.energy__lead,
+.demo__lead {
+  max-width: 62ch;
+  font-size: 1.02rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  margin: 0 0 1.6rem;
+}
+.energy__lead:last-of-type,
+.demo__lead:last-of-type {
+  margin-bottom: 0;
+}
+.demo__cta {
+  margin-top: 2.5rem;
+}
+
+/* Code-mock — "1行埋め込み" スニペットを見せるターミナル風カード */
+.code-mock {
+  width: 100%;
+  max-width: 380px;
+  background: var(--ink);
+  border-radius: 22px;
+  border: 1px solid rgba(110, 114, 240, 0.22);
+  box-shadow:
+    0 32px 60px -28px rgba(42, 45, 124, 0.45),
+    0 12px 24px -12px rgba(13, 15, 18, 0.3);
+  overflow: hidden;
+}
+.code-mock__bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(247, 246, 241, 0.08);
+}
+.code-mock__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(247, 246, 241, 0.18);
+}
+.code-mock__body {
+  margin: 0;
+  padding: 1.4rem 1.2rem 1.6rem;
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: rgba(247, 246, 241, 0.85);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.code-mock__body .code-mock__comment {
+  color: rgba(247, 246, 241, 0.4);
+}
+.code-mock__body .code-mock__tag {
+  color: #6e72f0;
+}
+.code-mock__body .code-mock__string {
+  color: #8fd19e;
+}
+
+/* Line-mock — LINE公式アカウント連携のイメージ画面（phone-mock 内に配置） */
+.line-mock {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
+  background: #7494c0;
+  border-radius: 30px;
+  overflow: hidden;
+}
+.line-mock__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  background: rgba(13, 15, 18, 0.18);
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+.line-mock__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 0.8rem;
+  overflow: hidden;
+}
+.line-mock__bubble {
+  max-width: 78%;
+  padding: 0.55rem 0.85rem;
+  border-radius: 16px;
+  font-family: var(--jp);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.line-mock__bubble--user {
+  align-self: flex-end;
+  background: #a4e065;
+  color: #0d0f12;
+  border-bottom-right-radius: 4px;
+}
+.line-mock__bubble--bot {
+  align-self: flex-start;
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom-left-radius: 4px;
 }
