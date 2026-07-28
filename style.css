@@ -2615,15 +2615,6 @@ body.fleet-page {
 .demo__lead:last-of-type {
   margin-bottom: 0;
 }
-.demo__notice {
-  margin: 2.2rem 0 0;
-  padding: 1rem 1.25rem;
-  border-left: 3px solid var(--line-soft);
-  font-size: 0.88rem;
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 62ch;
-}
 .demo__cta {
   margin-top: 2.5rem;
 }
