@@ -366,32 +366,69 @@
 
 <!-- EntreprenAIs PoC: AIチャットウィジェットを、u-movenext.net純正の固定バナー2枚
      （#bnr .fixed_bnr、右下 bottom:20px 起点で高さ約300px、上のfixed_bnr参照）と
-     重ならないよう3枚目のカードとして配置し、見た目もバナーに合わせてカード状にする。
-     widget_router.py（バックエンド側）は変更せず、埋め込み先であるこのページのCSSだけで
-     完結させている。.__eai-widget-btn / .__eai-widget-panel は widget.js が生成する
-     公開クラス名（README「埋め込み先サイト側でのウィジェットの見た目・位置カスタマイズ」参照）。 -->
+     重ならないよう3枚目のカードとして配置し、見た目もバナーに合わせてカード状の生成画像
+     （data-img属性、assets/ai-card.png）に差し替える。widget_router.py（バックエンド側）
+     は変更せず、埋め込み先であるこのページのCSS+タグ属性だけで完結させている。
+     .__eai-widget-btn / .__eai-widget-panel は widget.js が生成する公開クラス名
+     （README「埋め込み先サイト側でのウィジェットの見た目・位置カスタマイズ」参照）。
+
+     レスポンシブ対応: u-movenext.net/assets/css/index.css を実際に取得し、
+     .fixed_bnr のブレークポイント（@media (max-width:768px)）とvw値をそのまま
+     踏襲して揃えている（バナー自身がこの境界からvw基準の流動サイズに切り替わるため）。
+     モバイル値の算出根拠:
+       - バナーmobile: right:2.604166666666667vw; width:47.65625vw
+         （fixed_bnr--2）、bottom:22.135416666666664vw（fixed_bnrから継承）
+       - バナー画像2枚はmobileでは margin:0 で単純に縦積みされるため、
+         実効高さ ≈ 47.65625vw × (画像アスペクト比の合計) ≈ 60.74vw
+       - カードbottom ≈ 22.14 + 60.74 + 余白5 ≈ 88vw -->
 <style>
   .__eai-widget-btn {
     bottom: 340px !important;
     right: 20px !important;
+    left: auto !important;
     width: 240px !important;
     height: auto !important;
-    padding: 14px 16px !important;
+    padding: 0 !important;
     border-radius: 16px !important;
-    justify-content: flex-start !important;
-    background: #ffffff !important;
-    color: #2b1505 !important;
-    border: 1px solid #ffe100 !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    border: none !important;
     box-shadow: 0 4px 16px rgba(0,0,0,.18) !important;
   }
+  .__eai-widget-btn img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    display: block !important;
+  }
   .__eai-widget-panel {
-    bottom: 408px !important;
+    bottom: 508px !important;
     right: 20px !important;
+  }
+
+  @media (max-width: 768px) {
+    .__eai-widget-btn {
+      bottom: 88vw !important;
+      right: 2.604166666666667vw !important;
+      width: 47.65625vw !important;
+    }
+    .__eai-widget-panel {
+      /* カードの高い位置（88vw、バナー回避のため）に追従させると短い画面で
+         パネル上端が画面外にはみ出すため、モバイルではパネルだけ画面下部に
+         固定し開いた時にバナー/カードに重ねて表示する（一般的なチャット
+         ウィジェットの挙動、複雑な計算式より単純で全端末サイズに頑健）。 */
+      bottom: 16px !important;
+      right: 2.604166666666667vw !important;
+      width: min(320px, calc(100vw - 24px)) !important;
+      max-height: calc(100dvh - 32px) !important;
+    }
   }
 </style>
 
 <!-- EntreprenAIs 問い合わせAI埋め込み（うつのみやムーブネクスト AIエージェント・PoC） -->
-<script src="https://utsunomiya-movenext-ambassador-04062ff8.pub.entreprenais.com/widget.js"></script>
+<script src="https://utsunomiya-movenext-ambassador-04062ff8.pub.entreprenais.com/widget.js"
+        data-img="https://entreprenais.com/sites/utsunomiya-movenext/assets/ai-card.png"></script>
 </body>
 
 </html>
