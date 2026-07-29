@@ -389,18 +389,23 @@
     width: 240px !important;
     height: auto !important;
     padding: 0 !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
+    border-radius: 0 !important;
     background: transparent !important;
     border: none !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,.18) !important;
+    box-shadow: none !important;
   }
   .__eai-widget-btn img {
+    /* box-shadow on the button above would shadow the button's rectangular
+       box even where the (transparent) image has no visible pixels, looking
+       like a ghostly glass pane. filter:drop-shadow follows the image's
+       actual alpha shape instead, so only the ribbon/card silhouette casts
+       a shadow. */
     width: 100% !important;
     height: auto !important;
     max-width: none !important;
     max-height: none !important;
     display: block !important;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.25)) !important;
   }
   .__eai-widget-panel {
     bottom: 508px !important;
