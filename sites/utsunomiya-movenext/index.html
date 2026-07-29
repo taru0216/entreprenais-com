@@ -364,6 +364,32 @@
 })();
 </script>
 
+<!-- EntreprenAIs PoC: AIチャットウィジェットを、u-movenext.net純正の固定バナー2枚
+     （#bnr .fixed_bnr、右下 bottom:20px 起点で高さ約300px、上のfixed_bnr参照）と
+     重ならないよう3枚目のカードとして配置し、見た目もバナーに合わせてカード状にする。
+     widget_router.py（バックエンド側）は変更せず、埋め込み先であるこのページのCSSだけで
+     完結させている。.__eai-widget-btn / .__eai-widget-panel は widget.js が生成する
+     公開クラス名（README「埋め込み先サイト側でのウィジェットの見た目・位置カスタマイズ」参照）。 -->
+<style>
+  .__eai-widget-btn {
+    bottom: 340px !important;
+    right: 20px !important;
+    width: 240px !important;
+    height: auto !important;
+    padding: 14px 16px !important;
+    border-radius: 16px !important;
+    justify-content: flex-start !important;
+    background: #ffffff !important;
+    color: #2b1505 !important;
+    border: 1px solid #ffe100 !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.18) !important;
+  }
+  .__eai-widget-panel {
+    bottom: 408px !important;
+    right: 20px !important;
+  }
+</style>
+
 <!-- EntreprenAIs 問い合わせAI埋め込み（うつのみやムーブネクスト AIエージェント・PoC） -->
 <script src="https://utsunomiya-movenext-ambassador-04062ff8.pub.entreprenais.com/widget.js"></script>
 </body>
