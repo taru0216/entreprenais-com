@@ -106,10 +106,22 @@ const {
     <slot />
     <script>
       (function () {
+        // #390/#391: reveal 発火時に KPI メーター（.kpi-meter__fill）の width を
+        // 0 → data-fill（またはインライン --fill）までアニメーションさせる
+        function fillKpiMeters(root) {
+          var meters = (root || document).querySelectorAll(".kpi-meter__fill");
+          meters.forEach(function (el) {
+            requestAnimationFrame(function () {
+              el.classList.add("is-filled");
+            });
+          });
+        }
+
         // Reveal on scroll — トップページ main.js と同一の IntersectionObserver 設定
         var reveals = document.querySelectorAll("[data-reveal]");
         if (!("IntersectionObserver" in window)) {
           reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          fillKpiMeters();
         } else {
           var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
@@ -118,6 +130,7 @@ const {
               var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
               setTimeout(function () {
                 el.classList.add("is-visible");
+                if (el.classList.contains("kpi-card")) fillKpiMeters(el);
               }, isNaN(delay) ? 0 : delay);
               io.unobserve(el);
             });

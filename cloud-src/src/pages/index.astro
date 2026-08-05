@@ -102,11 +102,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        モバイルは下記メディアクエリで1カラムに戻し、chat-preview は背景装飾
        （低コントラスト・pointer-events:none）として組み込む（msg344「背景の
        ような感じが良さそう？スマホでも見えるように」を反映）。 */
+    /* #387: factory.ai のレイアウト（見出し・サブコピー・CTAを上部、ビジュアル
+       要素はその下）を参考に、横並び2カラムから縦積み（テキスト→ビジュアル）に変更 */
     .hero-grid-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      display: flex;
+      flex-direction: column;
       gap: 3rem;
-      align-items: center;
+    }
+    .hero-col-text {
+      max-width: 46em;
+    }
+    .hero-visual-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
     }
     .chat-preview {
       position: relative;
@@ -183,6 +193,94 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       opacity: 0.75;
       text-align: center;
       margin-top: 0.5rem;
+    }
+
+    /* #390/#391: factory.ai のKPIカード（LIVEバッジ＋スパークライン）を参考に、
+       「科学的・データドリブン」な信頼感を演出するメーター/グラフカード。
+       0.4ms（速度）・超省電力・実質再エネ100%を可視化する。数値はいずれも
+       既存の要検証注記の対象と同じ性質のため、断定的な実測値ではなくメーター上の
+       目安として表現し、注記も併記する。 */
+    .kpi-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .kpi-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+      text-transform: uppercase;
+    }
+    .kpi-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--color-green);
+      font-weight: 600;
+    }
+    .kpi-live::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--color-green);
+      animation: chatDotPulse 1.8s ease-in-out infinite;
+    }
+    .kpi-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .kpi-row__label {
+      font-size: 0.8rem;
+      color: var(--color-text-soft);
+    }
+    .kpi-row__value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--color-text);
+    }
+    /* 速度メーター（0.4ms訴求）: バー内を99%以上満たすことで「速さ」を視覚化 */
+    .kpi-meter {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+    .kpi-meter__fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--color-green), var(--color-green2));
+      width: 0%;
+      transition: width 1.4s var(--ease);
+    }
+    .kpi-meter__fill.is-filled { width: var(--fill, 90%); }
+    /* スパークライン（簡易 SVG polyline） */
+    .kpi-spark {
+      width: 100%;
+      height: 32px;
+      display: block;
+    }
+    .kpi-spark polyline {
+      fill: none;
+      stroke: var(--color-green);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .kpi-card__note {
+      font-size: 0.64rem;
+      color: var(--color-muted);
+      opacity: 0.7;
+      line-height: 1.5;
     }
     .hero-eyebrow {
       display: inline-block;
@@ -521,18 +619,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         width: 100%;
         text-align: center;
       }
-      /* #322: モバイルでは2カラムを解除し、chat-preview を「背景のような感じ」
-         （msg344）として溶け込ませる。position:absolute で hero-col-text の
-         背後に重ね、低不透明度・pointer-events:none で操作不能な純粋な装飾に
-         する（実際のチャット起動は既存の画面右下フローティングボタンが担う
-         ため、背景側の操作性を犠牲にしても機能は失われない）。 */
+      /* #322/#387: モバイルでは hero-visual-row（チャットプレビュー＋KPIカード）
+         を1カラムに変更。chat-preview は「背景のような感じ」（msg344）として
+         hero-col-text の背後に溶け込ませ、KPIカードはその下にフルワイド表示
+         する（実際の速度・データ訴求はKPIカードで維持しつつ、操作可能な
+         チャットUIはモバイルでは既存の画面右下フローティングボタンに一本化）。 */
       .hero-grid-layout {
-        display: block;
         position: relative;
       }
       .hero-col-text {
         position: relative;
         z-index: 1;
+      }
+      .hero-visual-row {
+        grid-template-columns: 1fr;
+        position: relative;
       }
       .chat-preview {
         position: absolute;
@@ -547,6 +648,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .chat-preview__cta,
       .chat-preview__note {
         display: none;
+      }
+      .kpi-card {
+        position: relative;
+        z-index: 1;
       }
     }
     @media (max-width: 420px) {
@@ -606,21 +711,58 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
         </div>
 
-        <!-- #322: チャットプレビュー（実物の「お問合せAI」ウィジェットへの導線）。
-             数値は実際に稼働中のウィジェット側（cpu_ms/gpu_ms実測表示）が表示するため、
-             ここでは固定の数値を書かず、実際に試すよう誘導するのみに留める
-             （実測値の断定表示リスクを避けるため）。「反射層」等の内部構造用語も
-             #314の方針に従いここでは使わない。 -->
-        <div class="chat-preview reveal" data-reveal data-delay="300">
-          <div class="chat-preview__header" aria-hidden="true">
-            <span class="chat-preview__dot"></span>
-            お問合せAI ✳︎太陽光と水力で稼働
+        <!-- #387: factory.ai のレイアウト（テキスト→ビジュアル）に合わせ、
+             チャットプレビュー＋KPIダッシュボード風カードを2カラムでHero下部に配置。 -->
+        <div class="hero-visual-row">
+          <!-- #322: チャットプレビュー（実物の「お問合せAI」ウィジェットへの導線）。
+               数値は実際に稼働中のウィジェット側（cpu_ms/gpu_ms実測表示）が表示するため、
+               ここでは固定の数値を書かず、実際に試すよう誘導するのみに留める
+               （実測値の断定表示リスクを避けるため）。「反射層」等の内部構造用語も
+               #314の方針に従いここでは使わない。 -->
+          <div class="chat-preview reveal" data-reveal data-delay="300">
+            <div class="chat-preview__header" aria-hidden="true">
+              <span class="chat-preview__dot"></span>
+              お問合せAI ✳︎太陽光と水力で稼働
+            </div>
+            <div class="chat-preview__bubble chat-preview__bubble--user" aria-hidden="true">グリーンAIクラウドの応答速度は？</div>
+            <div class="chat-preview__bubble chat-preview__bubble--ai" aria-hidden="true">実際にチャットで試してみてください</div>
+            <div class="chat-preview__debug" aria-hidden="true">処理経路・実測msをその場で表示します</div>
+            <button type="button" class="chat-preview__cta" id="chat-preview-open">実際に質問してみる</button>
+            <div class="chat-preview__note">画面右下の「AIに聞く」からもご利用いただけます</div>
           </div>
-          <div class="chat-preview__bubble chat-preview__bubble--user" aria-hidden="true">グリーンAIクラウドの応答速度は？</div>
-          <div class="chat-preview__bubble chat-preview__bubble--ai" aria-hidden="true">実際にチャットで試してみてください</div>
-          <div class="chat-preview__debug" aria-hidden="true">処理経路・実測msをその場で表示します</div>
-          <button type="button" class="chat-preview__cta" id="chat-preview-open">実際に質問してみる</button>
-          <div class="chat-preview__note">画面右下の「AIに聞く」からもご利用いただけます</div>
+
+          <!-- #390/#391: メーター・グラフによる「科学的」演出。数値は要検証注記の
+               対象と同じ性質のため、断定値ではなくメーター上の目安として表現する。 -->
+          <div class="kpi-card reveal" data-reveal data-delay="400">
+            <div class="kpi-card__header">
+              <span>PERFORMANCE</span>
+              <span class="kpi-live">LIVE</span>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-row__label">応答速度（反射応答）</span>
+              <span class="kpi-row__value">0.4ms 台</span>
+            </div>
+            <div class="kpi-meter" role="img" aria-label="応答速度メーター">
+              <div class="kpi-meter__fill" id="kpi-speed-fill" style="--fill: 96%;"></div>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-row__label">消費電力（推定）</span>
+              <span class="kpi-row__value">超省電力</span>
+            </div>
+            <div class="kpi-meter" role="img" aria-label="省電力メーター">
+              <div class="kpi-meter__fill" id="kpi-power-fill" style="--fill: 88%;"></div>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-row__label">再エネ電力比率</span>
+              <span class="kpi-row__value">実質100%</span>
+            </div>
+            <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,24 15,20 30,22 45,14 60,16 75,8 90,10 105,4 120,6" />
+            </svg>
+            <div class="kpi-card__note">
+              メーター・グラフは傾向を示すイメージです。数値の対外開示条件は継続整備中（詳細は下記アーキテクチャ・グリーンセクションの注記を参照）。
+            </div>
+          </div>
         </div>
       </div>
     </div>
