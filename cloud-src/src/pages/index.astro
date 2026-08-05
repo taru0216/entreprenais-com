@@ -1,0 +1,432 @@
+---
+// src/pages/index.astro — entreprenais-cloud-astro
+// entreprenais.com/cloud 「グリーンAIクラウド」LP（#303）
+// リーンキャンバス出典: taru0216/taruishi-llc#2139
+// 将来のLP差し替えを前提とし、コピー内容はこのファイル + BaseLayout.astro のみで完結する
+import BaseLayout from '../layouts/BaseLayout.astro';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout>
+
+  <style>
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6, 17, 12, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--color-text);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--color-accent); }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--color-muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-text); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 80px 24px 60px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(61, 220, 132, 0.15), transparent 55%),
+        radial-gradient(ellipse at 70% 80%, rgba(126, 242, 176, 0.10), transparent 55%);
+    }
+    .hero-content {
+      position: relative;
+      max-width: 820px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 24px;
+    }
+    .hero h1 .accent { color: var(--color-accent); }
+    .hero-lede {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--color-muted);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.85;
+    }
+    .hero-cta {
+      display: inline-flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--color-accent);
+      color: #06110c;
+    }
+    .btn-primary:hover { background: var(--color-accent2); }
+    .btn-secondary {
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+    .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    /* SECTION common */
+    section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 90px 24px;
+    }
+    .section-head {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 56px;
+    }
+    .section-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+      margin-bottom: 14px;
+    }
+    .section-head h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      margin-bottom: 16px;
+    }
+    .section-head p {
+      color: var(--color-muted);
+      line-height: 1.8;
+    }
+
+    /* PROBLEM */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .problem-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .problem-card .label {
+      font-size: 0.75rem;
+      color: var(--color-accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .problem-card p {
+      color: var(--color-muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    /* ARCHITECTURE (大脳×反射) */
+    .arch-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .arch-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .arch-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: var(--color-accent2);
+    }
+    .arch-card p {
+      color: var(--color-muted);
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+    .arch-card .metric {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+    .arch-card .metric strong {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    /* GREEN */
+    .green-box {
+      background: linear-gradient(135deg, rgba(61,220,132,0.08), rgba(6,17,12,0));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 40px;
+    }
+    .green-list {
+      list-style: none;
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .green-list li {
+      display: flex;
+      gap: 12px;
+      color: var(--color-muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+    .green-list li::before {
+      content: '●';
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* NOTE (数値主張の注記) */
+    .note {
+      margin-top: 28px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--color-border);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--color-muted);
+      line-height: 1.7;
+    }
+
+    /* FLOW */
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      text-align: center;
+    }
+    .flow .step {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+    }
+    .flow .arrow { color: var(--color-accent); }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .cta-section h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      color: var(--color-muted);
+      margin-bottom: 32px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--color-muted);
+      font-size: 0.8rem;
+    }
+  </style>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Entrepren<span>AIs</span> Cloud</div>
+      <ul class="nav-links">
+        <li><a href="#architecture">アーキテクチャ</a></li>
+        <li><a href="#green">グリーン</a></li>
+        <li><a href={`${BASE}/`}>entreprenais.com</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">GREEN AI CLOUD</span>
+      <h1>思考は深く、応答は瞬時に。<br />すべて<span class="accent">自社グリーン電力</span>で。</h1>
+      <p class="hero-lede">
+        大脳（ローカルLLMによるじっくり思考）と反射（脊髄反射相当をCPU上で実現する自社開発技術）の
+        ハイブリッドアーキテクチャにより、超省電力・超高速のエージェント開発／実行基盤を、
+        自社開発グリーンデータセンター上で完結させます。
+      </p>
+      <div class="hero-cta">
+        <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
+        <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="section-head">
+      <div class="section-eyebrow">PROBLEM</div>
+      <h2>「速い」と「グリーン」は、両立しないと思われてきた</h2>
+      <p>AIエージェント基盤の高消費電力・速度と環境配慮のトレードオフ・電源構成の不透明性。私たちはこの3つの課題に取り組んでいます。</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="label">01 / 高消費電力</div>
+        <p>クラウドLLM経由のエージェント運用は、大規模GPUデータセンターの電力消費・ネットワーク往復レイテンシに依存し、コスト・環境負荷・応答速度のすべてで制約を抱えています。</p>
+      </div>
+      <div class="problem-card">
+        <div class="label">02 / 速度とグリーンのトレードオフ</div>
+        <p>「高速な推論」と「省電力・グリーン」は両立しないという前提が業界に定着しており、この2軸を同時に訴求するプレイヤーは多くありません。</p>
+      </div>
+      <div class="problem-card">
+        <div class="label">03 / 電源構成の不透明性</div>
+        <p>多くのAIサービスは自社が使う電力の起源を開示せず、企業のESG/CSR要件を満たすAI導入先の選定を難しくしています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="section-head">
+      <div class="section-eyebrow">ARCHITECTURE</div>
+      <h2>大脳 × 反射 — ハイブリッドアーキテクチャ</h2>
+      <p>人間の神経系になぞらえた2層構成。じっくり考える処理と、脊髄反射のように瞬時に返す処理を使い分けます。</p>
+    </div>
+    <div class="arch-wrap">
+      <div class="arch-card">
+        <h3>大脳 — じっくり思考</h3>
+        <p>
+          複雑な判断・生成が必要な処理は、自社グリーンデータセンター内で稼働するローカルLLMが担当します。
+          クラウドLLM（他社データセンター経由）を介さないため、自社の再エネ電力起源で完結します。
+        </p>
+      </div>
+      <div class="arch-card">
+        <h3>反射 — CPU上の脊髄反射</h3>
+        <p>
+          定型的な応答は、人間の脊髄反射（脳を介さず完結する高速反応）に相当する処理を、
+          LLM推論を介さずCPU上で行う自社開発技術が担当します。超省電力かつ超高速な応答を実現します。
+        </p>
+        <div class="metric">
+          <strong>0.4ms</strong>
+          反射層の応答実行時間（自社計測値）
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <strong>数値についての注記:</strong>
+      「0.4ms」は自社エージェント基盤における反射層（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
+      計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、
+      現時点では自社内での実測値としてご案内しています。すべてのリクエストがこの数値で応答することを保証するものではありません。
+    </div>
+  </section>
+
+  <!-- GREEN -->
+  <section id="green">
+    <div class="section-head">
+      <div class="section-eyebrow">GREEN INFRASTRUCTURE</div>
+      <h2>再エネのみで完結させるために、超省電力を自社開発した</h2>
+      <p>太陽光自家発電＋再エネ電力契約という有限な電力の中で、大脳×反射のハイブリッド構成が生まれました。</p>
+    </div>
+    <div class="green-box">
+      <ul class="green-list">
+        <li>自社開発グリーンデータセンターは、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力で運用しています。</li>
+        <li>外部クラウドLLMへの通信往復・他社データセンターの電源構成への依存を排除し、電力起源を自社で完結させています。</li>
+        <li>再エネ電力には出力・供給量の制約があるため、消費電力を極限まで下げる必要があり、その結果として大脳×反射のハイブリッドアーキテクチャ（超省電力技術）を自社開発しました。</li>
+        <li>電源構成を対外開示し、証跡整備を前提とした透明性のある「グリーン」訴求を行っています。</li>
+      </ul>
+      <div class="note">
+        <strong>「実質再エネ100%」についての注記:</strong>
+        自社太陽光発電設備の自家発電および再エネ電力契約に基づく表現です。「実質」の定義・開示粒度については
+        対外公表の透明性向上に向けて継続的に整備を進めています。個別契約の詳細な証跡開示については、
+        お問い合わせいただければ可能な範囲でご説明します。
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section id="flow">
+    <div class="section-head">
+      <div class="section-eyebrow">WHY GREEN AI CLOUD</div>
+      <h2>開発の出発点は、電力の制約でした</h2>
+    </div>
+    <div class="flow">
+      <div class="step">再エネ電力の出力・供給制約</div>
+      <span class="arrow">→</span>
+      <div class="step">消費電力を極限まで削減する必要</div>
+      <span class="arrow">→</span>
+      <div class="step">超省電力技術を自社開発（大脳×反射）</div>
+      <span class="arrow">→</span>
+      <div class="step">超省電力 × 超高速 × グリーンが両立</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>グリーンAIクラウドについて、お話ししませんか</h2>
+    <p>導入相談・共同研究のご相談を承っています。</p>
+    <a href={`${BASE}/`} class="btn btn-primary">entreprenais.com へ戻る</a>
+  </section>
+
+  <footer>
+    &copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud
+  </footer>
+
+</BaseLayout>
