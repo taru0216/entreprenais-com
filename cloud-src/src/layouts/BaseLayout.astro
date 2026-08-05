@@ -106,10 +106,22 @@ const {
     <slot />
     <script>
       (function () {
+        // #390/#391: reveal 発火時に KPI メーター（.kpi-meter__fill）の width を
+        // 0 → data-fill（またはインライン --fill）までアニメーションさせる
+        function fillKpiMeters(root) {
+          var meters = (root || document).querySelectorAll(".kpi-meter__fill");
+          meters.forEach(function (el) {
+            requestAnimationFrame(function () {
+              el.classList.add("is-filled");
+            });
+          });
+        }
+
         // Reveal on scroll — トップページ main.js と同一の IntersectionObserver 設定
         var reveals = document.querySelectorAll("[data-reveal]");
         if (!("IntersectionObserver" in window)) {
           reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          fillKpiMeters();
         } else {
           var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
@@ -118,6 +130,7 @@ const {
               var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
               setTimeout(function () {
                 el.classList.add("is-visible");
+                if (el.classList.contains("kpi-card")) fillKpiMeters(el);
               }, isNaN(delay) ? 0 : delay);
               io.unobserve(el);
             });
@@ -137,6 +150,150 @@ const {
           window.addEventListener("scroll", onMove, { passive: true });
         }
       })();
+    </script>
+
+    <!-- #322: EntreprenAIs Contact AI widget — entreprenais.com トップページ
+         （index.html 617-736行目相当）と同一の動的ロード + オフラインフォールバック
+         実装をそのまま移植。widget.js 自体（entreprenais-contact-agent が別リポジトリ
+         で提供する実サービス）は改変しない。FC依頼「超高速で返事が返ってくるチャット
+         画面」に対応し、実際に稼働中の cpu_ms/gpu_ms 実測値表示機能を持つ本物の
+         ウィジェットをそのまま利用する（デモ演出ではない）。 -->
+    <script>
+    (function () {
+      'use strict';
+      var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+
+      // 「AIお休み中」バッジを右下に表示する（contact-agent がダウン時）
+      function showOfflineBadge() {
+        if (document.getElementById('__eai-offline-badge')) return;
+
+        if (window.gtag) {
+          gtag('event', 'ai_offline', {
+            event_category: 'contact_agent',
+            event_label: 'offline_badge_shown',
+            non_interaction: true
+          });
+        }
+
+        var style = document.createElement('style');
+        style.textContent = [
+          '#__eai-offline-badge {',
+          '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
+          '  height: 44px; padding: 0 16px;',
+          '  border-radius: 22px; white-space: nowrap;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.65);',
+          '  border: 1px solid rgba(247,246,241,0.10);',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
+          '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
+          '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
+          '  transition: background 0.2s, color 0.2s;',
+          '}',
+          '#__eai-offline-badge:hover {',
+          '  background: #2a2d34; color: rgba(247,246,241,0.88);',
+          '}',
+          '#__eai-offline-toast {',
+          '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.82);',
+          '  padding: 12px 16px; border-radius: 10px;',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; line-height: 1.5;',
+          '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
+          '  border: 1px solid rgba(247,246,241,0.08);',
+          '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
+          '}',
+          '#__eai-offline-toast.visible { opacity: 1; }',
+        ].join('\n');
+        document.head.appendChild(style);
+
+        var badge = document.createElement('button');
+        badge.id = '__eai-offline-badge';
+        badge.innerHTML = '&#x1F319; AI&#x304A;&#x4F11;&#x307F;&#x4E2D;';
+        badge.setAttribute('aria-label', 'AI は現在お休み中です');
+        badge.setAttribute('title', '現在 AI はお休み中です');
+
+        var toast = document.createElement('div');
+        toast.id = '__eai-offline-toast';
+        toast.textContent = '現在 AI はお休み中です。太陽が出てきたら稼働します。';
+
+        badge.addEventListener('click', function () {
+          toast.classList.add('visible');
+          setTimeout(function () { toast.classList.remove('visible'); }, 3500);
+        });
+
+        document.body.appendChild(badge);
+        document.body.appendChild(toast);
+
+        // 本文内の「AI に聞く」ボタンをオフライン状態に変更（/cloud には該当クラス
+        // の要素は存在しないが、トップページと同一ロジックを維持し将来の追従を容易にする）
+        ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
+          var btns = document.querySelectorAll('.' + cls);
+          btns.forEach(function(btn) {
+            btn.textContent = 'AI お休み中';
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            btn.onclick = null;
+          });
+        });
+      }
+
+      // ページロード時にアクティブチェック（widget.js の到達可否を確認）
+      function checkAiOnline(cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', WIDGET_URL, true);
+        xhr.timeout = 5000;
+        xhr.onload = function() { cb(xhr.status < 400); };
+        xhr.onerror = function() { cb(false); };
+        xhr.ontimeout = function() { cb(false); };
+        xhr.send();
+      }
+
+      // widget.js を動的ロード（onerror で offline バッジ表示）
+      function loadWidget() {
+        var s = document.createElement('script');
+        s.src = WIDGET_URL;
+        s.async = true;
+        s.onerror = function () {
+          showOfflineBadge();
+        };
+        document.body.appendChild(s);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          checkAiOnline(function(online) {
+            if (!online) showOfflineBadge();
+          });
+          loadWidget();
+        });
+      } else {
+        checkAiOnline(function(online) {
+          if (!online) showOfflineBadge();
+        });
+        loadWidget();
+      }
+
+      // #322: Hero チャットプレビューの「実際に質問してみる」ボタンから
+      // 実物ウィジェットのフローティングボタン（widget.js が生成する
+      // .__eai-widget-btn）をクリックして開く。トップページ main.js の
+      // openWidgetBtn と同一パターン。
+      var previewBtn = document.getElementById('chat-preview-open');
+      if (previewBtn) {
+        previewBtn.addEventListener('click', function () {
+          var widgetBtn = document.querySelector('.__eai-widget-btn');
+          if (widgetBtn) {
+            widgetBtn.click();
+          } else {
+            // widget.js がまだロード中の場合は少し待って再試行
+            setTimeout(function () {
+              var retryBtn = document.querySelector('.__eai-widget-btn');
+              if (retryBtn) retryBtn.click();
+            }, 800);
+          }
+        });
+      }
+    })();
     </script>
   </body>
 </html>
