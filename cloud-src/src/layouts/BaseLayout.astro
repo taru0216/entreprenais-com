@@ -26,7 +26,19 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
+    <!-- #320: BaseLayout.astro の <style> は Astro の scoped CSS 機構により
+         コンポーネント固有の data-astro-cid-* が自動付加される。<slot /> 経由で
+         レンダリングされる index.astro 側の要素は別の cid を持つため、scoped の
+         ままだと cid が一致せずスタイルが一切適用されない。
+         これは #318（.reveal 未適用）と同じ根本原因で、今回はグローバルリセット
+         （box-sizing: border-box・margin/padding: 0 等）が index.astro 側の要素
+         （.btn 等）に適用されておらず、モバイルで width:100%+padding が
+         content-box 扱いとなり画面右端に大きくはみ出す横方向オーバーフローが
+         発生していた（FC実機報告で発覚）。
+         再発防止のため、BaseLayout.astro のスタイルは <style is:global> に
+         一本化し、cid依存を構造的に排除する（部分的な is:global 化は今回のような
+         見落としを再度生みうるため、レイアウト全体を global に統一する）。 -->
+    <style is:global>
       /* #312: entreprenais.com トップページ（root index.html / style.css）の
          ブランドトーンに準拠。オフホワイト基調＋インディゴアクセントの
          トップページ配色パターンを踏襲しつつ、「グリーンAIクラウド」の
@@ -69,14 +81,7 @@ const {
       a { color: var(--color-accent); text-decoration: none; }
       a:hover { color: var(--color-accent2); }
       img { max-width: 100%; height: auto; }
-    </style>
 
-    <!-- #318: Astro の scoped CSS は <style> ブロックごとにコンポーネント固有の
-         data-astro-cid-* をセレクタへ自動付加する。.reveal クラスは本レイアウト
-         (BaseLayout.astro) と slot 先 (index.astro 等) の両方の要素で使われるため、
-         scoped のまま定義すると cid が一致せず適用されない（実機確認で発覚したバグ）。
-         is:global でスコープを外し、cid に依存せず全ページで確実に適用されるようにする。 -->
-    <style is:global>
       /* #316: entreprenais.com トップページ style.css の .reveal 定義
          （opacity/transform 0.9s var(--ease)・translateY(28px)）と完全一致させる。
          data-reveal 属性を持つ要素を IntersectionObserver で監視する（トップページ
@@ -84,7 +89,7 @@ const {
       .reveal {
         opacity: 0;
         transform: translateY(28px);
-        transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
         transition-delay: 0ms;
         will-change: opacity, transform;
       }
