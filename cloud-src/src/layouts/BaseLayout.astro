@@ -69,7 +69,14 @@ const {
       a { color: var(--color-accent); text-decoration: none; }
       a:hover { color: var(--color-accent2); }
       img { max-width: 100%; height: auto; }
+    </style>
 
+    <!-- #318: Astro の scoped CSS は <style> ブロックごとにコンポーネント固有の
+         data-astro-cid-* をセレクタへ自動付加する。.reveal クラスは本レイアウト
+         (BaseLayout.astro) と slot 先 (index.astro 等) の両方の要素で使われるため、
+         scoped のまま定義すると cid が一致せず適用されない（実機確認で発覚したバグ）。
+         is:global でスコープを外し、cid に依存せず全ページで確実に適用されるようにする。 -->
+    <style is:global>
       /* #316: entreprenais.com トップページ style.css の .reveal 定義
          （opacity/transform 0.9s var(--ease)・translateY(28px)）と完全一致させる。
          data-reveal 属性を持つ要素を IntersectionObserver で監視する（トップページ
@@ -77,7 +84,7 @@ const {
       .reveal {
         opacity: 0;
         transform: translateY(28px);
-        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
         transition-delay: 0ms;
         will-change: opacity, transform;
       }
