@@ -165,12 +165,34 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: clamp(0.95rem, 1.3vw, 1.05rem);
       color: var(--color-muted);
       max-width: 42em;
-      margin: 0 0 2.5rem;
+      margin: 0 0 1.5rem;
       line-height: 1.9;
     }
     .hero-lede strong {
       color: var(--color-text);
       font-weight: 600;
+    }
+    /* #314-follow-up: FCペルソナ情報（IT意思決定層/ESG企業）を直接的な
+       「〇〇へ。」宛先表記ではなく、ベネフィットタグとして訴求する */
+    .hero-value-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 0 0 2.5rem;
+    }
+    .value-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      color: var(--color-text-soft);
+    }
+    .value-tag__icon {
+      font-size: 1rem;
     }
     .hero-cta {
       display: flex;
@@ -364,6 +386,54 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       color: var(--color-muted);
       font-size: 0.8rem;
     }
+
+    /* #314: レスポンシブ対応（entreprenais.com トップページの 720px/820px
+       ブレークポイントに準拠） */
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .hero {
+        min-height: auto;
+        padding: 6.5rem 20px 3rem;
+      }
+      .hero-metric {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+      .hero-metric__value {
+        font-size: clamp(3.4rem, 22vw, 5.5rem);
+      }
+      .hero-glow--a, .hero-glow--b {
+        width: 260px;
+        height: 260px;
+      }
+      section {
+        padding: 56px 20px;
+      }
+      .arch-wrap, .problem-grid {
+        grid-template-columns: 1fr;
+      }
+      .flow {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .flow .arrow {
+        transform: rotate(90deg);
+      }
+      .hero-cta, .hero-value-tags {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    @media (max-width: 420px) {
+      .hero-metric__value {
+        font-size: clamp(2.8rem, 24vw, 4.2rem);
+      }
+    }
   </style>
 
   <!-- NAV -->
@@ -378,7 +448,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </nav>
 
-  <!-- HERO（#312: 0.4ms を大型フォント+アニメーションで主役化。文章は簡潔に） -->
+  <!-- HERO（#314: 「反射層」等の内部構造用語を排除し、価値訴求に特化。
+       0.4ms 大型演出は維持しつつラベルを顧客価値視点の文言に変更） -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
       <span class="hero-grid"></span>
@@ -386,26 +457,28 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="hero-glow hero-glow--b"></span>
     </div>
     <div class="hero-content">
-      <span class="hero-eyebrow">GREEN AI CLOUD</span>
+      <span class="hero-eyebrow reveal" data-reveal>GREEN AI CLOUD</span>
 
-      <div class="hero-metric">
+      <div class="hero-metric reveal" data-reveal data-delay="100">
         <span class="hero-metric__value">0.4<span style="font-size: 0.4em;">ms</span></span>
         <span class="hero-metric__label">
-          反射層の応答実行時間<br />
+          で応答する、超高速エージェント基盤<br />
           <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
         </span>
       </div>
 
-      <h1>「超高速、超省電力」<span class="accent">グリーンAIクラウド</span>誕生。</h1>
+      <h1 class="reveal" data-reveal data-delay="200">「超高速、超省電力」<span class="accent">グリーンAIクラウド</span>誕生。</h1>
 
-      <p class="hero-lede">
-        <strong>コスト効率と応答速度を両立させたいIT意思決定層へ。</strong><br />
-        <strong>電源構成の透明性を求めるESG/CSR推進企業へ。</strong><br /><br />
-        大脳（ローカルLLMによるじっくり思考）と反射（CPU上の自社開発技術による瞬時応答）の
-        ハイブリッドアーキテクチャが、超省電力・超高速のエージェント基盤を自社グリーンデータセンター上で実現します。
+      <p class="hero-lede reveal" data-reveal data-delay="350">
+        超省電力・超高速のエージェント基盤を、自社グリーンデータセンター上で実現します。
       </p>
 
-      <div class="hero-cta">
+      <div class="hero-value-tags reveal" data-reveal data-delay="420">
+        <span class="value-tag"><span class="value-tag__icon" aria-hidden="true">⚡</span>コスト効率と応答速度を両立</span>
+        <span class="value-tag"><span class="value-tag__icon" aria-hidden="true">🌱</span>電源構成の透明性でESG/CSRに適合</span>
+      </div>
+
+      <div class="hero-cta reveal" data-reveal data-delay="500">
         <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
         <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
       </div>
@@ -414,57 +487,58 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- PROBLEM -->
   <section id="problem">
-    <div class="section-head">
+    <div class="section-head reveal" data-reveal>
       <div class="section-eyebrow">PROBLEM</div>
       <h2>「速い」と「グリーン」は、両立しないと思われてきた</h2>
       <p>AIエージェント基盤の高消費電力・速度と環境配慮のトレードオフ・電源構成の不透明性。私たちはこの3つの課題に取り組んでいます。</p>
     </div>
     <div class="problem-grid">
-      <div class="problem-card">
+      <div class="problem-card reveal" data-reveal>
         <div class="label">01 / 高消費電力</div>
         <p>クラウドLLM経由のエージェント運用は、大規模GPUデータセンターの電力消費・ネットワーク往復レイテンシに依存し、コスト・環境負荷・応答速度のすべてで制約を抱えています。</p>
       </div>
-      <div class="problem-card">
+      <div class="problem-card reveal" data-reveal data-delay="100">
         <div class="label">02 / 速度とグリーンのトレードオフ</div>
         <p>「高速な推論」と「省電力・グリーン」は両立しないという前提が業界に定着しており、この2軸を同時に訴求するプレイヤーは多くありません。</p>
       </div>
-      <div class="problem-card">
+      <div class="problem-card reveal" data-reveal data-delay="200">
         <div class="label">03 / 電源構成の不透明性</div>
         <p>多くのAIサービスは自社が使う電力の起源を開示せず、企業のESG/CSR要件を満たすAI導入先の選定を難しくしています。</p>
       </div>
     </div>
   </section>
 
-  <!-- ARCHITECTURE -->
+  <!-- ARCHITECTURE（#314: 「反射層」を「エージェント脊髄反射技術」に置き換え。
+       大脳側も呼称のバランスを取り「大脳AI」に統一） -->
   <section id="architecture">
-    <div class="section-head">
+    <div class="section-head reveal" data-reveal>
       <div class="section-eyebrow">ARCHITECTURE</div>
-      <h2>大脳 × 反射 — ハイブリッドアーキテクチャ</h2>
+      <h2>大脳AI × エージェント脊髄反射技術</h2>
       <p>人間の神経系になぞらえた2層構成。じっくり考える処理と、脊髄反射のように瞬時に返す処理を使い分けます。</p>
     </div>
     <div class="arch-wrap">
-      <div class="arch-card">
-        <h3>大脳 — じっくり思考</h3>
+      <div class="arch-card reveal" data-reveal>
+        <h3>大脳AI — じっくり思考</h3>
         <p>
           複雑な判断・生成が必要な処理は、自社グリーンデータセンター内で稼働するローカルLLMが担当します。
           クラウドLLM（他社データセンター経由）を介さないため、自社の再エネ電力起源で完結します。
         </p>
       </div>
-      <div class="arch-card">
-        <h3>反射 — CPU上の脊髄反射</h3>
+      <div class="arch-card reveal" data-reveal data-delay="150">
+        <h3>エージェント脊髄反射技術</h3>
         <p>
           定型的な応答は、人間の脊髄反射（脳を介さず完結する高速反応）に相当する処理を、
           LLM推論を介さずCPU上で行う自社開発技術が担当します。超省電力かつ超高速な応答を実現します。
         </p>
         <div class="metric">
           <strong>0.4ms</strong>
-          反射層の応答実行時間（自社計測値）
+          エージェント脊髄反射技術の応答実行時間（自社計測値）
         </div>
       </div>
     </div>
-    <div class="note">
+    <div class="note reveal" data-reveal>
       <strong>数値についての注記:</strong>
-      「0.4ms」は自社エージェント基盤における反射層（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
+      「0.4ms」は自社エージェント基盤におけるエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
       計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、
       現時点では自社内での実測値としてご案内しています。すべてのリクエストがこの数値で応答することを保証するものではありません。
     </div>
@@ -472,16 +546,16 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- GREEN -->
   <section id="green">
-    <div class="section-head">
+    <div class="section-head reveal" data-reveal>
       <div class="section-eyebrow">GREEN INFRASTRUCTURE</div>
       <h2>再エネのみで完結させるために、超省電力を自社開発した</h2>
-      <p>太陽光自家発電＋再エネ電力契約という有限な電力の中で、大脳×反射のハイブリッド構成が生まれました。</p>
+      <p>太陽光自家発電＋再エネ電力契約という有限な電力の中で、大脳AI×エージェント脊髄反射技術のハイブリッド構成が生まれました。</p>
     </div>
-    <div class="green-box">
+    <div class="green-box reveal" data-reveal>
       <ul class="green-list">
         <li>自社開発グリーンデータセンターは、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力で運用しています。</li>
         <li>外部クラウドLLMへの通信往復・他社データセンターの電源構成への依存を排除し、電力起源を自社で完結させています。</li>
-        <li>再エネ電力には出力・供給量の制約があるため、消費電力を極限まで下げる必要があり、その結果として大脳×反射のハイブリッドアーキテクチャ（超省電力技術）を自社開発しました。</li>
+        <li>再エネ電力には出力・供給量の制約があるため、消費電力を極限まで下げる必要があり、その結果として大脳AI×エージェント脊髄反射技術のハイブリッドアーキテクチャ（超省電力技術）を自社開発しました。</li>
         <li>電源構成を対外開示し、証跡整備を前提とした透明性のある「グリーン」訴求を行っています。</li>
       </ul>
       <div class="note">
@@ -495,23 +569,23 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- FLOW -->
   <section id="flow">
-    <div class="section-head">
+    <div class="section-head reveal" data-reveal>
       <div class="section-eyebrow">WHY GREEN AI CLOUD</div>
       <h2>開発の出発点は、電力の制約でした</h2>
     </div>
-    <div class="flow">
+    <div class="flow reveal" data-reveal>
       <div class="step">再エネ電力の出力・供給制約</div>
       <span class="arrow">→</span>
       <div class="step">消費電力を極限まで削減する必要</div>
       <span class="arrow">→</span>
-      <div class="step">超省電力技術を自社開発（大脳×反射）</div>
+      <div class="step">超省電力技術を自社開発（大脳AI×エージェント脊髄反射技術）</div>
       <span class="arrow">→</span>
       <div class="step">超省電力 × 超高速 × グリーンが両立</div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="cta-section reveal" data-reveal>
     <h2>コスト効率・速度・グリーンの両立を、ご相談ください</h2>
     <p>IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究のご相談を承っています。</p>
     <a href={`${BASE}/`} class="btn btn-primary">entreprenais.com へ戻る</a>

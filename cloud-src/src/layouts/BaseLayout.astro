@@ -10,7 +10,7 @@ export interface Props {
 
 const {
   title = "グリーンAIクラウド",
-  description = "「超高速、超省電力」グリーンAIクラウド誕生。コスト効率・応答速度を求めるIT意思決定層、電源構成の透明性を求めるESG/CSR推進企業へ。大脳（ローカルLLM）×反射（CPU上の自社開発技術）のハイブリッドアーキテクチャによる、超省電力・超高速のエージェント実行基盤。",
+  description = "「超高速、超省電力」グリーンAIクラウド誕生。0.4msの超高速応答とコスト効率、電源構成の透明性を両立する、自社グリーンデータセンター上のエージェント実行基盤。",
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -61,13 +61,51 @@ const {
         font-size: 16px;
         line-height: 1.75;
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
       a { color: var(--color-accent); text-decoration: none; }
       a:hover { color: var(--color-accent2); }
       img { max-width: 100%; height: auto; }
+
+      /* #314: entreprenais.com トップページの reveal（スクロール連動フェードイン）
+         パターンを踏襲。data-reveal 属性を持つ要素を IntersectionObserver で監視する。 */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none; transition: none; }
+      }
     </style>
   </head>
   <body>
     <slot />
+    <script>
+      (function () {
+        var reveals = document.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window)) {
+          reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+            setTimeout(function () {
+              el.classList.add("is-visible");
+            }, isNaN(delay) ? 0 : delay);
+            io.unobserve(el);
+          });
+        }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>
