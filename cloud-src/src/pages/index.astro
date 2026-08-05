@@ -497,6 +497,89 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       margin-bottom: 4px;
     }
 
+    /* SPEED COMPARISON（#326: 既存 .kpi-card / .kpi-meter のデザイン言語を再利用し、
+       自社「エージェント脊髄反射技術」と一般的なクラウドエージェントの速度比較を可視化。
+       特定の競合他社名は使用せず、一般化した表現に限定する（景表法・不競法配慮）。
+       クラウド側のバー幅は「数十〜数百ms」レンジの下限を基準にした目安表示であり、
+       断定的な実測値ではないことを注記で明示する。 */
+    .compare-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 40px;
+    }
+    .compare-row {
+      margin-bottom: 28px;
+    }
+    .compare-row:last-of-type {
+      margin-bottom: 0;
+    }
+    .compare-row__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .compare-row__label {
+      font-size: 0.92rem;
+      color: var(--color-text-soft);
+      font-weight: 600;
+    }
+    .compare-row__value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--color-text);
+    }
+    .compare-row__value.is-ours { color: var(--color-green); }
+    /* 比較バー: 自社は極小幅、クラウド側は相対的に大きい幅で「速さの差」を視覚化。
+       絶対値の精緻な比例ではなく、あくまで「桁の違い」を示すイメージ表現とする
+       （note で明示）。 */
+    .compare-bar {
+      height: 14px;
+      border-radius: 999px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+    .compare-bar__fill {
+      height: 100%;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 1.4s var(--ease);
+    }
+    .compare-bar__fill.is-ours {
+      background: linear-gradient(90deg, var(--color-green), var(--color-green2));
+    }
+    .compare-bar__fill.is-cloud {
+      background: linear-gradient(90deg, var(--color-muted), var(--color-border));
+    }
+    .compare-bar__fill.is-filled.ours-fill { width: 3%; }
+    .compare-bar__fill.is-filled.cloud-fill { width: 100%; }
+    .compare-row__note {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--color-muted);
+      opacity: 0.8;
+    }
+    .compare-ratio {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 20px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(31, 157, 85, 0.08);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      color: var(--color-text);
+    }
+    .compare-ratio strong {
+      color: var(--color-green);
+      font-family: var(--font-heading);
+    }
+
     /* GREEN */
     .green-box {
       background: linear-gradient(135deg, rgba(31,157,85,0.08), rgba(244,249,243,0));
@@ -603,6 +686,14 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
       .arch-wrap, .problem-grid {
         grid-template-columns: 1fr;
+      }
+      .compare-card {
+        padding: 24px 20px;
+      }
+      .compare-row__head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
       }
       .flow {
         flex-direction: column;
@@ -787,6 +878,49 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="problem-card reveal" data-reveal data-delay="200">
         <div class="label">03 / 電源構成の不透明性</div>
         <p>多くのAIサービスは自社が使う電力の起源を開示せず、企業のESG/CSR要件を満たすAI導入先の選定を難しくしています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEED COMPARISON（#326: 一般的なクラウドエージェントとの速度比較。
+       特定の競合他社名は使用せず、一般化した表現に限定する（景表法・不競法配慮）。
+       クラウド側の数値は業界的に広く知られたネットワークレイテンシの技術的事実に基づく
+       レンジ表現とし、特定サービスの実測値を騙る・捏造することは行わない。 -->
+  <section id="speed-comparison">
+    <div class="section-head reveal" data-reveal>
+      <div class="section-eyebrow">SPEED COMPARISON</div>
+      <h2>一般的なクラウドエージェントとの、応答速度の違い</h2>
+      <p>クラウドLLM API経由のエージェントは、ネットワーク往復とクラウド側推論のレイテンシが避けられません。エージェント脊髄反射技術は、この往復自体をなくす設計です。</p>
+    </div>
+    <div class="compare-card reveal" data-reveal>
+      <div class="compare-row">
+        <div class="compare-row__head">
+          <span class="compare-row__label">エージェント脊髄反射技術（自社）</span>
+          <span class="compare-row__value is-ours">0.4ms 台</span>
+        </div>
+        <div class="compare-bar" role="img" aria-label="自社応答速度バー">
+          <div class="compare-bar__fill is-ours is-filled ours-fill"></div>
+        </div>
+        <div class="compare-row__note">自社計測値。CPU上で完結する低遅延応答経路の実行時間（詳細は下記アーキテクチャセクションの注記を参照）。</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-row__head">
+          <span class="compare-row__label">一般的なクラウドLLM API経由のエージェント</span>
+          <span class="compare-row__value">数十〜数百ms 程度</span>
+        </div>
+        <div class="compare-bar" role="img" aria-label="一般的なクラウドエージェントの応答速度バー（目安）">
+          <div class="compare-bar__fill is-cloud is-filled cloud-fill"></div>
+        </div>
+        <div class="compare-row__note">特定サービスの実測値ではなく、ネットワーク往復とクラウド側推論に伴う一般的なレイテンシ帯を示す目安です。</div>
+      </div>
+      <div class="compare-ratio">
+        目安として <strong>一桁〜二桁（10〜100倍程度）</strong> の応答速度差になりえます
+      </div>
+      <div class="note">
+        <strong>比較についての注記:</strong>
+        本比較は特定の企業・サービスを指すものではなく、「クラウドLLM API経由でエージェントを構成した場合に一般的に生じるネットワークラウンドトリップおよびクラウド側推論のレイテンシ」という、業界的に広く知られた技術的性質と、自社エージェント脊髄反射技術（CPU上でネットワーク往復を伴わずに完結する応答経路）の実行時間を対比したものです。
+        自社側の「0.4ms」は自社計測値、クラウド側の「数十〜数百ms」はネットワーク・API構成に応じて変動する一般的な目安レンジであり、いずれも特定のベンダー・製品の実測値ではありません。
+        両者は測定条件（ネットワーク往復の有無・推論処理の内容）が異なるため単純な同一条件比較ではなく、応答速度差の倍率は算出方法・比較対象によって変動します。バー表示は速度の桁の違いを示すイメージであり、面積・長さが正確な比例関係を表すものではありません。
       </div>
     </div>
   </section>
