@@ -48,7 +48,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .nav-links a:hover { color: var(--color-text); }
 
-    /* HERO（#312: 0.4ms を大型フォント+アニメーションで主役にする構成に刷新。
+    /* HERO（#312: 0.5ms を大型フォント+アニメーションで主役にする構成に刷新。
        トップページ index.html の hero__grid / hero__glow / reveal パターンを踏襲） */
     .hero {
       position: relative;
@@ -197,7 +197,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     /* #390/#391: factory.ai のKPIカード（LIVEバッジ＋スパークライン）を参考に、
        「科学的・データドリブン」な信頼感を演出するメーター/グラフカード。
-       0.4ms（速度）・超省電力・実質再エネ100%を可視化する。数値はいずれも
+       0.5ms（速度）・超省電力・実質再エネ100%を可視化する。数値はいずれも
        既存の要検証注記の対象と同じ性質のため、断定的な実測値ではなくメーター上の
        目安として表現し、注記も併記する。 */
     .kpi-card {
@@ -247,7 +247,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 1.05rem;
       color: var(--color-text);
     }
-    /* 速度メーター（0.4ms訴求）: バー内を99%以上満たすことで「速さ」を視覚化 */
+    /* 速度メーター（0.5ms訴求）: バー内を99%以上満たすことで「速さ」を視覚化 */
     .kpi-meter {
       height: 6px;
       border-radius: 999px;
@@ -300,7 +300,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       background: var(--color-muted);
     }
 
-    /* 0.4ms を大型タイポグラフィ＋パルスアニメーションでビジュアルの主役に据える */
+    /* 0.5ms を大型タイポグラフィ＋パルスアニメーションでビジュアルの主役に据える */
     .hero-metric {
       display: flex;
       align-items: baseline;
@@ -765,7 +765,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   </nav>
 
   <!-- HERO（#314: 「反射層」等の内部構造用語を排除し、価値訴求に特化。
-       0.4ms 大型演出は維持しつつラベルを顧客価値視点の文言に変更） -->
+       0.5ms 大型演出は維持しつつラベルを顧客価値視点の文言に変更） -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
       <span class="hero-grid"></span>
@@ -778,7 +778,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="hero-eyebrow reveal" data-reveal>GREEN AI CLOUD</span>
 
           <div class="hero-metric reveal" data-reveal data-delay="100">
-            <span class="hero-metric__value">0.4<span style="font-size: 0.4em;">ms</span></span>
+            <span class="hero-metric__value">0.5<span style="font-size: 0.4em;">ms</span></span>
             <span class="hero-metric__label">
               で応答する、超高速エージェント基盤<br />
               <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
@@ -831,7 +831,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
             <div class="kpi-row">
               <span class="kpi-row__label">応答速度（反射応答）</span>
-              <span class="kpi-row__value">0.4ms 台</span>
+              <span class="kpi-row__value">0.5ms 台</span>
             </div>
             <div class="kpi-meter" role="img" aria-label="応答速度メーター">
               <div class="kpi-meter__fill" id="kpi-speed-fill" style="--fill: 96%;"></div>
@@ -961,14 +961,14 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           この「LLM推論を介さない」実行体こそ、コンパイル技術が生成する実行プログラムです。
         </p>
         <div class="metric">
-          <strong>0.4ms</strong>
+          <strong>0.5ms</strong>
           エージェント脊髄反射技術の応答実行時間（自社計測値）
         </div>
       </div>
     </div>
     <div class="note reveal" data-reveal>
       <strong>数値についての注記:</strong>
-      「0.4ms」は自社エージェント基盤におけるエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
+      「0.5ms」は自社エージェント基盤におけるエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
       計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、
       現時点では自社内での実測値としてご案内しています。すべてのリクエストがこの数値で応答することを保証するものではありません。
       「コンパイル技術」は、設計図から実行プログラムへの変換の一部を自社独自の仕組みで行う技術を指し、詳細な変換方式は非公開です。
