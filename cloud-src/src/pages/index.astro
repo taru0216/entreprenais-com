@@ -13,7 +13,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(244, 249, 243, 0.92);
+      background: rgba(247, 246, 241, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border);
@@ -48,58 +48,134 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .nav-links a:hover { color: var(--color-text); }
 
-    /* HERO */
+    /* HERO（#312: 0.4ms を大型フォント+アニメーションで主役にする構成に刷新。
+       トップページ index.html の hero__grid / hero__glow / reveal パターンを踏襲） */
     .hero {
       position: relative;
-      min-height: 80vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
       overflow: hidden;
-      padding: 80px 24px 60px;
+      padding: 8rem 24px 4rem;
     }
     .hero-bg {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 20%, rgba(31, 157, 85, 0.14), transparent 55%),
-        radial-gradient(ellipse at 70% 80%, rgba(22, 163, 74, 0.10), transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--color-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      background-position: -1px -1px;
+      opacity: 0.45;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+    .hero-glow--a {
+      width: 480px; height: 480px; top: -120px; left: -160px;
+      background: radial-gradient(circle, rgba(31, 157, 85, 0.30), transparent 70%);
+    }
+    .hero-glow--b {
+      width: 380px; height: 380px; bottom: -120px; right: -120px;
+      background: radial-gradient(circle, rgba(74, 78, 224, 0.22), transparent 70%);
     }
     .hero-content {
       position: relative;
-      max-width: 820px;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
     }
     .hero-eyebrow {
       display: inline-block;
       font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      color: var(--color-accent);
-      border: 1px solid var(--color-border);
-      border-radius: 999px;
-      padding: 6px 16px;
-      margin-bottom: 28px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+      position: relative;
     }
+    .hero-eyebrow::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 50%;
+      width: 1rem; height: 1px;
+      background: var(--color-muted);
+    }
+
+    /* 0.4ms を大型タイポグラフィ＋パルスアニメーションでビジュアルの主役に据える */
+    .hero-metric {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .hero-metric__value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(4.5rem, 14vw, 10rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--color-green);
+      position: relative;
+      animation: heroMetricPulse 2.6s ease-in-out infinite;
+    }
+    @keyframes heroMetricPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(31, 157, 85, 0); }
+      50%      { opacity: 0.88; text-shadow: 0 0 28px rgba(31, 157, 85, 0.35); }
+    }
+    .hero-metric__label {
+      font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+      color: var(--color-muted);
+      line-height: 1.6;
+      max-width: 16em;
+    }
+    .hero-metric__note {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--color-muted);
+      opacity: 0.75;
+      border-bottom: 1px dotted var(--color-border);
+      cursor: help;
+    }
+
     .hero h1 {
       font-family: var(--font-heading);
-      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      font-size: clamp(1.7rem, 3.4vw, 2.3rem);
       font-weight: 700;
-      line-height: 1.35;
-      margin-bottom: 24px;
+      line-height: 1.4;
+      margin: 1.5rem 0 1.75rem;
     }
     .hero h1 .accent { color: var(--color-accent); }
     .hero-lede {
-      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
       color: var(--color-muted);
-      max-width: 640px;
-      margin: 0 auto 40px;
-      line-height: 1.85;
+      max-width: 42em;
+      margin: 0 0 2.5rem;
+      line-height: 1.9;
+    }
+    .hero-lede strong {
+      color: var(--color-text);
+      font-weight: 600;
     }
     .hero-cta {
-      display: inline-flex;
+      display: flex;
       gap: 16px;
       flex-wrap: wrap;
-      justify-content: center;
     }
     .btn {
       display: inline-block;
@@ -113,7 +189,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       background: var(--color-accent);
       color: #ffffff;
     }
-    .btn-primary:hover { background: var(--color-accent2); }
+    .btn-primary:hover { background: var(--color-accent2); transform: translateY(-2px); }
     .btn-secondary {
       border: 1px solid var(--color-border);
       color: var(--color-text);
@@ -302,17 +378,33 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO（#312: 0.4ms を大型フォント+アニメーションで主役化。文章は簡潔に） -->
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg" aria-hidden="true">
+      <span class="hero-grid"></span>
+      <span class="hero-glow hero-glow--a"></span>
+      <span class="hero-glow hero-glow--b"></span>
+    </div>
     <div class="hero-content">
-      <span class="hero-eyebrow">FOR CTO / IT意思決定層・ESG推進担当者へ</span>
-      <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド</span>誕生。</h1>
+      <span class="hero-eyebrow">GREEN AI CLOUD</span>
+
+      <div class="hero-metric">
+        <span class="hero-metric__value">0.4<span style="font-size: 0.4em;">ms</span></span>
+        <span class="hero-metric__label">
+          反射層の応答実行時間<br />
+          <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
+        </span>
+      </div>
+
+      <h1>「超高速、超省電力」<span class="accent">グリーンAIクラウド</span>誕生。</h1>
+
       <p class="hero-lede">
-        コスト効率と応答速度を両立させたいIT意思決定層へ。電源構成の透明性を求めるESG/CSR推進企業へ。
+        <strong>コスト効率と応答速度を両立させたいIT意思決定層へ。</strong><br />
+        <strong>電源構成の透明性を求めるESG/CSR推進企業へ。</strong><br /><br />
         大脳（ローカルLLMによるじっくり思考）と反射（CPU上の自社開発技術による瞬時応答）の
         ハイブリッドアーキテクチャが、超省電力・超高速のエージェント基盤を自社グリーンデータセンター上で実現します。
       </p>
+
       <div class="hero-cta">
         <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
         <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
