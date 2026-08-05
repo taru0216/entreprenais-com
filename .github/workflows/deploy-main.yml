@@ -1,13 +1,22 @@
 name: Deploy main site
 
+# Single unified workflow for all GitHub Pages content (#303 hotfix).
+#
+# Background: this repo previously had per-site workflows
+# (deploy-taruishi-burger.yml / deploy-banwaen-ikebukuro.yml / deploy-cloud.yml)
+# that each independently called actions/upload-pages-artifact. Each run fully
+# replaces the previous Pages deployment, so whichever per-site workflow ran
+# last would publish only its own site + non-Astro static sites, silently
+# 404-ing the other Astro subsites (they can't copy each other's *unbuilt*
+# source, and don't retain each other's *built* dist/ across separate runs).
+# This was latent since banwaen-ikebukuro was added and got exposed when
+# cloud-src was added (#303). Consolidating into one workflow that always
+# builds every Astro subsite together removes the possibility of a partial
+# deployment entirely — there is no longer a "last writer wins" race between
+# sites, because there is only one writer.
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'sites/banwaen-ikebukuro/**'
-      - 'sites/taruishi-burger/**'
-      - '.github/workflows/deploy-banwaen-ikebukuro.yml'
-      - '.github/workflows/deploy-taruishi-burger.yml'
   workflow_dispatch:
 
 permissions:
@@ -49,6 +58,18 @@ jobs:
         env:
           ASTRO_BASE: /sites/taruishi-burger
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: cloud-src/package-lock.json
+
+      - name: Build cloud
+        working-directory: cloud-src
+        run: npm ci && npm run build
+        env:
+          ASTRO_BASE: /cloud
+
       - name: Assemble full site
         run: |
           mkdir -p _site
@@ -62,16 +83,21 @@ jobs:
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           # Astro subsites (built output)
-          mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger
+          mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger _site/cloud
           cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
           cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
-          # Other static sites
+          cp -r cloud-src/dist/. _site/cloud/
+          # Other sites (non-Astro static HTML). Astro source dirs are detected
+          # automatically via package.json presence and skipped here — they are
+          # already built and placed above. This keeps the loop correct as new
+          # sites/* are added without needing to list them explicitly (#303).
           for site in sites/*/; do
             name=$(basename "$site")
-            if [ "$name" != "banwaen-ikebukuro" ] && [ "$name" != "taruishi-burger" ]; then
-              mkdir -p "_site/sites/$name"
-              cp -r "$site"/* "_site/sites/$name/" 2>/dev/null || true
+            if [ -f "${site}package.json" ]; then
+              continue
             fi
+            mkdir -p "_site/sites/$name"
+            cp -r "$site"/* "_site/sites/$name/" 2>/dev/null || true
           done
 
       - uses: actions/upload-pages-artifact@v3
