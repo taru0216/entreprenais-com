@@ -97,6 +97,93 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       margin: 0 auto;
       width: 100%;
     }
+    /* #322: Hero を2カラム化し、右側にチャットプレビュー（実物ウィジェットへの
+       導線）を配置。FC依頼「ホームページの右側に超高速チャット」に対応。
+       モバイルは下記メディアクエリで1カラムに戻し、chat-preview は背景装飾
+       （低コントラスト・pointer-events:none）として組み込む（msg344「背景の
+       ような感じが良さそう？スマホでも見えるように」を反映）。 */
+    .hero-grid-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 3rem;
+      align-items: center;
+    }
+    .chat-preview {
+      position: relative;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 1.25rem;
+      box-shadow: 0 24px 48px -24px rgba(13, 15, 18, 0.18);
+    }
+    .chat-preview__header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.78rem;
+      color: var(--color-muted);
+    }
+    .chat-preview__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-green);
+      animation: chatDotPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes chatDotPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .chat-preview__bubble {
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
+      max-width: 88%;
+    }
+    .chat-preview__bubble--user {
+      background: var(--color-card);
+      color: var(--color-text-soft);
+      margin-left: auto;
+    }
+    .chat-preview__bubble--ai {
+      background: rgba(31, 157, 85, 0.08);
+      color: var(--color-text);
+    }
+    .chat-preview__debug {
+      font-size: 0.68rem;
+      color: var(--color-green);
+      opacity: 0.85;
+      margin: -0.3rem 0 0.6rem 0.2rem;
+    }
+    .chat-preview__cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 0.5rem;
+      padding: 10px;
+      border-radius: var(--radius);
+      background: var(--color-accent);
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+    .chat-preview__cta:hover {
+      background: var(--color-accent2);
+      transform: translateY(-2px);
+    }
+    .chat-preview__note {
+      font-size: 0.68rem;
+      color: var(--color-muted);
+      opacity: 0.75;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
     .hero-eyebrow {
       display: inline-block;
       font-size: 0.78rem;
@@ -434,6 +521,33 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         width: 100%;
         text-align: center;
       }
+      /* #322: モバイルでは2カラムを解除し、chat-preview を「背景のような感じ」
+         （msg344）として溶け込ませる。position:absolute で hero-col-text の
+         背後に重ね、低不透明度・pointer-events:none で操作不能な純粋な装飾に
+         する（実際のチャット起動は既存の画面右下フローティングボタンが担う
+         ため、背景側の操作性を犠牲にしても機能は失われない）。 */
+      .hero-grid-layout {
+        display: block;
+        position: relative;
+      }
+      .hero-col-text {
+        position: relative;
+        z-index: 1;
+      }
+      .chat-preview {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.16;
+        pointer-events: none;
+        border: none;
+        box-shadow: none;
+        overflow: hidden;
+      }
+      .chat-preview__cta,
+      .chat-preview__note {
+        display: none;
+      }
     }
     @media (max-width: 420px) {
       .hero-metric__value {
@@ -463,30 +577,51 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="hero-glow hero-glow--b"></span>
     </div>
     <div class="hero-content">
-      <span class="hero-eyebrow reveal" data-reveal>GREEN AI CLOUD</span>
+      <div class="hero-grid-layout">
+        <div class="hero-col-text">
+          <span class="hero-eyebrow reveal" data-reveal>GREEN AI CLOUD</span>
 
-      <div class="hero-metric reveal" data-reveal data-delay="100">
-        <span class="hero-metric__value">0.4<span style="font-size: 0.4em;">ms</span></span>
-        <span class="hero-metric__label">
-          で応答する、超高速エージェント基盤<br />
-          <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
-        </span>
-      </div>
+          <div class="hero-metric reveal" data-reveal data-delay="100">
+            <span class="hero-metric__value">0.4<span style="font-size: 0.4em;">ms</span></span>
+            <span class="hero-metric__label">
+              で応答する、超高速エージェント基盤<br />
+              <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
+            </span>
+          </div>
 
-      <h1 class="reveal" data-reveal data-delay="200">「超高速、超省電力」<span class="accent">グリーンAIクラウド</span>誕生。</h1>
+          <h1 class="reveal" data-reveal data-delay="200">「超高速、超省電力」<span class="accent">グリーンAIクラウド</span>誕生。</h1>
 
-      <p class="hero-lede reveal" data-reveal data-delay="350">
-        超省電力・超高速のエージェント基盤を、自社グリーンデータセンター上で実現します。
-      </p>
+          <p class="hero-lede reveal" data-reveal data-delay="350">
+            超省電力・超高速のエージェント基盤を、自社グリーンデータセンター上で実現します。
+          </p>
 
-      <div class="hero-value-tags reveal" data-reveal data-delay="420">
-        <span class="value-tag">コスト効率と応答速度を両立</span>
-        <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
-      </div>
+          <div class="hero-value-tags reveal" data-reveal data-delay="420">
+            <span class="value-tag">コスト効率と応答速度を両立</span>
+            <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
+          </div>
 
-      <div class="hero-cta reveal" data-reveal data-delay="500">
-        <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
-        <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
+          <div class="hero-cta reveal" data-reveal data-delay="500">
+            <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
+            <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
+          </div>
+        </div>
+
+        <!-- #322: チャットプレビュー（実物の「お問合せAI」ウィジェットへの導線）。
+             数値は実際に稼働中のウィジェット側（cpu_ms/gpu_ms実測表示）が表示するため、
+             ここでは固定の数値を書かず、実際に試すよう誘導するのみに留める
+             （実測値の断定表示リスクを避けるため）。「反射層」等の内部構造用語も
+             #314の方針に従いここでは使わない。 -->
+        <div class="chat-preview reveal" data-reveal data-delay="300">
+          <div class="chat-preview__header" aria-hidden="true">
+            <span class="chat-preview__dot"></span>
+            お問合せAI ✳︎太陽光と水力で稼働
+          </div>
+          <div class="chat-preview__bubble chat-preview__bubble--user" aria-hidden="true">グリーンAIクラウドの応答速度は？</div>
+          <div class="chat-preview__bubble chat-preview__bubble--ai" aria-hidden="true">実際にチャットで試してみてください</div>
+          <div class="chat-preview__debug" aria-hidden="true">処理経路・実測msをその場で表示します</div>
+          <button type="button" class="chat-preview__cta" id="chat-preview-open">実際に質問してみる</button>
+          <div class="chat-preview__note">画面右下の「AIに聞く」からもご利用いただけます</div>
+        </div>
       </div>
     </div>
   </section>
