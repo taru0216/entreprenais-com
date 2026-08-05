@@ -66,14 +66,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     /* #335: ヒーロー背景に半透明写真（海沿いの公園風景）を追加。FC承認済み
        v3（デスクトップ不透明度10%・モバイル8%）。既存の hero-grid（格子）・
-       hero-glow（グロー）の下に敷き、テキスト可読性を損なわないよう最背面に配置 */
+       hero-glow（グロー）の下に敷き、テキスト可読性を損なわないよう最背面に配置。
+       #337: 当初 inset:0 + object-fit:cover だと、画像の縦横比(2:1)とビュー
+       ポートの縦横比が近く object-position の可動域(excess_y)がほぼゼロになり、
+       被写体（デッキ・遊歩道・海面反射）がファーストビューから外れる不具合が
+       あった。bottom固定 + width:100% + height:auto（アスペクト比保持）に変更し、
+       画像下端を .hero 下端に揃えることで、被写体を含む画像全体が確実に
+       ファーストビュー内（min-height:100vh）に収まるようにする。 */
     .hero-photo-bg {
       position: absolute;
-      inset: 0;
+      left: 0;
+      bottom: 0;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      height: auto;
     }
     .hero-photo-bg--mobile { display: none; }
     .hero-grid {
