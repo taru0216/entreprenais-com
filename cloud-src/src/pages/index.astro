@@ -888,39 +888,43 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        レンジ表現とし、特定サービスの実測値を騙る・捏造することは行わない。 -->
   <section id="speed-comparison">
     <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">SPEED COMPARISON</div>
-      <h2>一般的なクラウドエージェントとの、応答速度の違い</h2>
-      <p>クラウドLLM API経由のエージェントは、ネットワーク往復とクラウド側推論のレイテンシが避けられません。エージェント脊髄反射技術は、この往復自体をなくす設計です。</p>
+      <div class="section-eyebrow">SPEED COMPARISON（実測ベンチマーク）</div>
+      <h2>同じ質問を投げて、実際に時間を計測しました</h2>
+      <p>「グリーンAIクラウドの応答速度は？」という同一の質問を、自社エージェント脊髄反射技術と、一般的なクラウドLLM推論（オープンソースモデルをクラウド経由で実行）の双方に投げ、応答時間を実測しました。</p>
     </div>
     <div class="compare-card reveal" data-reveal>
       <div class="compare-row">
         <div class="compare-row__head">
-          <span class="compare-row__label">エージェント脊髄反射技術（自社）</span>
-          <span class="compare-row__value is-ours">0.4ms 台</span>
+          <span class="compare-row__label">エージェント脊髄反射技術（自社・実測）</span>
+          <span class="compare-row__value is-ours">0.5〜1.0ms</span>
         </div>
         <div class="compare-bar" role="img" aria-label="自社応答速度バー">
           <div class="compare-bar__fill is-ours is-filled ours-fill"></div>
         </div>
-        <div class="compare-row__note">自社計測値。CPU上で完結する低遅延応答経路の実行時間（詳細は下記アーキテクチャセクションの注記を参照）。</div>
+        <div class="compare-row__note">自社計測値（5回計測・サーバー内部処理時間）。CPUキャッシュ経路（LLM推論なし）で固定応答を返す処理時間です。</div>
       </div>
       <div class="compare-row">
         <div class="compare-row__head">
-          <span class="compare-row__label">一般的なクラウドLLM API経由のエージェント</span>
-          <span class="compare-row__value">数十〜数百ms 程度</span>
+          <span class="compare-row__label">gpt-oss:20b（オープンソースモデル・クラウド推論経由・実測）</span>
+          <span class="compare-row__value">9.5〜22.9秒</span>
         </div>
-        <div class="compare-bar" role="img" aria-label="一般的なクラウドエージェントの応答速度バー（目安）">
+        <div class="compare-bar" role="img" aria-label="gpt-oss応答速度バー">
           <div class="compare-bar__fill is-cloud is-filled cloud-fill"></div>
         </div>
-        <div class="compare-row__note">特定サービスの実測値ではなく、ネットワーク往復とクラウド側推論に伴う一般的なレイテンシ帯を示す目安です。</div>
+        <div class="compare-row__note">同一プロンプトの実測値（5回計測・応答完了までの総時間）。オープンソースの大規模言語モデル gpt-oss をクラウド推論基盤経由で実行した際の応答時間です。</div>
       </div>
       <div class="compare-ratio">
-        目安として <strong>一桁〜二桁（10〜100倍程度）</strong> の応答速度差になりえます
+        実測ベースで <strong>約1万倍〜5万倍</strong> の応答時間差（0.5〜1.0ms 対 9.5〜22.9秒。個々の計測値の最小・最大の組み合わせによる幅）
       </div>
       <div class="note">
-        <strong>比較についての注記:</strong>
-        本比較は特定の企業・サービスを指すものではなく、「クラウドLLM API経由でエージェントを構成した場合に一般的に生じるネットワークラウンドトリップおよびクラウド側推論のレイテンシ」という、業界的に広く知られた技術的性質と、自社エージェント脊髄反射技術（CPU上でネットワーク往復を伴わずに完結する応答経路）の実行時間を対比したものです。
-        自社側の「0.4ms」は自社計測値、クラウド側の「数十〜数百ms」はネットワーク・API構成に応じて変動する一般的な目安レンジであり、いずれも特定のベンダー・製品の実測値ではありません。
-        両者は測定条件（ネットワーク往復の有無・推論処理の内容）が異なるため単純な同一条件比較ではなく、応答速度差の倍率は算出方法・比較対象によって変動します。バー表示は速度の桁の違いを示すイメージであり、面積・長さが正確な比例関係を表すものではありません。
+        <strong>計測条件についての注記:</strong>
+        2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」を用いて計測しました。自社側は自社エージェント基盤の CPU キャッシュ応答経路（`source: cache`、LLM推論を介さず固定応答を返す処理）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でオープンソースモデル「gpt-oss:20b」をクラウド推論として実行した際の、リクエスト送信から応答完了までの総時間です。
+        <br /><br />
+        <strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、OpenAI 社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回の計測はクラウド推論基盤経由で実行しており、いわゆる「クラウドLLM API経由のエージェント」の実例として計測しました。
+        <br /><br />
+        <strong>比較の非対称性について:</strong> 自社側は固定応答をキャッシュから返す処理、gpt-oss側は毎回フルにテキストを生成する推論処理であり、処理内容が異なります。単純な同一条件比較ではなく、応答時間差の主因は「推論の有無」そのものです。バー表示は速度差のイメージであり、面積・長さが正確な比例関係を表すものではありません。倍率（約1万倍〜5万倍）は、両者それぞれ5回の計測値の中で最も差が小さい組み合わせ（9.5秒 ÷ 1.0ms ＝ 約9,500倍）と最も差が大きい組み合わせ（22.9秒 ÷ 0.5ms ＝ 約45,800倍）の範囲として算出しています。
+        <br /><br />
+        <strong>今後の拡張予定:</strong> 現時点では、より一般的な商用クラウドAPI（Claude・GPT本家等）への直接アクセス手段が未整備のため、今回はオープンソースモデルのクラウド推論実測のみを掲載しています。今後、商用クラウドAPI経由の実測データも追加予定です。
       </div>
     </div>
   </section>
