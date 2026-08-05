@@ -23,23 +23,31 @@ const {
     <meta property="og:title" content={`${title} | EntreprenAIs`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      /* #310: FCフィードバックにより黒背景から明るいグリーン系トーンへ変更。
-         グリーン=環境配慮の清潔感、AI=先進性を意識した配色。 */
+      /* #312: entreprenais.com トップページ（root index.html / style.css）の
+         ブランドトーンに準拠。オフホワイト基調＋インディゴアクセントの
+         トップページ配色パターンを踏襲しつつ、「グリーンAIクラウド」の
+         商品識別性のためグリーンをセカンドアクセントとして残す。 */
       :root {
-        --color-bg:        #f4f9f3;
+        --color-bg:        #f7f6f1;
         --color-surface:   #ffffff;
-        --color-card:      #eaf5ea;
-        --color-border:    #cfe6cf;
-        --color-accent:    #1f9d55;
-        --color-accent2:   #16a34a;
+        --color-card:      #f7f6f1;
+        --color-border:    #d5d2c6;
+        --color-accent:    #2a2d7c;
+        --color-accent2:   #4a4ee0;
+        --color-green:     #1f9d55;
+        --color-green2:    #16a34a;
         --color-gold:      #0f3d24;
-        --color-text:      #12261a;
-        --color-muted:     #4b6357;
-        --color-hero-from: #eafaf0;
-        --color-hero-to:   #f4f9f3;
-        --font-heading:    'Hiragino Sans', 'Segoe UI', sans-serif;
-        --font-body:       'Hiragino Sans', 'Segoe UI', sans-serif;
+        --color-text:      #0d0f12;
+        --color-text-soft: #1a1d22;
+        --color-muted:     #6b6b6b;
+        --color-hero-from: #f7f6f1;
+        --color-hero-to:   #f7f6f1;
+        --font-heading:    'Noto Sans JP', 'Inter', system-ui, sans-serif;
+        --font-body:       'Noto Sans JP', 'Inter', system-ui, sans-serif;
         --radius:          10px;
         --max-w:           1100px;
       }
