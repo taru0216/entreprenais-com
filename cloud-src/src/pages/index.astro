@@ -13,7 +13,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(6, 17, 12, 0.92);
+      background: rgba(244, 249, 243, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border);
@@ -63,8 +63,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 30% 20%, rgba(61, 220, 132, 0.15), transparent 55%),
-        radial-gradient(ellipse at 70% 80%, rgba(126, 242, 176, 0.10), transparent 55%);
+        radial-gradient(ellipse at 30% 20%, rgba(31, 157, 85, 0.14), transparent 55%),
+        radial-gradient(ellipse at 70% 80%, rgba(22, 163, 74, 0.10), transparent 55%);
     }
     .hero-content {
       position: relative;
@@ -111,7 +111,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .btn-primary {
       background: var(--color-accent);
-      color: #06110c;
+      color: #ffffff;
     }
     .btn-primary:hover { background: var(--color-accent2); }
     .btn-secondary {
@@ -210,7 +210,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     /* GREEN */
     .green-box {
-      background: linear-gradient(135deg, rgba(61,220,132,0.08), rgba(6,17,12,0));
+      background: linear-gradient(135deg, rgba(31,157,85,0.08), rgba(244,249,243,0));
       border: 1px solid var(--color-border);
       border-radius: var(--radius);
       padding: 40px;
@@ -238,7 +238,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .note {
       margin-top: 28px;
       padding: 16px 20px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(15, 61, 36, 0.04);
       border-left: 3px solid var(--color-border);
       border-radius: 4px;
       font-size: 0.78rem;
@@ -306,12 +306,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <span class="hero-eyebrow">GREEN AI CLOUD</span>
-      <h1>思考は深く、応答は瞬時に。<br />すべて<span class="accent">自社グリーン電力</span>で。</h1>
+      <span class="hero-eyebrow">FOR CTO / IT意思決定層・ESG推進担当者へ</span>
+      <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド</span>誕生。</h1>
       <p class="hero-lede">
-        大脳（ローカルLLMによるじっくり思考）と反射（脊髄反射相当をCPU上で実現する自社開発技術）の
-        ハイブリッドアーキテクチャにより、超省電力・超高速のエージェント開発／実行基盤を、
-        自社開発グリーンデータセンター上で完結させます。
+        コスト効率と応答速度を両立させたいIT意思決定層へ。電源構成の透明性を求めるESG/CSR推進企業へ。
+        大脳（ローカルLLMによるじっくり思考）と反射（CPU上の自社開発技術による瞬時応答）の
+        ハイブリッドアーキテクチャが、超省電力・超高速のエージェント基盤を自社グリーンデータセンター上で実現します。
       </p>
       <div class="hero-cta">
         <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
@@ -420,8 +420,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- CTA -->
   <section class="cta-section">
-    <h2>グリーンAIクラウドについて、お話ししませんか</h2>
-    <p>導入相談・共同研究のご相談を承っています。</p>
+    <h2>コスト効率・速度・グリーンの両立を、ご相談ください</h2>
+    <p>IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究のご相談を承っています。</p>
     <a href={`${BASE}/`} class="btn btn-primary">entreprenais.com へ戻る</a>
   </section>
 
