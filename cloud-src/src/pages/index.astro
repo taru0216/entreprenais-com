@@ -44,7 +44,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       color: var(--color-muted);
       font-size: 0.85rem;
       letter-spacing: 0.02em;
-      transition: color 0.2s;
+      transition: color 0.2s var(--ease);
     }
     .nav-links a:hover { color: var(--color-text); }
 
@@ -191,21 +191,27 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 0.85rem;
       color: var(--color-text-soft);
     }
-    .value-tag__icon {
-      font-size: 1rem;
+    /* 絵文字はフォント環境依存で表示されないケースがあるため、
+       CSS content の記号（既存 .green-list li::before と同じパターン）で統一 */
+    .value-tag::before {
+      content: '●';
+      color: var(--color-green);
+      font-size: 0.7rem;
     }
     .hero-cta {
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
     }
+    /* #316: トップページ .btn の transition（0.25s var(--ease)、複数プロパティ個別指定）
+       と一致させる */
     .btn {
       display: inline-block;
       padding: 14px 32px;
       border-radius: var(--radius);
       font-size: 0.95rem;
       font-weight: 600;
-      transition: all 0.2s;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
     }
     .btn-primary {
       background: var(--color-accent);
@@ -216,7 +222,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       border: 1px solid var(--color-border);
       color: var(--color-text);
     }
-    .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
 
     /* SECTION common */
     section {
@@ -474,8 +480,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       </p>
 
       <div class="hero-value-tags reveal" data-reveal data-delay="420">
-        <span class="value-tag"><span class="value-tag__icon" aria-hidden="true">⚡</span>コスト効率と応答速度を両立</span>
-        <span class="value-tag"><span class="value-tag__icon" aria-hidden="true">🌱</span>電源構成の透明性でESG/CSRに適合</span>
+        <span class="value-tag">コスト効率と応答速度を両立</span>
+        <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
       </div>
 
       <div class="hero-cta reveal" data-reveal data-delay="500">

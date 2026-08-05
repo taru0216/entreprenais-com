@@ -50,6 +50,9 @@ const {
         --font-body:       'Noto Sans JP', 'Inter', system-ui, sans-serif;
         --radius:          10px;
         --max-w:           1100px;
+        /* #316: entreprenais.com トップページ（root style.css L24）の
+           --ease と完全一致させ、サイト全体でアニメーションの「感触」を統一 */
+        --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
       }
 
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -67,12 +70,15 @@ const {
       a:hover { color: var(--color-accent2); }
       img { max-width: 100%; height: auto; }
 
-      /* #314: entreprenais.com トップページの reveal（スクロール連動フェードイン）
-         パターンを踏襲。data-reveal 属性を持つ要素を IntersectionObserver で監視する。 */
+      /* #316: entreprenais.com トップページ style.css の .reveal 定義
+         （opacity/transform 0.9s var(--ease)・translateY(28px)）と完全一致させる。
+         data-reveal 属性を持つ要素を IntersectionObserver で監視する（トップページ
+         main.js の reveal ロジックと同一の threshold / rootMargin / delay 処理）。 */
       .reveal {
         opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(28px);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        transition-delay: 0ms;
         will-change: opacity, transform;
       }
       .reveal.is-visible {
@@ -88,23 +94,36 @@ const {
     <slot />
     <script>
       (function () {
+        // Reveal on scroll — トップページ main.js と同一の IntersectionObserver 設定
         var reveals = document.querySelectorAll("[data-reveal]");
         if (!("IntersectionObserver" in window)) {
           reveals.forEach(function (el) { el.classList.add("is-visible"); });
-          return;
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+              setTimeout(function () {
+                el.classList.add("is-visible");
+              }, isNaN(delay) ? 0 : delay);
+              io.unobserve(el);
+            });
+          }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+          reveals.forEach(function (el) { io.observe(el); });
         }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            var el = entry.target;
-            var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
-            setTimeout(function () {
-              el.classList.add("is-visible");
-            }, isNaN(delay) ? 0 : delay);
-            io.unobserve(el);
-          });
-        }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
-        reveals.forEach(function (el) { io.observe(el); });
+
+        // Subtle parallax for hero glows — トップページ main.js と同一ロジック
+        var glowA = document.querySelector(".hero-glow--a");
+        var glowB = document.querySelector(".hero-glow--b");
+        if (glowA && glowB && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          var onMove = function () {
+            var y = Math.min(window.scrollY, 800);
+            glowA.style.transform = "translate3d(0," + (y * 0.18) + "px, 0)";
+            glowB.style.transform = "translate3d(0," + (y * -0.12) + "px, 0)";
+          };
+          window.addEventListener("scroll", onMove, { passive: true });
+        }
       })();
     </script>
   </body>
