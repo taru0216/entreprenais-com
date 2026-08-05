@@ -64,6 +64,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       pointer-events: none;
       z-index: 0;
     }
+    /* #335: ヒーロー背景に半透明写真（海沿いの公園風景）を追加。FC承認済み
+       v3（デスクトップ不透明度10%・モバイル8%）。既存の hero-grid（格子）・
+       hero-glow（グロー）の下に敷き、テキスト可読性を損なわないよう最背面に配置 */
+    .hero-photo-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-photo-bg--mobile { display: none; }
     .hero-grid {
       position: absolute;
       inset: 0;
@@ -681,6 +693,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         width: 260px;
         height: 260px;
       }
+      /* #335: モバイルは軽量版画像に切り替え（不透明度8%版）。デスクトップ用
+         img を隠し、モバイル用 img（不透明度8%で書き出し済み）を表示する */
+      .hero-photo-bg--desktop { display: none; }
+      .hero-photo-bg--mobile { display: block; }
       section {
         padding: 56px 20px;
       }
@@ -768,6 +784,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        0.5ms 大型演出は維持しつつラベルを顧客価値視点の文言に変更） -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
+      <img class="hero-photo-bg hero-photo-bg--desktop" src={`${BASE}/images/hero-photo-bg-desktop.jpg`} alt="" loading="eager" />
+      <img class="hero-photo-bg hero-photo-bg--mobile" src={`${BASE}/images/hero-photo-bg-mobile.jpg`} alt="" loading="eager" />
       <span class="hero-grid"></span>
       <span class="hero-glow hero-glow--a"></span>
       <span class="hero-glow hero-glow--b"></span>
