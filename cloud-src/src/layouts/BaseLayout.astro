@@ -1,0 +1,63 @@
+---
+// src/layouts/BaseLayout.astro — entreprenais-cloud-astro
+// entreprenais.com/cloud 「グリーンAIクラウド」LP 基盤レイアウト（#303）
+// 将来のLP差し替え時はこのファイル + src/pages/index.astro のみの改修で完結する設計
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "グリーンAIクラウド",
+  description = "思考は深く、応答は瞬時に。すべて自社グリーン電力で。大脳（ローカルLLM）×反射（CPU上の自社開発技術）のハイブリッドアーキテクチャによる、超省電力・超高速のエージェント実行基盤。",
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | EntreprenAIs</title>
+    <meta property="og:title" content={`${title} | EntreprenAIs`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <style>
+      :root {
+        --color-bg:        #06110c;
+        --color-surface:   #0c1c14;
+        --color-card:      #10261a;
+        --color-border:    #1c3a28;
+        --color-accent:    #3ddc84;
+        --color-accent2:   #7ef2b0;
+        --color-gold:      #d4f5c8;
+        --color-text:      #eaf5ee;
+        --color-muted:     #8fada0;
+        --color-hero-from: #06110c;
+        --color-hero-to:   #06110c;
+        --font-heading:    'Hiragino Sans', 'Segoe UI', sans-serif;
+        --font-body:       'Hiragino Sans', 'Segoe UI', sans-serif;
+        --radius:          10px;
+        --max-w:           1100px;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--color-accent); text-decoration: none; }
+      a:hover { color: var(--color-accent2); }
+      img { max-width: 100%; height: auto; }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
