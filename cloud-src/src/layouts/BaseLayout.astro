@@ -10,7 +10,7 @@ export interface Props {
 
 const {
   title = "グリーンAIクラウド",
-  description = "思考は深く、応答は瞬時に。すべて自社グリーン電力で。大脳（ローカルLLM）×反射（CPU上の自社開発技術）のハイブリッドアーキテクチャによる、超省電力・超高速のエージェント実行基盤。",
+  description = "「超高速、超省電力」グリーンAIクラウド誕生。コスト効率・応答速度を求めるIT意思決定層、電源構成の透明性を求めるESG/CSR推進企業へ。大脳（ローカルLLM）×反射（CPU上の自社開発技術）のハイブリッドアーキテクチャによる、超省電力・超高速のエージェント実行基盤。",
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -24,18 +24,20 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <style>
+      /* #310: FCフィードバックにより黒背景から明るいグリーン系トーンへ変更。
+         グリーン=環境配慮の清潔感、AI=先進性を意識した配色。 */
       :root {
-        --color-bg:        #06110c;
-        --color-surface:   #0c1c14;
-        --color-card:      #10261a;
-        --color-border:    #1c3a28;
-        --color-accent:    #3ddc84;
-        --color-accent2:   #7ef2b0;
-        --color-gold:      #d4f5c8;
-        --color-text:      #eaf5ee;
-        --color-muted:     #8fada0;
-        --color-hero-from: #06110c;
-        --color-hero-to:   #06110c;
+        --color-bg:        #f4f9f3;
+        --color-surface:   #ffffff;
+        --color-card:      #eaf5ea;
+        --color-border:    #cfe6cf;
+        --color-accent:    #1f9d55;
+        --color-accent2:   #16a34a;
+        --color-gold:      #0f3d24;
+        --color-text:      #12261a;
+        --color-muted:     #4b6357;
+        --color-hero-from: #eafaf0;
+        --color-hero-to:   #f4f9f3;
         --font-heading:    'Hiragino Sans', 'Segoe UI', sans-serif;
         --font-body:       'Hiragino Sans', 'Segoe UI', sans-serif;
         --radius:          10px;
