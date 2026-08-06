@@ -895,7 +895,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .nav-cta { margin-left: auto; padding: 9px 14px; font-size: 11.5px; white-space: nowrap; }
       .hero { padding: 96px 20px 0; }
       .hero-flex { flex-direction: column; align-items: flex-start; }
-      .hero-col-phone { width: 100%; align-items: center; }
+      /* #356: FC指摘「レスポンシブでiPhoneが左に寄っちゃってる」。
+         .hero-col-phone は max-width:300px（デフォルト定義）を持つため、
+         width:100% を指定しても実際のボックス幅は 300px に収まる。
+         親 .hero-flex が align-items:flex-start（左寄せ）のため、
+         この300px幅のボックス自体が左寄せされていた。align-self:center で
+         .hero-col-phone コンテナ自体を親フレックス内で中央寄せする
+         （width:100% は撤去 — align-self:center + max-width:300px の
+         組み合わせで意図通り中央に収まる）。 */
+      .hero-col-phone { align-self: center; align-items: center; }
       .hero h1 { max-width: none; }
       .hero-photo-bg--desktop { display: none; }
       .hero-photo-bg--mobile { display: block; }
