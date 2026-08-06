@@ -6,7 +6,14 @@
     <description>EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。</description>
     <language>ja</language>
     <atom:link href="https://entreprenais.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 24 May 2026 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0900</lastBuildDate>
+  <item>
+    <title><![CDATA[グリーンAIクラウド「EntreprenAIs Cloud」提供開始]]></title>
+    <link>https://entreprenais.com/news/entreprenais-cloud-launch/</link>
+    <description><![CDATA[超高速・超省電力を両立するグリーンAIクラウド「EntreprenAIs Cloud」の提供を開始しました。大脳AI×エージェント脊髄反射のハイブリッドアーキテクチャと、自社グリーンデータセンターによる電力起源の透明性を特長とします。]]></description>
+    <pubDate>Thu, 06 Aug 2026 00:00:00 +0900</pubDate>
+    <guid isPermaLink="true">https://entreprenais.com/news/entreprenais-cloud-launch/</guid>
+  </item>
   <item>
     <title><![CDATA[EntreprenAIs、CPU のみでエージェントスキルを実行できる独自技術を確立]]></title>
     <link>https://entreprenais.com/news/cpu-skill-execution/</link>
