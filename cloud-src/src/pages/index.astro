@@ -181,8 +181,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .hero-news-pill:hover { border-color: var(--color-accent); color: var(--color-text); }
     .hero-news-pill:hover .hero-news-pill__title { color: var(--color-accent2); }
     @media (max-width: 720px) {
-      .hero-news-pill { position: static; margin-bottom: 20px; }
-      .hero-news-pill time { display: none; }
+      /* #377: FC指摘「レスポンシブのスマホビューが少しごちゃごちゃしてる」を受け、
+         ヒーロー内の情報階層を整理。ニューステロップはモバイルでは非表示にし
+         見出し（タグライン）を主役にする（デスクトップは従来どおり表示）。 */
+      .hero-news-pill { display: none; }
     }
     .hero-live-badge {
       display: inline-flex;
@@ -1041,6 +1043,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
          組み合わせで意図通り中央に収まる）。 */
       .hero-col-phone { align-self: center; align-items: center; }
       .hero h1 { max-width: none; }
+      /* #377: FC指摘「レスモバイルビューがごちゃごちゃしてる」への対応。
+         タグライン（見出し）を主役にし、他の要素は相対的に控えめにすることで
+         情報階層にメリハリを付ける。値は既存の clamp() レンジを踏襲しつつ
+         モバイル固有の上書きとして追加する（デスクトップの見た目は変更しない）。 */
+      .hero h1 { font-size: 42px; line-height: 1.2; }
+      .hero-eyebrow-row { gap: 8px; margin-bottom: 20px; }
+      .hero-eyebrow { font-size: 10px; }
+      .hero-live-badge { font-size: 10px; padding: 5px 12px 5px 10px; }
+      .hero-lede { font-size: 15px; line-height: 1.7; margin-top: 20px; }
+      .hero-metric-standalone__value { font-size: 40px; }
+      .hero-metric-standalone__unit { font-size: 15px; }
+      .hero-metric-standalone__note { font-size: 9.5px; }
       .hero-photo-bg--desktop { display: none; }
       .hero-photo-bg--mobile { display: block; }
       .section-light, .section-dark { padding: 56px 20px; }
