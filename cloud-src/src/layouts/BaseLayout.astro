@@ -313,8 +313,9 @@ const {
           }, 800);
         }
       }
-      // #350: ヒーロー iPhone フレーム内 CTA（hero-phone-cta）も同一の起動導線に統合
-      ['chat-preview-open', 'chat-preview-open-cta', 'hero-phone-cta'].forEach(function (id) {
+      // #354: ヒーロー iPhone フレーム専用CTA（hero-phone-cta）は FC 指摘によりスペース
+      // 確保のため削除。実物ウィジェットへの導線は下記の既存ボタン群で維持する。
+      ['chat-preview-open', 'chat-preview-open-cta'].forEach(function (id) {
         var btn = document.getElementById(id);
         if (btn) btn.addEventListener('click', openContactWidget);
       });

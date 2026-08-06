@@ -197,7 +197,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        display:block で明示的に分離しているため単独では折り返さない想定。
        text-wrap: balance を維持しつつ nowrap は使わない（縦幅の狭い実機での
        はみ出しを避けるため、ブラウザ側の自動折り返しは許容する）。 */
-    .hero h1 .accent { color: var(--color-accent); display: block; }
+    /* #354: FC 指摘「「、始動」は黒で良い」。2行目内で「グリーンAIクラウド」
+       （青 = --color-accent）と「、始動」（黒 = --color-text、h1本体の色を継承）
+       に分色するため、行分離用の .hero-h1-line2 と、色指定用の .accent を分離する。 */
+    .hero h1 .hero-h1-line2 { display: block; color: var(--color-text); }
+    .hero h1 .accent { color: var(--color-accent); }
     .hero-lede {
       margin: 30px 0 0;
       max-width: 46ch;
@@ -211,6 +215,43 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 38px;
+    }
+    /* #354: FC指摘「0.5msが小さくなった。独立して拡大・強調」。
+       旧 .hero-metric（KPIカード削除時に撤去）相当の巨大数字表示を、
+       iPhoneフレームと共存する形でテキストカラム内に復元する。
+       モックアップ（eai/tmp/1785983555-...png）の巨大「0.5」+「ms」を参考に、
+       アクセント色の大型数字 + 補足ノートで構成。 */
+    .hero-metric-standalone {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border);
+    }
+    .hero-metric-standalone__value {
+      font-family: var(--font-heading);
+      font-size: clamp(64px, 9vw, 128px);
+      line-height: 0.82;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--color-accent);
+    }
+    .hero-metric-standalone__unit {
+      font-size: clamp(20px, 2.4vw, 32px);
+      line-height: 1;
+      font-weight: 900;
+      color: var(--color-text);
+      margin-top: 10px;
+    }
+    .hero-metric-standalone__note {
+      margin-left: 6px;
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      color: var(--color-muted);
     }
     .btn {
       display: inline-block;
@@ -261,6 +302,16 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       box-shadow:
         0 32px 60px -28px rgba(42, 45, 124, 0.35),
         0 12px 24px -12px rgba(13, 15, 18, 0.22);
+      /* #354: FC指摘「アニメーションがない」への対応。フレーム自体の微妙な
+         浮遊アニメーション（継続ループ）。 */
+      animation: heroPhoneFloat 5s ease-in-out infinite;
+    }
+    @keyframes heroPhoneFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-phone-mock { animation: none; }
     }
     .hero-phone-mock__notch {
       position: absolute;
@@ -303,18 +354,33 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 12.5px;
       line-height: 1.6;
       max-width: 88%;
+      /* #354: FC指摘「アニメーションがない」への対応。吹き出しをページロード後に
+         順次フェードイン + 下からのスライドインで表示する軽量アニメーション。
+         LIVE DEMOの自動再生（タイプライター演出）ほど大掛かりにせず、
+         CSS @keyframes + animation-delay の一回限りの演出に留める。 */
+      opacity: 0;
+      animation: heroPhoneMsgIn 0.6s var(--ease) forwards;
     }
     .hero-phone-mock__msg--in {
       align-self: flex-start;
       background: var(--color-dark-surface);
       color: var(--color-dark-text-soft);
       border-bottom-left-radius: 4px;
+      animation-delay: 0.6s;
     }
     .hero-phone-mock__msg--out {
       align-self: flex-end;
       background: var(--color-accent);
       color: #fff;
       border-bottom-right-radius: 4px;
+      animation-delay: 1.5s;
+    }
+    @keyframes heroPhoneMsgIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-phone-mock__msg { opacity: 1; animation: none; }
     }
     .hero-phone-mock__ms {
       margin-top: auto;
@@ -323,6 +389,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       align-items: baseline;
       gap: 6px;
       border-top: 1px solid var(--color-dark-border);
+      opacity: 0;
+      animation: heroPhoneMsgIn 0.6s var(--ease) forwards;
+      animation-delay: 2.2s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-phone-mock__ms { opacity: 1; animation: none; }
     }
     .hero-phone-mock__ms-value {
       font-family: var(--font-heading);
@@ -337,20 +409,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       color: var(--color-dark-muted);
       line-height: 1.5;
     }
-    .hero-phone-cta {
-      width: 100%;
-      max-width: 300px;
-      padding: 13px 20px;
-      border-radius: 999px;
-      border: none;
-      background: var(--color-text);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.25s var(--ease), background 0.25s var(--ease);
-    }
-    .hero-phone-cta:hover { background: var(--color-accent2); transform: translateY(-2px); }
     .hero-phone-note {
       max-width: 300px;
       text-align: center;
@@ -949,7 +1007,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="hero-flex">
         <div class="hero-col-text reveal" data-reveal data-delay="100">
-          <h1>「超高速、超省電力」<span class="accent">グリーンAIクラウド、始動</span></h1>
+          <h1>「超高速、超省電力」<span class="hero-h1-line2"><span class="accent">グリーンAIクラウド</span>、始動</span></h1>
           <p class="hero-lede">
             自社グリーンデータセンターで動くエージェント基盤。応答は<strong>ミリ秒</strong>、電力は<strong>自社の再エネ</strong>で完結する。
           </p>
@@ -957,17 +1015,28 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
             <a href="#demo" class="btn btn-primary">0.5ms を体験する →</a>
             <a href="#architecture" class="btn btn-secondary">アーキテクチャを見る</a>
           </div>
+
+          <!-- #354: FC指摘「0.5msが小さくなった。独立して拡大・強調」。
+               KPIカード削除前にあった旧 .hero-metric（巨大数字表示）を、
+               iPhoneフレームと両立する形でテキストカラム内に復元。 -->
+          <div class="hero-metric-standalone">
+            <span class="hero-metric-standalone__value">0.5</span>
+            <span class="hero-metric-standalone__unit">ms</span>
+            <span class="hero-metric-standalone__note">エージェント脊髄反射技術<br />応答実行時間（自社計測値・LLM推論なし）</span>
+          </div>
         </div>
 
-        <!-- #350: iPhone風デバイスフレーム内チャットデモ（ファーストビュー）。
+        <!-- #350/#354: iPhone風デバイスフレーム内チャットデモ（ファーストビュー）。
              root（entreprenais.com トップ）の .phone-mock 実装パターンを移植し、
              /cloud 専用スタイルとして .hero-phone-mock に定義（BASE_URL差異のため
-             共通CSSファイル化はせず値をそのまま踏襲）。CTA は既存の
-             openContactWidget() 経由で実物ウィジェットを開く（BaseLayout.astro 側で
-             #hero-phone-cta を chat-preview-open 系ボタン群に追加登録）。
+             共通CSSファイル化はせず値をそのまま踏襲）。実物ウィジェットへの導線は
+             左カラムの既存CTA（「0.5ms を体験する」等）で維持し、フレーム専用の
+             CTAボタン（#hero-phone-cta）はスペース確保のため削除（#354 FC指摘）。
              削除した KPI カード3枚の情報（0.5ms 台 / 超省電力 / 実質100%）は
-             フレーム内チャット吹き出し + ms バッジ + フレーム下の note に要約して継承し、
-             詳細は ARCHITECTURE / GREEN セクションでカバーする。 -->
+             フレーム内チャット吹き出し + ms バッジ + 左カラムの独立強調表示に
+             要約して継承し、詳細は ARCHITECTURE / GREEN セクションでカバーする。
+             吹き出し・ms表示は順次フェードイン、フレーム自体は微妙な浮遊アニメーション
+             で表示する（#354 FC指摘「アニメーションがない」への対応）。 -->
         <div class="hero-col-phone reveal" data-reveal data-delay="200">
           <div class="hero-phone-mock">
             <span class="hero-phone-mock__notch" aria-hidden="true"></span>
@@ -984,8 +1053,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
               </div>
             </div>
           </div>
-          <button type="button" class="hero-phone-cta" id="hero-phone-cta">このAIに質問してみる →</button>
-          <p class="hero-phone-note">実際に稼働中の「お問合せAI」です。左のプレビューは会話イメージで、ボタンから本物のチャットが開きます。</p>
+          <p class="hero-phone-note">実際に稼働中の「お問合せAI」です。上のプレビューは会話イメージです。</p>
         </div>
       </div>
 
