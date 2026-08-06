@@ -159,7 +159,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        overflow 制約のない .hero-inner（position:relative）を配置基準にする。 */
     .hero-news-pill {
       position: absolute;
-      top: 0;
+      /* #379: FC指摘「ニューステロップの位置が太陽光、水力と高さが被ってる」。
+         top:0 だと通常フローで配置される .hero-eyebrow-row（太陽光+水力の
+         hero-live-badge を含む）と同じ高さになり重なって見えていた。
+         .hero の padding-top（clamp(108px, 13vw, 150px)）の余白を利用し、
+         ニューステロップをヘッダー直下・さらに右上へ引き上げて分離する。 */
+      top: -56px;
       right: 0;
       z-index: 2;
       display: inline-flex;
