@@ -3,12 +3,19 @@
 // entreprenais.com/cloud 「グリーンAIクラウド」LP（#303）
 // リーンキャンバス出典: taru0216/taruishi-llc#2139
 // 将来のLP差し替えを前提とし、コピー内容はこのファイル + BaseLayout.astro のみで完結する
+//
+// #341: FC承認デザインモックアップ（EntreprenAIs_Green_AI_Cloud）への全面リライト。
+// ビジュアルデザイン（配色・タイポグラフィ・レイアウト・余白）はモックアップに完全準拠。
+// 機能実装（お問合せAIチャットウィジェット埋め込み・実測ベンチマーク比較ロジック・
+// ヒーロー背景写真・reveal/KPIメーターアニメーション）は BaseLayout.astro 側のスクリプトを
+// そのまま流用し、クラス名の対応関係のみ維持する。
 import BaseLayout from '../layouts/BaseLayout.astro';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout>
 
   <style>
+    /* ============ NAV ============ */
     nav {
       position: sticky;
       top: 0;
@@ -19,44 +26,68 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       border-bottom: 1px solid var(--color-border);
     }
     .nav-inner {
+      width: 100%;
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 24px;
-      height: 60px;
+      padding: 0 clamp(16px, 3vw, 40px);
+      height: 66px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: clamp(12px, 2vw, 36px);
     }
     .nav-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
       font-family: var(--font-heading);
-      font-size: 1.15rem;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.01em;
       color: var(--color-text);
-      letter-spacing: 0.02em;
     }
     .nav-logo span { color: var(--color-accent); }
+    .nav-logo .dot {
+      width: 5px; height: 5px; border-radius: 999px;
+      background: var(--color-accent);
+      display: inline-block;
+    }
     .nav-links {
       display: flex;
-      gap: 24px;
+      align-items: center;
+      gap: 4px;
       list-style: none;
+      margin-left: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
     .nav-links a {
-      color: var(--color-muted);
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-      transition: color 0.2s var(--ease);
+      flex: none;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-soft);
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
     }
-    .nav-links a:hover { color: var(--color-text); }
+    .nav-links a:hover { background: var(--color-accent-tint); color: var(--color-accent2); }
+    .nav-cta {
+      flex: none;
+      margin-left: 12px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: var(--color-text);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .nav-cta:hover { color: #fff; background: var(--color-accent2); }
 
-    /* HERO（#312: 0.5ms を大型フォント+アニメーションで主役にする構成に刷新。
-       トップページ index.html の hero__grid / hero__glow / reveal パターンを踏襲） */
+    /* ============ HERO ============ */
     .hero {
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
+      padding: clamp(108px, 13vw, 150px) clamp(20px, 4vw, 40px) 0;
       overflow: hidden;
-      padding: 8rem 24px 4rem;
     }
     .hero-bg {
       position: absolute;
@@ -64,995 +95,1017 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       pointer-events: none;
       z-index: 0;
     }
-    /* #335: ヒーロー背景に半透明写真（海沿いの公園風景）を追加。FC承認済み
-       v3（デスクトップ不透明度10%・モバイル8%）。既存の hero-grid（格子）・
-       hero-glow（グロー）の下に敷き、テキスト可読性を損なわないよう最背面に配置。
-       #337: 当初 inset:0 + object-fit:cover だと、画像の縦横比(2:1)とビュー
-       ポートの縦横比が近く object-position の可動域(excess_y)がほぼゼロになり、
-       被写体（デッキ・遊歩道・海面反射）がファーストビューから外れる不具合が
-       あった。
-       #339: #337 で bottom固定に変更したが、位置基準は「ビューポート」ではなく
-       親要素 .hero-bg（実体は .hero、汎用 `section { max-width: var(--max-w) }`
-       ルールにより幅1100px・コンテンツ量で高さが100vhを超えて実測1188px超）
-       だった。bottom:0 だとこの実測高さの下端が基準になり、画像（表示高さ約
-       550px）がビューポート可視範囲（sticky nav分を除く0-839px相当）の外＝
-       スクロールしないと見えない位置に配置されていた。
-       top:0 に変更し、.hero-bg の上端（＝ページ上部・ファーストビュー内）を
-       基準にすることで、画像表示高さがビューポート可視範囲に収まるようにする。 */
+    .hero-glow--a {
+      position: absolute;
+      top: -220px; right: -160px;
+      width: 760px; height: 760px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--color-accent-tint) 0%, rgba(230,229,239,0) 68%);
+    }
     .hero-photo-bg {
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
       height: auto;
-    }
-    .hero-photo-bg--mobile { display: none; }
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--color-border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
-      background-size: 56px 56px;
-      background-position: -1px -1px;
-      opacity: 0.45;
-      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-    }
-    .hero-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
       opacity: 0.5;
     }
-    .hero-glow--a {
-      width: 480px; height: 480px; top: -120px; left: -160px;
-      background: radial-gradient(circle, rgba(31, 157, 85, 0.30), transparent 70%);
-    }
-    .hero-glow--b {
-      width: 380px; height: 380px; bottom: -120px; right: -120px;
-      background: radial-gradient(circle, rgba(74, 78, 224, 0.22), transparent 70%);
-    }
-    .hero-content {
+    .hero-photo-bg--mobile { display: none; }
+    .hero-inner {
       position: relative;
-      z-index: 1;
       max-width: var(--max-w);
       margin: 0 auto;
-      width: 100%;
+      z-index: 1;
     }
-    /* #322: Hero を2カラム化し、右側にチャットプレビュー（実物ウィジェットへの
-       導線）を配置。FC依頼「ホームページの右側に超高速チャット」に対応。
-       モバイルは下記メディアクエリで1カラムに戻し、chat-preview は背景装飾
-       （低コントラスト・pointer-events:none）として組み込む（msg344「背景の
-       ような感じが良さそう？スマホでも見えるように」を反映）。 */
-    /* #387: factory.ai のレイアウト（見出し・サブコピー・CTAを上部、ビジュアル
-       要素はその下）を参考に、横並び2カラムから縦積み（テキスト→ビジュアル）に変更 */
-    .hero-grid-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-    }
-    .hero-col-text {
-      max-width: 46em;
-    }
-    .hero-visual-row {
-      display: grid;
-      grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
-      gap: 1.5rem;
-      align-items: stretch;
-    }
-    .chat-preview {
-      position: relative;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: calc(var(--radius) + 6px);
-      padding: 1.25rem;
-      box-shadow: 0 24px 48px -24px rgba(13, 15, 18, 0.18);
-    }
-    .chat-preview__header {
+    .hero-eyebrow-row {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding-bottom: 0.75rem;
-      margin-bottom: 0.75rem;
-      border-bottom: 1px solid var(--color-border);
-      font-size: 0.78rem;
-      color: var(--color-muted);
-    }
-    .chat-preview__dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--color-green);
-      animation: chatDotPulse 1.8s ease-in-out infinite;
-    }
-    @keyframes chatDotPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .chat-preview__bubble {
-      border-radius: 12px;
-      padding: 0.65rem 0.9rem;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      margin-bottom: 0.6rem;
-      max-width: 88%;
-    }
-    .chat-preview__bubble--user {
-      background: var(--color-card);
-      color: var(--color-text-soft);
-      margin-left: auto;
-    }
-    .chat-preview__bubble--ai {
-      background: rgba(31, 157, 85, 0.08);
-      color: var(--color-text);
-    }
-    .chat-preview__debug {
-      font-size: 0.68rem;
-      color: var(--color-green);
-      opacity: 0.85;
-      margin: -0.3rem 0 0.6rem 0.2rem;
-    }
-    .chat-preview__cta {
-      display: block;
-      width: 100%;
-      text-align: center;
-      margin-top: 0.5rem;
-      padding: 10px;
-      border-radius: var(--radius);
-      background: var(--color-accent);
-      color: #ffffff;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: background 0.25s var(--ease), transform 0.25s var(--ease);
-    }
-    .chat-preview__cta:hover {
-      background: var(--color-accent2);
-      transform: translateY(-2px);
-    }
-    .chat-preview__note {
-      font-size: 0.68rem;
-      color: var(--color-muted);
-      opacity: 0.75;
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-
-    /* #390/#391: factory.ai のKPIカード（LIVEバッジ＋スパークライン）を参考に、
-       「科学的・データドリブン」な信頼感を演出するメーター/グラフカード。
-       0.5ms（速度）・超省電力・実質再エネ100%を可視化する。数値はいずれも
-       既存の要検証注記の対象と同じ性質のため、断定的な実測値ではなくメーター上の
-       目安として表現し、注記も併記する。 */
-    .kpi-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: calc(var(--radius) + 6px);
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-    .kpi-card__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--color-muted);
-      text-transform: uppercase;
-    }
-    .kpi-live {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: var(--color-green);
-      font-weight: 600;
-    }
-    .kpi-live::before {
-      content: '';
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--color-green);
-      animation: chatDotPulse 1.8s ease-in-out infinite;
-    }
-    .kpi-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-    .kpi-row__label {
-      font-size: 0.8rem;
-      color: var(--color-text-soft);
-    }
-    .kpi-row__value {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--color-text);
-    }
-    /* 速度メーター（0.5ms訴求）: バー内を99%以上満たすことで「速さ」を視覚化 */
-    .kpi-meter {
-      height: 6px;
-      border-radius: 999px;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      overflow: hidden;
-    }
-    .kpi-meter__fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--color-green), var(--color-green2));
-      width: 0%;
-      transition: width 1.4s var(--ease);
-    }
-    .kpi-meter__fill.is-filled { width: var(--fill, 90%); }
-    /* スパークライン（簡易 SVG polyline） */
-    .kpi-spark {
-      width: 100%;
-      height: 32px;
-      display: block;
-    }
-    .kpi-spark polyline {
-      fill: none;
-      stroke: var(--color-green);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .kpi-card__note {
-      font-size: 0.64rem;
-      color: var(--color-muted);
-      opacity: 0.7;
-      line-height: 1.5;
+      gap: 14px;
+      margin-bottom: 30px;
     }
     .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.78rem;
-      letter-spacing: 0.28em;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--color-muted);
-      margin-bottom: 2rem;
-      padding-left: 1.5rem;
-      position: relative;
+      color: var(--color-accent2);
     }
-    .hero-eyebrow::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 50%;
-      width: 1rem; height: 1px;
-      background: var(--color-muted);
+    .hero-eyebrow-rule {
+      height: 1px;
+      flex: 1;
+      max-width: 120px;
+      background: var(--color-border);
     }
-
-    /* 0.5ms を大型タイポグラフィ＋パルスアニメーションでビジュアルの主役に据える */
-    .hero-metric {
+    .hero-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px 6px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--color-text-soft);
+    }
+    .hero-live-dot {
+      width: 6px; height: 6px; border-radius: 999px;
+      background: var(--color-green);
+      animation: eaiPulse 2.4s ease-in-out infinite;
+    }
+    @keyframes eaiPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .hero-flex {
       display: flex;
-      align-items: baseline;
-      gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1.25rem;
+      gap: clamp(28px, 5vw, 64px);
+      align-items: flex-end;
     }
-    .hero-metric__value {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: clamp(4.5rem, 14vw, 10rem);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      color: var(--color-green);
-      position: relative;
-      animation: heroMetricPulse 2.6s ease-in-out infinite;
-    }
-    @keyframes heroMetricPulse {
-      0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(31, 157, 85, 0); }
-      50%      { opacity: 0.88; text-shadow: 0 0 28px rgba(31, 157, 85, 0.35); }
-    }
-    .hero-metric__label {
-      font-size: clamp(0.9rem, 1.6vw, 1.15rem);
-      color: var(--color-muted);
-      line-height: 1.6;
-      max-width: 16em;
-    }
-    .hero-metric__note {
-      display: inline-block;
-      margin-top: 0.4rem;
-      font-size: 0.72rem;
-      color: var(--color-muted);
-      opacity: 0.75;
-      border-bottom: 1px dotted var(--color-border);
-      cursor: help;
-    }
-
+    .hero-col-text { flex: 1 1 440px; min-width: 0; }
     .hero h1 {
+      margin: 0;
       font-family: var(--font-heading);
-      font-size: clamp(1.7rem, 3.4vw, 2.3rem);
-      font-weight: 700;
-      line-height: 1.4;
-      margin: 1.5rem 0 1.75rem;
+      font-size: clamp(34px, 5.2vw, 76px);
+      line-height: 1.14;
+      font-weight: 900;
+      letter-spacing: -0.015em;
     }
     .hero h1 .accent { color: var(--color-accent); }
     .hero-lede {
-      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-      color: var(--color-muted);
-      max-width: 42em;
-      margin: 0 0 1.5rem;
-      line-height: 1.9;
+      margin: 30px 0 0;
+      max-width: 52ch;
+      font-size: 19px;
+      line-height: 1.85;
+      color: var(--color-text-soft);
     }
-    .hero-lede strong {
-      color: var(--color-text);
-      font-weight: 600;
-    }
-    /* #314-follow-up: FCペルソナ情報（IT意思決定層/ESG企業）を直接的な
-       「〇〇へ。」宛先表記ではなく、ベネフィットタグとして訴求する */
+    .hero-lede strong { color: var(--color-text); font-weight: 700; }
     .hero-value-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin: 0 0 2.5rem;
+      gap: 10px;
+      margin-top: 30px;
     }
     .value-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.1rem;
+      padding: 8px 16px;
       border-radius: 999px;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      font-size: 0.85rem;
-      color: var(--color-text-soft);
-    }
-    /* 絵文字はフォント環境依存で表示されないケースがあるため、
-       CSS content の記号（既存 .green-list li::before と同じパターン）で統一 */
-    .value-tag::before {
-      content: '●';
-      color: var(--color-green);
-      font-size: 0.7rem;
+      background: var(--color-accent-tint);
+      color: var(--color-accent2);
+      font-size: 13px;
+      font-weight: 700;
     }
     .hero-cta {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 38px;
     }
-    /* #316: トップページ .btn の transition（0.25s var(--ease)、複数プロパティ個別指定）
-       と一致させる */
     .btn {
       display: inline-block;
-      padding: 14px 32px;
-      border-radius: var(--radius);
-      font-size: 0.95rem;
-      font-weight: 600;
+      border-radius: 999px;
+      font-weight: 700;
+      text-align: center;
       transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
     }
     .btn-primary {
-      background: var(--color-accent);
-      color: #ffffff;
+      padding: 16px 30px;
+      background: var(--color-text);
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: 0.02em;
     }
-    .btn-primary:hover { background: var(--color-accent2); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--color-accent2); color: #fff; transform: translateY(-2px); }
     .btn-secondary {
-      border: 1px solid var(--color-border);
+      padding: 14px 28px;
+      border: 2px solid var(--color-text);
       color: var(--color-text);
+      font-size: 15px;
     }
     .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
 
-    /* SECTION common */
-    section {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 90px 24px;
+    /* ヒーロー右側の巨大メトリック */
+    .hero-col-metric {
+      flex: 1 1 300px;
+      text-align: right;
+      padding-bottom: 6px;
     }
-    .section-head {
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto 56px;
-    }
-    .section-eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      color: var(--color-accent);
-      margin-bottom: 14px;
-    }
-    .section-head h2 {
-      font-family: var(--font-heading);
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      margin-bottom: 16px;
-    }
-    .section-head p {
-      color: var(--color-muted);
-      line-height: 1.8;
-    }
-
-    /* PROBLEM */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .problem-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 28px;
-    }
-    .problem-card .label {
-      font-size: 0.75rem;
-      color: var(--color-accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
-    }
-    .problem-card p {
-      color: var(--color-muted);
-      font-size: 0.92rem;
-      line-height: 1.75;
-    }
-
-    /* ARCHITECTURE (大脳×反射) */
-    .arch-wrap {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
-    .arch-card {
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 32px;
-    }
-    .arch-card h3 {
-      font-family: var(--font-heading);
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-      color: var(--color-accent2);
-    }
-    .arch-card p {
-      color: var(--color-muted);
-      font-size: 0.92rem;
-      line-height: 1.8;
-    }
-    .arch-card .metric {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid var(--color-border);
-      font-size: 0.8rem;
-      color: var(--color-muted);
-    }
-    .arch-card .metric strong {
-      display: block;
-      font-size: 1.6rem;
-      color: var(--color-text);
-      margin-bottom: 4px;
-    }
-
-    /* SPEED COMPARISON（#326: 既存 .kpi-card / .kpi-meter のデザイン言語を再利用し、
-       自社「エージェント脊髄反射技術」と一般的なクラウドエージェントの速度比較を可視化。
-       特定の競合他社名は使用せず、一般化した表現に限定する（景表法・不競法配慮）。
-       クラウド側のバー幅は「数十〜数百ms」レンジの下限を基準にした目安表示であり、
-       断定的な実測値ではないことを注記で明示する。 */
-    .compare-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: calc(var(--radius) + 6px);
-      padding: 40px;
-    }
-    .compare-row {
-      margin-bottom: 28px;
-    }
-    .compare-row:last-of-type {
-      margin-bottom: 0;
-    }
-    .compare-row__head {
+    .hero-metric-inner {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.6rem;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 8px;
     }
-    .compare-row__label {
-      font-size: 0.92rem;
-      color: var(--color-text-soft);
-      font-weight: 600;
-    }
-    .compare-row__value {
+    .hero-metric__value {
       font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--color-text);
+      font-size: clamp(108px, 16vw, 230px);
+      line-height: 0.82;
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      color: var(--color-accent);
+      animation: heroMetricPulse 2.6s ease-in-out infinite;
     }
-    .compare-row__value.is-ours { color: var(--color-green); }
-    /* 比較バー: 自社は極小幅、クラウド側は相対的に大きい幅で「速さの差」を視覚化。
-       絶対値の精緻な比例ではなく、あくまで「桁の違い」を示すイメージ表現とする
-       （note で明示）。 */
-    .compare-bar {
-      height: 14px;
-      border-radius: 999px;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
+    @keyframes heroMetricPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(74, 74, 226, 0); }
+      50%      { opacity: 0.88; text-shadow: 0 0 32px rgba(74, 74, 226, 0.30); }
+    }
+    .hero-metric__unit {
+      font-size: clamp(28px, 4vw, 56px);
+      line-height: 1;
+      font-weight: 900;
+      color: var(--color-text);
+      margin-top: 16px;
+    }
+    .hero-metric__note {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      color: var(--color-muted);
+      text-align: right;
+      cursor: help;
+    }
+
+    /* KPIグリッド（3カラム） */
+    .hero-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+      gap: 1px;
+      margin-top: clamp(48px, 7vw, 80px);
+      background: var(--color-border2);
+      border: 1px solid var(--color-border2);
+      border-radius: 20px;
       overflow: hidden;
     }
-    .compare-bar__fill {
-      height: 100%;
-      border-radius: 999px;
-      width: 0%;
-      transition: width 1.4s var(--ease);
+    .hero-kpi-cell {
+      background: #fff;
+      padding: 28px 30px;
     }
-    .compare-bar__fill.is-ours {
-      background: linear-gradient(90deg, var(--color-green), var(--color-green2));
-    }
-    .compare-bar__fill.is-cloud {
-      background: linear-gradient(90deg, var(--color-muted), var(--color-border));
-    }
-    .compare-bar__fill.is-filled.ours-fill { width: 3%; }
-    .compare-bar__fill.is-filled.cloud-fill { width: 100%; }
-    .compare-row__note {
-      margin-top: 0.5rem;
-      font-size: 0.72rem;
+    .hero-kpi-cell__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
       color: var(--color-muted);
-      opacity: 0.8;
     }
-    .compare-ratio {
+    .hero-kpi-cell__value {
+      margin-top: 12px;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .hero-kpi-cell__value.is-accent { color: var(--color-accent); }
+    .hero-kpi-cell__value .unit { font-size: 17px; font-weight: 700; margin-left: 3px; }
+    .hero-kpi-cell__desc {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--color-text-soft);
+    }
+    .hero-chat-open {
+      margin: 14px 0 0;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      margin-top: 20px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      background: rgba(31, 157, 85, 0.08);
-      border: 1px solid var(--color-border);
-      font-size: 0.85rem;
-      color: var(--color-text);
-    }
-    .compare-ratio strong {
-      color: var(--color-green);
-      font-family: var(--font-heading);
-    }
-
-    /* GREEN */
-    .green-box {
-      background: linear-gradient(135deg, rgba(31,157,85,0.08), rgba(244,249,243,0));
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 40px;
-    }
-    .green-list {
-      list-style: none;
-      display: grid;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .green-list li {
-      display: flex;
-      gap: 12px;
+      gap: 8px;
+      font-size: 12px;
       color: var(--color-muted);
-      font-size: 0.92rem;
-      line-height: 1.75;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
     }
-    .green-list li::before {
-      content: '●';
-      color: var(--color-accent);
-      flex-shrink: 0;
+    .hero-chat-open:hover { color: var(--color-accent2); }
+
+    .hero-footnote {
+      margin: 12px 0 0;
+      max-width: 88ch;
+      font-size: 12.5px;
+      line-height: 1.9;
+      color: var(--color-muted);
     }
 
-    /* NOTE (数値主張の注記) */
+    /* ============ SECTION common ============ */
+    .section-light {
+      padding: clamp(72px, 10vw, 110px) clamp(20px, 4vw, 40px);
+      scroll-margin-top: 66px;
+    }
+    .section-dark {
+      padding: clamp(72px, 10vw, 104px) clamp(20px, 4vw, 40px) clamp(72px, 10vw, 110px);
+      background: var(--color-dark-bg);
+      scroll-margin-top: 66px;
+    }
+    .section-inner { max-width: var(--max-w); margin: 0 auto; }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+    .eyebrow.on-dark { color: var(--color-accent-light); }
+    h2.headline {
+      margin: 18px 0 0;
+      font-size: clamp(27px, 3.6vw, 46px);
+      line-height: 1.3;
+      font-weight: 900;
+      letter-spacing: -0.005em;
+    }
+    h2.headline.narrow { max-width: 30ch; }
+    h2.headline .accent { color: var(--color-accent); }
+    .section-lede {
+      margin: 20px 0 0;
+      max-width: 60ch;
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--color-text-soft);
+    }
+    .section-lede.on-dark { color: var(--color-dark-text-soft); }
     .note {
-      margin-top: 28px;
-      padding: 16px 20px;
-      background: rgba(15, 61, 36, 0.04);
-      border-left: 3px solid var(--color-border);
-      border-radius: 4px;
-      font-size: 0.78rem;
+      margin-top: 22px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border);
+      font-size: 12.5px;
+      line-height: 1.9;
       color: var(--color-muted);
+      max-width: 96ch;
+    }
+    .note.on-dark { border-top-color: var(--color-dark-border); color: var(--color-dark-muted); }
+    .note strong { color: var(--color-text-soft); }
+    .note.on-dark strong { color: var(--color-dark-text-soft); }
+
+    /* PROBLEM（3カード） */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+      gap: 20px;
+      margin-top: 56px;
+    }
+    .problem-card {
+      padding: 34px;
+      background: #fff;
+      border: 1px solid var(--color-border2);
+      border-radius: 22px;
+    }
+    .problem-card__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--color-accent2);
+    }
+    .problem-card h3 {
+      margin: 16px 0 0;
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .problem-card p {
+      margin: 14px 0 0;
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: var(--color-text-soft);
+    }
+
+    /* SPEED COMPARISON（ダーク・チャットUIカード2枚） */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 24px;
+      margin-top: 44px;
+    }
+    .compare-card {
+      border: 1px solid var(--color-dark-border);
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .compare-card.is-ours { background: var(--color-dark-navy); }
+    .compare-card.is-cloud { background: var(--color-dark-surface); }
+    .compare-card__head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--color-dark-border2);
+      background: var(--color-dark-card);
+    }
+    .compare-card.is-cloud .compare-card__head {
+      border-bottom-color: var(--color-dark-border);
+      background: var(--color-dark-slate);
+    }
+    .compare-card__dot { width: 8px; height: 8px; border-radius: 999px; }
+    .compare-card.is-ours .compare-card__dot { background: var(--color-green); }
+    .compare-card.is-cloud .compare-card__dot { background: var(--color-orange); }
+    .compare-card__title { font-size: 13px; font-weight: 700; color: var(--color-dark-text); }
+    .compare-card__badge {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+    }
+    .compare-card.is-ours .compare-card__badge { border: 1px solid var(--color-green); color: var(--color-green); }
+    .compare-card.is-cloud .compare-card__badge { border: 1px solid var(--color-dark-border3); color: var(--color-dark-muted2); }
+    .compare-card__ms {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+    }
+    .compare-card.is-ours .compare-card__ms { color: var(--color-green); }
+    .compare-card.is-cloud .compare-card__ms { color: var(--color-orange); }
+    .compare-card__body {
+      flex: none;
+      height: clamp(260px, 38vh, 340px);
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .compare-bubble--user {
+      align-self: flex-end;
+      max-width: 82%;
+      padding: 13px 18px;
+      border-radius: 16px 16px 4px 16px;
+      color: var(--color-dark-text);
+      font-size: 14.5px;
       line-height: 1.7;
     }
+    .compare-card.is-ours .compare-bubble--user { background: var(--color-dark-border2); }
+    .compare-card.is-cloud .compare-bubble--user { background: var(--color-dark-border); }
+    .compare-bubble--ai {
+      max-width: 90%;
+      padding: 15px 19px;
+      border-radius: 16px 16px 16px 4px;
+      font-size: 14.5px;
+      line-height: 1.8;
+    }
+    .compare-card.is-ours .compare-bubble--ai { background: var(--color-dark-navy-border); color: var(--color-dark-text); }
+    .compare-card.is-cloud .compare-bubble--ai { background: var(--color-dark-slate); color: var(--color-dark-text-soft); }
+    .compare-card__footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-dark-border2);
+      background: var(--color-dark-card);
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .compare-card.is-cloud .compare-card__footer {
+      border-top-color: var(--color-dark-border);
+      background: var(--color-dark-slate);
+    }
+    .compare-card__footer-value {
+      font-size: clamp(38px, 4vw, 52px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .compare-card.is-ours .compare-card__footer-value { color: var(--color-accent-light); }
+    .compare-card.is-cloud .compare-card__footer-value { color: var(--color-dark-muted2); }
+    .compare-card__footer-unit { font-size: 18px; font-weight: 900; color: var(--color-dark-text); }
+    .compare-card__footer-note {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--color-dark-muted);
+      text-align: right;
+    }
+    .compare-ratio {
+      margin-top: 18px;
+      padding-top: 22px;
+      border-top: 1px solid var(--color-dark-border);
+    }
+    .compare-ratio__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-dark-text-soft);
+    }
+    .compare-ratio__badge strong { color: var(--color-green); font-family: var(--font-mono); }
 
-    /* FLOW */
-    .flow {
+    /* ARCHITECTURE（ダーク・3要素 + sticky KPIサイドバー） */
+    .arch-flex {
       display: flex;
       flex-wrap: wrap;
+      gap: clamp(32px, 5vw, 70px);
+      align-items: flex-start;
+    }
+    .arch-col-main { flex: 1 1 520px; min-width: 0; }
+    .arch-sub {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--color-accent-light);
+    }
+    .arch-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 44px;
+    }
+    .arch-card {
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+      background: var(--color-dark-surface);
+      border: 1px solid var(--color-dark-border);
+      border-radius: 20px;
+    }
+    .arch-card.is-highlight {
+      background: var(--color-dark-navy);
+      border-color: var(--color-dark-navy-border);
+    }
+    .arch-card__icon {
+      flex: none;
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(123,123,240,0.14);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 13px; font-weight: 700;
+      color: var(--color-accent-light);
+    }
+    .arch-card.is-highlight .arch-card__icon { background: rgba(71,199,117,0.14); color: var(--color-green); }
+    .arch-card h3 { margin: 0; font-size: 21px; font-weight: 700; color: var(--color-dark-text); }
+    .arch-card p { margin: 12px 0 0; font-size: 14.5px; line-height: 1.9; color: var(--color-dark-text-soft); }
+    .arch-connector {
+      display: flex;
       align-items: center;
-      justify-content: center;
       gap: 12px;
-      font-size: 0.85rem;
-      color: var(--color-muted);
-      text-align: center;
+      padding: 0 6px;
+      color: var(--color-dark-border3);
+      font-size: 18px;
     }
-    .flow .step {
-      background: var(--color-surface);
+    .arch-connector-line { height: 1px; flex: 1; background: var(--color-dark-border); }
+    .arch-connector-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--color-accent-light); }
+
+    .arch-sidebar {
+      flex: 1 1 320px;
+      max-width: 460px;
+      position: sticky;
+      top: 110px;
+      padding: clamp(28px, 3vw, 44px);
+      background: var(--color-dark-surface);
+      border: 1px solid var(--color-dark-border);
+      border-radius: 24px;
+    }
+    .arch-sidebar__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--color-dark-muted);
+    }
+    .arch-sidebar__metric {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .arch-sidebar__value {
+      font-size: clamp(78px, 9vw, 110px);
+      line-height: 0.86;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: var(--color-accent-light);
+    }
+    .arch-sidebar__unit { font-size: 30px; font-weight: 900; color: var(--color-dark-text); margin-top: 8px; }
+    .arch-sidebar__desc { margin: 22px 0 0; font-size: 13.5px; line-height: 1.9; color: var(--color-dark-text-soft); }
+    .arch-sidebar__list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-dark-border);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--color-dark-muted);
+    }
+    .arch-sidebar__row { display: flex; justify-content: space-between; }
+    .arch-sidebar__row .v { color: var(--color-dark-text); }
+    .arch-sidebar__row .v.is-green { color: var(--color-green); }
+    .arch-sidebar__cta { margin-top: 24px; }
+    .arch-sidebar__cta-note { font-size: 12px; color: var(--color-dark-muted); }
+
+    /* GREEN（3カード） */
+    .green-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+      gap: 20px;
+      margin-top: 52px;
+    }
+    .green-card {
+      padding: 34px;
+      background: #fff;
+      border: 1px solid var(--color-border2);
+      border-radius: 22px;
+    }
+    .green-card__icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--color-accent-tint);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700;
+      color: var(--color-accent2);
+    }
+    .green-card h3 { margin: 18px 0 0; font-size: 20px; font-weight: 700; }
+    .green-card p { margin: 12px 0 0; font-size: 14.5px; line-height: 1.9; color: var(--color-text-soft); }
+
+    /* FLOW（「制約が両立を生んだ」まとめボックス） */
+    .flow-box {
+      margin-top: clamp(56px, 8vw, 86px);
+      padding: clamp(28px, 4vw, 60px);
+      background: var(--color-bg);
       border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 14px 20px;
+      border-radius: 28px;
     }
-    .flow .arrow { color: var(--color-accent); }
+    .flow-box h3 {
+      margin: 16px 0 0;
+      font-size: clamp(24px, 2.8vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.005em;
+    }
+    .flow-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-top: 44px;
+    }
+    .flow-step {
+      flex: 1 1 210px;
+      padding: 26px;
+      background: #fff;
+      border: 1px solid var(--color-border2);
+      border-radius: 18px;
+      font-size: 14.5px;
+      line-height: 1.8;
+      font-weight: 700;
+    }
+    .flow-step.is-final {
+      background: var(--color-text);
+      border-color: var(--color-text);
+      color: var(--color-dark-text);
+    }
+    .flow-arrow { color: var(--color-muted); font-size: 20px; }
+    .flow-arrow.is-accent { color: var(--color-accent); }
 
     /* CTA */
-    .cta-section {
+    .cta-wrap { padding: 0 clamp(20px, 4vw, 40px) clamp(72px, 10vw, 110px); scroll-margin-top: 66px; }
+    .cta-box {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: clamp(32px, 5vw, 80px);
+      background: var(--color-dark-bg);
+      border-radius: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(28px, 4vw, 60px);
+      align-items: center;
+    }
+    .cta-box__text { flex: 1 1 460px; min-width: 0; }
+    .cta-box h2 {
+      margin: 0;
+      font-size: clamp(27px, 3.4vw, 44px);
+      line-height: 1.3;
+      font-weight: 900;
+      color: var(--color-dark-text);
+      letter-spacing: -0.005em;
+    }
+    .cta-box p { margin: 20px 0 0; max-width: 56ch; font-size: 16px; line-height: 1.9; color: var(--color-dark-text-soft); }
+    .cta-box__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1 1 280px;
+    }
+    .cta-btn-primary {
+      padding: 18px 32px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--color-dark-bg);
+      font-size: 15px;
+      font-weight: 700;
       text-align: center;
-      background: var(--color-surface);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
     }
-    .cta-section h2 {
-      font-family: var(--font-heading);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      margin-bottom: 16px;
+    .cta-btn-primary:hover { color: var(--color-dark-bg); background: var(--color-dark-text-soft); }
+    .cta-btn-secondary {
+      padding: 16px 30px;
+      border-radius: 999px;
+      border: 2px solid var(--color-dark-border);
+      color: var(--color-dark-text);
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
     }
-    .cta-section p {
-      color: var(--color-muted);
-      margin-bottom: 32px;
-    }
+    .cta-btn-secondary:hover { color: var(--color-dark-text); border-color: var(--color-accent-light); }
+    .cta-box__note { margin-top: 6px; text-align: center; font-size: 13px; color: var(--color-dark-muted); }
 
+    /* FOOTER */
     footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--color-muted);
-      font-size: 0.8rem;
+      padding: 34px clamp(20px, 4vw, 40px) 54px;
+      border-top: 1px solid var(--color-border2);
     }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 12.5px;
+      color: var(--color-muted);
+    }
+    .footer-inner .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
 
-    /* #314: レスポンシブ対応（entreprenais.com トップページの 720px/820px
-       ブレークポイントに準拠） */
+    /* ============ RESPONSIVE ============ */
     @media (max-width: 720px) {
       .nav-links { display: none; }
-      .hero {
-        min-height: auto;
-        padding: 6.5rem 20px 3rem;
-      }
-      .hero-metric {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-      }
-      .hero-metric__value {
-        font-size: clamp(3.4rem, 22vw, 5.5rem);
-      }
-      .hero-glow--a, .hero-glow--b {
-        width: 260px;
-        height: 260px;
-      }
-      /* #335: モバイルは軽量版画像に切り替え（不透明度8%版）。デスクトップ用
-         img を隠し、モバイル用 img（不透明度8%で書き出し済み）を表示する */
+      .hero { padding: 96px 20px 0; }
+      .hero-flex { flex-direction: column; align-items: flex-start; }
+      .hero-col-metric { text-align: left; width: 100%; }
+      .hero-metric-inner { justify-content: flex-start; }
+      .hero-metric__note { text-align: left; }
       .hero-photo-bg--desktop { display: none; }
       .hero-photo-bg--mobile { display: block; }
-      section {
-        padding: 56px 20px;
-      }
-      .arch-wrap, .problem-grid {
-        grid-template-columns: 1fr;
-      }
-      .compare-card {
-        padding: 24px 20px;
-      }
-      .compare-row__head {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.15rem;
-      }
-      .flow {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .flow .arrow {
-        transform: rotate(90deg);
-      }
-      .hero-cta, .hero-value-tags {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .btn {
-        width: 100%;
-        text-align: center;
-      }
-      /* #322/#387: モバイルでは hero-visual-row（チャットプレビュー＋KPIカード）
-         を1カラムに変更。chat-preview は「背景のような感じ」（msg344）として
-         hero-col-text の背後に溶け込ませ、KPIカードはその下にフルワイド表示
-         する（実際の速度・データ訴求はKPIカードで維持しつつ、操作可能な
-         チャットUIはモバイルでは既存の画面右下フローティングボタンに一本化）。 */
-      .hero-grid-layout {
-        position: relative;
-      }
-      .hero-col-text {
-        position: relative;
-        z-index: 1;
-      }
-      .hero-visual-row {
-        grid-template-columns: 1fr;
-        position: relative;
-      }
-      .chat-preview {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        opacity: 0.16;
-        pointer-events: none;
-        border: none;
-        box-shadow: none;
-        overflow: hidden;
-      }
-      .chat-preview__cta,
-      .chat-preview__note {
-        display: none;
-      }
-      .kpi-card {
-        position: relative;
-        z-index: 1;
-      }
+      .section-light, .section-dark { padding: 56px 20px; }
+      .arch-flex { flex-direction: column; }
+      .arch-sidebar { position: static; max-width: none; width: 100%; }
+      .compare-card__body { height: 280px; }
+      .flow-steps { flex-direction: column; align-items: stretch; }
+      .cta-box { flex-direction: column; }
+      .hero-cta, .hero-value-tags { flex-direction: column; align-items: flex-start; }
+      .btn, .cta-btn-primary, .cta-btn-secondary { width: 100%; }
     }
     @media (max-width: 420px) {
-      .hero-metric__value {
-        font-size: clamp(2.8rem, 24vw, 4.2rem);
-      }
+      .hero-metric__value { font-size: clamp(72px, 22vw, 108px); }
     }
   </style>
 
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <div class="nav-logo">Entrepren<span>AIs</span> Cloud</div>
+      <div class="nav-logo">Entrepren<span>AIs</span><span class="dot"></span>Cloud</div>
       <ul class="nav-links">
         <li><a href="#architecture">アーキテクチャ</a></li>
+        <li><a href="#speed-comparison">速度比較</a></li>
         <li><a href="#green">グリーン</a></li>
-        <li><a href={`${BASE}/`}>entreprenais.com</a></li>
       </ul>
+      <a href={`${BASE}/`} class="nav-cta">entreprenais.com</a>
     </div>
   </nav>
 
-  <!-- HERO（#314: 「反射層」等の内部構造用語を排除し、価値訴求に特化。
-       0.5ms 大型演出は維持しつつラベルを顧客価値視点の文言に変更） -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
+      <div class="hero-glow--a"></div>
       <img class="hero-photo-bg hero-photo-bg--desktop" src={`${BASE}/images/hero-photo-bg-desktop.jpg`} alt="" loading="eager" />
       <img class="hero-photo-bg hero-photo-bg--mobile" src={`${BASE}/images/hero-photo-bg-mobile.jpg`} alt="" loading="eager" />
-      <span class="hero-grid"></span>
-      <span class="hero-glow hero-glow--a"></span>
-      <span class="hero-glow hero-glow--b"></span>
     </div>
-    <div class="hero-content">
-      <div class="hero-grid-layout">
-        <div class="hero-col-text">
-          <span class="hero-eyebrow reveal" data-reveal>GREEN AI CLOUD</span>
+    <div class="hero-inner">
+      <div class="hero-eyebrow-row reveal" data-reveal>
+        <span class="hero-eyebrow">GREEN AI CLOUD</span>
+        <span class="hero-eyebrow-rule"></span>
+        <span class="hero-live-badge"><span class="hero-live-dot"></span>太陽光と水力で稼働中</span>
+      </div>
 
-          <div class="hero-metric reveal" data-reveal data-delay="100">
-            <span class="hero-metric__value">0.5<span style="font-size: 0.4em;">ms</span></span>
-            <span class="hero-metric__label">
-              で応答する、超高速エージェント基盤<br />
-              <span class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">自社計測値・計測条件は継続整備中 ⓘ</span>
-            </span>
-          </div>
-
-          <h1 class="reveal" data-reveal data-delay="200">「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド</span>誕生。</h1>
-
-          <p class="hero-lede reveal" data-reveal data-delay="350">
-            超省電力・超高速のエージェント基盤を、自社グリーンデータセンター上で実現します。
+      <div class="hero-flex">
+        <div class="hero-col-text reveal" data-reveal data-delay="100">
+          <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド</span>誕生。</h1>
+          <p class="hero-lede">
+            超省電力・超高速のエージェント基盤を、<strong>自社グリーンデータセンター</strong>上で実現します。
           </p>
-
-          <div class="hero-value-tags reveal" data-reveal data-delay="420">
+          <div class="hero-value-tags">
             <span class="value-tag">コスト効率と応答速度を両立</span>
             <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
           </div>
-
-          <div class="hero-cta reveal" data-reveal data-delay="500">
+          <div class="hero-cta">
             <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
             <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
           </div>
         </div>
 
-        <!-- #387: factory.ai のレイアウト（テキスト→ビジュアル）に合わせ、
-             チャットプレビュー＋KPIダッシュボード風カードを2カラムでHero下部に配置。 -->
-        <div class="hero-visual-row">
-          <!-- #322: チャットプレビュー（実物の「お問合せAI」ウィジェットへの導線）。
-               数値は実際に稼働中のウィジェット側（cpu_ms/gpu_ms実測表示）が表示するため、
-               ここでは固定の数値を書かず、実際に試すよう誘導するのみに留める
-               （実測値の断定表示リスクを避けるため）。「反射層」等の内部構造用語も
-               #314の方針に従いここでは使わない。 -->
-          <div class="chat-preview reveal" data-reveal data-delay="300">
-            <div class="chat-preview__header" aria-hidden="true">
-              <span class="chat-preview__dot"></span>
-              お問合せAI ✳︎太陽光と水力で稼働
-            </div>
-            <div class="chat-preview__bubble chat-preview__bubble--user" aria-hidden="true">グリーンAIクラウドの応答速度は？</div>
-            <div class="chat-preview__bubble chat-preview__bubble--ai" aria-hidden="true">実際にチャットで試してみてください</div>
-            <div class="chat-preview__debug" aria-hidden="true">処理経路・実測msをその場で表示します</div>
-            <button type="button" class="chat-preview__cta" id="chat-preview-open">実際に質問してみる</button>
-            <div class="chat-preview__note">画面右下の「AIに聞く」からもご利用いただけます</div>
+        <div class="hero-col-metric reveal" data-reveal data-delay="200">
+          <div class="hero-metric-inner">
+            <span class="hero-metric__value">0.5</span>
           </div>
+          <div class="hero-metric__unit">ms で応答</div>
+          <div class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">
+            自社計測値・計測条件は継続整備中 ⓘ
+          </div>
+        </div>
+      </div>
 
-          <!-- #390/#391: メーター・グラフによる「科学的」演出。数値は要検証注記の
-               対象と同じ性質のため、断定値ではなくメーター上の目安として表現する。 -->
-          <div class="kpi-card reveal" data-reveal data-delay="400">
-            <div class="kpi-card__header">
-              <span>PERFORMANCE</span>
-              <span class="kpi-live">LIVE</span>
-            </div>
-            <div class="kpi-row">
-              <span class="kpi-row__label">応答速度（反射応答）</span>
-              <span class="kpi-row__value">0.5ms 台</span>
-            </div>
-            <div class="kpi-meter" role="img" aria-label="応答速度メーター">
-              <div class="kpi-meter__fill" id="kpi-speed-fill" style="--fill: 96%;"></div>
-            </div>
-            <div class="kpi-row">
-              <span class="kpi-row__label">消費電力（推定）</span>
-              <span class="kpi-row__value">超省電力</span>
-            </div>
-            <div class="kpi-meter" role="img" aria-label="省電力メーター">
-              <div class="kpi-meter__fill" id="kpi-power-fill" style="--fill: 88%;"></div>
-            </div>
-            <div class="kpi-row">
-              <span class="kpi-row__label">再エネ電力比率</span>
-              <span class="kpi-row__value">実質100%</span>
-            </div>
-            <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
-              <polyline points="0,24 15,20 30,22 45,14 60,16 75,8 90,10 105,4 120,6" />
-            </svg>
-            <div class="kpi-card__note">
-              メーター・グラフは傾向を示すイメージです。数値の対外開示条件は継続整備中（詳細は下記アーキテクチャ・グリーンセクションの注記を参照）。
-            </div>
-          </div>
+      <!-- KPIグリッド + お問合せAI導線 -->
+      <div class="hero-kpi-grid reveal" data-reveal data-delay="300">
+        <div class="hero-kpi-cell">
+          <div class="hero-kpi-cell__label">応答速度（反射応答）</div>
+          <div class="hero-kpi-cell__value is-accent">0.5<span class="unit">ms 台</span></div>
+          <div class="hero-kpi-cell__desc">エージェント脊髄反射技術による実測値</div>
+        </div>
+        <div class="hero-kpi-cell">
+          <div class="hero-kpi-cell__label">消費電力</div>
+          <div class="hero-kpi-cell__value">超省電力</div>
+          <div class="hero-kpi-cell__desc">推論を必要な場面に集中させる設計</div>
+        </div>
+        <div class="hero-kpi-cell">
+          <div class="hero-kpi-cell__label">再エネ電力比率</div>
+          <div class="hero-kpi-cell__value">実質100%</div>
+          <div class="hero-kpi-cell__desc">太陽光自家発電＋再エネ電力契約</div>
+          <button type="button" class="hero-chat-open" id="chat-preview-open">実際に質問してみる →</button>
+        </div>
+      </div>
+      <p class="hero-footnote">
+        メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値であり、すべてのリクエストがこの数値で応答することを保証するものではありません。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定です。画面右下の「AIに聞く」からも実際にお試しいただけます。
+      </p>
+    </div>
+  </section>
+
+  <!-- PROBLEM: 速さは、会話でしか伝わらない -->
+  <section id="problem" class="section-light">
+    <div class="section-inner">
+      <div class="eyebrow reveal" data-reveal>PROBLEM</div>
+      <h2 class="headline reveal" data-reveal data-delay="80">速さは、会話でしか伝わらない。<br />賢さは前提になった。</h2>
+      <p class="section-lede reveal" data-reveal data-delay="140">
+        モデルの賢さは業界全体で急速に進んでいます。その上で、エージェントが日常的に働き続ける基盤に必要なのは、応答速度・消費電力・電源構成の透明性です。私たちはこの3つを設計対象にしました。
+      </p>
+      <div class="problem-grid">
+        <div class="problem-card reveal" data-reveal>
+          <div class="problem-card__label">01</div>
+          <h3>応答速度を設計する</h3>
+          <p>定型的な応答は、LLM推論とネットワーク往復を経路から外してCPU上で返します。会話が何往復も続く用途では、この一手が体験の質をそのまま決めます。</p>
+        </div>
+        <div class="problem-card reveal" data-reveal data-delay="100">
+          <div class="problem-card__label">02</div>
+          <h3>消費電力を設計する</h3>
+          <p>推論を必要な場面に集中させ、それ以外はCPUで完結させます。使う電力そのものを小さくすることが、コストと環境負荷の両方に効きます。</p>
+        </div>
+        <div class="problem-card reveal" data-reveal data-delay="200">
+          <div class="problem-card__label">03</div>
+          <h3>電源構成を開示する</h3>
+          <p>推論は自社グリーンデータセンター内で完結するため、電力の起源を自社で説明できます。ESG/CSR要件の確認に必要な証跡整備を前提に運用しています。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section id="problem">
-    <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">PROBLEM</div>
-      <h2>「AI」と「グリーン」は、両立しないと思われてきた</h2>
-      <p>AIエージェント基盤の高消費電力・速度と環境配慮のトレードオフ・電源構成の不透明性。私たちはこの3つの課題に取り組んでいます。</p>
-    </div>
-    <div class="problem-grid">
-      <div class="problem-card reveal" data-reveal>
-        <div class="label">01 / 高消費電力</div>
-        <p>クラウドLLM経由のエージェント運用は、大規模GPUデータセンターの電力消費・ネットワーク往復レイテンシに依存し、コスト・環境負荷・応答速度のすべてで制約を抱えています。</p>
-      </div>
-      <div class="problem-card reveal" data-reveal data-delay="100">
-        <div class="label">02 / 速度とグリーンのトレードオフ</div>
-        <p>「高速な推論」と「省電力・グリーン」は両立しないという前提が業界に定着しており、この2軸を同時に訴求するプレイヤーは多くありません。</p>
-      </div>
-      <div class="problem-card reveal" data-reveal data-delay="200">
-        <div class="label">03 / 電源構成の不透明性</div>
-        <p>多くのAIサービスは自社が使う電力の起源を開示せず、企業のESG/CSR要件を満たすAI導入先の選定を難しくしています。</p>
-      </div>
-    </div>
-  </section>
+  <!-- SPEED COMPARISON -->
+  <section id="speed-comparison" class="section-dark">
+    <div class="section-inner">
+      <div class="eyebrow on-dark reveal" data-reveal>SPEED COMPARISON（実測ベンチマーク）</div>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">同じ質問を投げて、<br />実際に時間を計測しました</h2>
+      <p class="section-lede on-dark reveal" data-reveal data-delay="140">
+        左は自社エージェント基盤の反射応答。右は同一プロンプトをクラウドLLM推論（gpt-oss:20b）へ。デモは自社実測値（2026-08-05）を再現したシミュレーションで、右パネルの待ち時間は倍速なしの実時間（1応答あたり 9.5〜18.7秒）です。
+      </p>
 
-  <!-- SPEED COMPARISON（#326: 一般的なクラウドエージェントとの速度比較。
-       特定の競合他社名は使用せず、一般化した表現に限定する（景表法・不競法配慮）。
-       クラウド側の数値は業界的に広く知られたネットワークレイテンシの技術的事実に基づく
-       レンジ表現とし、特定サービスの実測値を騙る・捏造することは行わない。 -->
-  <section id="speed-comparison">
-    <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">SPEED COMPARISON（実測ベンチマーク）</div>
-      <h2>同じ質問を投げて、実際に時間を計測しました</h2>
-      <p>「グリーンAIクラウドの応答速度は？」という同一の質問を、自社エージェント脊髄反射技術と、一般的なクラウドLLM推論（オープンソースモデルをクラウド経由で実行）の双方に投げ、応答時間を実測しました。</p>
-    </div>
-    <div class="compare-card reveal" data-reveal>
-      <div class="compare-row">
-        <div class="compare-row__head">
-          <span class="compare-row__label">エージェント脊髄反射技術（自社・実測）</span>
-          <span class="compare-row__value is-ours">0.5〜1.0ms</span>
+      <div class="compare-grid reveal" data-reveal data-delay="200">
+        <div class="compare-card is-ours">
+          <div class="compare-card__head">
+            <span class="compare-card__dot"></span>
+            <span class="compare-card__title">エージェント脊髄反射技術（自社）</span>
+            <span class="compare-card__badge">CPU cache</span>
+            <span class="compare-card__ms">0.5〜1.0ms</span>
+          </div>
+          <div class="compare-card__body">
+            <div class="compare-bubble--user">グリーンAIクラウドの応答速度は？</div>
+            <div class="compare-bubble--ai">0.5ms台で応答します。LLM推論を介さないCPUキャッシュ経路です。</div>
+          </div>
+          <div class="compare-card__footer">
+            <span class="compare-card__footer-value">0.5</span>
+            <span class="compare-card__footer-unit">ms</span>
+            <span class="compare-card__footer-note">source: cache<br />5回計測・サーバー内部処理時間</span>
+          </div>
         </div>
-        <div class="compare-bar" role="img" aria-label="自社応答速度バー">
-          <div class="compare-bar__fill is-ours is-filled ours-fill"></div>
+
+        <div class="compare-card is-cloud">
+          <div class="compare-card__head">
+            <span class="compare-card__dot"></span>
+            <span class="compare-card__title">gpt-oss:20b（クラウド推論経由）</span>
+            <span class="compare-card__badge">cloud inference</span>
+            <span class="compare-card__ms">9.5〜22.9秒</span>
+          </div>
+          <div class="compare-card__body">
+            <div class="compare-bubble--user">グリーンAIクラウドの応答速度は？</div>
+            <div class="compare-bubble--ai">（推論中…オープンソースモデルgpt-oss:20bをクラウド推論基盤経由で実行しています）</div>
+          </div>
+          <div class="compare-card__footer">
+            <span class="compare-card__footer-value">9.5〜22.9</span>
+            <span class="compare-card__footer-unit">秒</span>
+            <span class="compare-card__footer-note">source: gpt-oss:20b<br />5回計測・応答完了までの総時間</span>
+          </div>
         </div>
-        <div class="compare-row__note">自社計測値（5回計測・サーバー内部処理時間）。CPUキャッシュ経路（LLM推論なし）で固定応答を返す処理時間です。</div>
       </div>
-      <div class="compare-row">
-        <div class="compare-row__head">
-          <span class="compare-row__label">gpt-oss:20b（オープンソースモデル・クラウド推論経由・実測）</span>
-          <span class="compare-row__value">9.5〜22.9秒</span>
-        </div>
-        <div class="compare-bar" role="img" aria-label="gpt-oss応答速度バー">
-          <div class="compare-bar__fill is-cloud is-filled cloud-fill"></div>
-        </div>
-        <div class="compare-row__note">同一プロンプトの実測値（5回計測・応答完了までの総時間）。オープンソースの大規模言語モデル gpt-oss をクラウド推論基盤経由で実行した際の応答時間です。</div>
+
+      <div class="compare-ratio reveal" data-reveal data-delay="260">
+        <span class="compare-ratio__badge">実測ベースで <strong>約1万倍〜5万倍</strong> の応答時間差（0.5〜1.0ms 対 9.5〜22.9秒。個々の計測値の最小・最大の組み合わせによる幅）</span>
       </div>
-      <div class="compare-ratio">
-        実測ベースで <strong>約1万倍〜5万倍</strong> の応答時間差（0.5〜1.0ms 対 9.5〜22.9秒。個々の計測値の最小・最大の組み合わせによる幅）
-      </div>
-      <div class="note">
+
+      <div class="note on-dark reveal" data-reveal data-delay="300">
         <strong>計測条件についての注記:</strong>
-        2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」を用いて計測しました。自社側は自社エージェント基盤の CPU キャッシュ応答経路（`source: cache`、LLM推論を介さず固定応答を返す処理）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でオープンソースモデル「gpt-oss:20b」をクラウド推論として実行した際の、リクエスト送信から応答完了までの総時間です。
+        2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」を用いて計測しました。自社側は自社エージェント基盤の CPU キャッシュ応答経路（source: cache、LLM推論を介さず固定応答を返す処理）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でオープンソースモデル「gpt-oss:20b」をクラウド推論として実行した際の、リクエスト送信から応答完了までの総時間です。
         <br /><br />
         <strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、OpenAI 社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回の計測はクラウド推論基盤経由で実行しており、いわゆる「クラウドLLM API経由のエージェント」の実例として計測しました。
         <br /><br />
-        <strong>比較の非対称性について:</strong> 自社側は固定応答をキャッシュから返す処理、gpt-oss側は毎回フルにテキストを生成する推論処理であり、処理内容が異なります。単純な同一条件比較ではなく、応答時間差の主因は「推論の有無」そのものです。バー表示は速度差のイメージであり、面積・長さが正確な比例関係を表すものではありません。倍率（約1万倍〜5万倍）は、両者それぞれ5回の計測値の中で最も差が小さい組み合わせ（9.5秒 ÷ 1.0ms ＝ 約9,500倍）と最も差が大きい組み合わせ（22.9秒 ÷ 0.5ms ＝ 約45,800倍）の範囲として算出しています。
+        <strong>比較の非対称性について:</strong> 自社側は固定応答をキャッシュから返す処理、gpt-oss側は毎回フルにテキストを生成する推論処理であり、処理内容が異なります。単純な同一条件比較ではなく、応答時間差の主因は「推論の有無」そのものです。倍率（約1万倍〜5万倍）は、両者それぞれ5回の計測値の中で最も差が小さい組み合わせ（9.5秒 ÷ 1.0ms ＝ 約9,500倍）と最も差が大きい組み合わせ（22.9秒 ÷ 0.5ms ＝ 約45,800倍）の範囲として算出しています。
         <br /><br />
         <strong>今後の拡張予定:</strong> 現時点では、より一般的な商用クラウドAPI（Claude・GPT本家等）への直接アクセス手段が未整備のため、今回はオープンソースモデルのクラウド推論実測のみを掲載しています。今後、商用クラウドAPI経由の実測データも追加予定です。
       </div>
     </div>
   </section>
 
-  <!-- ARCHITECTURE（#314: 「反射層」を「エージェント脊髄反射技術」に置き換え。
-       大脳側も呼称のバランスを取り「大脳AI」に統一） -->
-  <section id="architecture">
-    <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">ARCHITECTURE</div>
-      <h2>大脳AI × エージェント脊髄反射技術</h2>
-      <p>人間の神経系になぞらえた2層構成。じっくり考える処理と、脊髄反射のように瞬時に返す処理を使い分けます。両者をつなぐのが、設計図を実行体へ変換するコンパイル技術です。</p>
-    </div>
-    <div class="arch-wrap">
-      <div class="arch-card reveal" data-reveal>
-        <h3>大脳AI — じっくり思考</h3>
-        <p>
-          複雑な判断・生成が必要な処理は、自社グリーンデータセンター内で稼働するローカルLLMが担当します。
-          クラウドLLM（他社データセンター経由）を介さないため、自社の再エネ電力起源で完結します。
+  <!-- ARCHITECTURE: 考える脳と、反射する神経は、 -->
+  <section id="architecture" class="section-dark">
+    <div class="section-inner arch-flex">
+      <div class="arch-col-main">
+        <div class="eyebrow on-dark reveal" data-reveal>ARCHITECTURE</div>
+        <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">考える脳と、反射する神経は、<br />一本の会話でつながっている。</h2>
+        <div class="arch-sub reveal" data-reveal data-delay="120">大脳AI × コンパイル技術 × エージェント脊髄反射技術</div>
+        <p class="section-lede on-dark reveal" data-reveal data-delay="160">
+          人間の神経系になぞらえた2層構成です。肝は「分けたこと」ではなく、分けたまま一本の会話としてつながっていること。どの応答がCPUの反射で、どこからGPUの思考に切り替わったのか、話している側は意識しません。
         </p>
-      </div>
-      <div class="arch-card reveal" data-reveal data-delay="100">
-        <h3>コンパイル技術 — 設計図を実行体へ</h3>
-        <p>
-          大脳AIが一度じっくり考えて書いた「設計図」を、CPUだけで動く軽量な実行プログラムに変換する自社独自技術です。
-          変換後は、同じ処理をLLM推論を介さず何度でも高速・低コストに繰り返し実行できます。
-          機械学習における「学習は高性能な計算資源で1回、推論は省エネな環境で日常的に」という考え方と同じ発想に基づいています。
-        </p>
-      </div>
-      <div class="arch-card reveal" data-reveal data-delay="150">
-        <h3>エージェント脊髄反射技術</h3>
-        <p>
-          定型的な応答は、人間の脊髄反射（脳を介さず完結する高速反応）に相当する処理を、
-          LLM推論を介さずCPU上で行う自社開発技術が担当します。超省電力かつ超高速な応答を実現します。
-          この「LLM推論を介さない」実行体こそ、コンパイル技術が生成する実行プログラムです。
-        </p>
-        <div class="metric">
-          <strong>0.5ms</strong>
-          エージェント脊髄反射技術の応答実行時間（自社計測値）
+
+        <div class="arch-card-list">
+          <div class="arch-card reveal" data-reveal data-delay="200">
+            <div class="arch-card__icon">脳</div>
+            <div>
+              <h3>大脳AI — じっくり思考</h3>
+              <p>複雑な判断・生成は、自社グリーンデータセンター内で稼働するローカルLLMが担当。クラウドLLM（他社データセンター経由）を介さないため、自社の再エネ電力起源で完結します。</p>
+            </div>
+          </div>
+
+          <div class="arch-connector">
+            <span class="arch-connector-line"></span>
+            <span class="arch-connector-label">COMPILE</span>
+            <span class="arch-connector-line"></span>
+          </div>
+
+          <div class="arch-card reveal" data-reveal data-delay="250">
+            <div class="arch-card__icon">⚙</div>
+            <div>
+              <h3>コンパイル技術 — 設計図を実行体へ</h3>
+              <p>大脳AIが一度じっくり考えて書いた「設計図」を、CPUだけで動く軽量な実行プログラムと、推論が必要な部分に分離する自社独自技術。現在は人と並走しながら進める半自動の工程で、運用しながらCPU実行の比率を段階的に引き上げ、低コストに繰り返せる範囲を広げています。</p>
+            </div>
+          </div>
+
+          <div class="arch-connector">
+            <span class="arch-connector-line"></span>
+            <span class="arch-connector-label">EXECUTE</span>
+            <span class="arch-connector-line"></span>
+          </div>
+
+          <div class="arch-card is-highlight reveal" data-reveal data-delay="300">
+            <div class="arch-card__icon">⚡</div>
+            <div>
+              <h3>エージェント脊髄反射技術</h3>
+              <p>定型的な応答は、脳を介さず完結する脊髄反射に相当する処理を、LLM推論なしでCPU上で実行。この実行体こそ、コンパイル技術が生成する実行プログラムです。反射で足りない問いは、そのまま大脳AIへ引き継がれます——会話は途切れません。</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="note reveal" data-reveal>
-      <strong>数値についての注記:</strong>
-      「0.5ms」は自社エージェント基盤におけるエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値です。
-      計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、
-      現時点では自社内での実測値としてご案内しています。すべてのリクエストがこの数値で応答することを保証するものではありません。
-      「コンパイル技術」は、設計図から実行プログラムへの変換の一部を自社独自の仕組みで行う技術を指し、詳細な変換方式は非公開です。
-    </div>
-  </section>
 
-  <!-- GREEN -->
-  <section id="green">
-    <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">GREEN INFRASTRUCTURE</div>
-      <h2>再エネのみで完結させるために、超省電力を自社開発した</h2>
-      <p>太陽光自家発電＋再エネ電力契約という有限な電力の中で、大脳AI×エージェント脊髄反射技術のハイブリッド構成が生まれました。</p>
-    </div>
-    <div class="green-box reveal" data-reveal>
-      <ul class="green-list">
-        <li>自社開発グリーンデータセンターは、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力で運用しています。</li>
-        <li>外部クラウドLLMへの通信往復・他社データセンターの電源構成への依存を排除し、電力起源を自社で完結させています。</li>
-        <li>再エネ電力には出力・供給量の制約があるため、消費電力を極限まで下げる必要があり、その結果として大脳AI×エージェント脊髄反射技術のハイブリッドアーキテクチャ（超省電力技術）を自社開発しました。</li>
-        <li>電源構成を対外開示し、証跡整備を前提とした透明性のある「グリーン」訴求を行っています。</li>
-      </ul>
-      <div class="note">
-        <strong>「実質再エネ100%」についての注記:</strong>
-        自社太陽光発電設備の自家発電および再エネ電力契約に基づく表現です。「実質」の定義・開示粒度については
-        対外公表の透明性向上に向けて継続的に整備を進めています。個別契約の詳細な証跡開示については、
-        お問い合わせいただければ可能な範囲でご説明します。
+      <div class="arch-sidebar reveal" data-reveal data-delay="200">
+        <div class="arch-sidebar__label">REFLEX RESPONSE TIME</div>
+        <div class="arch-sidebar__metric">
+          <span class="arch-sidebar__value">0.5</span>
+          <span class="arch-sidebar__unit">ms</span>
+        </div>
+        <p class="arch-sidebar__desc">エージェント脊髄反射技術の応答実行時間（自社計測値）。反射で処理しきれない問いは大脳AIへシームレスに引き継がれます。</p>
+        <div class="arch-sidebar__list">
+          <div class="arch-sidebar__row"><span>大脳AI</span><span class="v">ローカルLLM</span></div>
+          <div class="arch-sidebar__row"><span>コンパイル技術</span><span class="v">半自動</span></div>
+          <div class="arch-sidebar__row"><span>脊髄反射</span><span class="v">CPUのみ</span></div>
+          <div class="arch-sidebar__row"><span>電力起源</span><span class="v is-green">自社再エネ</span></div>
+        </div>
+        <div class="arch-sidebar__cta">
+          <a href="#green" class="btn btn-secondary" style="display:block;border-color:var(--color-dark-border);color:var(--color-dark-text)">グリーン電力の裏付けを見る</a>
+        </div>
+        <p class="arch-sidebar__cta-note">「0.5ms」は自社エージェント基盤における低遅延応答経路の実行時間の自社計測値です。計測条件は今後対外開示の透明性を高めていく予定で、現時点では自社内実測値としてご案内しています。「コンパイル技術」は設計図から実行プログラムへの変換の一部を自社独自の仕組みで行う技術を指し、詳細な変換方式は非公開です。</p>
       </div>
     </div>
   </section>
 
-  <!-- FLOW -->
-  <section id="flow">
-    <div class="section-head reveal" data-reveal>
-      <div class="section-eyebrow">WHY GREEN AI CLOUD</div>
-      <h2>開発の出発点は、電力の制約でした</h2>
-    </div>
-    <div class="flow reveal" data-reveal>
-      <div class="step">再エネ電力の出力・供給制約</div>
-      <span class="arrow">→</span>
-      <div class="step">消費電力を極限まで削減する必要</div>
-      <span class="arrow">→</span>
-      <div class="step">超省電力技術を自社開発（大脳AI×エージェント脊髄反射技術）</div>
-      <span class="arrow">→</span>
-      <div class="step">超省電力 × 超高速 × グリーンが両立</div>
+  <!-- GREEN: 電力の上限が、 -->
+  <section id="green" class="section-light">
+    <div class="section-inner">
+      <div class="eyebrow reveal" data-reveal>GREEN INFRASTRUCTURE</div>
+      <h2 class="headline reveal" data-reveal data-delay="80">電力の上限が、<br /><span class="accent">両立を生んだ。</span></h2>
+      <p class="section-lede reveal" data-reveal data-delay="140">
+        太陽光自家発電＋再エネ電力契約という有限な電力の中から、大脳AI×エージェント脊髄反射技術のハイブリッド構成が生まれました。
+      </p>
+
+      <div class="green-grid">
+        <div class="green-card reveal" data-reveal>
+          <div class="green-card__icon">☀</div>
+          <h3>自社グリーンデータセンター</h3>
+          <p>太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力で運用しています。</p>
+        </div>
+        <div class="green-card reveal" data-reveal data-delay="100">
+          <div class="green-card__icon">⇥</div>
+          <h3>外部依存を経路から外す</h3>
+          <p>外部クラウドLLMへの通信往復と、他社データセンターの電源構成への依存を排除。電力起源を自社で完結させています。</p>
+        </div>
+        <div class="green-card reveal" data-reveal data-delay="150">
+          <div class="green-card__icon">⚡</div>
+          <h3>制約が生んだ超省電力技術</h3>
+          <p>再エネ電力には出力・供給量の制約がある。消費電力を極限まで下げる必要から、ハイブリッドアーキテクチャを自社開発しました。</p>
+        </div>
+        <div class="green-card reveal" data-reveal data-delay="200">
+          <div class="green-card__icon">✓</div>
+          <h3>証跡を前提にした透明性</h3>
+          <p>電源構成を対外開示し、証跡整備を前提とした透明性のある「グリーン」訴求を行っています。</p>
+        </div>
+      </div>
+
+      <div class="flow-box reveal" data-reveal data-delay="240">
+        <div class="eyebrow">WHY GREEN AI CLOUD</div>
+        <h3>制約が、両立を生んだ</h3>
+        <div class="flow-steps">
+          <div class="flow-step">再エネ電力の出力・供給制約</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">消費電力を極限まで削減する必要</div>
+          <span class="flow-arrow is-accent">→</span>
+          <div class="flow-step">超省電力技術を自社開発<br />（大脳AI×エージェント脊髄反射技術）</div>
+          <span class="flow-arrow is-accent">→</span>
+          <div class="flow-step is-final">超省電力 × 超高速 × グリーンが両立</div>
+        </div>
+      </div>
+
+      <div class="note reveal" data-reveal data-delay="280">
+        <strong>「実質再エネ100%」についての注記:</strong>
+        自社太陽光発電設備の自家発電および再エネ電力契約に基づく表現です。「実質」の定義・開示粒度については対外公表の透明性向上に向けて継続的に整備を進めています。個別契約の詳細な証跡開示については、お問い合わせいただければ可能な範囲でご説明します。
+      </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section reveal" data-reveal>
-    <h2>コスト効率・速度・グリーンの両立を、ご相談ください</h2>
-    <p>IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究のご相談を承っています。</p>
-    <a href={`${BASE}/`} class="btn btn-primary">entreprenais.com へ戻る</a>
-  </section>
+  <div class="cta-wrap">
+    <div class="cta-box reveal" data-reveal>
+      <div class="cta-box__text">
+        <h2>速さと、電力の説明責任を、<br />同じ基盤で。</h2>
+        <p>IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究のご相談を承っています。</p>
+      </div>
+      <div class="cta-box__actions">
+        <button type="button" class="cta-btn-primary" id="chat-preview-open-cta">今すぐAIに聞いてみる</button>
+        <a href={`${BASE}/`} class="cta-btn-secondary">entreprenais.com へ戻る</a>
+        <div class="cta-box__note">画面右下の「AIに聞く」からもご利用いただけます</div>
+      </div>
+    </div>
+  </div>
 
   <footer>
-    &copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud
+    <div class="footer-inner">
+      <span>&copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud</span>
+      <span class="mono">GREEN AI CLOUD / v341</span>
+    </div>
   </footer>
 
 </BaseLayout>

@@ -25,7 +25,7 @@ const {
     <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
     <!-- #320: BaseLayout.astro の <style> は Astro の scoped CSS 機構により
          コンポーネント固有の data-astro-cid-* が自動付加される。<slot /> 経由で
          レンダリングされる index.astro 側の要素は別の cid を持つため、scoped の
@@ -38,32 +38,53 @@ const {
          再発防止のため、BaseLayout.astro のスタイルは <style is:global> に
          一本化し、cid依存を構造的に排除する（部分的な is:global 化は今回のような
          見落としを再度生みうるため、レイアウト全体を global に統一する）。 -->
+    <!-- #341: FC承認デザインモックアップ（EntreprenAIs_Green_AI_Cloud）の
+         デザイントークンに全面移行。配色パレット・フォント（Zen Kaku Gothic New
+         + JetBrains Mono）・コンテナ幅(1280px)をモックアップの抽出値に統一する。
+         既存の実装コメント（#312/#316等）は過去の意思決定履歴として残しつつ、
+         値のみモックアップ準拠に更新する。 -->
     <style is:global>
-      /* #312: entreprenais.com トップページ（root index.html / style.css）の
-         ブランドトーンに準拠。オフホワイト基調＋インディゴアクセントの
-         トップページ配色パターンを踏襲しつつ、「グリーンAIクラウド」の
-         商品識別性のためグリーンをセカンドアクセントとして残す。 */
       :root {
+        /* Light section */
         --color-bg:        #f7f6f1;
         --color-surface:   #ffffff;
         --color-card:      #f7f6f1;
-        --color-border:    #d5d2c6;
-        --color-accent:    #2a2d7c;
-        --color-accent2:   #4a4ee0;
-        --color-green:     #1f9d55;
-        --color-green2:    #16a34a;
-        --color-gold:      #0f3d24;
+        --color-border:    #d2d2d6;
+        --color-border2:   #e8e8e8;
         --color-text:      #0d0f12;
-        --color-text-soft: #1a1d22;
-        --color-muted:     #6b6b6b;
+        --color-text-soft: #47484b;
+        --color-muted:     #8a8c92;
         --color-hero-from: #f7f6f1;
         --color-hero-to:   #f7f6f1;
-        --font-heading:    'Noto Sans JP', 'Inter', system-ui, sans-serif;
-        --font-body:       'Noto Sans JP', 'Inter', system-ui, sans-serif;
-        --radius:          10px;
-        --max-w:           1100px;
-        /* #316: entreprenais.com トップページ（root style.css L24）の
-           --ease と完全一致させ、サイト全体でアニメーションの「感触」を統一 */
+        /* Accent purple */
+        --color-accent:    #4a4ae2;
+        --color-accent2:   #2b2b7e;
+        --color-accent-light: #7b7bf0;
+        --color-accent-tint:  #e6e5f2;
+        /* Green / Orange */
+        --color-green:     #47c775;
+        --color-green2:    #34a75f;
+        --color-orange:    #ed9b1f;
+        /* Dark section */
+        --color-dark-bg:      #0d0f12;
+        --color-dark-surface: #15181d;
+        --color-dark-card:    #1a1a2e;
+        --color-dark-navy:    #16213e;
+        --color-dark-slate:   #1e232a;
+        --color-dark-border:  #2a313a;
+        --color-dark-border2: #28324c;
+        --color-dark-border3: #3a434e;
+        --color-dark-navy-border: #0f3460;
+        --color-dark-text:      #f4f3ee;
+        --color-dark-text-soft: #c4c3c0;
+        --color-dark-muted:     #8e8e8c;
+        --color-dark-muted2:    #a8aab0;
+
+        --font-heading:    'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+        --font-body:       'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+        --font-mono:       'JetBrains Mono', monospace;
+        --radius:          18px;
+        --max-w:           1280px;
         --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
       }
 
@@ -278,21 +299,24 @@ const {
       // 実物ウィジェットのフローティングボタン（widget.js が生成する
       // .__eai-widget-btn）をクリックして開く。トップページ main.js の
       // openWidgetBtn と同一パターン。
-      var previewBtn = document.getElementById('chat-preview-open');
-      if (previewBtn) {
-        previewBtn.addEventListener('click', function () {
-          var widgetBtn = document.querySelector('.__eai-widget-btn');
-          if (widgetBtn) {
-            widgetBtn.click();
-          } else {
-            // widget.js がまだロード中の場合は少し待って再試行
-            setTimeout(function () {
-              var retryBtn = document.querySelector('.__eai-widget-btn');
-              if (retryBtn) retryBtn.click();
-            }, 800);
-          }
-        });
+      // #341: CTA セクションにも同種の起動ボタン（chat-preview-open-cta）を
+      // 追加したため、共通関数化して複数ボタンに同一ロジックを適用する。
+      function openContactWidget() {
+        var widgetBtn = document.querySelector('.__eai-widget-btn');
+        if (widgetBtn) {
+          widgetBtn.click();
+        } else {
+          // widget.js がまだロード中の場合は少し待って再試行
+          setTimeout(function () {
+            var retryBtn = document.querySelector('.__eai-widget-btn');
+            if (retryBtn) retryBtn.click();
+          }, 800);
+        }
       }
+      ['chat-preview-open', 'chat-preview-open-cta'].forEach(function (id) {
+        var btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', openContactWidget);
+      });
     })();
     </script>
   </body>
