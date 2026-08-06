@@ -177,19 +177,24 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       gap: clamp(28px, 5vw, 64px);
       align-items: center;
     }
-    .hero-col-text { flex: 1 1 440px; min-width: 0; }
+    /* #352: .hero-col-phone 側が max-width:300px で頭打ちになる一方、旧実装は
+       両カラムとも flex-grow:1（均等配分）だったため、コンテナの余剰スペースが
+       頭打ち後も無駄に .hero-col-phone 側へ配分され続け、.hero-col-text の実効幅が
+       不足して見出し2行目「グリーンAIクラウド、始動」がデスクトップ幅（1440/1920px）
+       でも折り返される不具合があった。flex-grow を非対称にし、余剰スペースを
+       テキスト側に優先配分することで解消する。 */
+    .hero-col-text { flex: 3 1 480px; min-width: 0; }
     .hero h1 {
       margin: 0;
       font-family: var(--font-heading);
-      font-size: clamp(34px, 5.2vw, 76px);
+      font-size: clamp(34px, 4.6vw, 68px);
       line-height: 1.14;
       font-weight: 900;
       letter-spacing: -0.015em;
       text-wrap: balance;
     }
-    /* #349: 各行（「超高速、超省電力」/ グリーンAIクラウド、始動）は
-       display:block で明示的に分離しているため単独では折り返さない想定だが、
-       せまい列幅（.hero-col-text: flex: 1 1 440px）でも安全なよう
+    /* #349/#352: 各行（「超高速、超省電力」/ グリーンAIクラウド、始動）は
+       display:block で明示的に分離しているため単独では折り返さない想定。
        text-wrap: balance を維持しつつ nowrap は使わない（縦幅の狭い実機での
        はみ出しを避けるため、ブラウザ側の自動折り返しは許容する）。 */
     .hero h1 .accent { color: var(--color-accent); display: block; }
@@ -238,7 +243,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        （widget.js は body 直下に fixed floating button を生成する設計のため、
        フレーム内に本体を iframe 化することはできない）。 */
     .hero-col-phone {
-      flex: 1 1 320px;
+      flex: 1 1 300px;
+      max-width: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
