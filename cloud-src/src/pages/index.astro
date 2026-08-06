@@ -6,9 +6,14 @@
 //
 // #341: FC承認デザインモックアップ（EntreprenAIs_Green_AI_Cloud）への全面リライト。
 // ビジュアルデザイン（配色・タイポグラフィ・レイアウト・余白）はモックアップに完全準拠。
-// 機能実装（お問合せAIチャットウィジェット埋め込み・実測ベンチマーク比較ロジック・
-// ヒーロー背景写真・reveal/KPIメーターアニメーション）は BaseLayout.astro 側のスクリプトを
-// そのまま流用し、クラス名の対応関係のみ維持する。
+// #345: FC指摘「文言をモックに合わせて」「LIVE DEMOのアニメーションが消えている」を受け、
+// モックアップ原文（eai/tmp/1785981249-EntreprenAIs_Green_AI_Cloud.html、Bundled Page形式・
+// JSON文字列エスケープされたHTML）をPythonで正確にデコードして一字一句のコピーを転記し、
+// LIVE DEMOセクションをモックアップの `Component`（DCLogicベースの独自コンポーネント）が
+// 実装していた自動再生ロジック（SCRIPT配列10問をタイプライター演出でサイクルする対話型
+// デモ）をVanilla JSで再現した。
+// 機能実装（お問合せAIチャットウィジェット埋め込み・ヒーロー背景写真・reveal/KPIメーター
+// アニメーション）は BaseLayout.astro 側のスクリプトをそのまま流用する。
 import BaseLayout from '../layouts/BaseLayout.astro';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -35,22 +40,29 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       align-items: center;
       gap: clamp(12px, 2vw, 36px);
     }
+    /* #345: モックアップ原文のロゴ表記「T ・ TDRI ｜ EntreprenAIs Cloud」に合わせる */
     .nav-logo {
       display: flex;
       align-items: baseline;
       gap: 10px;
-      font-family: var(--font-heading);
-      font-weight: 900;
-      font-size: 22px;
-      letter-spacing: -0.01em;
-      color: var(--color-text);
     }
-    .nav-logo span { color: var(--color-accent); }
-    .nav-logo .dot {
+    .nav-logo__t { font-weight: 900; font-size: 22px; letter-spacing: -0.01em; color: var(--color-text); }
+    .nav-logo__dot {
       width: 5px; height: 5px; border-radius: 999px;
       background: var(--color-accent);
       display: inline-block;
+      margin-left: -8px;
     }
+    .nav-logo__tdri {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+    .nav-logo__sep { width: 1px; height: 14px; background: var(--color-border); display: inline-block; margin: 0 4px; }
+    .nav-logo__product { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; color: var(--color-text-soft); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -154,9 +166,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       animation: eaiPulse 2.4s ease-in-out infinite;
     }
     @keyframes eaiPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.35); }
     }
+    @keyframes eaiSpin { to { transform: rotate(360deg); } }
+    @keyframes eaiCaret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
     .hero-flex {
       display: flex;
       flex-wrap: wrap;
@@ -243,11 +257,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-weight: 900;
       letter-spacing: -0.055em;
       color: var(--color-accent);
-      animation: heroMetricPulse 2.6s ease-in-out infinite;
-    }
-    @keyframes heroMetricPulse {
-      0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(74, 74, 226, 0); }
-      50%      { opacity: 0.88; text-shadow: 0 0 32px rgba(74, 74, 226, 0.30); }
     }
     .hero-metric__unit {
       font-size: clamp(28px, 4vw, 56px);
@@ -266,7 +275,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       letter-spacing: 0.03em;
       color: var(--color-muted);
       text-align: right;
-      cursor: help;
     }
 
     /* KPIグリッド（3カラム） */
@@ -304,22 +312,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 13px;
       color: var(--color-text-soft);
     }
-    .hero-chat-open {
-      margin: 14px 0 0;
+    /* details/summary（モックアップのアコーディオン注記表示を踏襲） */
+    details.hero-details { margin: 14px 0 0; }
+    details.hero-details summary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-size: 12px;
       color: var(--color-muted);
-      background: none;
-      border: none;
       cursor: pointer;
-      font-family: inherit;
-      padding: 0;
     }
-    .hero-chat-open:hover { color: var(--color-accent2); }
-
-    .hero-footnote {
+    details.hero-details summary:hover { color: var(--color-text); }
+    details.hero-details p {
       margin: 12px 0 0;
       max-width: 88ch;
       font-size: 12.5px;
@@ -353,7 +357,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-weight: 900;
       letter-spacing: -0.005em;
     }
-    h2.headline.narrow { max-width: 30ch; }
+    h2.headline.narrow { max-width: 26ch; }
     h2.headline .accent { color: var(--color-accent); }
     .section-lede {
       margin: 20px 0 0;
@@ -375,6 +379,28 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .note.on-dark { border-top-color: var(--color-dark-border); color: var(--color-dark-muted); }
     .note strong { color: var(--color-text-soft); }
     .note.on-dark strong { color: var(--color-dark-text-soft); }
+    details.note-details { margin-top: 22px; }
+    details.note-details.on-dark { padding-top: 22px; border-top: 1px solid var(--color-dark-border); margin-top: 18px; }
+    details.note-details summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--color-muted);
+      cursor: pointer;
+    }
+    details.note-details.on-dark summary { font-size: 13px; font-weight: 700; color: var(--color-dark-text-soft); }
+    details.note-details summary:hover { color: var(--color-text); }
+    details.note-details.on-dark summary:hover { color: var(--color-dark-text); }
+    details.note-details .note-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 26px;
+      margin-top: 22px;
+    }
+    details.note-details .note-grid p { margin: 0; font-size: 12.5px; line-height: 1.9; color: var(--color-dark-muted); }
+    details.note-details .note-grid p strong { color: var(--color-dark-text-soft); }
+    details.note-details > p { margin: 12px 0 0; max-width: 88ch; font-size: 12.5px; line-height: 1.9; color: var(--color-muted); }
 
     /* PROBLEM（3カード） */
     .problem-grid {
@@ -408,23 +434,24 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       color: var(--color-text-soft);
     }
 
-    /* SPEED COMPARISON（ダーク・チャットUIカード2枚） */
-    .compare-grid {
+    /* LIVE DEMO（ダーク・チャットUIカード2枚 + 自動再生アニメーション） */
+    .demo-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .demo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
       gap: 24px;
       margin-top: 44px;
     }
-    .compare-card {
+    .demo-card {
       border: 1px solid var(--color-dark-border);
       border-radius: 22px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    .compare-card.is-ours { background: var(--color-dark-navy); }
-    .compare-card.is-cloud { background: var(--color-dark-surface); }
-    .compare-card__head {
+    .demo-card.is-ours { background: var(--color-dark-navy); }
+    .demo-card.is-cloud { background: var(--color-dark-surface); }
+    .demo-card__head {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -432,40 +459,41 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       border-bottom: 1px solid var(--color-dark-border2);
       background: var(--color-dark-card);
     }
-    .compare-card.is-cloud .compare-card__head {
+    .demo-card.is-cloud .demo-card__head {
       border-bottom-color: var(--color-dark-border);
       background: var(--color-dark-slate);
     }
-    .compare-card__dot { width: 8px; height: 8px; border-radius: 999px; }
-    .compare-card.is-ours .compare-card__dot { background: var(--color-green); }
-    .compare-card.is-cloud .compare-card__dot { background: var(--color-orange); }
-    .compare-card__title { font-size: 13px; font-weight: 700; color: var(--color-dark-text); }
-    .compare-card__badge {
+    .demo-card__dot { width: 8px; height: 8px; border-radius: 999px; }
+    .demo-card.is-ours .demo-card__dot { background: var(--color-green); }
+    .demo-card.is-cloud .demo-card__dot { background: var(--color-orange); }
+    .demo-card__title { font-size: 13px; font-weight: 700; color: var(--color-dark-text); }
+    .demo-card__badge {
       padding: 3px 9px;
       border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 9.5px;
       letter-spacing: 0.06em;
     }
-    .compare-card.is-ours .compare-card__badge { border: 1px solid var(--color-green); color: var(--color-green); }
-    .compare-card.is-cloud .compare-card__badge { border: 1px solid var(--color-dark-border3); color: var(--color-dark-muted2); }
-    .compare-card__ms {
+    .demo-card.is-ours .demo-card__badge { border: 1px solid var(--color-green); color: var(--color-green); }
+    .demo-card.is-cloud .demo-card__badge { border: 1px solid var(--color-dark-border3); color: var(--color-dark-muted2); }
+    .demo-card__turnlabel {
       margin-left: auto;
       font-family: var(--font-mono);
       font-size: 10.5px;
     }
-    .compare-card.is-ours .compare-card__ms { color: var(--color-green); }
-    .compare-card.is-cloud .compare-card__ms { color: var(--color-orange); }
-    .compare-card__body {
+    .demo-card.is-ours .demo-card__turnlabel { color: var(--color-green); }
+    .demo-card.is-cloud .demo-card__turnlabel { color: var(--color-orange); }
+    .demo-card__body {
       flex: none;
-      height: clamp(260px, 38vh, 340px);
+      height: clamp(300px, 42vh, 392px);
       overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
-    .compare-bubble--user {
+    .demo-bubble--user {
       align-self: flex-end;
       max-width: 82%;
       padding: 13px 18px;
@@ -474,18 +502,57 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 14.5px;
       line-height: 1.7;
     }
-    .compare-card.is-ours .compare-bubble--user { background: var(--color-dark-border2); }
-    .compare-card.is-cloud .compare-bubble--user { background: var(--color-dark-border); }
-    .compare-bubble--ai {
+    .demo-card.is-ours .demo-bubble--user { background: var(--color-dark-border2); }
+    .demo-card.is-cloud .demo-bubble--user { background: var(--color-dark-border); }
+    .demo-bubble-wrap { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .demo-bubble--ai {
       max-width: 90%;
       padding: 15px 19px;
       border-radius: 16px 16px 16px 4px;
       font-size: 14.5px;
       line-height: 1.8;
     }
-    .compare-card.is-ours .compare-bubble--ai { background: var(--color-dark-navy-border); color: var(--color-dark-text); }
-    .compare-card.is-cloud .compare-bubble--ai { background: var(--color-dark-slate); color: var(--color-dark-text-soft); }
-    .compare-card__footer {
+    .demo-card.is-ours .demo-bubble--ai { background: var(--color-dark-navy-border); color: var(--color-dark-text); }
+    .demo-card.is-cloud .demo-bubble--ai { background: var(--color-dark-slate); color: var(--color-dark-text-soft); }
+    .demo-caret {
+      display: inline-block;
+      width: 8px; height: 16px;
+      margin-left: 2px;
+      background: var(--color-accent-light);
+      vertical-align: -3px;
+      animation: eaiCaret 900ms step-end infinite;
+    }
+    .demo-bubble__meta { font-family: var(--font-mono); font-size: 10.5px; padding-left: 4px; }
+    .demo-card.is-ours .demo-bubble__meta { color: var(--color-green); }
+    .demo-card.is-cloud .demo-bubble__meta { color: var(--color-orange); }
+    .demo-waiting {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 19px;
+      border-radius: 16px 16px 16px 4px;
+      background: var(--color-dark-slate);
+      max-width: 74%;
+    }
+    .demo-spinner {
+      width: 15px; height: 15px;
+      border: 2px solid var(--color-dark-border3);
+      border-top-color: var(--color-orange);
+      border-radius: 999px;
+      animation: eaiSpin 700ms linear infinite;
+      display: inline-block;
+      flex: none;
+    }
+    .demo-waiting span.txt { font-family: var(--font-mono); font-size: 12px; color: var(--color-dark-muted2); }
+    .demo-idle {
+      margin: auto;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 2;
+      color: var(--color-muted);
+    }
+    .demo-card__footer {
       padding: 20px 24px;
       border-top: 1px solid var(--color-dark-border2);
       background: var(--color-dark-card);
@@ -493,40 +560,26 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       align-items: baseline;
       gap: 12px;
     }
-    .compare-card.is-cloud .compare-card__footer {
+    .demo-card.is-cloud .demo-card__footer {
       border-top-color: var(--color-dark-border);
       background: var(--color-dark-slate);
     }
-    .compare-card__footer-value {
+    .demo-card__footer-value {
       font-size: clamp(38px, 4vw, 52px);
       font-weight: 900;
       line-height: 1;
       letter-spacing: -0.03em;
     }
-    .compare-card.is-ours .compare-card__footer-value { color: var(--color-accent-light); }
-    .compare-card.is-cloud .compare-card__footer-value { color: var(--color-dark-muted2); }
-    .compare-card__footer-unit { font-size: 18px; font-weight: 900; color: var(--color-dark-text); }
-    .compare-card__footer-note {
+    .demo-card.is-ours .demo-card__footer-value { color: var(--color-accent-light); }
+    .demo-card.is-cloud .demo-card__footer-value { color: var(--color-dark-muted2); }
+    .demo-card__footer-unit { font-size: 18px; font-weight: 900; color: var(--color-dark-text); }
+    .demo-card__footer-note {
       margin-left: auto;
       font-family: var(--font-mono);
       font-size: 10.5px;
       color: var(--color-dark-muted);
       text-align: right;
     }
-    .compare-ratio {
-      margin-top: 18px;
-      padding-top: 22px;
-      border-top: 1px solid var(--color-dark-border);
-    }
-    .compare-ratio__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--color-dark-text-soft);
-    }
-    .compare-ratio__badge strong { color: var(--color-green); font-family: var(--font-mono); }
 
     /* ARCHITECTURE（ダーク・3要素 + sticky KPIサイドバー） */
     .arch-flex {
@@ -631,10 +684,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .arch-sidebar__row { display: flex; justify-content: space-between; }
     .arch-sidebar__row .v { color: var(--color-dark-text); }
     .arch-sidebar__row .v.is-green { color: var(--color-green); }
-    .arch-sidebar__cta { margin-top: 24px; }
-    .arch-sidebar__cta-note { font-size: 12px; color: var(--color-dark-muted); }
+    details.arch-details { margin-top: 24px; }
+    details.arch-details summary { font-size: 12px; color: var(--color-dark-muted); cursor: pointer; }
+    details.arch-details summary:hover { color: var(--color-dark-text); }
+    details.arch-details p { margin: 12px 0 0; font-size: 12px; line-height: 1.85; color: var(--color-dark-muted); }
 
-    /* GREEN（3カード） */
+    /* GREEN（4カード） */
     .green-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
@@ -775,7 +830,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
          nav-cta のpadding/font-sizeを絞り、幅375-390px内に収める。 */
       .nav-links { display: none; }
       .nav-inner { padding: 0 16px; gap: 8px; }
-      .nav-logo { font-size: 17px; gap: 6px; }
+      .nav-logo__t { font-size: 17px; }
+      .nav-logo__product { display: none; }
       .nav-cta { margin-left: auto; padding: 9px 14px; font-size: 11.5px; white-space: nowrap; }
       .hero { padding: 96px 20px 0; }
       .hero-flex { flex-direction: column; align-items: flex-start; }
@@ -787,7 +843,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .section-light, .section-dark { padding: 56px 20px; }
       .arch-flex { flex-direction: column; }
       .arch-sidebar { position: static; max-width: none; width: 100%; }
-      .compare-card__body { height: 280px; }
+      .demo-card__body { height: 280px; }
       .flow-steps { flex-direction: column; align-items: stretch; }
       .cta-box { flex-direction: column; }
       .hero-cta, .hero-value-tags { flex-direction: column; align-items: flex-start; }
@@ -801,13 +857,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <div class="nav-logo">Entrepren<span>AIs</span><span class="dot"></span>Cloud</div>
+      <div class="nav-logo">
+        <span class="nav-logo__t">T</span><span class="nav-logo__dot"></span>
+        <span class="nav-logo__tdri">TDRI</span>
+        <span class="nav-logo__sep"></span>
+        <span class="nav-logo__product">EntreprenAIs Cloud</span>
+      </div>
       <ul class="nav-links">
+        <li><a href="#demo">ライブデモ</a></li>
+        <li><a href="#problem">考え方</a></li>
         <li><a href="#architecture">アーキテクチャ</a></li>
-        <li><a href="#speed-comparison">速度比較</a></li>
         <li><a href="#green">グリーン</a></li>
       </ul>
-      <a href={`${BASE}/`} class="nav-cta">entreprenais.com</a>
+      <a href="#contact" class="nav-cta">導入を相談する →</a>
     </div>
   </nav>
 
@@ -820,84 +882,147 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
     <div class="hero-inner">
       <div class="hero-eyebrow-row reveal" data-reveal>
-        <span class="hero-eyebrow">GREEN AI CLOUD</span>
+        <span class="hero-eyebrow">Green AI Cloud</span>
         <span class="hero-eyebrow-rule"></span>
-        <span class="hero-live-badge"><span class="hero-live-dot"></span>太陽光と水力で稼働中</span>
+        <span class="hero-live-badge"><span class="hero-live-dot"></span>太陽光 + 水力で稼働中</span>
       </div>
 
       <div class="hero-flex">
         <div class="hero-col-text reveal" data-reveal data-delay="100">
-          <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド</span>誕生。</h1>
+          <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド、始動</span></h1>
           <p class="hero-lede">
-            超省電力・超高速のエージェント基盤を、<strong>自社グリーンデータセンター</strong>上で実現します。
+            エージェント基盤を、自社グリーンデータセンターで動かす。クラウドLLMへの往復をやめた瞬間、応答は <strong>ミリ秒</strong> になり、電力起源は <strong>自社の再エネ</strong> で完結する。
           </p>
           <div class="hero-value-tags">
             <span class="value-tag">コスト効率と応答速度を両立</span>
             <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
           </div>
           <div class="hero-cta">
-            <a href="#architecture" class="btn btn-primary">アーキテクチャを見る</a>
-            <a href="#green" class="btn btn-secondary">グリーン電力の裏付け</a>
+            <a href="#demo" class="btn btn-primary">0.5ms を体験する →</a>
+            <a href="#architecture" class="btn btn-secondary">アーキテクチャを見る</a>
           </div>
         </div>
 
         <div class="hero-col-metric reveal" data-reveal data-delay="200">
           <div class="hero-metric-inner">
             <span class="hero-metric__value">0.5</span>
+            <span class="hero-metric__unit">ms</span>
           </div>
-          <div class="hero-metric__unit">ms で応答</div>
-          <div class="hero-metric__note" title="自社計測値です。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定であり、すべてのリクエストがこの数値で応答することを保証するものではありません。">
-            自社計測値・計測条件は継続整備中 ⓘ
+          <div class="hero-metric__note">
+            エージェント脊髄反射技術<br />応答実行時間（自社計測値・LLM推論なし）
           </div>
         </div>
       </div>
 
-      <!-- KPIグリッド + お問合せAI導線 -->
+      <!-- KPIグリッド -->
       <div class="hero-kpi-grid reveal" data-reveal data-delay="300">
         <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">応答速度（反射応答）</div>
-          <div class="hero-kpi-cell__value is-accent">0.5<span class="unit">ms 台</span></div>
-          <div class="hero-kpi-cell__desc">エージェント脊髄反射技術による実測値</div>
+          <div class="hero-kpi-cell__label">Response</div>
+          <div class="hero-kpi-cell__value">0.5<span class="unit">ms 台</span></div>
+          <div class="hero-kpi-cell__desc">反射応答（CPUキャッシュ経路）</div>
         </div>
         <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">消費電力</div>
+          <div class="hero-kpi-cell__label">Power</div>
           <div class="hero-kpi-cell__value">超省電力</div>
-          <div class="hero-kpi-cell__desc">推論を必要な場面に集中させる設計</div>
+          <div class="hero-kpi-cell__desc">GPU推論を介さない実行体（推定）</div>
         </div>
         <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">再エネ電力比率</div>
-          <div class="hero-kpi-cell__value">実質100%</div>
-          <div class="hero-kpi-cell__desc">太陽光自家発電＋再エネ電力契約</div>
-          <button type="button" class="hero-chat-open" id="chat-preview-open">実際に質問してみる →</button>
+          <div class="hero-kpi-cell__label">Renewable</div>
+          <div class="hero-kpi-cell__value is-accent">実質100<span class="unit" style="font-size:22px">%</span></div>
+          <div class="hero-kpi-cell__desc">太陽光自家発電 + 再エネ電力契約</div>
         </div>
       </div>
-      <p class="hero-footnote">
-        メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値であり、すべてのリクエストがこの数値で応答することを保証するものではありません。計測条件（レスポンスの定義・ベンチマーク環境・再現性）は今後対外開示の透明性を高めていく予定です。画面右下の「AIに聞く」からも実際にお試しいただけます。
-      </p>
+      <details class="hero-details">
+        <summary>＋ 数値の計測条件・開示範囲について</summary>
+        <p>メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値であり、すべてのリクエストがこの数値で応答することを保証するものではありません。計測条件（レスポンスの定義・ベンチマーク環境・再現性）および「実質再エネ100%」の定義・開示粒度は、対外開示の透明性向上に向けて継続整備中です。</p>
+      </details>
     </div>
   </section>
 
-  <!-- PROBLEM: 速さは、会話でしか伝わらない -->
+  <!-- LIVE DEMO -->
+  <section id="demo" class="section-dark" style="margin-top:120px">
+    <div class="section-inner">
+      <div class="demo-head">
+        <div>
+          <div class="eyebrow on-dark reveal" data-reveal>Live Demo</div>
+          <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">速さは、会話でしか伝わらない。</h2>
+          <p class="section-lede on-dark reveal" data-reveal data-delay="140" style="max-width:60ch">
+            左は自社エージェント基盤の反射応答。右は同一プロンプトをクラウドLLM推論（gpt-oss:20b）へ。<strong style="color:var(--color-dark-text);font-weight:700">右パネルは実測どおり実時間で待ちます</strong>——左が会話を終えても、右はまだ最初の返答を書いています。
+          </p>
+        </div>
+      </div>
+
+      <div class="demo-grid reveal" data-reveal data-delay="200" id="live-demo-root">
+        <div class="demo-card is-ours">
+          <div class="demo-card__head">
+            <span class="demo-card__dot"></span>
+            <span class="demo-card__title">EntreprenAIs Cloud</span>
+            <span class="demo-card__badge">cache</span>
+            <span class="demo-card__turnlabel" data-own-turn-label>自社グリーンDC / 反射経路</span>
+          </div>
+          <div class="demo-card__body" data-scroll="own" id="demo-own-body">
+            <div class="demo-idle" data-own-idle>reflex path<br />画面に入ると自動で実行します</div>
+          </div>
+          <div class="demo-card__footer">
+            <span class="demo-card__footer-value" data-own-ms-big>0.5</span>
+            <span class="demo-card__footer-unit">ms</span>
+            <span class="demo-card__footer-note">応答処理時間の累計<br />LLM推論なし / CPUのみ</span>
+          </div>
+        </div>
+
+        <div class="demo-card is-cloud">
+          <div class="demo-card__head">
+            <span class="demo-card__dot"></span>
+            <span class="demo-card__title">クラウドLLM推論</span>
+            <span class="demo-card__badge">gpt-oss:20b</span>
+            <span class="demo-card__turnlabel" data-cloud-turn-label>他社DC経由 / 毎回フル生成</span>
+          </div>
+          <div class="demo-card__body" data-scroll="cloud" id="demo-cloud-body">
+            <div class="demo-idle" data-cloud-idle>cloud inference<br />実測どおり実時間で待機します</div>
+          </div>
+          <div class="demo-card__footer">
+            <span class="demo-card__footer-value" data-cloud-sec-big>9.5</span>
+            <span class="demo-card__footer-unit">s</span>
+            <span class="demo-card__footer-note">会話開始からの経過時間<br />（実測 9.5〜22.9 秒 / 応答）</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-lede on-dark" style="margin-top:22px;font-size:12.5px;line-height:1.9;color:var(--color-dark-muted);max-width:96ch">※ デモは自社実測値（2026-08-05）を再現したシミュレーションで、右パネルの待ち時間は倍速なしの実時間（1応答あたり 9.5〜18.7 秒）です。会話が終わると自動でリプレイします。左は固定応答をキャッシュから返す処理、右は毎回フル生成する推論処理で、処理内容が異なります。左の文字送りは可読性のための表示演出で、応答処理そのものは 0.5ms 台で完了しています。</p>
+
+      <details class="note-details on-dark">
+        <summary>＋ 計測条件・実測値・比較の非対称性についての注記（4件）</summary>
+        <div class="note-grid">
+          <p><strong>計測条件:</strong> 2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」で計測。自社側は CPU キャッシュ応答経路（<span style="font-family:var(--font-mono)">source: cache</span>、LLM推論を介さず固定応答）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でクラウド推論として実行した際のリクエスト送信〜応答完了の総時間。実測レンジは 0.5〜1.0 ms 対 9.5〜22.9 秒。</p>
+          <p><strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、同社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回はクラウドLLM API経由エージェントの一例として計測しました。</p>
+          <p><strong>比較の非対称性:</strong> 自社側はキャッシュからの固定応答、gpt-oss 側は毎回フル生成の推論であり処理内容が異なります。応答時間差の主因は「推論の有無」そのものです。倍率は最小差（9.5s ÷ 1.0ms ≒ 9,500倍）〜最大差（22.9s ÷ 0.5ms ≒ 45,800倍）の範囲です。</p>
+          <p><strong>今後の拡張:</strong> 現時点では商用クラウドAPI（Claude・GPT本家等）への直接アクセス手段が未整備のため、オープンソースモデルのクラウド推論実測のみを掲載しています。デモ2ターン目以降の待ち時間は、この実測レンジ内の想定値です。</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
   <section id="problem" class="section-light">
     <div class="section-inner">
-      <div class="eyebrow reveal" data-reveal>PROBLEM</div>
-      <h2 class="headline reveal" data-reveal data-delay="80">速さは、会話でしか伝わらない。<br />賢さは前提になった。</h2>
+      <div class="eyebrow reveal" data-reveal>Our Approach</div>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80">賢さは前提になった。<br />私たちは、速さと電力を設計する</h2>
       <p class="section-lede reveal" data-reveal data-delay="140">
         モデルの賢さは業界全体で急速に進んでいます。その上で、エージェントが日常的に働き続ける基盤に必要なのは、応答速度・消費電力・電源構成の透明性です。私たちはこの3つを設計対象にしました。
       </p>
       <div class="problem-grid">
         <div class="problem-card reveal" data-reveal>
-          <div class="problem-card__label">01</div>
+          <div class="problem-card__label">01 / SPEED</div>
           <h3>応答速度を設計する</h3>
           <p>定型的な応答は、LLM推論とネットワーク往復を経路から外してCPU上で返します。会話が何往復も続く用途では、この一手が体験の質をそのまま決めます。</p>
         </div>
         <div class="problem-card reveal" data-reveal data-delay="100">
-          <div class="problem-card__label">02</div>
+          <div class="problem-card__label">02 / POWER</div>
           <h3>消費電力を設計する</h3>
           <p>推論を必要な場面に集中させ、それ以外はCPUで完結させます。使う電力そのものを小さくすることが、コストと環境負荷の両方に効きます。</p>
         </div>
         <div class="problem-card reveal" data-reveal data-delay="200">
-          <div class="problem-card__label">03</div>
+          <div class="problem-card__label">03 / TRANSPARENCY</div>
           <h3>電源構成を開示する</h3>
           <p>推論は自社グリーンデータセンター内で完結するため、電力の起源を自社で説明できます。ESG/CSR要件の確認に必要な証跡整備を前提に運用しています。</p>
         </div>
@@ -905,84 +1030,20 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </section>
 
-  <!-- SPEED COMPARISON -->
-  <section id="speed-comparison" class="section-dark">
-    <div class="section-inner">
-      <div class="eyebrow on-dark reveal" data-reveal>SPEED COMPARISON（実測ベンチマーク）</div>
-      <h2 class="headline narrow reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">同じ質問を投げて、<br />実際に時間を計測しました</h2>
-      <p class="section-lede on-dark reveal" data-reveal data-delay="140">
-        左は自社エージェント基盤の反射応答。右は同一プロンプトをクラウドLLM推論（gpt-oss:20b）へ。デモは自社実測値（2026-08-05）を再現したシミュレーションで、右パネルの待ち時間は倍速なしの実時間（1応答あたり 9.5〜18.7秒）です。
-      </p>
-
-      <div class="compare-grid reveal" data-reveal data-delay="200">
-        <div class="compare-card is-ours">
-          <div class="compare-card__head">
-            <span class="compare-card__dot"></span>
-            <span class="compare-card__title">エージェント脊髄反射技術（自社）</span>
-            <span class="compare-card__badge">CPU cache</span>
-            <span class="compare-card__ms">0.5〜1.0ms</span>
-          </div>
-          <div class="compare-card__body">
-            <div class="compare-bubble--user">グリーンAIクラウドの応答速度は？</div>
-            <div class="compare-bubble--ai">0.5ms台で応答します。LLM推論を介さないCPUキャッシュ経路です。</div>
-          </div>
-          <div class="compare-card__footer">
-            <span class="compare-card__footer-value">0.5</span>
-            <span class="compare-card__footer-unit">ms</span>
-            <span class="compare-card__footer-note">source: cache<br />5回計測・サーバー内部処理時間</span>
-          </div>
-        </div>
-
-        <div class="compare-card is-cloud">
-          <div class="compare-card__head">
-            <span class="compare-card__dot"></span>
-            <span class="compare-card__title">gpt-oss:20b（クラウド推論経由）</span>
-            <span class="compare-card__badge">cloud inference</span>
-            <span class="compare-card__ms">9.5〜22.9秒</span>
-          </div>
-          <div class="compare-card__body">
-            <div class="compare-bubble--user">グリーンAIクラウドの応答速度は？</div>
-            <div class="compare-bubble--ai">（推論中…オープンソースモデルgpt-oss:20bをクラウド推論基盤経由で実行しています）</div>
-          </div>
-          <div class="compare-card__footer">
-            <span class="compare-card__footer-value">9.5〜22.9</span>
-            <span class="compare-card__footer-unit">秒</span>
-            <span class="compare-card__footer-note">source: gpt-oss:20b<br />5回計測・応答完了までの総時間</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="compare-ratio reveal" data-reveal data-delay="260">
-        <span class="compare-ratio__badge">実測ベースで <strong>約1万倍〜5万倍</strong> の応答時間差（0.5〜1.0ms 対 9.5〜22.9秒。個々の計測値の最小・最大の組み合わせによる幅）</span>
-      </div>
-
-      <div class="note on-dark reveal" data-reveal data-delay="300">
-        <strong>計測条件についての注記:</strong>
-        2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」を用いて計測しました。自社側は自社エージェント基盤の CPU キャッシュ応答経路（source: cache、LLM推論を介さず固定応答を返す処理）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でオープンソースモデル「gpt-oss:20b」をクラウド推論として実行した際の、リクエスト送信から応答完了までの総時間です。
-        <br /><br />
-        <strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、OpenAI 社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回の計測はクラウド推論基盤経由で実行しており、いわゆる「クラウドLLM API経由のエージェント」の実例として計測しました。
-        <br /><br />
-        <strong>比較の非対称性について:</strong> 自社側は固定応答をキャッシュから返す処理、gpt-oss側は毎回フルにテキストを生成する推論処理であり、処理内容が異なります。単純な同一条件比較ではなく、応答時間差の主因は「推論の有無」そのものです。倍率（約1万倍〜5万倍）は、両者それぞれ5回の計測値の中で最も差が小さい組み合わせ（9.5秒 ÷ 1.0ms ＝ 約9,500倍）と最も差が大きい組み合わせ（22.9秒 ÷ 0.5ms ＝ 約45,800倍）の範囲として算出しています。
-        <br /><br />
-        <strong>今後の拡張予定:</strong> 現時点では、より一般的な商用クラウドAPI（Claude・GPT本家等）への直接アクセス手段が未整備のため、今回はオープンソースモデルのクラウド推論実測のみを掲載しています。今後、商用クラウドAPI経由の実測データも追加予定です。
-      </div>
-    </div>
-  </section>
-
-  <!-- ARCHITECTURE: 考える脳と、反射する神経は、 -->
+  <!-- ARCHITECTURE -->
   <section id="architecture" class="section-dark">
     <div class="section-inner arch-flex">
       <div class="arch-col-main">
-        <div class="eyebrow on-dark reveal" data-reveal>ARCHITECTURE</div>
-        <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">考える脳と、反射する神経は、<br />一本の会話でつながっている。</h2>
-        <div class="arch-sub reveal" data-reveal data-delay="120">大脳AI × コンパイル技術 × エージェント脊髄反射技術</div>
+        <div class="eyebrow on-dark reveal" data-reveal>Architecture</div>
+        <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">考える脳と、反射する神経は、<br />ひとつの会話でつながっている</h2>
+        <div class="arch-sub reveal" data-reveal data-delay="120">大脳AI × エージェント脊髄反射技術</div>
         <p class="section-lede on-dark reveal" data-reveal data-delay="160">
-          人間の神経系になぞらえた2層構成です。肝は「分けたこと」ではなく、分けたまま一本の会話としてつながっていること。どの応答がCPUの反射で、どこからGPUの思考に切り替わったのか、話している側は意識しません。
+          人間の神経系になぞらえた2層構成です。肝は「分けたこと」ではなく、分けたまま一本の会話としてつながっていること。どの応答がCPUの反射で、どこからGPUの思考に切り替わったのか、話している側は意識しません。その切り替えを担うのが、設計図を実行体へ変換するコンパイル技術です（現時点では半自動——対応できる範囲を運用しながら広げています）。
         </p>
 
         <div class="arch-card-list">
           <div class="arch-card reveal" data-reveal data-delay="200">
-            <div class="arch-card__icon">脳</div>
+            <div class="arch-card__icon">01</div>
             <div>
               <h3>大脳AI — じっくり思考</h3>
               <p>複雑な判断・生成は、自社グリーンデータセンター内で稼働するローカルLLMが担当。クラウドLLM（他社データセンター経由）を介さないため、自社の再エネ電力起源で完結します。</p>
@@ -991,26 +1052,26 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
           <div class="arch-connector">
             <span class="arch-connector-line"></span>
-            <span class="arch-connector-label">COMPILE</span>
+            <span class="arch-connector-label">SEAMLESS</span>
             <span class="arch-connector-line"></span>
           </div>
 
           <div class="arch-card reveal" data-reveal data-delay="250">
-            <div class="arch-card__icon">⚙</div>
+            <div class="arch-card__icon">02</div>
             <div>
               <h3>コンパイル技術 — 設計図を実行体へ</h3>
-              <p>大脳AIが一度じっくり考えて書いた「設計図」を、CPUだけで動く軽量な実行プログラムと、推論が必要な部分に分離する自社独自技術。現在は人と並走しながら進める半自動の工程で、運用しながらCPU実行の比率を段階的に引き上げ、低コストに繰り返せる範囲を広げています。</p>
+              <p>大脳AIが一度じっくり考えて書いた「設計図」を、CPUだけで動く軽量な実行プログラムと、推論が必要な部分に分離する自社独自技術。現在は人と並走しながら進める半自動の工程で、運用しながらCPU実行の比率を段階的に引き上げ、低コストに繰り返せる範囲を広げています。「学習は高性能な計算資源で1回、推論は省エネな環境で日常的に」という発想です。</p>
             </div>
           </div>
 
           <div class="arch-connector">
             <span class="arch-connector-line"></span>
-            <span class="arch-connector-label">EXECUTE</span>
+            <span class="arch-connector-label">SEAMLESS</span>
             <span class="arch-connector-line"></span>
           </div>
 
           <div class="arch-card is-highlight reveal" data-reveal data-delay="300">
-            <div class="arch-card__icon">⚡</div>
+            <div class="arch-card__icon">03</div>
             <div>
               <h3>エージェント脊髄反射技術</h3>
               <p>定型的な応答は、脳を介さず完結する脊髄反射に相当する処理を、LLM推論なしでCPU上で実行。この実行体こそ、コンパイル技術が生成する実行プログラムです。反射で足りない問いは、そのまま大脳AIへ引き継がれます——会話は途切れません。</p>
@@ -1020,90 +1081,90 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
 
       <div class="arch-sidebar reveal" data-reveal data-delay="200">
-        <div class="arch-sidebar__label">REFLEX RESPONSE TIME</div>
+        <div class="arch-sidebar__label">Reflex path</div>
         <div class="arch-sidebar__metric">
           <span class="arch-sidebar__value">0.5</span>
           <span class="arch-sidebar__unit">ms</span>
         </div>
-        <p class="arch-sidebar__desc">エージェント脊髄反射技術の応答実行時間（自社計測値）。反射で処理しきれない問いは大脳AIへシームレスに引き継がれます。</p>
+        <p class="arch-sidebar__desc">エージェント脊髄反射技術の応答実行時間（自社計測値）。反射で返せる問いはCPUで、思考が必要な問いは大脳AIへ——切り替えは会話の裏側で自動的に起こります。</p>
         <div class="arch-sidebar__list">
-          <div class="arch-sidebar__row"><span>大脳AI</span><span class="v">ローカルLLM</span></div>
-          <div class="arch-sidebar__row"><span>コンパイル技術</span><span class="v">半自動</span></div>
-          <div class="arch-sidebar__row"><span>脊髄反射</span><span class="v">CPUのみ</span></div>
-          <div class="arch-sidebar__row"><span>電力起源</span><span class="v is-green">自社再エネ</span></div>
+          <div class="arch-sidebar__row"><span>LLM inference</span><span class="v">none</span></div>
+          <div class="arch-sidebar__row"><span>Network hop</span><span class="v">in-house</span></div>
+          <div class="arch-sidebar__row"><span>Compute</span><span class="v">CPU / GPU auto</span></div>
+          <div class="arch-sidebar__row"><span>Power source</span><span class="v is-green">renewable</span></div>
         </div>
-        <div class="arch-sidebar__cta">
-          <a href="#green" class="btn btn-secondary" style="display:block;border-color:var(--color-dark-border);color:var(--color-dark-text)">グリーン電力の裏付けを見る</a>
-        </div>
-        <p class="arch-sidebar__cta-note">「0.5ms」は自社エージェント基盤における低遅延応答経路の実行時間の自社計測値です。計測条件は今後対外開示の透明性を高めていく予定で、現時点では自社内実測値としてご案内しています。「コンパイル技術」は設計図から実行プログラムへの変換の一部を自社独自の仕組みで行う技術を指し、詳細な変換方式は非公開です。</p>
+        <details class="arch-details">
+          <summary>＋ 数値と「コンパイル技術」の注記</summary>
+          <p>「0.5ms」は自社エージェント基盤における低遅延応答経路の実行時間の自社計測値です。計測条件は今後対外開示の透明性を高めていく予定で、現時点では自社内実測値としてご案内しています。すべてのリクエストがこの数値で応答することを保証するものではありません。「コンパイル技術」は設計図から実行プログラムへの変換の一部を自社独自の仕組みで行う技術です。現時点では全自動ではなく、人と並走しながら進める半自動の工程であり、変換できる処理の範囲は順次拡大中です。詳細な変換方式は非公開です。</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- GREEN: 電力の上限が、 -->
+  <!-- GREEN -->
   <section id="green" class="section-light">
     <div class="section-inner">
-      <div class="eyebrow reveal" data-reveal>GREEN INFRASTRUCTURE</div>
-      <h2 class="headline reveal" data-reveal data-delay="80">電力の上限が、<br /><span class="accent">両立を生んだ。</span></h2>
+      <div class="eyebrow reveal" data-reveal>Green Infrastructure</div>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80">電力の上限が、<span class="accent">そのまま設計思想になった</span></h2>
       <p class="section-lede reveal" data-reveal data-delay="140">
         太陽光自家発電＋再エネ電力契約という有限な電力の中から、大脳AI×エージェント脊髄反射技術のハイブリッド構成が生まれました。
       </p>
 
       <div class="green-grid">
         <div class="green-card reveal" data-reveal>
-          <div class="green-card__icon">☀</div>
+          <div class="green-card__icon">PV</div>
           <h3>自社グリーンデータセンター</h3>
           <p>太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力で運用しています。</p>
         </div>
         <div class="green-card reveal" data-reveal data-delay="100">
-          <div class="green-card__icon">⇥</div>
+          <div class="green-card__icon">A2A</div>
           <h3>外部依存を経路から外す</h3>
           <p>外部クラウドLLMへの通信往復と、他社データセンターの電源構成への依存を排除。電力起源を自社で完結させています。</p>
         </div>
         <div class="green-card reveal" data-reveal data-delay="150">
-          <div class="green-card__icon">⚡</div>
+          <div class="green-card__icon">kW</div>
           <h3>制約が生んだ超省電力技術</h3>
           <p>再エネ電力には出力・供給量の制約がある。消費電力を極限まで下げる必要から、ハイブリッドアーキテクチャを自社開発しました。</p>
         </div>
         <div class="green-card reveal" data-reveal data-delay="200">
-          <div class="green-card__icon">✓</div>
+          <div class="green-card__icon">ESG</div>
           <h3>証跡を前提にした透明性</h3>
           <p>電源構成を対外開示し、証跡整備を前提とした透明性のある「グリーン」訴求を行っています。</p>
         </div>
       </div>
 
+      <details class="note-details">
+        <summary>＋ 「実質再エネ100%」についての注記</summary>
+        <p>自社太陽光発電設備の自家発電および再エネ電力契約に基づく表現です。「実質」の定義・開示粒度については対外公表の透明性向上に向けて継続的に整備を進めています。個別契約の詳細な証跡開示については、お問い合わせいただければ可能な範囲でご説明します。</p>
+      </details>
+
       <div class="flow-box reveal" data-reveal data-delay="240">
-        <div class="eyebrow">WHY GREEN AI CLOUD</div>
+        <div class="eyebrow">Why Green AI Cloud</div>
         <h3>制約が、両立を生んだ</h3>
         <div class="flow-steps">
           <div class="flow-step">再エネ電力の出力・供給制約</div>
           <span class="flow-arrow">→</span>
           <div class="flow-step">消費電力を極限まで削減する必要</div>
-          <span class="flow-arrow is-accent">→</span>
-          <div class="flow-step">超省電力技術を自社開発<br />（大脳AI×エージェント脊髄反射技術）</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">超省電力技術を自社開発</div>
           <span class="flow-arrow is-accent">→</span>
           <div class="flow-step is-final">超省電力 × 超高速 × グリーンが両立</div>
         </div>
-      </div>
-
-      <div class="note reveal" data-reveal data-delay="280">
-        <strong>「実質再エネ100%」についての注記:</strong>
-        自社太陽光発電設備の自家発電および再エネ電力契約に基づく表現です。「実質」の定義・開示粒度については対外公表の透明性向上に向けて継続的に整備を進めています。個別契約の詳細な証跡開示については、お問い合わせいただければ可能な範囲でご説明します。
       </div>
     </div>
   </section>
 
   <!-- CTA -->
   <div class="cta-wrap">
-    <div class="cta-box reveal" data-reveal>
+    <div class="cta-box reveal" data-reveal id="contact">
       <div class="cta-box__text">
-        <h2>速さと、電力の説明責任を、<br />同じ基盤で。</h2>
+        <h2>速さと、電力の説明責任を、<br />同時に手に入れる</h2>
         <p>IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究のご相談を承っています。</p>
       </div>
       <div class="cta-box__actions">
-        <button type="button" class="cta-btn-primary" id="chat-preview-open-cta">今すぐAIに聞いてみる</button>
-        <a href={`${BASE}/`} class="cta-btn-secondary">entreprenais.com へ戻る</a>
-        <div class="cta-box__note">画面右下の「AIに聞く」からもご利用いただけます</div>
+        <button type="button" class="cta-btn-primary" id="chat-preview-open-cta">導入を相談する →</button>
+        <button type="button" class="cta-btn-secondary" id="chat-preview-open">AIに聞いてみる</button>
+        <a href={`${BASE}/`} class="cta-box__note" style="color:var(--color-dark-muted)">entreprenais.com へ戻る</a>
       </div>
     </div>
   </div>
@@ -1111,8 +1172,239 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   <footer>
     <div class="footer-inner">
       <span>&copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud</span>
-      <span class="mono">GREEN AI CLOUD / v341</span>
+      <span class="mono">Internet of Agents · Edge-First · Zero Emission</span>
     </div>
   </footer>
+
+  <!-- #345: LIVE DEMO 自動再生ロジック。モックアップの Component（DCLogicベース）の
+       ownTurn/cloudTurn/runDemo/resetDemo を Vanilla JS で再現。IntersectionObserver で
+       #demo が画面に入ったら自動再生を開始し、画面外に出たらリセットする。 -->
+  <script>
+  (function () {
+    'use strict';
+
+    var SCRIPT = [
+      { q: 'グリーンAIクラウドの応答速度は？', own: '反射応答で 0.5ms 台です。CPUキャッシュ経路（LLM推論なし）で固定応答を返しています。', cloud: 'グリーンAIクラウドの応答速度については、アーキテクチャや測定条件によって変動しますが、一般的なクラウド推論では数秒〜数十秒程度の応答時間が想定されます。', cloudMs: 9500 },
+      { q: 'その電力はどこから来ていますか？', own: '太陽光の自家発電と再エネ電力契約（アクアエナジー100等）です。実質再エネ100%で稼働しています。', cloud: '一般的なクラウドサービスの電力構成は事業者や地域によって異なり、公開情報の範囲では再生可能エネルギーの比率を正確に特定することは難しいと考えられます。', cloudMs: 11800 },
+      { q: 'クラウドLLMは使いますか？', own: '使いません。推論は自社グリーンデータセンター内で完結し、電力起源を自社で管理しています。', cloud: 'クラウドLLMの利用有無については構成に依存しますが、多くのAIエージェント基盤では外部の大規模言語モデルAPIを経由する構成が一般的です。', cloudMs: 9900 },
+      { q: 'なぜそこまで速いのですか？', own: 'LLM推論とネットワーク往復を経路から外し、コンパイル済みの実行体をCPU上で実行しているためです。', cloud: '応答速度はモデルサイズ、量子化、GPUの世代、バッチサイズ、ネットワーク経路など複数の要因に左右されるため、一概に説明することは難しいのですが、一般には推論処理そのものが支配的です。', cloudMs: 14200 },
+      { q: '従来のクラウドLLM運用と何が違いますか？', own: '大規模GPUデータセンターの電力とネットワーク往復に依存しません。コスト・環境負荷・応答速度の制約を同時に外せます。', cloud: '一般的なクラウドLLM運用では、推論をリモートのGPUクラスタで実行するため、ネットワーク往復と待ち行列の影響を受けることが知られていますが、構成によって差があります。', cloudMs: 12900 },
+      { q: '「大脳AI」は何をしていますか？', own: '複雑な判断と生成だけを担当します。自社データセンター内のローカルLLMなので、電力起源も自社で完結します。', cloud: 'ご質問の「大脳AI」という名称は一般的な技術用語ではないため、正確な定義は提供元の資料をご確認いただく必要がありますが、階層的な推論アーキテクチャを指す可能性があります。', cloudMs: 16400 },
+      { q: '設計図を実行体に変える技術とは？', own: 'コンパイル技術です。大脳AIが書いた設計図を、CPUだけで動く実行体と推論が必要な部分に分離します。現時点では人と並走しながら進める半自動の工程で、CPU実行の比率を段階的に高めています。', cloud: 'LLMの出力をコードやワークフローへ変換する手法は複数提案されており、コード生成、プロンプトのキャッシュ、ルールベースへの蒸留などが一般に議論されていますが、実装は事業者ごとに異なります。', cloudMs: 18700 },
+      { q: '電力の制約が先だったのですか？', own: 'はい。再エネの出力上限が先にありました。消費電力を極限まで下げる必要から、このハイブリッド構成が生まれました。', cloud: '一般に再生可能エネルギーの出力は変動するため、電力制約を前提とした計算資源の設計が必要になると考えられますが、具体的な設計判断は各事業者の方針に依存します。', cloudMs: 11200 },
+      { q: 'ESG報告に使える証跡は出せますか？', own: '電源構成を対外開示し、証跡整備を前提に運用しています。個別契約の粒度はご相談ください。', cloud: '電力証跡の開示範囲については、利用しているクラウド事業者の公開情報に依存するため、詳細な内訳を提示できない場合があります。', cloudMs: 10600 },
+      { q: '導入の相談はできますか？', own: 'できます。IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究を承っています。', cloud: '導入に関するご相談窓口については、提供元の公開情報をご確認いただくのが確実です。一般的には問い合わせフォームまたは営業窓口が案内されています。', cloudMs: 9800 }
+    ];
+
+    var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
+
+    var root = document.getElementById('live-demo-root');
+    if (!root) return;
+
+    var ownBody = document.getElementById('demo-own-body');
+    var cloudBody = document.getElementById('demo-cloud-body');
+    var ownIdleEl = ownBody.querySelector('[data-own-idle]');
+    var cloudIdleEl = cloudBody.querySelector('[data-cloud-idle]');
+    var ownTurnLabelEl = document.querySelector('[data-own-turn-label]');
+    var cloudTurnLabelEl = document.querySelector('[data-cloud-turn-label]');
+    var ownMsBigEl = document.querySelector('[data-own-ms-big]');
+    var cloudSecBigEl = document.querySelector('[data-cloud-sec-big]');
+
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var ownMsTotal = 0;
+    var cloudTotalStart = 0;
+    var cloudTotalIv = null;
+    var stickOwn = true;
+    var stickCloud = true;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function watchScroll(el, key) {
+      if (el.dataset.watched) return;
+      el.dataset.watched = '1';
+      el.addEventListener('scroll', function () {
+        var atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 48;
+        if (key === 'own') stickOwn = atBottom; else stickCloud = atBottom;
+      }, { passive: true });
+    }
+    watchScroll(ownBody, 'own');
+    watchScroll(cloudBody, 'cloud');
+
+    function maybeStick() {
+      if (stickOwn) ownBody.scrollTop = ownBody.scrollHeight;
+      if (stickCloud) cloudBody.scrollTop = cloudBody.scrollHeight;
+    }
+
+    function appendUserBubble(body, text) {
+      var div = document.createElement('div');
+      div.className = 'demo-bubble--user';
+      div.textContent = text;
+      body.appendChild(div);
+    }
+
+    function ownTurn(i) {
+      if (i >= SCRIPT.length) return;
+      var step = SCRIPT[i];
+      appendUserBubble(ownBody, step.q);
+      ownTurnLabelEl.textContent = '応答中';
+      maybeStick();
+
+      var t1 = setTimeout(function () {
+        ownMsTotal = Math.round((ownMsTotal + 0.5) * 10) / 10;
+        ownMsBigEl.textContent = ownMsTotal.toFixed(1);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        var caret = document.createElement('span');
+        caret.className = 'demo-caret';
+        bubble.appendChild(caret);
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        ownBody.appendChild(wrap);
+        maybeStick();
+
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 2;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) { bubble.appendChild(caret); }
+          else { meta.textContent = 'source: cache · 0.5 ms'; }
+          maybeStick();
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () {
+              var nextI = i + 1;
+              if (nextI >= SCRIPT.length) {
+                ownTurnLabelEl.textContent = '会話完了';
+              } else {
+                ownTurn(nextI);
+              }
+            }, 700);
+            timers.push(t2);
+          }
+        }, 14);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
+    }
+
+    function cloudTurn(i) {
+      if (i >= SCRIPT.length) {
+        cloudTurnLabelEl.textContent = '会話完了';
+        if (cloudTotalIv) { clearInterval(cloudTotalIv); cloudTotalIv = null; }
+        var replay = setTimeout(runDemo, 3200);
+        timers.push(replay);
+        return;
+      }
+      var step = SCRIPT[i];
+      appendUserBubble(cloudBody, step.q);
+      cloudTurnLabelEl.textContent = '生成中';
+      maybeStick();
+
+      var waiting = document.createElement('div');
+      waiting.className = 'demo-waiting';
+      waiting.innerHTML = '<span class="demo-spinner"></span><span class="txt">generating… <span data-cur-sec>0.0</span> s</span>';
+      cloudBody.appendChild(waiting);
+      maybeStick();
+      var curSecEl = waiting.querySelector('[data-cur-sec]');
+
+      var t0 = CLOCK();
+      var iv2 = setInterval(function () {
+        curSecEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(iv2);
+
+      var c1 = setTimeout(function () {
+        clearInterval(iv2);
+        var idx = intervals.indexOf(iv2);
+        if (idx >= 0) intervals.splice(idx, 1);
+        if (waiting.parentNode) waiting.parentNode.removeChild(waiting);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        bubble.textContent = step.cloud;
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        meta.textContent = 'source: cloud-inference · ' + (step.cloudMs / 1000).toFixed(1) + ' s';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        cloudBody.appendChild(wrap);
+        maybeStick();
+
+        var c2 = setTimeout(function () { cloudTurn(i + 1); }, 700);
+        timers.push(c2);
+      }, step.cloudMs);
+      timers.push(c1);
+    }
+
+    function runDemo() {
+      clearAllTimers();
+      stickOwn = true;
+      stickCloud = true;
+      started = true;
+      ownMsTotal = 0;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = '応答中';
+      cloudTurnLabelEl.textContent = '生成中';
+
+      var t0 = CLOCK();
+      cloudTotalIv = setInterval(function () {
+        cloudSecBigEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(cloudTotalIv);
+
+      ownTurn(0);
+      cloudTurn(0);
+    }
+
+    function resetDemo() {
+      clearAllTimers();
+      started = false;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownBody.appendChild(ownIdleEl);
+      cloudBody.appendChild(cloudIdleEl);
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = '自社グリーンDC / 反射経路';
+      cloudTurnLabelEl.textContent = '他社DC経由 / 毎回フル生成';
+    }
+
+    var demoSection = document.getElementById('demo');
+    if (demoSection && typeof IntersectionObserver === 'function') {
+      var demoIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) runDemo();
+          } else if (started) {
+            resetDemo();
+          }
+        });
+      }, { threshold: 0.35 });
+      demoIo.observe(demoSection);
+    } else if (demoSection) {
+      runDemo();
+    }
+  })();
+  </script>
 
 </BaseLayout>
