@@ -315,7 +315,10 @@ const {
       }
       // #354: ヒーロー iPhone フレーム専用CTA（hero-phone-cta）は FC 指摘によりスペース
       // 確保のため削除。実物ウィジェットへの導線は下記の既存ボタン群で維持する。
-      ['chat-preview-open', 'chat-preview-open-cta'].forEach(function (id) {
+      // #366: FC指示「0.5ms を体験する → というファーストビューのボタンは右下の
+      // AIに聞くチャットぼっとを立ち上げるのが良い」を受け、#demo アンカーリンクから
+      // openContactWidget() 導線のボタン（hero-cta-open-widget）に変更。
+      ['chat-preview-open', 'chat-preview-open-cta', 'hero-cta-open-widget'].forEach(function (id) {
         var btn = document.getElementById(id);
         if (btn) btn.addEventListener('click', openContactWidget);
       });
