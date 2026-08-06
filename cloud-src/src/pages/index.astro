@@ -851,23 +851,148 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .cta-btn-secondary:hover { color: var(--color-dark-text); border-color: var(--color-accent-light); }
     .cta-box__note { margin-top: 6px; text-align: center; font-size: 13px; color: var(--color-dark-muted); }
 
+    /* #368: ABOUT（entreprenais.com トップページ #about 相当の会社紹介を移植）
+       既存 .green-grid / .green-card パターンをそのまま再利用し、3ブロック
+       （会社概要・創業の原点・代表プロフィール）をカード表示する。 */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+      gap: 20px;
+      margin-top: 52px;
+    }
+    .about-card {
+      padding: 34px;
+      background: var(--color-dark-surface);
+      border: 1px solid var(--color-dark-border);
+      border-radius: 22px;
+    }
+    .about-card h3 { margin: 0; font-size: 20px; font-weight: 700; color: var(--color-dark-text); }
+    .about-card p { margin: 14px 0 0; font-size: 14.5px; line-height: 1.9; color: var(--color-dark-text-soft); }
+    .about-card p + p { margin-top: 12px; }
+
+    /* #368: NEWS（entreprenais.com トップページ #news 相当のニュース一覧を移植）
+       /data/news.json を取得して最新3件をカード表示する。トップページの
+       .news-card 構造・データ形式をそのまま踏襲し、/cloud のライトテーマに合わせて配色調整。 */
+    .news-list {
+      list-style: none;
+      margin: 52px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .news-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 22px;
+      padding: 24px 28px;
+      background: #fff;
+      border: 1px solid var(--color-border2);
+      border-radius: 22px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .news-card:hover { transform: translateY(-3px); border-color: var(--color-accent); color: inherit; }
+    .news-card__thumb,
+    .news-card__thumb-placeholder {
+      flex: none;
+      width: 84px;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      background: var(--color-card);
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      opacity: 0.4;
+    }
+    .news-card__body { flex: 1; min-width: 0; }
+    .news-card__meta { display: flex; align-items: center; gap: 10px; }
+    .news-card__date { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-muted); }
+    .news-card__badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-accent2);
+      background: var(--color-accent-tint);
+      border-radius: 999px;
+      padding: 2px 10px;
+    }
+    .news-card__title { margin: 8px 0 0; font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--color-text); }
+    .news-card__summary { margin: 8px 0 0; font-size: 13.5px; line-height: 1.8; color: var(--color-text-soft); }
+    .news-card__cta { margin-top: 8px; display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--color-accent); }
+    .news-more { margin-top: 28px; text-align: center; }
+    @media (max-width: 720px) {
+      .news-card { flex-direction: column; }
+      .news-card__thumb, .news-card__thumb-placeholder { width: 100%; aspect-ratio: 16 / 9; }
+    }
+
     /* FOOTER */
     footer {
-      padding: 34px clamp(20px, 4vw, 40px) 54px;
-      border-top: 1px solid var(--color-border2);
+      padding: 54px clamp(20px, 4vw, 40px) 40px;
+      border-top: 1px solid var(--color-dark-border);
+      background: var(--color-dark-bg);
     }
     .footer-inner {
       max-width: var(--max-w);
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 14px; }
+    .footer-brand__mark {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: var(--color-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #fff;
+      flex: none;
+    }
+    .footer-brand__name { font-size: 14.5px; font-weight: 700; color: var(--color-dark-text); }
+    .footer-brand__name-en { margin-top: 2px; font-size: 11.5px; color: var(--color-dark-muted); }
+    .footer-nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+    }
+    .footer-nav-list a {
+      font-size: 12.5px;
+      color: var(--color-dark-muted2);
+    }
+    .footer-nav-list a:hover { color: var(--color-dark-text); }
+    .footer-bottom {
+      padding-top: 22px;
+      border-top: 1px solid var(--color-dark-border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
       flex-wrap: wrap;
       font-size: 12.5px;
-      color: var(--color-muted);
+      color: var(--color-dark-muted);
     }
-    .footer-inner .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
+    .footer-bottom .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
+    @media (max-width: 720px) {
+      .footer-top { flex-direction: column; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 720px) {
@@ -1323,12 +1448,160 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </div>
 
+  <!-- #368: ABOUT — entreprenais.com トップページ #about セクション（会社概要・
+       創業の原点・代表プロフィール）を原文のまま移植。/cloud のダークセクション
+       パターン（.section-dark）に統合。 -->
+  <section id="about" class="section-dark">
+    <div class="section-inner">
+      <div class="eyebrow on-dark reveal" data-reveal>About</div>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80">樽石デジタル技術研究所合同会社（TDRI）</h2>
+
+      <div class="about-grid">
+        <div class="about-card reveal" data-reveal data-delay="120">
+          <h3>会社概要</h3>
+          <p>
+            樽石デジタル技術研究所合同会社（TDRI）は、
+            2018年に創業、2021年12月に法人設立した
+            千葉県白井市を拠点とするテクノロジーカンパニーです。
+            再生可能エネルギーと IT の融合を事業の柱に、
+            AI エージェントを経営の中核に置く EntreprenAIs プラットフォームの
+            研究開発・運用を行っています。
+          </p>
+          <p>
+            従業員数 0 人。CFO・CTO・CPO・CLO・CHRO・CISO・COO・Auditor の
+            8 体の AI エージェント（C-Suite Agent Fleet）が経営を担う、
+            マルチエージェント経営を実践している企業です。
+          </p>
+        </div>
+        <div class="about-card reveal" data-reveal data-delay="200">
+          <h3>創業の原点</h3>
+          <p>
+            父方の実家が福島県いわき市にある代表の樽石将人は、
+            2011年の東日本大震災を機に「電気を使う国にした当事者としての責任」を痛感し、
+            再生可能エネルギーを安定活用するためのデジタル技術確立を目指して
+            本研究所を立ち上げました。
+          </p>
+        </div>
+        <div class="about-card reveal" data-reveal data-delay="280">
+          <h3>代表プロフィール</h3>
+          <p>
+            代表社員 樽石将人は、外資系 IT 企業・Google Japan・楽天でエンジニアとして
+            大規模分散システムの開発に携わったのち、Retty の CTO として東証マザーズ上場を経験。
+            現在は大手グループ会社の CTO として経営を担いながら、
+            早稲田大学データサイエンス研究所の招聘研究員として研究活動も継続。
+            2021年に TDRI を法人設立し、EntreprenAIs C-Suite Agent Fleet との
+            マルチエージェント経営を自ら実践・研究している。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- #368: NEWS — entreprenais.com トップページ #news セクション（最新3件の
+       ニュース一覧）を移植。news/ は GitHub Pages ビルドでルート直下（/news/）に
+       配置されるサイト共通ページのため、BASE（/cloud）を付与せずサイト絶対パスで
+       リンクする（下記 FOOTER の他リンクも同様）。 -->
+  <section id="news" class="section-light" style="display:none" aria-hidden="true">
+    <div class="section-inner">
+      <div class="eyebrow reveal" data-reveal>News</div>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80">ニュース</h2>
+      <ul class="news-list" id="cloud-news-list"></ul>
+      <div class="news-more reveal" data-reveal data-delay="200">
+        <a class="cta-btn-secondary" href="/news/" style="display:inline-block">すべてのニュースを見る &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- #368: FOOTER — entreprenais.com トップページのフッター（会社ブランド・
+       著作権表示・フッターナビゲーション）を移植。既存の1行フッターを置換。 -->
   <footer>
     <div class="footer-inner">
-      <span>&copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud</span>
-      <span class="mono">Internet of Agents · Edge-First · Zero Emission</span>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-brand__mark" aria-hidden="true">T</span>
+          <div>
+            <p class="footer-brand__name">樽石デジタル技術研究所合同会社</p>
+            <p class="footer-brand__name-en">Taruishi Digital Research Institute, LLC</p>
+          </div>
+        </div>
+        <nav aria-label="フッターナビゲーション">
+          <ul class="footer-nav-list">
+            <li><a href="/news/">News</a></li>
+            <li><a href="/eai/">EntreprenAIs</a></li>
+            <li><a href="/agents/">Agents</a></li>
+            <li><a href="/vertical/">Vertical</a></li>
+            <li><a href="/eai/showcase/">Showcase</a></li>
+            <li><a href="/terms/">Terms of Use</a></li>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 樽石デジタル技術研究所合同会社 — EntreprenAIs Cloud</span>
+        <span class="mono">Internet of Agents · Edge-First · Zero Emission</span>
+      </div>
     </div>
   </footer>
+
+  <!-- #368: LP News section — トップページ index.html L741-797 と同一ロジックを移植。
+       news.json は GitHub Pages ビルド（deploy-main.yml）でリポジトリルート直下の
+       data/ から _site/data/ にコピーされ apex 直下（/data/news.json）で配信される。
+       /cloud は _site/cloud/ にサブディレクトリとして組み込まれるだけで data/ は
+       複製されないため、BASE（/cloud）を付与せずサイト絶対パスで参照する。 -->
+  <script>
+  (function () {
+    'use strict';
+    var section = document.getElementById('news');
+    var list = document.getElementById('cloud-news-list');
+    if (!section || !list) return;
+
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + escHtml(item.thumbnail) + '" alt="' + escHtml(item.title) + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      li.innerHTML = '<a class="news-card" href="' + escHtml(item.url) + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + escHtml(item.date) + '</span>'
+        +     '<span class="news-card__badge">' + escHtml(item.badge) + '</span>'
+        +   '</div>'
+        +   '<h3 class="news-card__title">' + escHtml(item.title) + '</h3>'
+        +   '<p class="news-card__summary">' + escHtml(item.summary) + '</p>'
+        +   '<span class="news-card__cta">' + escHtml(item.cta) + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items.slice(0, 3);
+        latest.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // News 取得失敗時はセクションを非表示のまま維持（LP UX を崩さない）
+      });
+  })();
+  </script>
 
   <!-- #345/#358/#360: LIVE DEMO と ヒーロー iPhone フレームの両方が参照する共有 SCRIPT。
        FC指摘「勝手に独自のアニメ作らなくて良い。LIVE DEMOの10ターンのチャットのデモが
