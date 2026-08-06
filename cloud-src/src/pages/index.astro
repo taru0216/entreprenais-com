@@ -148,6 +148,38 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       max-width: 120px;
       background: var(--color-border);
     }
+    /* #370: ヘッダー直下・右寄せの最新ニュース1件ピル。root（entreprenais.com
+       トップページ）の .hero__news-pill と同じ配置意図（ヒーロー右上・絶対配置）を
+       /cloud のライトテーマ配色（--color-border/--color-text/--color-muted/
+       --font-mono）に合わせて移植する。.hero は overflow:hidden のため、
+       overflow 制約のない .hero-inner（position:relative）を配置基準にする。 */
+    .hero-news-pill {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      padding: 0.4em 0.95em;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .hero-news-pill time { font-feature-settings: "tnum"; }
+    .hero-news-pill__title { color: var(--color-text); font-weight: 500; }
+    .hero-news-pill:hover { border-color: var(--color-accent); color: var(--color-text); }
+    .hero-news-pill:hover .hero-news-pill__title { color: var(--color-accent2); }
+    @media (max-width: 720px) {
+      .hero-news-pill { position: static; margin-bottom: 20px; }
+      .hero-news-pill time { display: none; }
+    }
     .hero-live-badge {
       display: inline-flex;
       align-items: center;
@@ -450,6 +482,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     h2.headline.narrow { max-width: 26ch; }
     h2.headline .accent { color: var(--color-accent); }
+    /* #370 followup: FC指摘「ABOUTの会社名も背景と文字色が同じで見えない」。
+       h2.headline は color 未指定のため body の既定文字色（暗色 --color-text）を
+       継承する。.section-dark（暗背景）内で使う場合、これまで #demo/#architecture の
+       h2 は個別にインライン style="color:var(--color-dark-text)" を付与して回避していたが、
+       ABOUT セクション追加時（#368）にこの付与が漏れ、暗背景×暗文字でコントラスト
+       不足となった。LIVE DEMO吹き出し（#347）・CTAボタン（#350 followup）でも同種の
+       コントラスト不足が繰り返し発生しているため、都度のインライン style ではなく
+       .section-dark 配下の h2.headline に既定で明色を当てるセレクタを追加し、
+       同じ見落としの再発を構造的に防ぐ。既存のインライン style（#demo/#architecture）は
+       同値のため無害だが、そのまま残してもこのルールと衝突しない。 */
+    .section-dark h2.headline { color: var(--color-dark-text); }
     .section-lede {
       margin: 20px 0 0;
       max-width: 60ch;
@@ -870,9 +913,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .about-card p { margin: 14px 0 0; font-size: 14.5px; line-height: 1.9; color: var(--color-dark-text-soft); }
     .about-card p + p { margin-top: 12px; }
 
-    /* #368: NEWS（entreprenais.com トップページ #news 相当のニュース一覧を移植）
-       /data/news.json を取得して最新3件をカード表示する。トップページの
-       .news-card 構造・データ形式をそのまま踏襲し、/cloud のライトテーマに合わせて配色調整。 */
+    /* #368/#370 followup: NEWS（entreprenais.com トップページ #news 相当の
+       ニュース一覧を移植）/data/news.json を取得して最新3件をカード表示する。
+       トップページの .news-card 構造・データ形式をそのまま踏襲し、/cloud の
+       ライトテーマに合わせて配色調整。
+       #370 followup: 本来ここに定義していた .news-card 関連セレクタ一式は
+       JS（renderCard、下記スクリプトブロック）が innerHTML で実行時に動的生成する
+       要素に適用されるが、Astro の scoped CSS（コンパイル時に静的要素へ注入される
+       data-astro-cid-* 属性ベースのセレクタ）は動的生成要素に一切マッチしないため、
+       本番でスタイルが丸ごと無効化され、素の <img> がカード幅いっぱいに表示される
+       崩れが発生した（FC報告）。LIVE DEMO吹き出し（#347）・ヒーローiPhoneフレーム
+       （#366）と同一原因のため、同じ対応（is:global ブロックへの切り出し）を適用する。
+       定義は下記 <style is:global> ブロックを参照（.news-list のみ静的要素
+       <ul id="cloud-news-list"> に直接付与されているためここに残置）。 */
     .news-list {
       list-style: none;
       margin: 52px 0 0;
@@ -881,54 +934,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       flex-direction: column;
       gap: 18px;
     }
-    .news-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 22px;
-      padding: 24px 28px;
-      background: #fff;
-      border: 1px solid var(--color-border2);
-      border-radius: 22px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
-    }
-    .news-card:hover { transform: translateY(-3px); border-color: var(--color-accent); color: inherit; }
-    .news-card__thumb,
-    .news-card__thumb-placeholder {
-      flex: none;
-      width: 84px;
-      aspect-ratio: 3 / 4;
-      border-radius: 12px;
-      background: var(--color-card);
-      object-fit: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      opacity: 0.4;
-    }
-    .news-card__body { flex: 1; min-width: 0; }
-    .news-card__meta { display: flex; align-items: center; gap: 10px; }
-    .news-card__date { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-muted); }
-    .news-card__badge {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-accent2);
-      background: var(--color-accent-tint);
-      border-radius: 999px;
-      padding: 2px 10px;
-    }
-    .news-card__title { margin: 8px 0 0; font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--color-text); }
-    .news-card__summary { margin: 8px 0 0; font-size: 13.5px; line-height: 1.8; color: var(--color-text-soft); }
-    .news-card__cta { margin-top: 8px; display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--color-accent); }
     .news-more { margin-top: 28px; text-align: center; }
-    @media (max-width: 720px) {
-      .news-card { flex-direction: column; }
-      .news-card__thumb, .news-card__thumb-placeholder { width: 100%; aspect-ratio: 16 / 9; }
+    /* #370 followup: FC 指摘「NEWS の『すべてのニュースを見る』が見えない」。
+       NEWS セクションは .section-light（明背景）だが、流用した .cta-btn-secondary は
+       .cta-box（暗背景 CTA）専用に明文字（--color-dark-text）で設計されたボタンで、
+       明背景に重なりコントラストが失われていた。#350 followup で一度直した
+       「アウトラインボタンの文字色が背景と同化する」パターンが、明背景コンテキストで
+       再発したもの。.news-more 配下限定で暗文字に上書きし、.cta-btn-secondary 本来の
+       用途（.cta-box 内）には影響させない。 */
+    .news-more .cta-btn-secondary {
+      border-color: var(--color-border2);
+      color: var(--color-text);
+    }
+    .news-more .cta-btn-secondary:hover {
+      color: var(--color-accent2);
+      border-color: var(--color-accent);
     }
 
     /* FOOTER */
@@ -1121,6 +1141,60 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       vertical-align: -2px;
       animation: eaiCaret 900ms step-end infinite;
     }
+
+    /* #370 followup: NEWS カード（renderCard が innerHTML で動的生成）。
+       root（entreprenais.com トップページ）の .news-card 構造・データ形式を
+       踏襲し、横並び（左に正方形サムネイル・右にテキスト）カードレイアウトを
+       /cloud のライトテーマ配色で再現する。720px 以下でのみ縦積みに切り替える。 */
+    .news-card {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 22px;
+      padding: 24px 28px;
+      background: #fff;
+      border: 1px solid var(--color-border2);
+      border-radius: 22px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .news-card:hover { transform: translateY(-3px); border-color: var(--color-accent); color: inherit; }
+    .news-card__thumb,
+    .news-card__thumb-placeholder {
+      flex: none;
+      width: 84px;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      background: var(--color-card);
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      opacity: 0.4;
+    }
+    .news-card__body { flex: 1; min-width: 0; }
+    .news-card__meta { display: flex; align-items: center; gap: 10px; }
+    .news-card__date { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-muted); }
+    .news-card__badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-accent2);
+      background: var(--color-accent-tint);
+      border-radius: 999px;
+      padding: 2px 10px;
+    }
+    .news-card__title { margin: 8px 0 0; font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--color-text); }
+    .news-card__summary { margin: 8px 0 0; font-size: 13.5px; line-height: 1.8; color: var(--color-text-soft); }
+    .news-card__cta { margin-top: 8px; display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--color-accent); }
+    @media (max-width: 720px) {
+      .news-card { flex-direction: column; }
+      .news-card__thumb, .news-card__thumb-placeholder { width: 100%; aspect-ratio: 16 / 9; }
+    }
   </style>
 
   <!-- NAV -->
@@ -1150,6 +1224,14 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <img class="hero-photo-bg hero-photo-bg--mobile" src={`${BASE}/images/hero-photo-bg-mobile.jpg`} alt="" loading="eager" />
     </div>
     <div class="hero-inner">
+      <!-- #370: 最新ニュース1件ピル。root と同一の /data/news.json を絶対パスで
+           fetch し items[0] のみ描画する（下記末尾スクリプトブロック参照）。
+           フェッチ失敗時は非表示のまま維持（既存 News セクションと同じフェイルセーフ）。 -->
+      <a class="hero-news-pill" id="hero-news-pill" href="#" style="display:none" aria-hidden="true">
+        <time id="hero-news-pill-date"></time>
+        <span class="hero-news-pill__title" id="hero-news-pill-title"></span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
       <div class="hero-eyebrow-row reveal" data-reveal>
         <span class="hero-eyebrow">Green AI Cloud</span>
         <span class="hero-eyebrow-rule"></span>
@@ -1599,6 +1681,38 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       })
       .catch(function () {
         // News 取得失敗時はセクションを非表示のまま維持（LP UX を崩さない）
+      });
+  })();
+  </script>
+
+  <!-- #370: ヒーロー最新ニュース1件ピル。上記 #368 News セクションと同じ
+       /data/news.json 絶対パス fetch パターンを踏襲し、items[0]（最新1件）のみを
+       日付＋見出し＋矢印リンクで描画する独立 IIFE（News セクションの表示可否とは
+       無関係に動作させるため分離）。フェッチ失敗時は非表示のまま維持。 -->
+  <script>
+  (function () {
+    'use strict';
+    var pill = document.getElementById('hero-news-pill');
+    var dateEl = document.getElementById('hero-news-pill-date');
+    var titleEl = document.getElementById('hero-news-pill-title');
+    if (!pill || !dateEl || !titleEl) return;
+
+    fetch('/data/news.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items && items[0];
+        if (!latest) return;
+        dateEl.textContent = latest.date;
+        titleEl.textContent = latest.title;
+        pill.href = latest.url;
+        pill.style.display = '';
+        pill.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // 取得失敗時は非表示のまま維持（LP UX を崩さない）
       });
   })();
   </script>
