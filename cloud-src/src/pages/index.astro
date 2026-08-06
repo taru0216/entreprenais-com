@@ -1299,15 +1299,23 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </footer>
 
-  <!-- #345/#358: LIVE DEMO と ヒーロー iPhone フレームの両方が参照する共有 SCRIPT。
+  <!-- #345/#358/#360: LIVE DEMO と ヒーロー iPhone フレームの両方が参照する共有 SCRIPT。
        FC指摘「勝手に独自のアニメ作らなくて良い。LIVE DEMOの10ターンのチャットのデモが
-       重要」「それと同じターンを iPhone にも出す」を受け、単一の情報源として
-       window.__EAI_DEMO_SCRIPT に定義し、LIVE DEMO（own/cloud比較）とヒーロー
-       iPhoneフレーム（own側のみ）の両方の自動再生ロジックから参照する。 -->
+       重要」「それと同じターンを iPhone にも出す」を受け、単一の情報源として定義し、
+       LIVE DEMO（own/cloud比較）とヒーロー iPhoneフレーム（own側のみ）の両方の
+       自動再生ロジックから参照する。
+       #360: Astro の hoisted スクリプトバンドラーは複数の <script> ブロックの
+       記述順序を保持しない（ビルド後の並び替えにより定義が参照より後になり得る）。
+       これにより SCRIPT を別ブロックの window.__EAI_DEMO_SCRIPT として定義していた
+       旧実装（#358）はヒーロー側・LIVE DEMO側の双方で参照時に undefined となり、
+       自動再生が発火しない障害が発生した（本番実測で確認）。
+       単一の <script> ブロック・単一の IIFE 内に SCRIPT 定義と両方の再生ロジックを
+       まとめることで、バンドル順序に依存しない確実な実行順序を保証する。 -->
   <script>
   (function () {
     'use strict';
-    window.__EAI_DEMO_SCRIPT = [
+
+    var SCRIPT = [
       { q: 'グリーンAIクラウドの応答速度は？', own: '反射応答で 0.5ms 台です。CPUキャッシュ経路（LLM推論なし）で固定応答を返しています。', cloud: 'グリーンAIクラウドの応答速度については、アーキテクチャや測定条件によって変動しますが、一般的なクラウド推論では数秒〜数十秒程度の応答時間が想定されます。', cloudMs: 9500 },
       { q: 'その電力はどこから来ていますか？', own: '太陽光の自家発電と再エネ電力契約（アクアエナジー100等）です。実質再エネ100%で稼働しています。', cloud: '一般的なクラウドサービスの電力構成は事業者や地域によって異なり、公開情報の範囲では再生可能エネルギーの比率を正確に特定することは難しいと考えられます。', cloudMs: 11800 },
       { q: 'クラウドLLMは使いますか？', own: '使いません。推論は自社グリーンデータセンター内で完結し、電力起源を自社で管理しています。', cloud: 'クラウドLLMの利用有無については構成に依存しますが、多くのAIエージェント基盤では外部の大規模言語モデルAPIを経由する構成が一般的です。', cloudMs: 9900 },
@@ -1319,17 +1327,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       { q: 'ESG報告に使える証跡は出せますか？', own: '電源構成を対外開示し、証跡整備を前提に運用しています。個別契約の粒度はご相談ください。', cloud: '電力証跡の開示範囲については、利用しているクラウド事業者の公開情報に依存するため、詳細な内訳を提示できない場合があります。', cloudMs: 10600 },
       { q: '導入の相談はできますか？', own: 'できます。IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究を承っています。', cloud: '導入に関するご相談窓口については、提供元の公開情報をご確認いただくのが確実です。一般的には問い合わせフォームまたは営業窓口が案内されています。', cloudMs: 9800 }
     ];
-  })();
-  </script>
-
-  <!-- #345: LIVE DEMO 自動再生ロジック。モックアップの Component（DCLogicベース）の
-       ownTurn/cloudTurn/runDemo/resetDemo を Vanilla JS で再現。IntersectionObserver で
-       #demo が画面に入ったら自動再生を開始し、画面外に出たらリセットする。 -->
-  <script>
-  (function () {
-    'use strict';
-
-    var SCRIPT = window.__EAI_DEMO_SCRIPT || [];
 
     var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
 
@@ -1539,25 +1536,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     } else if (demoSection) {
       runDemo();
     }
-  })();
-  </script>
 
-  <!-- #358: ヒーロー iPhone フレーム自動再生。FC指摘「勝手に独自のアニメ作らなくて
-       良い。LIVE DEMOの10ターンのチャットのデモが重要」「それと同じターンを iPhone
-       にも出す」を受け、window.__EAI_DEMO_SCRIPT（LIVE DEMOと共有）の own側のみを
-       ownTurn と同一パターンのタイプライター演出で再生する軽量版。cloud側の比較表示は
-       LIVE DEMO専用のまま複製しない。ヒーローセクションが画面に入ったら自動再生を
-       開始し、画面外に出たらリセットする（LIVE DEMOと同じ IntersectionObserver
-       パターン）。 -->
-  <script>
-  (function () {
-    'use strict';
-
-    var SCRIPT = window.__EAI_DEMO_SCRIPT || [];
-    if (!SCRIPT.length) return;
-
-    var msgsEl = document.getElementById('hero-phone-msgs');
-    var msValueEl = document.getElementById('hero-phone-ms-value');
+    // #358/#360: ヒーロー iPhone フレーム自動再生。FC指摘「勝手に独自のアニメ作らなくて
+    // 良い。LIVE DEMOの10ターンのチャットのデモが重要」「それと同じターンを iPhone
+    // にも出す」を受け、上記 SCRIPT（LIVE DEMOと同一スコープ内で共有）の own側のみを
+    // ownTurn と同一パターンのタイプライター演出で再生する軽量版。cloud側の比較表示は
+    // LIVE DEMO専用のまま複製しない。ヒーローセクションが画面に入ったら自動再生を
+    // 開始し、画面外に出たらリセットする（LIVE DEMOと同じ IntersectionObserver
+    // パターン）。#360: 別 <script> ブロックに分離すると Astro の hoisted バンドラーが
+    // 記述順序を保持せず定義前に参照される障害が発生したため、SCRIPT 定義と同一 IIFE内に
+    // まとめて実行順序を保証する。
+    (function () {
+      var msgsEl = document.getElementById('hero-phone-msgs');
+      var msValueEl = document.getElementById('hero-phone-ms-value');
     if (!msgsEl || !msValueEl) return;
 
     var idleHtml = msgsEl.innerHTML;
@@ -1653,6 +1644,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       heroIo.observe(heroSection);
     }
     // prefers-reduced-motion: reduce の場合は静的な idle 表示（既存マークアップ）のまま
+    })();
   })();
   </script>
 
