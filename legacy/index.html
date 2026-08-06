@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0f12" />
+  <meta name="format-detection" content="telephone=no" />
+  <!-- #374: トップページ差替えに伴い /legacy/ へ退避したアーカイブページ。
+       検索エンジンには index.html（新トップページ）のみをインデックスさせ、
+       本ページは重複コンテンツとして扱わせないため noindex を付与する。
+       リンク自体は辿れるようにし、閲覧・ロールバック確認は妨げない（follow）。 -->
+  <meta name="robots" content="noindex,follow" />
+  <title>[archive] Internet of Agents | 樽石デジタル技術研究所合同会社 (TDRI)</title>
+  <meta name="description" content="EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。（アーカイブページ）" />
+  <link rel="canonical" href="https://entreprenais.com/legacy/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:site_name" content="EntreprenAIs / 樽石デジタル技術研究所合同会社" />
+  <meta property="og:url" content="https://entreprenais.com/legacy/" />
+  <meta property="og:title" content="[archive] Internet of Agents | 樽石デジタル技術研究所合同会社 (TDRI)" />
+  <meta property="og:description" content="EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。（アーカイブページ）" />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[archive] Internet of Agents | 樽石デジタル技術研究所合同会社 (TDRI)" />
+  <meta name="twitter:description" content="EntreprenAIs — エッジで自律する AI エージェントの時代へ。グリーン電力で持続稼働するプラットフォームを TDRI が研究開発しています。（アーカイブページ）" />
+  <meta name="twitter:image" content="https://entreprenais.com/og.png" />
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="application/rss+xml" title="EntreprenAIs ニュース" href="/feed.xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- SRI 非適用 (#70): Google Fonts は動的 URL のためハッシュ固定不可。CSP の style-src / font-src allowlist で保護。 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- News section styles (LP) -->
+  <style>
+    .news-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .news-list--lp {
+      margin-bottom: 2.5rem;
+    }
+    .news-card {
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--line-soft);
+      border-radius: 22px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1.6rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .news-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 1.6rem;
+      right: 1.6rem;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 42px -22px rgba(42, 45, 124, 0.30);
+    }
+    .news-card:hover::before {
+      opacity: 0.85;
+    }
+    .news-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .news-card__date {
+      font-family: var(--serif);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .news-card__badge {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(42, 45, 124, 0.08);
+      border: 1px solid rgba(42, 45, 124, 0.22);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+    .news-card__title {
+      font-family: var(--jp);
+      font-weight: 700;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      line-height: 1.45;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .news-card__summary {
+      font-size: 0.93rem;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .news-card__cta {
+      margin-top: 0.5rem;
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s var(--ease);
+    }
+    .news-card:hover .news-card__cta {
+      color: var(--accent-bright);
+    }
+    .news-card__thumb {
+      flex: none;
+      width: 90px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 12px;
+      background: var(--paper-soft);
+      display: block;
+    }
+    .news-card__thumb-placeholder {
+      flex: none;
+      width: 90px;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      background: var(--paper-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      opacity: 0.38;
+    }
+    .news-card__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .news-more {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+    @media (max-width: 720px) {
+      .news-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.4rem 1.5rem;
+      }
+      .news-card__thumb,
+      .news-card__thumb-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+      }
+    }
+  </style>
+
+  <!-- Google Analytics 4 (gtag.js) -->
+  <!-- SRI 非適用 (#70): gtag/js は動的バージョンロード CDN のためハッシュ固定不可。CSP の script-src allowlist で保護。 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ND9RLH0NT3');
+  </script>
+
+  <!-- JSON-LD: Organization + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://entreprenais.com/#organization",
+        "name": "樽石デジタル技術研究所合同会社",
+        "alternateName": ["TDRI", "Taruishi Digital Research Institute, LLC"],
+        "url": "https://entreprenais.com/",
+        "logo": "https://entreprenais.com/og.png",
+        "sameAs": [
+          "https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/",
+          "https://github.com/taru0216"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://entreprenais.com/#website",
+        "url": "https://entreprenais.com/",
+        "name": "EntreprenAIs",
+        "description": "エッジで自律する AI エージェントのプラットフォーム",
+        "publisher": { "@id": "https://entreprenais.com/#organization" },
+        "inLanguage": "ja-JP"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="#hero">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#works">Roadmap</a></li>
+        <li><a href="#showcase">Showcase</a></li>
+        <li><a href="/agents/">Agents</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <nav class="lang-nav" aria-label="言語切り替え">
+        <a href="/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/en/" hreflang="en">English</a>
+        <a href="/zh/" hreflang="zh">中文</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <span class="hero__grid"></span>
+      <span class="hero__glow hero__glow--a"></span>
+      <span class="hero__glow hero__glow--b"></span>
+    </div>
+    <a class="hero__news-pill" href="/news/cpu-skill-execution/">
+      <time>2026-05-24</time>
+      <span>CPU のみでエージェントスキルを実行できる独自技術を確立</span>
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal" data-reveal>Internet of Agents</p>
+      <h1 class="hero__title">
+        <span class="reveal" data-reveal data-delay="100">再エネで自律する</span>
+        <span class="reveal hero__title--accent" data-reveal data-delay="200">AI エージェントの時代へ。</span>
+      </h1>
+      <p class="hero__lead reveal" data-reveal data-delay="350">
+        モノがつながる IoT から、エージェントが協調する IoA へ。
+      </p>
+      <div class="hero__cta reveal" data-reveal data-delay="500">
+        <a class="btn btn--primary" href="#mission">Read Vision &rarr;</a>
+        <a class="btn btn--ghost" href="#contact">Contact &darr;</a>
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>SCROLL</span>
+      <span class="hero__scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section id="mission" class="section section--dark">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>01 / Mission</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        <span class="accent">IoA</span> の実現プラットフォームを、エッジから組み立てる。
+      </h2>
+      <div class="mission__grid">
+        <p class="mission__lead reveal" data-reveal data-delay="200">
+          樽石デジタル技術研究所合同会社（TDRI）は、Internet of Agents（IoA）の実現プラットフォームを提供します。エージェントが安全に走り、互いに委譲し合う世界を、ソフトウェアとしてのインフラから設計しています。
+        </p>
+        <p class="mission__body reveal" data-reveal data-delay="300">
+          IoT が「モノをつないでデータを送る」ネットワークだったとすれば、IoA は「エージェント同士が依頼・委譲・交渉を行う」自律協調のネットワークです。中央クラウドだけに依存せず、エッジに分散した AI ノードがその場で考え、その場で決め、必要なときだけ協調する。TDRI はそのための実行基盤を、EntreprenAIs プラットフォームとして研究開発しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach (3 pillars) -->
+  <section id="approach" class="section">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>02 / Approach</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        IoA を支える 3 つの柱
+      </h2>
+      <div class="cards">
+        <article class="card reveal" data-reveal data-delay="150">
+          <p class="card__num">A.</p>
+          <h3 class="card__title">Edge-First</h3>
+          <p class="card__lead">エッジに分散するエージェントノード</p>
+          <p class="card__body">
+            Desktop / Server / Connect の 3 形態で、エージェントノードを
+            手元のデバイスから現場のサーバーまで分散配置します。
+          </p>
+        </article>
+        <article class="card reveal" data-reveal data-delay="250">
+          <p class="card__num">B.</p>
+          <h3 class="card__title">Zero Emission</h3>
+          <p class="card__lead">グリーン電力で持続稼働する推論</p>
+          <p class="card__body">
+            太陽光とバッテリーの余剰電力時間帯にローカル LLM<sup class="card__ref">*</sup> 推論を集中させ、
+            エージェントの稼働を化石燃料から切り離していきます。
+          </p>
+        </article>
+        <article class="card reveal" data-reveal data-delay="350">
+          <p class="card__num">C.</p>
+          <h3 class="card__title">Agent-to-Agent</h3>
+          <p class="card__lead">エージェント同士の自律協調</p>
+          <p class="card__body">
+            A2A プロトコルでエージェント同士が依頼・委譲・交渉を自律的に行い、
+            人間は方針と価値観の決定に集中できる構造をつくります。
+          </p>
+        </article>
+      </div>
+
+      <aside class="cards__note reveal" data-reveal data-delay="500" aria-label="Zero Emission Option に関する補足">
+        <p class="cards__note-label">補足</p>
+        <p class="cards__note-body">
+          EntreprenAIs は現在、AI の頭脳部分にクラウドの大規模言語モデル（<strong>Claude</strong>）を利用しています。クラウド側の電力源までは私たちでは管理できないため、Zero Emission Option が対象とするのは <strong>エッジ側のローカル LLM 基盤</strong>と、エージェント同士をつなぐ仕組み（<strong>Internet of Agents</strong>）の方です。
+        </p>
+        <p class="cards__note-body">
+          私たちの長期目標は、エッジで動くローカル LLM の利用比率を高め、AI の稼働そのものを再生可能エネルギーで賄える状態に近づけていくことです。
+        </p>
+      </aside>
+
+      <!-- Product Preview — A2A in action -->
+      <div class="preview reveal" data-reveal data-delay="450">
+        <figure class="preview__device">
+          <div class="preview__phone phone-mock">
+            <span class="preview__notch phone-mock__notch" aria-hidden="true"></span>
+            <img
+              class="preview__img phone-mock__img"
+              src="/img/chat-preview-iphone.png"
+              alt="EntreprenAIs chat-app — FC が C-Suite Agent と対話する画面"
+              loading="lazy"
+              width="380"
+              height="800"
+            />
+          </div>
+        </figure>
+        <figcaption class="preview__caption">
+          <p class="preview__eyebrow">Product Preview</p>
+          <h3 class="preview__title">FC が C-Suite Agent と話す日常</h3>
+          <p class="preview__body">
+            自然言語の問いかけに、エージェントが自律的に調査タスクを起動し、
+            進捗カードでリアルタイムに状態を返す。これが EntreprenAIs の A2A チャット UX です。
+          </p>
+          <a class="btn btn--ghost preview__cta" href="/eai/">詳細 &rarr;</a>
+        </figcaption>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap (timeline) -->
+  <section id="works" class="section section--dark">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>03 / Roadmap</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        IoA への道のり
+      </h2>
+      <ol class="timeline">
+        <li class="timeline__item reveal" data-reveal data-delay="150">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Now</span>
+            <h3 class="timeline__title">Desktop + Connect</h3>
+          </div>
+          <p class="timeline__body">
+            個人のワークステーションを「経営ノード」として接続する EntreprenAIs Connect の
+            Phase 1 / Phase 2 を進行中。エッジに最初のエージェントノードを根付かせています。
+          </p>
+        </li>
+        <li class="timeline__item reveal" data-reveal data-delay="250">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Next</span>
+            <h3 class="timeline__title">Zero Emission Option / A2A</h3>
+          </div>
+          <p class="timeline__body">
+            グリーン電力余剰時間帯に推論を寄せる Zero Emission Option の PoC、
+            エージェント間プロトコル A2A の標準化、チャットルーム UX の整備を進めます。
+          </p>
+        </li>
+        <li class="timeline__item reveal" data-reveal data-delay="350">
+          <span class="timeline__marker"></span>
+          <div class="timeline__head">
+            <span class="timeline__phase">Future</span>
+            <h3 class="timeline__title">Carbon-Aware Cluster &amp; IoA Mesh</h3>
+          </div>
+          <p class="timeline__body">
+            Carbon-Aware にスケジュールされる Edge-First K8s クラスタと、
+            エージェントが越境して協調する IoA メッシュ、そしてエージェント市場へ。
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Showcase — 稼働中の AI エージェント -->
+  <section id="showcase" class="section">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>04 / Showcase</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        稼働中の AI エージェント
+      </h2>
+      <p class="showcase-lead reveal" data-reveal data-delay="150">
+        EntreprenAIs Runtime で動作する実際のエージェントたち
+      </p>
+      <div class="showcase-cards">
+
+        <!-- Card 1: 問い合わせ AI -->
+        <article class="showcase-card reveal" data-reveal data-delay="200">
+          <div class="showcase-card__header">
+            <span class="showcase-card__status" aria-label="稼働中">
+              <span class="showcase-card__status-dot" aria-hidden="true"></span>
+              稼働中
+            </span>
+          </div>
+          <h3 class="showcase-card__title">問い合わせ AI</h3>
+          <p class="showcase-card__body">
+            このサイトに埋め込まれた公開問い合わせエージェント。
+            エッジで動くローカル LLM（ollama）で推論し、
+            entreprenaIs.com の情報にもとづいて質問に回答します。
+          </p>
+          <ul class="showcase-card__tags" aria-label="技術タグ">
+            <li>EntreprenAIs Contact AI</li>
+            <li>Edge inference</li>
+            <li>MacBook 稼働</li>
+          </ul>
+          <div class="showcase-card__cta">
+            <button class="btn btn--primary showcase-card__btn-open" type="button"
+              aria-label="右下の AI チャットウィジェットを開く">
+              AI に聞く &rarr;
+            </button>
+            <a class="btn btn--ghost" href="/agents/">プロダクト詳細 &rarr;</a>
+          </div>
+        </article>
+        <!-- Card 3: C-Suite Agent Fleet -->
+        <article class="showcase-card reveal" data-reveal data-delay="300">
+          <div class="showcase-card__header">
+            <span class="showcase-card__status" aria-label="稼働中">
+              <span class="showcase-card__status-dot" aria-hidden="true"></span>
+              稼働中
+            </span>
+          </div>
+          <h3 class="showcase-card__title">C-Suite Agent Fleet</h3>
+          <p class="showcase-card__body">
+            経営判断・コード実装・法務・財務を担う 8 体の経営 AI エージェントチーム。
+            FC（Fleet Commander）の日常業務を並列支援し、
+            チャットで自律的にタスクを実行します。
+          </p>
+          <ul class="showcase-card__tags" aria-label="技術タグ">
+            <li>経営 AI</li>
+            <li>Multi-agent</li>
+            <li>Edge-First</li>
+          </ul>
+          <div class="showcase-card__cta">
+            <a class="btn btn--ghost" href="/eai/">詳細を見る &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section section--dark">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>05 / About</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        樽石デジタル技術研究所合同会社（TDRI）
+      </h2>
+      <div class="about__grid">
+        <div class="about__block reveal" data-reveal data-delay="150">
+          <h3 class="about__heading">会社概要</h3>
+          <p class="about__body">
+            樽石デジタル技術研究所合同会社（TDRI）は、
+            2018年に創業、2021年12月に法人設立した
+            千葉県白井市を拠点とするテクノロジーカンパニーです。
+            再生可能エネルギーと IT の融合を事業の柱に、
+            AI エージェントを経営の中核に置く EntreprenAIs プラットフォームの
+            研究開発・運用を行っています。
+          </p>
+          <p class="about__body">
+            従業員数 0 人。CFO・CTO・CPO・CLO・CHRO・CISO・COO・Auditor の
+            8 体の AI エージェント（C-Suite Agent Fleet）が経営を担う、
+            マルチエージェント経営を実践している企業です。
+          </p>
+        </div>
+        <div class="about__block reveal" data-reveal data-delay="250">
+          <h3 class="about__heading">創業の原点</h3>
+          <p class="about__body">
+            父方の実家が福島県いわき市にある代表の樽石将人は、
+            2011年の東日本大震災を機に「電気を使う国にした当事者としての責任」を痛感し、
+            再生可能エネルギーを安定活用するためのデジタル技術確立を目指して
+            本研究所を立ち上げました。
+          </p>
+        </div>
+        <div class="about__block reveal" data-reveal data-delay="350">
+          <h3 class="about__heading">代表プロフィール</h3>
+          <p class="about__body">
+            代表社員 樽石将人は、外資系 IT 企業・Google Japan・楽天でエンジニアとして
+            大規模分散システムの開発に携わったのち、Retty の CTO として東証マザーズ上場を経験。
+            現在は大手グループ会社の CTO として経営を担いながら、
+            早稲田大学データサイエンス研究所の招聘研究員として研究活動も継続。
+            2021年に TDRI を法人設立し、EntreprenAIs C-Suite Agent Fleet との
+            マルチエージェント経営を自ら実践・研究している。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="section" style="display:none" aria-hidden="true">
+    <div class="section__inner">
+      <p class="section__num reveal" data-reveal>05.5 / News</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        ニュース
+      </h2>
+      <ul class="news-list news-list--lp" id="lp-news-list">
+        <!-- Dynamically populated from /data/news.json -->
+      </ul>
+      <div class="news-more reveal" data-reveal data-delay="300">
+        <a class="btn btn--ghost" href="/news/">すべてのニュースを見る &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section section--accent">
+    <div class="section__inner contact">
+      <p class="section__num reveal" data-reveal>06 / Contact</p>
+      <h2 class="section__title reveal" data-reveal data-delay="100">
+        お問い合わせ
+      </h2>
+      <p class="contact__lead reveal" data-reveal data-delay="200">
+        IoA / Zero Emission Option に関する共同研究・導入相談・採用は、代表者の LinkedIn からご連絡ください。
+      </p>
+      <a class="contact__mail reveal" data-reveal data-delay="300" href="https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/" target="_blank" rel="noopener noreferrer">
+        LinkedIn — 樽石将人
+      </a>
+      <p class="contact__note reveal" data-reveal data-delay="400">
+        ※ 本サイトは TDRI のコーポレートサイトです。返信にはお時間をいただく場合があります。専用問い合わせメールアドレスは準備中です。
+      </p>
+      <button class="btn btn--ghost contact__ai-btn reveal" data-reveal data-delay="500" type="button">
+        AI に聞く &rarr;
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石デジタル技術研究所合同会社</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__copy">
+          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
+          This site is part of EntreprenAIs IoA platform
+        </p>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+          <ul class="footer__nav-list">
+            <li><a href="/news/" class="footer__link">News</a></li>
+            <li><a href="/eai/" class="footer__link">EntreprenAIs</a></li>
+            <li><a href="/agents/" class="footer__link">Agents</a></li>
+            <li><a href="/vertical/" class="footer__link">Vertical</a></li>
+            <li><a href="/eai/showcase/" class="footer__link">Showcase</a></li>
+            <li><a href="/terms/" class="footer__link">Terms of Use</a></li>
+            <li><a href="/privacy/" class="footer__link">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+
+  <!-- EntreprenAIs Contact AI widget — dynamic load with offline fallback (#41) -->
+  <script>
+  (function () {
+    'use strict';
+    var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+
+    // 「AIお休み中」バッジを右下に表示する（contact-agent がダウン時）
+    function showOfflineBadge() {
+      if (document.getElementById('__eai-offline-badge')) return;
+
+      // GA4: AI オフライン表示を計測（PV相当）
+      if (window.gtag) {
+        gtag('event', 'ai_offline', {
+          event_category: 'contact_agent',
+          event_label: 'offline_badge_shown',
+          non_interaction: true
+        });
+      }
+
+      var style = document.createElement('style');
+      style.textContent = [
+        '#__eai-offline-badge {',
+        '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
+        '  height: 44px; padding: 0 16px;',
+        '  border-radius: 22px; white-space: nowrap;',
+        '  background: #1a1d22; color: rgba(247,246,241,0.65);',
+        '  border: 1px solid rgba(247,246,241,0.10);',
+        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+        '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
+        '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
+        '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
+        '  transition: background 0.2s, color 0.2s;',
+        '}',
+        '#__eai-offline-badge:hover {',
+        '  background: #2a2d34; color: rgba(247,246,241,0.88);',
+        '}',
+        '#__eai-offline-toast {',
+        '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
+        '  background: #1a1d22; color: rgba(247,246,241,0.82);',
+        '  padding: 12px 16px; border-radius: 10px;',
+        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+        '  font-size: 13px; line-height: 1.5;',
+        '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
+        '  border: 1px solid rgba(247,246,241,0.08);',
+        '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
+        '}',
+        '#__eai-offline-toast.visible { opacity: 1; }',
+      ].join('\n');
+      document.head.appendChild(style);
+
+      var badge = document.createElement('button');
+      badge.id = '__eai-offline-badge';
+      badge.innerHTML = '&#x1F319; AI&#x304A;&#x4F11;&#x307F;&#x4E2D;';
+      badge.setAttribute('aria-label', 'AI は現在お休み中です');
+      badge.setAttribute('title', '現在 AI はお休み中です');
+
+      var toast = document.createElement('div');
+      toast.id = '__eai-offline-toast';
+      toast.textContent = '現在 AI はお休み中です。太陽が出てきたら稼働します。';
+
+      badge.addEventListener('click', function () {
+        toast.classList.add('visible');
+        setTimeout(function () { toast.classList.remove('visible'); }, 3500);
+      });
+
+      document.body.appendChild(badge);
+      document.body.appendChild(toast);
+
+      // 本文内の「AI に聞く」ボタンをオフライン状態に変更
+      ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
+        var btns = document.querySelectorAll('.' + cls);
+        btns.forEach(function(btn) {
+          btn.textContent = 'AI お休み中';
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+          btn.onclick = null;
+        });
+      });
+    }
+
+    // ページロード時にアクティブチェック（widget.js の到達可否を確認）
+    function checkAiOnline(cb) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', WIDGET_URL, true);
+      xhr.timeout = 5000;
+      xhr.onload = function() { cb(xhr.status < 400); };
+      xhr.onerror = function() { cb(false); };
+      xhr.ontimeout = function() { cb(false); };
+      xhr.send();
+    }
+
+    // widget.js を動的ロード（onerror で offline バッジ表示）
+    function loadWidget() {
+      var s = document.createElement('script');
+      s.src = WIDGET_URL;
+      s.async = true;
+      s.onerror = function () {
+        showOfflineBadge();
+      };
+      document.body.appendChild(s);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        // ページロード時にヘルスチェックしてボタンを即時制御
+        checkAiOnline(function(online) {
+          if (!online) showOfflineBadge();
+        });
+        loadWidget();
+      });
+    } else {
+      checkAiOnline(function(online) {
+        if (!online) showOfflineBadge();
+      });
+      loadWidget();
+    }
+  })();
+  </script>
+
+  <!-- LP News section: fetch latest 3 items from /data/news.json -->
+  <script>
+  (function () {
+    'use strict';
+    var section = document.getElementById('news');
+    var list = document.getElementById('lp-news-list');
+    if (!section || !list) return;
+
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + escHtml(item.thumbnail) + '" alt="' + escHtml(item.title) + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      var cardClass = item.thumbnail ? 'news-card news-card--has-thumb' : 'news-card';
+      li.innerHTML = '<a class="' + cardClass + '" href="' + escHtml(item.url) + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + escHtml(item.date) + '</span>'
+        +     '<span class="news-card__badge">' + escHtml(item.badge) + '</span>'
+        +   '</div>'
+        +   '<h3 class="news-card__title">' + escHtml(item.title) + '</h3>'
+        +   '<p class="news-card__summary">' + escHtml(item.summary) + '</p>'
+        +   '<span class="news-card__cta">' + escHtml(item.cta) + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items.slice(0, 3);
+        latest.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+        // Show the section only after successful load
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep section hidden on error — do not disrupt LP UX
+      });
+  })();
+  </script>
+
+  <!-- Anchor scroll offset fix for mobile browsers (#1494)
+       iOS Safari / Android Chrome fire the hash scroll before CSS is applied on
+       cross-page navigation, so scroll-padding-top is ignored.
+       This script re-scrolls to the target after 'load' (CSS guaranteed applied),
+       compensating for the fixed nav height dynamically. -->
+  <script>
+  (function () {
+    'use strict';
+    if (!location.hash) return;
+    window.addEventListener('load', function () {
+      var hash = location.hash;
+      var target = document.querySelector(hash);
+      if (!target) return;
+      var nav = document.querySelector('.nav');
+      var navH = nav ? nav.getBoundingClientRect().height : 0;
+      var offset = 16; // extra breathing room (px)
+      var targetTop = target.getBoundingClientRect().top + window.scrollY;
+      // Disable smooth scroll temporarily to avoid fighting with browser's own scroll
+      var htmlEl = document.documentElement;
+      var prevBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto';
+      window.scrollTo({ top: targetTop - navH - offset, behavior: 'instant' });
+      htmlEl.style.scrollBehavior = prevBehavior;
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1535,7 +1535,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="cta-box__actions">
         <button type="button" class="cta-btn-primary" id="chat-preview-open-cta">導入を相談する →</button>
         <button type="button" class="cta-btn-secondary" id="chat-preview-open">AIに聞いてみる</button>
-        <a href={`${BASE}/`} class="cta-box__note" style="color:var(--color-dark-muted)">entreprenais.com へ戻る</a>
+        {/* #374: ASTRO_BASE=/ でルート直下にデプロイされる場合、このリンクは
+             自己参照ループ（現在ページ自身に戻るだけ）になるため非表示にする。
+             ASTRO_BASE=/cloud（従来の /cloud サブパス配信）時のみ表示を維持する。 */}
+        {BASE !== '' && (
+          <a href={`${BASE}/`} class="cta-box__note" style="color:var(--color-dark-muted)">entreprenais.com へ戻る</a>
+        )}
       </div>
     </div>
   </div>

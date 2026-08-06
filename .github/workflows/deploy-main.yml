@@ -64,29 +64,50 @@ jobs:
           cache: 'npm'
           cache-dependency-path: cloud-src/package-lock.json
 
-      - name: Build cloud
+      - name: Build cloud (/cloud サブパス版 — 従来どおり維持 #303)
         working-directory: cloud-src
         run: npm ci && npm run build
         env:
           ASTRO_BASE: /cloud
 
+      - name: Stash /cloud build output
+        run: |
+          # 直後の root ビルドが dist/ を上書きするため、/cloud 用の成果物を退避する
+          mv cloud-src/dist /tmp/cloud-dist
+
+      - name: Build cloud (root 版 — #374 トップページ差替え)
+        working-directory: cloud-src
+        run: npm run build
+        env:
+          ASTRO_BASE: /
+
       - name: Assemble full site
         run: |
           mkdir -p _site
           # Root static files
+          # #374: index.html はここで root 直下の旧ファイルがまずコピーされるが、
+          # 後続の「Cloud build output (root)」ステップで cloud-src の root ビルド
+          # 成果物により上書きされる（index.html を含む）。style.css / main.js は
+          # サイト全体で共有される旧アセットのため、cloud-src 側とファイル名が
+          # 衝突せず（cloud 側は _astro/ 配下にハッシュ付き名で出力）、意図せず
+          # 上書きされることはない。
           find . -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
             -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
             -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
             -exec cp {} _site/ \;
           # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page
-          for dir in img en zh news eai agents privacy terms data _i18n vertical; do
+          for dir in img en zh news eai agents privacy terms data _i18n vertical legacy; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
+          # Cloud build output (root) — #374: entreprenais.com トップページを
+          # /cloud の内容に差替え。index.html を含む root ビルド成果物一式で
+          # 上記 Root static files の index.html を上書きする。
+          cp -r cloud-src/dist/. _site/
           # Astro subsites (built output)
           mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger _site/cloud
           cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
           cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
-          cp -r cloud-src/dist/. _site/cloud/
+          cp -r /tmp/cloud-dist/. _site/cloud/
           # Other sites (non-Astro static HTML). Astro source dirs are detected
           # automatically via package.json presence and skipped here — they are
           # already built and placed above. This keeps the loop correct as new

@@ -12,6 +12,13 @@ const {
   title = "グリーンAIクラウド",
   description = "「超高速、超省電力」グリーンAIクラウド誕生。0.5msの超高速応答とコスト効率、電源構成の透明性を両立する、自社グリーンデータセンター上のエージェント実行基盤。",
 } = Astro.props;
+
+// #374: entreprenais.com のトップページ（/）差替えに伴う GA4 計測タグ移植。
+// ルート index.html が持っていた gtag('config', 'G-ND9RLH0NT3') と同一の測定 ID。
+// ASTRO_BASE=/（ルート配信）時のみ有効化する。/cloud サブパス配信時は元々計測タグが
+// 存在しなかったため、挙動を変えないよう BASE === '' の場合に限定する。
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isRootDeploy = BASE === '';
 ---
 <!DOCTYPE html>
 <html lang="ja">
@@ -23,6 +30,17 @@ const {
     <meta property="og:title" content={`${title} | EntreprenAIs`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    {isRootDeploy && (
+      <>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+        <script define:vars={{ gaId: 'G-ND9RLH0NT3' }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
