@@ -216,40 +216,38 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       gap: 12px;
       margin-top: 38px;
     }
-    /* #354: FC指摘「0.5msが小さくなった。独立して拡大・強調」。
-       旧 .hero-metric（KPIカード削除時に撤去）相当の巨大数字表示を、
-       iPhoneフレームと共存する形でテキストカラム内に復元する。
-       モックアップ（eai/tmp/1785983555-...png）の巨大「0.5」+「ms」を参考に、
-       アクセント色の大型数字 + 補足ノートで構成。 */
+    /* #354/#358: FC指摘「0.5msが小さくなった。独立して拡大・強調」
+       →「右上にスペースがあるのでここが良さそう」を受け、ヒーロー右上
+       （iPhoneフレームカラムの上部）に配置。モックアップの巨大「0.5」+「ms」を
+       参考に、アクセント色の大型数字 + 補足ノートで構成。 */
     .hero-metric-standalone {
       display: flex;
       align-items: flex-start;
       gap: 8px;
-      margin-top: 40px;
-      padding-top: 28px;
-      border-top: 1px solid var(--color-border);
+      align-self: flex-end;
+      margin-bottom: 4px;
     }
     .hero-metric-standalone__value {
       font-family: var(--font-heading);
-      font-size: clamp(64px, 9vw, 128px);
+      font-size: clamp(56px, 7vw, 96px);
       line-height: 0.82;
       font-weight: 900;
       letter-spacing: -0.04em;
       color: var(--color-accent);
     }
     .hero-metric-standalone__unit {
-      font-size: clamp(20px, 2.4vw, 32px);
+      font-size: clamp(18px, 2vw, 26px);
       line-height: 1;
       font-weight: 900;
       color: var(--color-text);
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .hero-metric-standalone__note {
       margin-left: 6px;
-      margin-top: 10px;
+      margin-top: 8px;
       font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1.9;
+      font-size: 10.5px;
+      line-height: 1.8;
       letter-spacing: 0.03em;
       color: var(--color-muted);
     }
@@ -302,16 +300,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       box-shadow:
         0 32px 60px -28px rgba(42, 45, 124, 0.35),
         0 12px 24px -12px rgba(13, 15, 18, 0.22);
-      /* #354: FC指摘「アニメーションがない」への対応。フレーム自体の微妙な
-         浮遊アニメーション（継続ループ）。 */
-      animation: heroPhoneFloat 5s ease-in-out infinite;
-    }
-    @keyframes heroPhoneFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-phone-mock { animation: none; }
     }
     .hero-phone-mock__notch {
       position: absolute;
@@ -347,54 +335,57 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 10px;
       letter-spacing: 0.05em;
     }
-    .hero-phone-mock__msg {
+    /* #358: FC指摘「LIVE DEMOの10ターンのチャットのデモが重要」「それと同じターンを
+       iPhone にも出す」を受け、独自演出（フェードイン・浮遊、#354）を撤回し、
+       LIVE DEMO（#demo）と同一の SCRIPT 配列を own側のみ再生するタイプライター演出に
+       置き換えた。.hero-phone-mock__msgs は会話ログのスクロール領域（縦スクロール、
+       auto-stick）で、吹き出しは JS（heroPhoneTurn、ページ末尾スクリプト）が動的生成する。 */
+    .hero-phone-mock__msgs {
       margin-top: 14px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+    .hero-phone-mock__msgs::-webkit-scrollbar { display: none; }
+    .hero-phone-mock__msg {
       padding: 10px 13px;
       border-radius: 14px;
       font-size: 12.5px;
       line-height: 1.6;
       max-width: 88%;
-      /* #354: FC指摘「アニメーションがない」への対応。吹き出しをページロード後に
-         順次フェードイン + 下からのスライドインで表示する軽量アニメーション。
-         LIVE DEMOの自動再生（タイプライター演出）ほど大掛かりにせず、
-         CSS @keyframes + animation-delay の一回限りの演出に留める。 */
-      opacity: 0;
-      animation: heroPhoneMsgIn 0.6s var(--ease) forwards;
     }
     .hero-phone-mock__msg--in {
       align-self: flex-start;
       background: var(--color-dark-surface);
       color: var(--color-dark-text-soft);
       border-bottom-left-radius: 4px;
-      animation-delay: 0.6s;
     }
     .hero-phone-mock__msg--out {
       align-self: flex-end;
       background: var(--color-accent);
       color: #fff;
       border-bottom-right-radius: 4px;
-      animation-delay: 1.5s;
     }
-    @keyframes heroPhoneMsgIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-phone-mock__msg { opacity: 1; animation: none; }
+    .hero-phone-caret {
+      display: inline-block;
+      width: 6px; height: 13px;
+      margin-left: 2px;
+      background: rgba(255,255,255,0.85);
+      vertical-align: -2px;
+      animation: eaiCaret 900ms step-end infinite;
     }
     .hero-phone-mock__ms {
-      margin-top: auto;
+      margin-top: 14px;
       padding-top: 14px;
       display: flex;
       align-items: baseline;
       gap: 6px;
       border-top: 1px solid var(--color-dark-border);
-      opacity: 0;
-      animation: heroPhoneMsgIn 0.6s var(--ease) forwards;
-      animation-delay: 2.2s;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-phone-mock__ms { opacity: 1; animation: none; }
+      flex: none;
     }
     .hero-phone-mock__ms-value {
       font-family: var(--font-heading);
@@ -1023,29 +1014,26 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
             <a href="#demo" class="btn btn-primary">0.5ms を体験する →</a>
             <a href="#architecture" class="btn btn-secondary">アーキテクチャを見る</a>
           </div>
+        </div>
 
-          <!-- #354: FC指摘「0.5msが小さくなった。独立して拡大・強調」。
-               KPIカード削除前にあった旧 .hero-metric（巨大数字表示）を、
-               iPhoneフレームと両立する形でテキストカラム内に復元。 -->
+        <!-- #350/#358: iPhone風デバイスフレーム内チャットデモ（ファーストビュー）。
+             root（entreprenais.com トップ）の .phone-mock 実装パターンを移植し、
+             /cloud 専用スタイルとして .hero-phone-mock に定義（BASE_URL差異のため
+             共通CSSファイル化はせず値をそのまま踏襲）。実物ウィジェットへの導線は
+             左カラムの既存CTA（「0.5ms を体験する」等）で維持する。
+             #358: FC指摘「勝手に独自のアニメ作らなくて良い。LIVE DEMOの10ターンの
+             チャットのデモが重要」「それと同じターンを iPhone にも出す」を受け、
+             独自演出（フェードイン・浮遊、#354で実装）を撤回。LIVE DEMOセクション
+             （#demo）と同一の SCRIPT 配列（グローバル化・共有）を own側のみ再生する
+             軽量タイプライター演出に置き換えた（詳細は末尾スクリプトブロック参照）。
+             #358: 「0.5ms」独立強調表示はヒーロー右上のスペース（フレームカラム上部）
+             に配置（FC指摘「右上にスペースがあるのでここが良さそう」）。 -->
+        <div class="hero-col-phone reveal" data-reveal data-delay="200">
           <div class="hero-metric-standalone">
             <span class="hero-metric-standalone__value">0.5</span>
             <span class="hero-metric-standalone__unit">ms</span>
             <span class="hero-metric-standalone__note">エージェント脊髄反射技術<br />応答実行時間（自社計測値・LLM推論なし）</span>
           </div>
-        </div>
-
-        <!-- #350/#354: iPhone風デバイスフレーム内チャットデモ（ファーストビュー）。
-             root（entreprenais.com トップ）の .phone-mock 実装パターンを移植し、
-             /cloud 専用スタイルとして .hero-phone-mock に定義（BASE_URL差異のため
-             共通CSSファイル化はせず値をそのまま踏襲）。実物ウィジェットへの導線は
-             左カラムの既存CTA（「0.5ms を体験する」等）で維持し、フレーム専用の
-             CTAボタン（#hero-phone-cta）はスペース確保のため削除（#354 FC指摘）。
-             削除した KPI カード3枚の情報（0.5ms 台 / 超省電力 / 実質100%）は
-             フレーム内チャット吹き出し + ms バッジ + 左カラムの独立強調表示に
-             要約して継承し、詳細は ARCHITECTURE / GREEN セクションでカバーする。
-             吹き出し・ms表示は順次フェードイン、フレーム自体は微妙な浮遊アニメーション
-             で表示する（#354 FC指摘「アニメーションがない」への対応）。 -->
-        <div class="hero-col-phone reveal" data-reveal data-delay="200">
           <div class="hero-phone-mock">
             <span class="hero-phone-mock__notch" aria-hidden="true"></span>
             <div class="hero-phone-mock__screen">
@@ -1053,15 +1041,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
                 <span class="hero-live-dot" style="background:var(--color-accent-light)"></span>
                 EntreprenAIs Cloud
               </span>
-              <div class="hero-phone-mock__msg hero-phone-mock__msg--in">グリーンAIクラウドの応答速度は？</div>
-              <div class="hero-phone-mock__msg hero-phone-mock__msg--out">0.5ms 台で応答。電力は太陽光+水力の自社再エネです。</div>
+              <div class="hero-phone-mock__msgs" id="hero-phone-msgs">
+                <div class="hero-phone-mock__msg hero-phone-mock__msg--in">グリーンAIクラウドの応答速度は？</div>
+                <div class="hero-phone-mock__msg hero-phone-mock__msg--out">反射応答で 0.5ms 台です。CPUキャッシュ経路（LLM推論なし）で固定応答を返しています。</div>
+              </div>
               <div class="hero-phone-mock__ms">
-                <span class="hero-phone-mock__ms-value">0.5</span>
+                <span class="hero-phone-mock__ms-value" id="hero-phone-ms-value">0.5</span>
                 <span class="hero-phone-mock__ms-label">ms 台の反射応答<br />超省電力・実質再エネ100%で稼働</span>
               </div>
             </div>
           </div>
-          <p class="hero-phone-note">実際に稼働中の「お問合せAI」です。上のプレビューは会話イメージです。</p>
+          <p class="hero-phone-note">実際に稼働中の「お問合せAI」です。LIVE DEMOと同じ会話が自動再生されます。</p>
         </div>
       </div>
 
@@ -1309,14 +1299,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </footer>
 
-  <!-- #345: LIVE DEMO 自動再生ロジック。モックアップの Component（DCLogicベース）の
-       ownTurn/cloudTurn/runDemo/resetDemo を Vanilla JS で再現。IntersectionObserver で
-       #demo が画面に入ったら自動再生を開始し、画面外に出たらリセットする。 -->
+  <!-- #345/#358: LIVE DEMO と ヒーロー iPhone フレームの両方が参照する共有 SCRIPT。
+       FC指摘「勝手に独自のアニメ作らなくて良い。LIVE DEMOの10ターンのチャットのデモが
+       重要」「それと同じターンを iPhone にも出す」を受け、単一の情報源として
+       window.__EAI_DEMO_SCRIPT に定義し、LIVE DEMO（own/cloud比較）とヒーロー
+       iPhoneフレーム（own側のみ）の両方の自動再生ロジックから参照する。 -->
   <script>
   (function () {
     'use strict';
-
-    var SCRIPT = [
+    window.__EAI_DEMO_SCRIPT = [
       { q: 'グリーンAIクラウドの応答速度は？', own: '反射応答で 0.5ms 台です。CPUキャッシュ経路（LLM推論なし）で固定応答を返しています。', cloud: 'グリーンAIクラウドの応答速度については、アーキテクチャや測定条件によって変動しますが、一般的なクラウド推論では数秒〜数十秒程度の応答時間が想定されます。', cloudMs: 9500 },
       { q: 'その電力はどこから来ていますか？', own: '太陽光の自家発電と再エネ電力契約（アクアエナジー100等）です。実質再エネ100%で稼働しています。', cloud: '一般的なクラウドサービスの電力構成は事業者や地域によって異なり、公開情報の範囲では再生可能エネルギーの比率を正確に特定することは難しいと考えられます。', cloudMs: 11800 },
       { q: 'クラウドLLMは使いますか？', own: '使いません。推論は自社グリーンデータセンター内で完結し、電力起源を自社で管理しています。', cloud: 'クラウドLLMの利用有無については構成に依存しますが、多くのAIエージェント基盤では外部の大規模言語モデルAPIを経由する構成が一般的です。', cloudMs: 9900 },
@@ -1328,6 +1319,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       { q: 'ESG報告に使える証跡は出せますか？', own: '電源構成を対外開示し、証跡整備を前提に運用しています。個別契約の粒度はご相談ください。', cloud: '電力証跡の開示範囲については、利用しているクラウド事業者の公開情報に依存するため、詳細な内訳を提示できない場合があります。', cloudMs: 10600 },
       { q: '導入の相談はできますか？', own: 'できます。IT導入のご担当者様、ESG/CSR推進のご担当者様からの導入相談・共同研究を承っています。', cloud: '導入に関するご相談窓口については、提供元の公開情報をご確認いただくのが確実です。一般的には問い合わせフォームまたは営業窓口が案内されています。', cloudMs: 9800 }
     ];
+  })();
+  </script>
+
+  <!-- #345: LIVE DEMO 自動再生ロジック。モックアップの Component（DCLogicベース）の
+       ownTurn/cloudTurn/runDemo/resetDemo を Vanilla JS で再現。IntersectionObserver で
+       #demo が画面に入ったら自動再生を開始し、画面外に出たらリセットする。 -->
+  <script>
+  (function () {
+    'use strict';
+
+    var SCRIPT = window.__EAI_DEMO_SCRIPT || [];
 
     var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
 
@@ -1537,6 +1539,120 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     } else if (demoSection) {
       runDemo();
     }
+  })();
+  </script>
+
+  <!-- #358: ヒーロー iPhone フレーム自動再生。FC指摘「勝手に独自のアニメ作らなくて
+       良い。LIVE DEMOの10ターンのチャットのデモが重要」「それと同じターンを iPhone
+       にも出す」を受け、window.__EAI_DEMO_SCRIPT（LIVE DEMOと共有）の own側のみを
+       ownTurn と同一パターンのタイプライター演出で再生する軽量版。cloud側の比較表示は
+       LIVE DEMO専用のまま複製しない。ヒーローセクションが画面に入ったら自動再生を
+       開始し、画面外に出たらリセットする（LIVE DEMOと同じ IntersectionObserver
+       パターン）。 -->
+  <script>
+  (function () {
+    'use strict';
+
+    var SCRIPT = window.__EAI_DEMO_SCRIPT || [];
+    if (!SCRIPT.length) return;
+
+    var msgsEl = document.getElementById('hero-phone-msgs');
+    var msValueEl = document.getElementById('hero-phone-ms-value');
+    if (!msgsEl || !msValueEl) return;
+
+    var idleHtml = msgsEl.innerHTML;
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var msTotal = 0;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function appendUserBubble(text) {
+      var div = document.createElement('div');
+      div.className = 'hero-phone-mock__msg hero-phone-mock__msg--in';
+      div.textContent = text;
+      msgsEl.appendChild(div);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    }
+
+    function heroPhoneTurn(i) {
+      if (i >= SCRIPT.length) {
+        var replay = setTimeout(function () { heroPhoneRun(); }, 3200);
+        timers.push(replay);
+        return;
+      }
+      var step = SCRIPT[i];
+      appendUserBubble(step.q);
+
+      var t1 = setTimeout(function () {
+        msTotal = Math.round((msTotal + 0.5) * 10) / 10;
+        msValueEl.textContent = msTotal.toFixed(1);
+
+        var bubble = document.createElement('div');
+        bubble.className = 'hero-phone-mock__msg hero-phone-mock__msg--out';
+        var caret = document.createElement('span');
+        caret.className = 'hero-phone-caret';
+        bubble.appendChild(caret);
+        msgsEl.appendChild(bubble);
+        msgsEl.scrollTop = msgsEl.scrollHeight;
+
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 3;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) bubble.appendChild(caret);
+          msgsEl.scrollTop = msgsEl.scrollHeight;
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () { heroPhoneTurn(i + 1); }, 900);
+            timers.push(t2);
+          }
+        }, 16);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
+    }
+
+    function heroPhoneRun() {
+      clearAllTimers();
+      started = true;
+      msTotal = 0;
+      msgsEl.innerHTML = '';
+      msValueEl.textContent = '0.5';
+      heroPhoneTurn(0);
+    }
+
+    function heroPhoneReset() {
+      clearAllTimers();
+      started = false;
+      msgsEl.innerHTML = idleHtml;
+      msValueEl.textContent = '0.5';
+    }
+
+    var heroSection = document.querySelector('.hero');
+    if (heroSection && typeof IntersectionObserver === 'function' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var heroIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) heroPhoneRun();
+          } else if (started) {
+            heroPhoneReset();
+          }
+        });
+      }, { threshold: 0.35 });
+      heroIo.observe(heroSection);
+    }
+    // prefers-reduced-motion: reduce の場合は静的な idle 表示（既存マークアップ）のまま
   })();
   </script>
 
