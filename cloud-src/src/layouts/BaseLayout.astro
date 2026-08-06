@@ -313,7 +313,8 @@ const {
           }, 800);
         }
       }
-      ['chat-preview-open', 'chat-preview-open-cta'].forEach(function (id) {
+      // #350: ヒーロー iPhone フレーム内 CTA（hero-phone-cta）も同一の起動導線に統合
+      ['chat-preview-open', 'chat-preview-open-cta', 'hero-phone-cta'].forEach(function (id) {
         var btn = document.getElementById(id);
         if (btn) btn.addEventListener('click', openContactWidget);
       });
