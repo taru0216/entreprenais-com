@@ -175,7 +175,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       display: flex;
       flex-wrap: wrap;
       gap: clamp(28px, 5vw, 64px);
-      align-items: flex-end;
+      align-items: center;
     }
     .hero-col-text { flex: 1 1 440px; min-width: 0; }
     .hero h1 {
@@ -185,30 +185,22 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       line-height: 1.14;
       font-weight: 900;
       letter-spacing: -0.015em;
+      text-wrap: balance;
     }
-    .hero h1 .accent { color: var(--color-accent); }
+    /* #349: 各行（「超高速、超省電力」/ グリーンAIクラウド、始動）は
+       display:block で明示的に分離しているため単独では折り返さない想定だが、
+       せまい列幅（.hero-col-text: flex: 1 1 440px）でも安全なよう
+       text-wrap: balance を維持しつつ nowrap は使わない（縦幅の狭い実機での
+       はみ出しを避けるため、ブラウザ側の自動折り返しは許容する）。 */
+    .hero h1 .accent { color: var(--color-accent); display: block; }
     .hero-lede {
       margin: 30px 0 0;
-      max-width: 52ch;
+      max-width: 46ch;
       font-size: 19px;
       line-height: 1.85;
       color: var(--color-text-soft);
     }
     .hero-lede strong { color: var(--color-text); font-weight: 700; }
-    .hero-value-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 30px;
-    }
-    .value-tag {
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: var(--color-accent-tint);
-      color: var(--color-accent2);
-      font-size: 13px;
-      font-weight: 700;
-    }
     .hero-cta {
       display: flex;
       flex-wrap: wrap;
@@ -238,79 +230,127 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
 
-    /* ヒーロー右側の巨大メトリック */
-    .hero-col-metric {
-      flex: 1 1 300px;
-      text-align: right;
-      padding-bottom: 6px;
-    }
-    .hero-metric-inner {
+    /* ヒーロー右側: iPhone風デバイスフレームによるチャットデモ（#350）
+       root（entreprenais.com トップ）の .phone-mock SSOT を移植。
+       ノッチ + 角丸フレーム + チャットプレビュー + CTA という構造は同一で、
+       CTA は BaseLayout.astro の openContactWidget() 経由で実物ウィジェット
+       （.__eai-widget-btn）を開く。iframe埋め込みではない
+       （widget.js は body 直下に fixed floating button を生成する設計のため、
+       フレーム内に本体を iframe 化することはできない）。 */
+    .hero-col-phone {
+      flex: 1 1 320px;
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-end;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
     }
-    .hero-metric__value {
-      font-family: var(--font-heading);
-      font-size: clamp(108px, 16vw, 230px);
-      line-height: 0.82;
-      font-weight: 900;
-      letter-spacing: -0.055em;
-      color: var(--color-accent);
+    .hero-phone-mock {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      background: #0d0f12;
+      padding: 14px 14px 20px;
+      border-radius: 38px;
+      border: 1px solid rgba(74, 74, 226, 0.22);
+      box-shadow:
+        0 32px 60px -28px rgba(42, 45, 124, 0.35),
+        0 12px 24px -12px rgba(13, 15, 18, 0.22);
     }
-    .hero-metric__unit {
-      font-size: clamp(28px, 4vw, 56px);
-      line-height: 1;
-      font-weight: 900;
-      color: var(--color-text);
-      margin-top: 16px;
+    .hero-phone-mock__notch {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(247, 246, 241, 0.08);
+      z-index: 2;
     }
-    .hero-metric__note {
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--color-border);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1.9;
-      letter-spacing: 0.03em;
-      color: var(--color-muted);
-      text-align: right;
-    }
-
-    /* KPIグリッド（3カラム） */
-    .hero-kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
-      gap: 1px;
-      margin-top: clamp(48px, 7vw, 80px);
-      background: var(--color-border2);
-      border: 1px solid var(--color-border2);
-      border-radius: 20px;
+    .hero-phone-mock__screen {
+      position: relative;
+      border-radius: 26px;
+      background: var(--color-dark-bg);
       overflow: hidden;
+      padding: 30px 14px 16px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
     }
-    .hero-kpi-cell {
-      background: #fff;
-      padding: 28px 30px;
-    }
-    .hero-kpi-cell__label {
+    .hero-phone-mock__badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(74, 74, 226, 0.18);
+      color: var(--color-accent-light);
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--color-muted);
+      letter-spacing: 0.05em;
     }
-    .hero-kpi-cell__value {
-      margin-top: 12px;
-      font-size: 34px;
+    .hero-phone-mock__msg {
+      margin-top: 14px;
+      padding: 10px 13px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      max-width: 88%;
+    }
+    .hero-phone-mock__msg--in {
+      align-self: flex-start;
+      background: var(--color-dark-surface);
+      color: var(--color-dark-text-soft);
+      border-bottom-left-radius: 4px;
+    }
+    .hero-phone-mock__msg--out {
+      align-self: flex-end;
+      background: var(--color-accent);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .hero-phone-mock__ms {
+      margin-top: auto;
+      padding-top: 14px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      border-top: 1px solid var(--color-dark-border);
+    }
+    .hero-phone-mock__ms-value {
+      font-family: var(--font-heading);
+      font-size: 30px;
       font-weight: 900;
-      letter-spacing: -0.01em;
+      color: var(--color-accent-light);
+      letter-spacing: -0.02em;
     }
-    .hero-kpi-cell__value.is-accent { color: var(--color-accent); }
-    .hero-kpi-cell__value .unit { font-size: 17px; font-weight: 700; margin-left: 3px; }
-    .hero-kpi-cell__desc {
-      margin-top: 6px;
-      font-size: 13px;
-      color: var(--color-text-soft);
+    .hero-phone-mock__ms-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--color-dark-muted);
+      line-height: 1.5;
+    }
+    .hero-phone-cta {
+      width: 100%;
+      max-width: 300px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      border: none;
+      background: var(--color-text);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+    }
+    .hero-phone-cta:hover { background: var(--color-accent2); transform: translateY(-2px); }
+    .hero-phone-note {
+      max-width: 300px;
+      text-align: center;
+      font-size: 11.5px;
+      line-height: 1.7;
+      color: var(--color-muted);
     }
     /* details/summary（モックアップのアコーディオン注記表示を踏襲） */
     details.hero-details { margin: 14px 0 0; }
@@ -741,10 +781,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       text-align: center;
     }
     .cta-btn-primary:hover { color: var(--color-dark-bg); background: var(--color-dark-text-soft); }
+    /* #350 followup（FC 指摘「ボタンの中の文字が見えない」）: <button> 要素は
+       background 未指定だとブラウザの UA デフォルト背景（明るいグレー、環境により
+       rgb(239,239,239) 等）が適用される。アウトラインボタンとして透過背景を意図していたが
+       background が未指定だったため、明るい文字色 (--color-dark-text) と UA デフォルトの
+       明るい背景が重なりコントラストがほぼ失われていた。background: transparent を明示し
+       意図どおりの透過アウトラインにする。 */
     .cta-btn-secondary {
       padding: 16px 30px;
       border-radius: 999px;
       border: 2px solid var(--color-dark-border);
+      background: transparent;
       color: var(--color-dark-text);
       font-size: 15px;
       font-weight: 700;
@@ -784,9 +831,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .nav-cta { margin-left: auto; padding: 9px 14px; font-size: 11.5px; white-space: nowrap; }
       .hero { padding: 96px 20px 0; }
       .hero-flex { flex-direction: column; align-items: flex-start; }
-      .hero-col-metric { text-align: left; width: 100%; }
-      .hero-metric-inner { justify-content: flex-start; }
-      .hero-metric__note { text-align: left; }
+      .hero-col-phone { width: 100%; align-items: center; }
+      .hero h1 { max-width: none; }
       .hero-photo-bg--desktop { display: none; }
       .hero-photo-bg--mobile { display: block; }
       .section-light, .section-dark { padding: 56px 20px; }
@@ -795,11 +841,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .demo-card__body { height: 280px; }
       .flow-steps { flex-direction: column; align-items: stretch; }
       .cta-box { flex-direction: column; }
-      .hero-cta, .hero-value-tags { flex-direction: column; align-items: flex-start; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
       .btn, .cta-btn-primary, .cta-btn-secondary { width: 100%; }
     }
     @media (max-width: 420px) {
-      .hero-metric__value { font-size: clamp(72px, 22vw, 108px); }
+      .hero-phone-mock { max-width: 260px; }
+      .hero-phone-mock__screen { min-height: 320px; }
     }
   </style>
 
@@ -896,49 +943,46 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="hero-flex">
         <div class="hero-col-text reveal" data-reveal data-delay="100">
-          <h1>「超高速、超省電力」<br /><span class="accent">グリーンAIクラウド、始動</span></h1>
+          <h1>「超高速、超省電力」<span class="accent">グリーンAIクラウド、始動</span></h1>
           <p class="hero-lede">
-            エージェント基盤を、自社グリーンデータセンターで動かす。クラウドLLMへの往復をやめた瞬間、応答は <strong>ミリ秒</strong> になり、電力起源は <strong>自社の再エネ</strong> で完結する。
+            自社グリーンデータセンターで動くエージェント基盤。応答は<strong>ミリ秒</strong>、電力は<strong>自社の再エネ</strong>で完結する。
           </p>
-          <div class="hero-value-tags">
-            <span class="value-tag">コスト効率と応答速度を両立</span>
-            <span class="value-tag">電源構成の透明性でESG/CSRに適合</span>
-          </div>
           <div class="hero-cta">
             <a href="#demo" class="btn btn-primary">0.5ms を体験する →</a>
             <a href="#architecture" class="btn btn-secondary">アーキテクチャを見る</a>
           </div>
         </div>
 
-        <div class="hero-col-metric reveal" data-reveal data-delay="200">
-          <div class="hero-metric-inner">
-            <span class="hero-metric__value">0.5</span>
-            <span class="hero-metric__unit">ms</span>
+        <!-- #350: iPhone風デバイスフレーム内チャットデモ（ファーストビュー）。
+             root（entreprenais.com トップ）の .phone-mock 実装パターンを移植し、
+             /cloud 専用スタイルとして .hero-phone-mock に定義（BASE_URL差異のため
+             共通CSSファイル化はせず値をそのまま踏襲）。CTA は既存の
+             openContactWidget() 経由で実物ウィジェットを開く（BaseLayout.astro 側で
+             #hero-phone-cta を chat-preview-open 系ボタン群に追加登録）。
+             削除した KPI カード3枚の情報（0.5ms 台 / 超省電力 / 実質100%）は
+             フレーム内チャット吹き出し + ms バッジ + フレーム下の note に要約して継承し、
+             詳細は ARCHITECTURE / GREEN セクションでカバーする。 -->
+        <div class="hero-col-phone reveal" data-reveal data-delay="200">
+          <div class="hero-phone-mock">
+            <span class="hero-phone-mock__notch" aria-hidden="true"></span>
+            <div class="hero-phone-mock__screen">
+              <span class="hero-phone-mock__badge">
+                <span class="hero-live-dot" style="background:var(--color-accent-light)"></span>
+                EntreprenAIs Cloud
+              </span>
+              <div class="hero-phone-mock__msg hero-phone-mock__msg--in">グリーンAIクラウドの応答速度は？</div>
+              <div class="hero-phone-mock__msg hero-phone-mock__msg--out">0.5ms 台で応答。電力は太陽光+水力の自社再エネです。</div>
+              <div class="hero-phone-mock__ms">
+                <span class="hero-phone-mock__ms-value">0.5</span>
+                <span class="hero-phone-mock__ms-label">ms 台の反射応答<br />超省電力・実質再エネ100%で稼働</span>
+              </div>
+            </div>
           </div>
-          <div class="hero-metric__note">
-            エージェント脊髄反射技術<br />応答実行時間（自社計測値・LLM推論なし）
-          </div>
+          <button type="button" class="hero-phone-cta" id="hero-phone-cta">このAIに質問してみる →</button>
+          <p class="hero-phone-note">実際に稼働中の「お問合せAI」です。左のプレビューは会話イメージで、ボタンから本物のチャットが開きます。</p>
         </div>
       </div>
 
-      <!-- KPIグリッド -->
-      <div class="hero-kpi-grid reveal" data-reveal data-delay="300">
-        <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">Response</div>
-          <div class="hero-kpi-cell__value">0.5<span class="unit">ms 台</span></div>
-          <div class="hero-kpi-cell__desc">反射応答（CPUキャッシュ経路）</div>
-        </div>
-        <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">Power</div>
-          <div class="hero-kpi-cell__value">超省電力</div>
-          <div class="hero-kpi-cell__desc">GPU推論を介さない実行体（推定）</div>
-        </div>
-        <div class="hero-kpi-cell">
-          <div class="hero-kpi-cell__label">Renewable</div>
-          <div class="hero-kpi-cell__value is-accent">実質100<span class="unit" style="font-size:22px">%</span></div>
-          <div class="hero-kpi-cell__desc">太陽光自家発電 + 再エネ電力契約</div>
-        </div>
-      </div>
       <details class="hero-details">
         <summary>＋ 数値の計測条件・開示範囲について</summary>
         <p>メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値であり、すべてのリクエストがこの数値で応答することを保証するものではありません。計測条件（レスポンスの定義・ベンチマーク環境・再現性）および「実質再エネ100%」の定義・開示粒度は、対外開示の透明性向上に向けて継続整備中です。</p>
