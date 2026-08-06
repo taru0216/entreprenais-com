@@ -1,740 +1,671 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0d0f12" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="robots" content="index,follow" />
-  <title>Internet of Agents | Taruishi Digital Technology Research Institute LLC (TDRI)</title>
-  <meta name="description" content="EntreprenAIs — Entering the era of AI agents that operate autonomously at the edge. TDRI researches and develops a platform sustained by green energy." />
-  <link rel="canonical" href="https://entreprenais.com/en/" />
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Introducing EntreprenAIs Cloud — a &quot;Ultra-Fast, Ultra-Low-Power&quot; Green AI Cloud. An agent execution platform on our own green data center that combines 0.5ms ultra-fast response, cost efficiency, and transparent power sourcing."><title>Green AI Cloud | EntreprenAIs</title><meta property="og:title" content="Green AI Cloud | EntreprenAIs"><meta property="og:description" content="Introducing EntreprenAIs Cloud — a &quot;Ultra-Fast, Ultra-Low-Power&quot; Green AI Cloud. An agent execution platform on our own green data center that combines 0.5ms ultra-fast response, cost efficiency, and transparent power sourcing."><meta property="og:type" content="website"><meta name="theme-color" content="#0d0f12"><meta name="format-detection" content="telephone=no"><meta name="robots" content="index,follow"><link rel="canonical" href="https://entreprenais.com/en/"><meta property="og:locale" content="en_US"><meta property="og:site_name" content="EntreprenAIs / Taruishi Digital Technology Research Institute LLC"><meta property="og:url" content="https://entreprenais.com/en/"><meta property="og:image" content="https://entreprenais.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://entreprenais.com/og.png"><link rel="alternate" hreflang="ja" href="https://entreprenais.com/"><link rel="alternate" hreflang="en" href="https://entreprenais.com/en/"><link rel="alternate" hreflang="zh" href="https://entreprenais.com/zh/"><link rel="alternate" hreflang="x-default" href="https://entreprenais.com/"><link rel="shortcut icon" href="/favicon.ico"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest"><script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script><script>(function(){const gaId = "G-ND9RLH0NT3";
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="EntreprenAIs / Taruishi Digital Technology Research Institute LLC" />
-  <meta property="og:url" content="https://entreprenais.com/en/" />
-  <meta property="og:title" content="Internet of Agents | Taruishi Digital Technology Research Institute LLC (TDRI)" />
-  <meta property="og:description" content="EntreprenAIs — Entering the era of AI agents that operate autonomously at the edge. TDRI researches and develops a platform sustained by green energy." />
-  <meta property="og:image" content="https://entreprenais.com/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        })();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/index.DoYvECpy.css"><script type="module">
+      (function () {
+        // On reveal, animate KPI meter (.kpi-meter__fill) width from 0 to data-fill (or inline --fill)
+        function fillKpiMeters(root) {
+          var meters = (root || document).querySelectorAll(".kpi-meter__fill");
+          meters.forEach(function (el) {
+            requestAnimationFrame(function () {
+              el.classList.add("is-filled");
+            });
+          });
+        }
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Internet of Agents | Taruishi Digital Technology Research Institute LLC (TDRI)" />
-  <meta name="twitter:description" content="EntreprenAIs — Entering the era of AI agents that operate autonomously at the edge. TDRI researches and develops a platform sustained by green energy." />
-  <meta name="twitter:image" content="https://entreprenais.com/og.png" />
+        // Reveal on scroll — same IntersectionObserver setup as the top page main.js
+        var reveals = document.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window)) {
+          reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          fillKpiMeters();
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+              setTimeout(function () {
+                el.classList.add("is-visible");
+                if (el.classList.contains("kpi-card")) fillKpiMeters(el);
+              }, isNaN(delay) ? 0 : delay);
+              io.unobserve(el);
+            });
+          }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+          reveals.forEach(function (el) { io.observe(el); });
+        }
 
-  <!-- hreflang alternates -->
-  <link rel="alternate" hreflang="ja" href="https://entreprenais.com/" />
-  <link rel="alternate" hreflang="en" href="https://entreprenais.com/en/" />
-  <link rel="alternate" hreflang="zh" href="https://entreprenais.com/zh/" />
-  <link rel="alternate" hreflang="x-default" href="https://entreprenais.com/" />
+        // Subtle parallax for hero glows — same logic as the top page main.js
+        var glowA = document.querySelector(".hero-glow--a");
+        var glowB = document.querySelector(".hero-glow--b");
+        if (glowA && glowB && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          var onMove = function () {
+            var y = Math.min(window.scrollY, 800);
+            glowA.style.transform = "translate3d(0," + (y * 0.18) + "px, 0)";
+            glowB.style.transform = "translate3d(0," + (y * -0.12) + "px, 0)";
+          };
+          window.addEventListener("scroll", onMove, { passive: true });
+        }
+      })();
+    </script><script type="module">(function () {
+    'use strict';
 
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-  <link rel="manifest" href="/site.webmanifest" />
+    var SCRIPT = [
+      { q: 'What is the response speed of the Green AI Cloud?', own: 'Reflex response in 0.5ms. A fixed response is returned via the CPU cache path (no LLM inference).', cloud: 'Response speed for a Green AI Cloud varies by architecture and measurement conditions, but general cloud inference is expected to take a few to several dozen seconds.', cloudMs: 9500 },
+      { q: 'Where does that power come from?', own: 'From our own solar generation and renewable energy contracts (e.g. Aqua Energy 100). We run on effectively 100% renewable energy.', cloud: 'The power mix of a general cloud service varies by provider and region, and it is often difficult to pinpoint the exact renewable energy ratio from publicly available information.', cloudMs: 11800 },
+      { q: 'Do you use cloud LLMs?', own: 'No. Inference is completed entirely within our own green data center, and we manage the power sourcing in-house.', cloud: 'Whether cloud LLMs are used depends on the configuration, but many AI agent platforms commonly route through external large language model APIs.', cloudMs: 9900 },
+      { q: 'Why is it so fast?', own: 'We remove LLM inference and network round-trips from the path, and run a compiled executable directly on the CPU.', cloud: 'Response speed depends on multiple factors such as model size, quantization, GPU generation, batch size, and network path, making it hard to give a single answer — but inference itself is generally the dominant factor.', cloudMs: 14200 },
+      { q: 'How is this different from a conventional cloud LLM setup?', own: 'We are not dependent on large GPU data center power or network round-trips. We can remove cost, environmental impact, and response speed constraints at the same time.', cloud: 'In typical cloud LLM operations, inference runs on remote GPU clusters, so it is known to be affected by network round-trips and queuing, though this varies by configuration.', cloudMs: 12900 },
+      { q: 'What does the "Cerebral AI" do?', own: 'It handles only complex judgment and generation. Since it is a local LLM inside our own data center, the power sourcing is also self-contained.', cloud: 'The term "Cerebral AI" in your question is not a standard technical term, so an exact definition would require checking the provider\'s materials, but it may refer to a hierarchical inference architecture.', cloudMs: 16400 },
+      { q: 'What is the technology that turns a design into an executable?', own: 'That is our compilation technology. It splits the design written by the Cerebral AI into a CPU-only executable and the parts that still require inference. This is currently a semi-automatic process run alongside human oversight, and we are gradually increasing the share of CPU execution.', cloud: 'Several approaches have been proposed for converting LLM output into code or workflows, including code generation, prompt caching, and distillation into rule-based systems, but implementations vary by provider.', cloudMs: 18700 },
+      { q: 'Did the power constraint come first?', own: 'Yes. The output cap on renewable energy came first. The need to minimize power consumption is what gave rise to this hybrid architecture.', cloud: 'Renewable energy output generally fluctuates, so compute design premised on power constraints is likely necessary, but the specific design decisions depend on each provider\'s policy.', cloudMs: 11200 },
+      { q: 'Can you provide evidence usable for ESG reporting?', own: 'Yes. We disclose our power sourcing externally and operate on the premise of maintaining audit trails. Please contact us for the granularity of individual contracts.', cloud: 'The scope of power sourcing disclosure depends on the public information provided by the cloud vendor you use, so a detailed breakdown may not always be available.', cloudMs: 10600 },
+      { q: 'Can I consult about adoption?', own: 'Yes. We welcome adoption inquiries and joint research consultations from IT procurement leads and ESG/CSR leads.', cloud: 'For adoption inquiries, it is safest to check the provider\'s public information. Typically a contact form or sales window is provided.', cloudMs: 9800 }
+    ];
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+    var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
 
-  <!-- News section styles (LP) -->
-  <style>
-    .news-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    var root = document.getElementById('live-demo-root');
+    if (!root) return;
+
+    var ownBody = document.getElementById('demo-own-body');
+    var cloudBody = document.getElementById('demo-cloud-body');
+    var ownIdleEl = ownBody.querySelector('[data-own-idle]');
+    var cloudIdleEl = cloudBody.querySelector('[data-cloud-idle]');
+    var ownTurnLabelEl = document.querySelector('[data-own-turn-label]');
+    var cloudTurnLabelEl = document.querySelector('[data-cloud-turn-label]');
+    var ownMsBigEl = document.querySelector('[data-own-ms-big]');
+    var cloudSecBigEl = document.querySelector('[data-cloud-sec-big]');
+
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var ownMsTotal = 0;
+    var cloudTotalStart = 0;
+    var cloudTotalIv = null;
+    var stickOwn = true;
+    var stickCloud = true;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
     }
-    .news-list--lp {
-      margin-bottom: 2.5rem;
+
+    function watchScroll(el, key) {
+      if (el.dataset.watched) return;
+      el.dataset.watched = '1';
+      el.addEventListener('scroll', function () {
+        var atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 48;
+        if (key === 'own') stickOwn = atBottom; else stickCloud = atBottom;
+      }, { passive: true });
     }
-    .news-card {
-      position: relative;
-      background: var(--paper);
-      border: 1px solid var(--line-soft);
-      border-radius: 22px;
-      padding: 1.6rem 2rem;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 1.6rem;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    watchScroll(ownBody, 'own');
+    watchScroll(cloudBody, 'cloud');
+
+    function maybeStick() {
+      if (stickOwn) ownBody.scrollTop = ownBody.scrollHeight;
+      if (stickCloud) cloudBody.scrollTop = cloudBody.scrollHeight;
     }
-    .news-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 1.6rem;
-      right: 1.6rem;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
-      border-radius: 999px;
-      opacity: 0;
-      transition: opacity 0.4s var(--ease);
+
+    function appendUserBubble(body, text) {
+      var div = document.createElement('div');
+      div.className = 'demo-bubble--user';
+      div.textContent = text;
+      body.appendChild(div);
     }
-    .news-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 18px 42px -22px rgba(42, 45, 124, 0.30);
+
+    function ownTurn(i) {
+      if (i >= SCRIPT.length) return;
+      var step = SCRIPT[i];
+      appendUserBubble(ownBody, step.q);
+      ownTurnLabelEl.textContent = 'Responding';
+      maybeStick();
+
+      var t1 = setTimeout(function () {
+        ownMsTotal = Math.round((ownMsTotal + 0.5) * 10) / 10;
+        ownMsBigEl.textContent = ownMsTotal.toFixed(1);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        var caret = document.createElement('span');
+        caret.className = 'demo-caret';
+        bubble.appendChild(caret);
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        ownBody.appendChild(wrap);
+        maybeStick();
+
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 2;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) { bubble.appendChild(caret); }
+          else { meta.textContent = 'source: cache · 0.5 ms'; }
+          maybeStick();
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () {
+              var nextI = i + 1;
+              if (nextI >= SCRIPT.length) {
+                ownTurnLabelEl.textContent = 'Conversation complete';
+              } else {
+                ownTurn(nextI);
+              }
+            }, 700);
+            timers.push(t2);
+          }
+        }, 14);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
     }
-    .news-card:hover::before {
-      opacity: 0.85;
-    }
-    .news-card__meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .news-card__date {
-      font-family: var(--serif);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-    .news-card__badge {
-      display: inline-block;
-      font-family: var(--serif);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(42, 45, 124, 0.08);
-      border: 1px solid rgba(42, 45, 124, 0.22);
-      border-radius: 999px;
-      padding: 0.2rem 0.65rem;
-    }
-    .news-card__title {
-      font-family: var(--jp);
-      font-weight: 700;
-      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-      line-height: 1.45;
-      letter-spacing: -0.005em;
-      color: var(--ink);
-      margin: 0;
-      text-wrap: balance;
-    }
-    .news-card__summary {
-      font-size: 0.93rem;
-      line-height: 1.85;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-    .news-card__cta {
-      margin-top: 0.5rem;
-      font-family: var(--serif);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: color 0.2s var(--ease);
-    }
-    .news-card:hover .news-card__cta {
-      color: var(--accent-bright);
-    }
-    .news-card__thumb {
-      flex: none;
-      width: 90px;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 12px;
-      background: var(--paper-soft);
-      display: block;
-    }
-    .news-card__thumb-placeholder {
-      flex: none;
-      width: 90px;
-      aspect-ratio: 3 / 4;
-      border-radius: 12px;
-      background: var(--paper-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      opacity: 0.38;
-    }
-    .news-card__body {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .news-more {
-      text-align: center;
-      padding-top: 0.5rem;
-    }
-    @media (max-width: 720px) {
-      .news-card {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.4rem 1.5rem;
+
+    function cloudTurn(i) {
+      if (i >= SCRIPT.length) {
+        cloudTurnLabelEl.textContent = 'Conversation complete';
+        if (cloudTotalIv) { clearInterval(cloudTotalIv); cloudTotalIv = null; }
+        var replay = setTimeout(runDemo, 3200);
+        timers.push(replay);
+        return;
       }
-      .news-card__thumb,
-      .news-card__thumb-placeholder {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-      }
+      var step = SCRIPT[i];
+      appendUserBubble(cloudBody, step.q);
+      cloudTurnLabelEl.textContent = 'Generating';
+      maybeStick();
+
+      var waiting = document.createElement('div');
+      waiting.className = 'demo-waiting';
+      waiting.innerHTML = '<span class="demo-spinner"></span><span class="txt">generating… <span data-cur-sec>0.0</span> s</span>';
+      cloudBody.appendChild(waiting);
+      maybeStick();
+      var curSecEl = waiting.querySelector('[data-cur-sec]');
+
+      var t0 = CLOCK();
+      var iv2 = setInterval(function () {
+        curSecEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(iv2);
+
+      var c1 = setTimeout(function () {
+        clearInterval(iv2);
+        var idx = intervals.indexOf(iv2);
+        if (idx >= 0) intervals.splice(idx, 1);
+        if (waiting.parentNode) waiting.parentNode.removeChild(waiting);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        bubble.textContent = step.cloud;
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        meta.textContent = 'source: cloud-inference · ' + (step.cloudMs / 1000).toFixed(1) + ' s';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        cloudBody.appendChild(wrap);
+        maybeStick();
+
+        var c2 = setTimeout(function () { cloudTurn(i + 1); }, 700);
+        timers.push(c2);
+      }, step.cloudMs);
+      timers.push(c1);
     }
-  </style>
 
-  <!-- Google Analytics 4 (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ND9RLH0NT3');
-  </script>
+    function runDemo() {
+      clearAllTimers();
+      stickOwn = true;
+      stickCloud = true;
+      started = true;
+      ownMsTotal = 0;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = 'Responding';
+      cloudTurnLabelEl.textContent = 'Generating';
 
-  <!-- JSON-LD: Organization + WebSite -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://entreprenais.com/#organization",
-        "name": "Taruishi Digital Technology Research Institute LLC",
-        "alternateName": ["TDRI", "樽石デジタル技術研究所合同会社"],
-        "url": "https://entreprenais.com/",
-        "logo": "https://entreprenais.com/og.png",
-        "sameAs": [
-          "https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/",
-          "https://github.com/taru0216"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://entreprenais.com/#website",
-        "url": "https://entreprenais.com/",
-        "name": "EntreprenAIs",
-        "description": "A platform for AI agents operating autonomously at the edge",
-        "publisher": { "@id": "https://entreprenais.com/#organization" },
-        "inLanguage": "en"
+      var t0 = CLOCK();
+      cloudTotalIv = setInterval(function () {
+        cloudSecBigEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(cloudTotalIv);
+
+      ownTurn(0);
+      cloudTurn(0);
+    }
+
+    function resetDemo() {
+      clearAllTimers();
+      started = false;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownBody.appendChild(ownIdleEl);
+      cloudBody.appendChild(cloudIdleEl);
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = 'Own green DC / reflex path';
+      cloudTurnLabelEl.textContent = 'Third-party DC / full generation every time';
+    }
+
+    var demoSection = document.getElementById('demo');
+    if (demoSection && typeof IntersectionObserver === 'function') {
+      var demoIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) runDemo();
+          } else if (started) {
+            resetDemo();
+          }
+        });
+      }, { threshold: 0.35 });
+      demoIo.observe(demoSection);
+    } else if (demoSection) {
+      runDemo();
+    }
+
+    // Hero iPhone frame autoplay: replays the "own" side of the shared SCRIPT
+    // array using the same typewriter effect as ownTurn(), lightweight and
+    // without the cloud-side comparison (which stays LIVE-DEMO-only). Starts
+    // when the hero section scrolls into view and resets when it scrolls out.
+    (function () {
+      var msgsEl = document.getElementById('hero-phone-msgs');
+      var msValueEl = document.getElementById('hero-phone-ms-value');
+    if (!msgsEl || !msValueEl) return;
+
+    var idleHtml = msgsEl.innerHTML;
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var msTotal = 0;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function appendUserBubble(text) {
+      var div = document.createElement('div');
+      div.className = 'hero-phone-mock__msg hero-phone-mock__msg--in';
+      div.textContent = text;
+      msgsEl.appendChild(div);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    }
+
+    function heroPhoneTurn(i) {
+      if (i >= SCRIPT.length) {
+        var replay = setTimeout(function () { heroPhoneRun(); }, 3200);
+        timers.push(replay);
+        return;
       }
-    ]
-  }
-  </script>
-</head>
-<body>
+      var step = SCRIPT[i];
+      appendUserBubble(step.q);
 
-  <!-- Fixed nav -->
-  <nav class="nav" id="nav">
-    <div class="nav__inner">
-      <a class="nav__brand" href="#hero">
-        <span class="nav__mark" aria-hidden="true">
-          <span class="nav__mark-bar"></span>
-          <span class="nav__mark-dot"></span>
-        </span>
-        <span class="nav__name">TDRI</span>
-      </a>
-      <ul class="nav__links">
-        <li><a href="#mission">Mission</a></li>
-        <li><a href="#approach">Approach</a></li>
-        <li><a href="#works">Roadmap</a></li>
-        <li><a href="#showcase">Showcase</a></li>
-        <li><a href="/news">News</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <nav class="lang-nav" aria-label="Language">
-        <a href="/" hreflang="ja">日本語</a>
-        <a href="/en/" hreflang="en" aria-current="page">English</a>
-        <a href="/zh/" hreflang="zh">中文</a>
-      </nav>
-    </div>
-  </nav>
+      var t1 = setTimeout(function () {
+        msTotal = Math.round((msTotal + 0.5) * 10) / 10;
+        msValueEl.textContent = msTotal.toFixed(1);
 
-  <!-- Hero -->
-  <section id="hero" class="hero">
-    <div class="hero__bg" aria-hidden="true">
-      <span class="hero__grid"></span>
-      <span class="hero__glow hero__glow--a"></span>
-      <span class="hero__glow hero__glow--b"></span>
-    </div>
-    <a class="hero__news-pill" href="/news/cpu-skill-execution/en/">
-      <time>2026-05-24</time>
-      <span>Establishes proprietary technology to execute agent skills on CPU only</span>
-      <span aria-hidden="true">&rarr;</span>
-    </a>
-    <div class="hero__content">
-      <p class="hero__eyebrow reveal" data-reveal>Internet of Agents</p>
-      <h1 class="hero__title">
-        <span class="reveal" data-reveal data-delay="100">Powered by renewables,</span>
-        <span class="reveal hero__title--accent" data-reveal data-delay="200">the age of autonomous AI agents is here.</span>
-      </h1>
-      <p class="hero__lead reveal" data-reveal data-delay="350">
-        From IoT where things connect, to IoA where agents collaborate.
-      </p>
-      <div class="hero__cta reveal" data-reveal data-delay="500">
-        <a class="btn btn--primary" href="#mission">Read Vision &rarr;</a>
-        <a class="btn btn--ghost" href="#contact">Contact &darr;</a>
-      </div>
-    </div>
-    <div class="hero__scroll" aria-hidden="true">
-      <span>SCROLL</span>
-      <span class="hero__scroll-line"></span>
-    </div>
-  </section>
+        var bubble = document.createElement('div');
+        bubble.className = 'hero-phone-mock__msg hero-phone-mock__msg--out';
+        var caret = document.createElement('span');
+        caret.className = 'hero-phone-caret';
+        bubble.appendChild(caret);
+        msgsEl.appendChild(bubble);
+        msgsEl.scrollTop = msgsEl.scrollHeight;
 
-  <!-- Mission -->
-  <section id="mission" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>01 / Mission</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        Building the realization platform for <span class="accent">IoA</span>, from the edge up.
-      </h2>
-      <div class="mission__grid">
-        <p class="mission__lead reveal" data-reveal data-delay="200">
-          Taruishi Digital Technology Research Institute LLC (TDRI) provides a platform for realizing the Internet of Agents (IoA). We design the infrastructure, as software, for a world where agents run safely and delegate to one another.
-        </p>
-        <p class="mission__body reveal" data-reveal data-delay="300">
-          If IoT was a network for "connecting things and transmitting data," IoA is a network of autonomous coordination where "agents make requests, delegate, and negotiate with each other." Rather than relying solely on a central cloud, AI nodes distributed at the edge think on-site, decide on-site, and coordinate only when needed. TDRI researches and develops the execution infrastructure for this as the EntreprenAIs platform.
-        </p>
-      </div>
-    </div>
-  </section>
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 3;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) bubble.appendChild(caret);
+          msgsEl.scrollTop = msgsEl.scrollHeight;
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () { heroPhoneTurn(i + 1); }, 900);
+            timers.push(t2);
+          }
+        }, 16);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
+    }
 
-  <!-- Approach (3 pillars) -->
-  <section id="approach" class="section">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>02 / Approach</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        The 3 Pillars Supporting IoA
-      </h2>
-      <div class="cards">
-        <article class="card reveal" data-reveal data-delay="150">
-          <p class="card__num">A.</p>
-          <h3 class="card__title">Edge-First</h3>
-          <p class="card__lead">Distributed agent nodes at the edge</p>
-          <p class="card__body">
-            In three forms — Desktop, Server, and Connect — agent nodes are
-            distributed from personal devices to on-site servers.
-          </p>
-        </article>
-        <article class="card reveal" data-reveal data-delay="250">
-          <p class="card__num">B.</p>
-          <h3 class="card__title">Zero Emission</h3>
-          <p class="card__lead">Inference sustained by green power</p>
-          <p class="card__body">
-            By concentrating local LLM<sup class="card__ref">*</sup> inference during periods of surplus
-            solar and battery power, we work to decouple agent operation from fossil fuels.
-          </p>
-        </article>
-        <article class="card reveal" data-reveal data-delay="350">
-          <p class="card__num">C.</p>
-          <h3 class="card__title">Agent-to-Agent</h3>
-          <p class="card__lead">Autonomous coordination between agents</p>
-          <p class="card__body">
-            Using the A2A protocol, agents autonomously make requests, delegate, and negotiate,
-            freeing humans to focus on decisions about direction and values.
-          </p>
-        </article>
-      </div>
+    function heroPhoneRun() {
+      clearAllTimers();
+      started = true;
+      msTotal = 0;
+      msgsEl.innerHTML = '';
+      msValueEl.textContent = '0.5';
+      heroPhoneTurn(0);
+    }
 
-      <aside class="cards__note reveal" data-reveal data-delay="500" aria-label="Note on the Zero Emission Option">
-        <p class="cards__note-label">Note</p>
-        <p class="cards__note-body">
-          EntreprenAIs currently uses a large language model in the cloud (<strong>Claude</strong>) for AI reasoning. Since we cannot manage the power sources on the cloud side, the Zero Emission Option targets the <strong>local LLM infrastructure at the edge</strong> and the mechanism connecting agents together (<strong>Internet of Agents</strong>).
-        </p>
-        <p class="cards__note-body">
-          Our long-term goal is to increase the proportion of local LLMs running at the edge and move closer to a state where AI operation itself can be powered by renewable energy.
-        </p>
-      </aside>
+    function heroPhoneReset() {
+      clearAllTimers();
+      started = false;
+      msgsEl.innerHTML = idleHtml;
+      msValueEl.textContent = '0.5';
+    }
 
-      <!-- Product Preview — A2A in action -->
-      <div class="preview reveal" data-reveal data-delay="450">
-        <figure class="preview__device">
-          <div class="preview__phone phone-mock">
-            <span class="preview__notch phone-mock__notch" aria-hidden="true"></span>
-            <img
-              class="preview__img phone-mock__img"
-              src="/img/chat-preview-iphone.png"
-              alt="EntreprenAIs chat-app — Screen showing FC interacting with C-Suite Agents"
-              loading="lazy"
-              width="380"
-              height="800"
-            />
-          </div>
-        </figure>
-        <figcaption class="preview__caption">
-          <p class="preview__eyebrow">Product Preview</p>
-          <h3 class="preview__title">The everyday life of FC talking with C-Suite Agents</h3>
-          <p class="preview__body">
-            In response to natural language queries, agents autonomously launch research tasks
-            and return status in real time via progress cards. This is the A2A chat UX of EntreprenAIs.
-          </p>
-          <a class="btn btn--ghost preview__cta" href="/eai/">Learn more &rarr;</a>
-        </figcaption>
-      </div>
-    </div>
-  </section>
+    var heroSection = document.querySelector('.hero');
+    if (heroSection && typeof IntersectionObserver === 'function' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var heroIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) heroPhoneRun();
+          } else if (started) {
+            heroPhoneReset();
+          }
+        });
+      }, { threshold: 0.35 });
+      heroIo.observe(heroSection);
+    }
+    // When prefers-reduced-motion is set, keep the static idle markup as-is
+    })();
+  })();
+  </script><script type="module">
 
-  <!-- Roadmap (timeline) -->
-  <section id="works" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>03 / Roadmap</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        The Path to IoA
-      </h2>
-      <ol class="timeline">
-        <li class="timeline__item reveal" data-reveal data-delay="150">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">Now</span>
-            <h3 class="timeline__title">Desktop + Connect</h3>
-          </div>
-          <p class="timeline__body">
-            Phase 1 and Phase 2 of EntreprenAIs Connect, which connects personal workstations
-            as "management nodes," are in progress. We are establishing the first agent nodes at the edge.
-          </p>
-        </li>
-        <li class="timeline__item reveal" data-reveal data-delay="250">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">Next</span>
-            <h3 class="timeline__title">Zero Emission Option / A2A</h3>
-          </div>
-          <p class="timeline__body">
-            We are advancing the PoC for the Zero Emission Option that concentrates inference
-            during green power surplus periods, standardization of the agent-to-agent A2A protocol,
-            and development of the chatroom UX.
-          </p>
-        </li>
-        <li class="timeline__item reveal" data-reveal data-delay="350">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">Future</span>
-            <h3 class="timeline__title">Carbon-Aware Cluster &amp; IoA Mesh</h3>
-          </div>
-          <p class="timeline__body">
-            A Carbon-Aware scheduled Edge-First K8s cluster, an IoA mesh where agents
-            collaborate across boundaries, and an agent marketplace.
-          </p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Showcase -->
-  <section id="showcase" class="section">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>04 / Showcase</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        AI Agents in Action
-      </h2>
-      <p class="showcase-lead reveal" data-reveal data-delay="150">
-        Real agents running on the EntreprenAIs Runtime
-      </p>
-      <div class="showcase-cards">
-
-        <!-- Card 1: Contact AI -->
-        <article class="showcase-card reveal" data-reveal data-delay="200">
-          <div class="showcase-card__header">
-            <span class="showcase-card__status" aria-label="Running">
-              <span class="showcase-card__status-dot" aria-hidden="true"></span>
-              Running
-            </span>
-          </div>
-          <h3 class="showcase-card__title">Contact AI</h3>
-          <p class="showcase-card__body">
-            A public contact agent embedded in this site.
-            It runs inference on a local LLM at the edge (ollama)
-            and answers questions based on information from EntreprenAIs.com.
-          </p>
-          <ul class="showcase-card__tags" aria-label="Tech tags">
-            <li>EntreprenAIs Contact AI</li>
-            <li>Edge inference</li>
-            <li>MacBook-powered</li>
-          </ul>
-          <div class="showcase-card__cta">
-            <button class="btn btn--primary showcase-card__btn-open" type="button"
-              aria-label="Open the AI chat widget at the bottom right">
-              Ask AI &rarr;
-            </button>
-          </div>
-        </article>
-
-        <!-- Card 2: C-Suite Agent Fleet -->
-        <article class="showcase-card reveal" data-reveal data-delay="300">
-          <div class="showcase-card__header">
-            <span class="showcase-card__status" aria-label="Running">
-              <span class="showcase-card__status-dot" aria-hidden="true"></span>
-              Running
-            </span>
-          </div>
-          <h3 class="showcase-card__title">C-Suite Agent Fleet</h3>
-          <p class="showcase-card__body">
-            A team of 8 executive AI agents handling management decisions, code implementation,
-            legal, and finance. They support the FC (Fleet Commander) in parallel for daily work
-            and autonomously execute tasks via chat.
-          </p>
-          <ul class="showcase-card__tags" aria-label="Tech tags">
-            <li>Executive AI</li>
-            <li>Multi-agent</li>
-            <li>Edge-First</li>
-          </ul>
-          <div class="showcase-card__cta">
-            <a class="btn btn--ghost" href="/eai/">Learn more &rarr;</a>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>05 / About</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        Taruishi Digital Technology Research Institute LLC (TDRI)
-      </h2>
-      <div class="about__grid">
-        <div class="about__block reveal" data-reveal data-delay="150">
-          <h3 class="about__heading">Company Overview</h3>
-          <p class="about__body">
-            Taruishi Digital Technology Research Institute LLC (TDRI) is a technology company
-            founded in 2018 and incorporated in December 2021, based in Shiroi City, Chiba Prefecture.
-            With the fusion of renewable energy and IT as our business pillar, we research, develop,
-            and operate the EntreprenAIs platform, which places AI agents at the core of management.
-          </p>
-          <p class="about__body">
-            0 employees. The company is operated by 8 AI agents (C-Suite Agent Fleet) — 
-            CFO, CTO, CPO, CLO, CHRO, CISO, COO, and Auditor — practicing multi-agent management.
-          </p>
-        </div>
-        <div class="about__block reveal" data-reveal data-delay="250">
-          <h3 class="about__heading">Our Origin</h3>
-          <p class="about__body">
-            Our representative, Masato Taruishi, whose paternal family home is in Iwaki City, Fukushima,
-            felt a deep sense of responsibility as a stakeholder in the country's energy consumption
-            following the Great East Japan Earthquake of 2011. This led him to establish this institute
-            with the goal of developing digital technologies for the stable utilization of renewable energy.
-          </p>
-        </div>
-        <div class="about__block reveal" data-reveal data-delay="350">
-          <h3 class="about__heading">Representative Profile</h3>
-          <p class="about__body">
-            Representative Member Masato Taruishi worked as an engineer at foreign IT companies,
-            Google Japan, and Rakuten, developing large-scale distributed systems. He then served as
-            CTO of Retty, experiencing its listing on the Tokyo Stock Exchange Mothers. Currently,
-            he serves as CTO of a major group company while continuing research activities as
-            a visiting researcher at the Waseda University Data Science Research Institute.
-            He incorporated TDRI in 2021 and personally practices and researches
-            multi-agent management with the EntreprenAIs C-Suite Agent Fleet.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="section section--accent">
-    <div class="section__inner contact">
-      <p class="section__num reveal" data-reveal>06 / Contact</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        Contact Us
-      </h2>
-      <p class="contact__lead reveal" data-reveal data-delay="200">
-        For joint research, implementation consultations, or career inquiries related to IoA / Zero Emission Option, please reach out via the representative's LinkedIn.
-      </p>
-      <a class="contact__mail reveal" data-reveal data-delay="300" href="https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/" target="_blank" rel="noopener noreferrer">
-        LinkedIn — Masato Taruishi
-      </a>
-      <p class="contact__note reveal" data-reveal data-delay="400">
-        * This site is the corporate website of TDRI. Responses may take some time. A dedicated contact email address is in preparation.
-      </p>
-      <button class="btn btn--ghost contact__ai-btn reveal" data-reveal data-delay="500" type="button">
-        Ask AI &rarr;
-      </button>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <span class="footer__mark" aria-hidden="true">
-          <span class="footer__mark-bar"></span>
-          <span class="footer__mark-dot"></span>
-        </span>
-        <div>
-          <p class="footer__name">Taruishi Digital Technology Research Institute LLC</p>
-          <p class="footer__name-en">樽石デジタル技術研究所合同会社</p>
-        </div>
-      </div>
-      <div class="footer__meta">
-        <p class="footer__copy">
-          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
-          This site is part of EntreprenAIs IoA platform
-        </p>
-        <nav class="footer__nav" aria-label="Footer navigation">
-          <ul class="footer__nav-list">
-            <li><a href="/news/" class="footer__link">News</a></li>
-            <li><a href="/eai/" class="footer__link">EntreprenAIs</a></li>
-            <li><a href="/eai/showcase/" class="footer__link">Showcase</a></li>
-            <li><a href="/terms/" class="footer__link">Terms of Use</a></li>
-            <li><a href="/privacy/" class="footer__link">Privacy Policy</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
-  <script src="/main.js" defer></script>
-
-  <!-- EntreprenAIs Contact AI widget — dynamic load with offline fallback -->
-  <script>
   (function () {
     'use strict';
-    var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+    var section = document.getElementById('news');
+    var list = document.getElementById('cloud-news-list');
+    if (!section || !list) return;
 
-    function showOfflineBadge() {
-      if (document.getElementById('__eai-offline-badge')) return;
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-      if (window.gtag) {
-        gtag('event', 'ai_offline', {
-          event_category: 'contact_agent',
-          event_label: 'offline_badge_shown',
-          non_interaction: true
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + escHtml(item.thumbnail) + '" alt="' + escHtml(item.title) + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      li.innerHTML = '<a class="news-card" href="' + escHtml(item.url) + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + escHtml(item.date) + '</span>'
+        +     '<span class="news-card__badge">' + escHtml(item.badge) + '</span>'
+        +   '</div>'
+        +   '<h3 class="news-card__title">' + escHtml(item.title) + '</h3>'
+        +   '<p class="news-card__summary">' + escHtml(item.summary) + '</p>'
+        +   '<span class="news-card__cta">' + escHtml(item.cta) + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news-en.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items.slice(0, 3);
+        latest.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep section hidden on fetch failure (avoid breaking the LP UX)
+      });
+  })();
+  
+</script><script type="module">
+
+  (function () {
+    'use strict';
+    var pill = document.getElementById('hero-news-pill');
+    var dateEl = document.getElementById('hero-news-pill-date');
+    var titleEl = document.getElementById('hero-news-pill-title');
+    if (!pill || !dateEl || !titleEl) return;
+
+    fetch('/data/news-en.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items && items[0];
+        if (!latest) return;
+        dateEl.textContent = latest.date;
+        titleEl.textContent = latest.title;
+        pill.href = latest.url;
+        pill.style.display = '';
+        pill.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep hidden on fetch failure (avoid breaking the LP UX)
+      });
+  })();
+  
+</script><script type="module">
+
+    (function () {
+      'use strict';
+      var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+
+      // Show an "AI Resting" badge in the bottom right (when contact-agent is down)
+      function showOfflineBadge() {
+        if (document.getElementById('__eai-offline-badge')) return;
+
+        if (window.gtag) {
+          gtag('event', 'ai_offline', {
+            event_category: 'contact_agent',
+            event_label: 'offline_badge_shown',
+            non_interaction: true
+          });
+        }
+
+        var style = document.createElement('style');
+        style.textContent = [
+          '#__eai-offline-badge {',
+          '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
+          '  height: 44px; padding: 0 16px;',
+          '  border-radius: 22px; white-space: nowrap;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.65);',
+          '  border: 1px solid rgba(247,246,241,0.10);',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
+          '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
+          '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
+          '  transition: background 0.2s, color 0.2s;',
+          '}',
+          '#__eai-offline-badge:hover {',
+          '  background: #2a2d34; color: rgba(247,246,241,0.88);',
+          '}',
+          '#__eai-offline-toast {',
+          '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.82);',
+          '  padding: 12px 16px; border-radius: 10px;',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; line-height: 1.5;',
+          '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
+          '  border: 1px solid rgba(247,246,241,0.08);',
+          '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
+          '}',
+          '#__eai-offline-toast.visible { opacity: 1; }',
+        ].join('\n');
+        document.head.appendChild(style);
+
+        var badge = document.createElement('button');
+        badge.id = '__eai-offline-badge';
+        badge.innerHTML = '&#x1F319; AI Resting';
+        badge.setAttribute('aria-label', 'The AI is currently resting');
+        badge.setAttribute('title', 'The AI is currently resting');
+
+        var toast = document.createElement('div');
+        toast.id = '__eai-offline-toast';
+        toast.textContent = 'The AI is currently resting. It will resume once the sun is out.';
+
+        badge.addEventListener('click', function () {
+          toast.classList.add('visible');
+          setTimeout(function () { toast.classList.remove('visible'); }, 3500);
+        });
+
+        document.body.appendChild(badge);
+        document.body.appendChild(toast);
+
+        // Switch in-page "Ask AI" buttons to offline state (no matching elements
+        // exist on /cloud, but we keep the same logic as the top page for easier future sync)
+        ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
+          var btns = document.querySelectorAll('.' + cls);
+          btns.forEach(function(btn) {
+            btn.textContent = 'AI Resting';
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            btn.onclick = null;
+          });
         });
       }
 
-      var style = document.createElement('style');
-      style.textContent = [
-        '#__eai-offline-badge {',
-        '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
-        '  height: 44px; padding: 0 16px;',
-        '  border-radius: 22px; white-space: nowrap;',
-        '  background: #1a1d22; color: rgba(247,246,241,0.65);',
-        '  border: 1px solid rgba(247,246,241,0.10);',
-        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
-        '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
-        '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
-        '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
-        '  transition: background 0.2s, color 0.2s;',
-        '}',
-        '#__eai-offline-badge:hover {',
-        '  background: #2a2d34; color: rgba(247,246,241,0.88);',
-        '}',
-        '#__eai-offline-toast {',
-        '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
-        '  background: #1a1d22; color: rgba(247,246,241,0.82);',
-        '  padding: 12px 16px; border-radius: 10px;',
-        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
-        '  font-size: 13px; line-height: 1.5;',
-        '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
-        '  border: 1px solid rgba(247,246,241,0.08);',
-        '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
-        '}',
-        '#__eai-offline-toast.visible { opacity: 1; }',
-      ].join('\n');
-      document.head.appendChild(style);
+      // Check reachability on page load (verify widget.js is reachable)
+      function checkAiOnline(cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', WIDGET_URL, true);
+        xhr.timeout = 5000;
+        xhr.onload = function() { cb(xhr.status < 400); };
+        xhr.onerror = function() { cb(false); };
+        xhr.ontimeout = function() { cb(false); };
+        xhr.send();
+      }
 
-      var badge = document.createElement('button');
-      badge.id = '__eai-offline-badge';
-      badge.innerHTML = '&#x1F319; AI Offline';
-      badge.setAttribute('aria-label', 'AI is currently offline');
-      badge.setAttribute('title', 'AI is currently offline');
+      // Dynamically load widget.js (show offline badge on error)
+      function loadWidget() {
+        var s = document.createElement('script');
+        s.src = WIDGET_URL;
+        s.async = true;
+        s.onerror = function () {
+          showOfflineBadge();
+        };
+        document.body.appendChild(s);
+      }
 
-      var toast = document.createElement('div');
-      toast.id = '__eai-offline-toast';
-      toast.textContent = 'AI is currently offline. It will be back when the sun is out.';
-
-      badge.addEventListener('click', function () {
-        toast.classList.add('visible');
-        setTimeout(function () { toast.classList.remove('visible'); }, 3500);
-      });
-
-      document.body.appendChild(badge);
-      document.body.appendChild(toast);
-
-      ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
-        var btns = document.querySelectorAll('.' + cls);
-        btns.forEach(function(btn) {
-          btn.textContent = 'AI Offline';
-          btn.disabled = true;
-          btn.style.opacity = '0.5';
-          btn.style.cursor = 'not-allowed';
-          btn.onclick = null;
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          checkAiOnline(function(online) {
+            if (!online) showOfflineBadge();
+          });
+          loadWidget();
         });
-      });
-    }
-
-    function checkAiOnline(cb) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', WIDGET_URL, true);
-      xhr.timeout = 5000;
-      xhr.onload = function() { cb(xhr.status < 400); };
-      xhr.onerror = function() { cb(false); };
-      xhr.ontimeout = function() { cb(false); };
-      xhr.send();
-    }
-
-    function loadWidget() {
-      var s = document.createElement('script');
-      s.src = WIDGET_URL;
-      s.async = true;
-      s.onerror = function () {
-        showOfflineBadge();
-      };
-      document.body.appendChild(s);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
+      } else {
         checkAiOnline(function(online) {
           if (!online) showOfflineBadge();
         });
         loadWidget();
-      });
-    } else {
-      checkAiOnline(function(online) {
-        if (!online) showOfflineBadge();
-      });
-      loadWidget();
-    }
-  })();
-  </script>
+      }
 
-  <!-- Anchor scroll offset fix for mobile browsers -->
-  <script>
-  (function () {
-    'use strict';
-    if (!location.hash) return;
-    window.addEventListener('load', function () {
-      var hash = location.hash;
-      var target = document.querySelector(hash);
-      if (!target) return;
-      var nav = document.querySelector('.nav');
-      var navH = nav ? nav.getBoundingClientRect().height : 0;
-      var offset = 16;
-      var targetTop = target.getBoundingClientRect().top + window.scrollY;
-      var htmlEl = document.documentElement;
-      var prevBehavior = htmlEl.style.scrollBehavior;
-      htmlEl.style.scrollBehavior = 'auto';
-      window.scrollTo({ top: targetTop - navH - offset, behavior: 'instant' });
-      htmlEl.style.scrollBehavior = prevBehavior;
-    });
-  })();
-  </script>
-</body>
-</html>
+      // Opens the real widget's floating button (the .__eai-widget-btn generated
+      // by widget.js) from the hero chat preview's "try asking" button. Same pattern
+      // as openWidgetBtn on the top page. Factored into a shared function so it can
+      // be reused by the CTA section's launch button (chat-preview-open-cta) too.
+      function openContactWidget() {
+        var widgetBtn = document.querySelector('.__eai-widget-btn');
+        if (widgetBtn) {
+          widgetBtn.click();
+        } else {
+          // If widget.js is still loading, wait briefly and retry
+          setTimeout(function () {
+            var retryBtn = document.querySelector('.__eai-widget-btn');
+            if (retryBtn) retryBtn.click();
+          }, 800);
+        }
+      }
+      // The dedicated hero iPhone-frame CTA was removed to save space; the path
+      // to the real widget is kept via the button group below (hero-cta-open-widget
+      // launches openContactWidget() instead of anchoring to #demo).
+      ['chat-preview-open', 'chat-preview-open-cta', 'hero-cta-open-widget'].forEach(function (id) {
+        var btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', openContactWidget);
+      });
+    })();
+    
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://entreprenais.com/#organization",
+      "name": "Taruishi Digital Technology Research Institute LLC",
+      "alternateName": ["TDRI", "Taruishi Digital Research Institute, LLC"],
+      "url": "https://entreprenais.com/",
+      "logo": "https://entreprenais.com/og.png",
+      "sameAs": [
+        "https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/",
+        "https://github.com/taru0216"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://entreprenais.com/#website",
+      "url": "https://entreprenais.com/en/",
+      "name": "EntreprenAIs",
+      "description": "A platform for AI agents that operate autonomously at the edge",
+      "publisher": { "@id": "https://entreprenais.com/#organization" },
+      "inLanguage": "en-US"
+    }
+  ]
+}
+</script></head> <body>      <nav class="site-nav" data-astro-cid-j7pv25f6> <div class="nav-inner" data-astro-cid-j7pv25f6> <div class="nav-logo" data-astro-cid-j7pv25f6> <span class="nav-logo__t" data-astro-cid-j7pv25f6>T</span><span class="nav-logo__dot" data-astro-cid-j7pv25f6></span> <span class="nav-logo__tdri" data-astro-cid-j7pv25f6>TDRI</span> <span class="nav-logo__sep" data-astro-cid-j7pv25f6></span> <span class="nav-logo__product" data-astro-cid-j7pv25f6>EntreprenAIs Cloud</span> </div> <ul class="nav-links" data-astro-cid-j7pv25f6> <li data-astro-cid-j7pv25f6><a href="#demo" data-astro-cid-j7pv25f6>Live Demo</a></li> <li data-astro-cid-j7pv25f6><a href="#problem" data-astro-cid-j7pv25f6>Our Approach</a></li> <li data-astro-cid-j7pv25f6><a href="#architecture" data-astro-cid-j7pv25f6>Architecture</a></li> <li data-astro-cid-j7pv25f6><a href="#green" data-astro-cid-j7pv25f6>Green</a></li> </ul>  <nav class="cloud-lang-nav" aria-label="Language" data-astro-cid-j7pv25f6> <a href="/" hreflang="ja">日本語</a> <a href="/en/" hreflang="en" aria-current="page" data-astro-cid-j7pv25f6>English</a> <a href="/zh/" hreflang="zh" data-astro-cid-j7pv25f6>中文</a> </nav> <a href="#contact" class="nav-cta" data-astro-cid-j7pv25f6>Talk to Us →</a> </div> </nav>  <section class="hero" data-astro-cid-j7pv25f6> <div class="hero-bg" aria-hidden="true" data-astro-cid-j7pv25f6> <div class="hero-glow--a" data-astro-cid-j7pv25f6></div> <img class="hero-photo-bg hero-photo-bg--desktop" src="/images/hero-photo-bg-desktop.jpg" alt="" loading="eager" data-astro-cid-j7pv25f6> <img class="hero-photo-bg hero-photo-bg--mobile" src="/images/hero-photo-bg-mobile.jpg" alt="" loading="eager" data-astro-cid-j7pv25f6> </div> <div class="hero-inner" data-astro-cid-j7pv25f6>  <a class="hero-news-pill" id="hero-news-pill" href="#" style="display:none" aria-hidden="true" data-astro-cid-j7pv25f6> <time id="hero-news-pill-date" data-astro-cid-j7pv25f6></time> <span class="hero-news-pill__title" id="hero-news-pill-title" data-astro-cid-j7pv25f6></span> <span aria-hidden="true" data-astro-cid-j7pv25f6>&rarr;</span> </a> <div class="hero-eyebrow-row reveal" data-reveal data-astro-cid-j7pv25f6> <span class="hero-eyebrow" data-astro-cid-j7pv25f6>Green AI Cloud</span> <span class="hero-eyebrow-rule" data-astro-cid-j7pv25f6></span> <span class="hero-live-badge" data-astro-cid-j7pv25f6><span class="hero-live-dot" data-astro-cid-j7pv25f6></span>Powered by solar + hydro</span> </div> <div class="hero-flex" data-astro-cid-j7pv25f6> <div class="hero-col-text reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <h1 data-astro-cid-j7pv25f6>&ldquo;Ultra-Fast, Ultra-Low-Power&rdquo;<span class="hero-h1-line2" data-astro-cid-j7pv25f6><span class="accent" data-astro-cid-j7pv25f6>Green AI Cloud</span> is here</span></h1> <p class="hero-lede" data-astro-cid-j7pv25f6>
+An agent platform running on our own green data center. Responses complete in <strong data-astro-cid-j7pv25f6>milliseconds</strong>, powered entirely by <strong data-astro-cid-j7pv25f6>our own renewable energy</strong>.
+</p> <div class="hero-cta" data-astro-cid-j7pv25f6>  <button type="button" class="btn btn-primary" id="hero-cta-open-widget" data-astro-cid-j7pv25f6>Experience 0.5ms →</button> <a href="#architecture" class="btn btn-secondary" data-astro-cid-j7pv25f6>See the Architecture</a> </div> </div>  <div class="hero-col-phone reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="hero-metric-standalone" data-astro-cid-j7pv25f6> <span class="hero-metric-standalone__value" data-astro-cid-j7pv25f6>0.5</span> <span class="hero-metric-standalone__unit" data-astro-cid-j7pv25f6>ms</span> <span class="hero-metric-standalone__note" data-astro-cid-j7pv25f6>Agent Spinal Reflex technology<br data-astro-cid-j7pv25f6>Response execution time (self-measured, no LLM inference)</span> </div> <div class="hero-phone-mock" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__notch" aria-hidden="true" data-astro-cid-j7pv25f6></span> <div class="hero-phone-mock__screen" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__badge" data-astro-cid-j7pv25f6> <span class="hero-live-dot" style="background:var(--color-accent-light)" data-astro-cid-j7pv25f6></span>
+EntreprenAIs Cloud
+</span> <div class="hero-phone-mock__msgs" id="hero-phone-msgs" data-astro-cid-j7pv25f6> <div class="hero-phone-mock__msg hero-phone-mock__msg--in" data-astro-cid-j7pv25f6>What is the response speed of the Green AI Cloud?</div> <div class="hero-phone-mock__msg hero-phone-mock__msg--out" data-astro-cid-j7pv25f6>Reflex response in 0.5ms. A fixed response is returned via the CPU cache path (no LLM inference).</div> </div> <div class="hero-phone-mock__ms" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__ms-value" id="hero-phone-ms-value" data-astro-cid-j7pv25f6>0.5</span> <span class="hero-phone-mock__ms-label" data-astro-cid-j7pv25f6>ms-range reflex response<br data-astro-cid-j7pv25f6>Ultra-low power, effectively 100% renewable</span> </div> </div> </div> <p class="hero-phone-note" data-astro-cid-j7pv25f6>This is our actual live &ldquo;Contact AI.&rdquo; The same conversation as the LIVE DEMO plays automatically.</p> </div> </div> <details class="hero-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ Measurement conditions &amp; disclosure scope for these figures</summary> <p data-astro-cid-j7pv25f6>The meters and figures shown are indicative trend values based on our own measurements. &ldquo;0.5ms&rdquo; is our self-measured execution time for the Agent Spinal Reflex technology (a low-latency response path completed entirely on CPU), and it does not guarantee that every request will respond at this figure. We are continuing to refine our measurement conditions (definition of response, benchmark environment, reproducibility) and the definition and disclosure granularity of &ldquo;effectively 100% renewable&rdquo; toward greater external transparency.</p> </details> </div> </section>  <section id="demo" class="section-dark" style="margin-top:120px" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="demo-head" data-astro-cid-j7pv25f6> <div data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>Live Demo</div> <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)" data-astro-cid-j7pv25f6>Speed is something you can only feel in conversation.</h2> <p class="section-lede on-dark reveal" data-reveal data-delay="140" style="max-width:60ch" data-astro-cid-j7pv25f6>
+The left panel shows the reflex response from our own agent platform. The right panel sends the same prompt to cloud LLM inference (gpt-oss:20b-cloud). <strong style="color:var(--color-dark-text);font-weight:700" data-astro-cid-j7pv25f6>The right panel waits in real time, exactly as measured</strong> — by the time the left panel finishes the whole conversation, the right panel is still writing its first reply.
+</p> </div> </div> <div class="demo-grid reveal" data-reveal data-delay="200" id="live-demo-root" data-astro-cid-j7pv25f6> <div class="demo-card is-ours" data-astro-cid-j7pv25f6> <div class="demo-card__head" data-astro-cid-j7pv25f6> <span class="demo-card__dot" data-astro-cid-j7pv25f6></span> <span class="demo-card__title" data-astro-cid-j7pv25f6>EntreprenAIs Cloud</span> <span class="demo-card__badge" data-astro-cid-j7pv25f6>cache</span> <span class="demo-card__turnlabel" data-own-turn-label data-astro-cid-j7pv25f6>Own green DC / reflex path</span> </div> <div class="demo-card__body" data-scroll="own" id="demo-own-body" data-astro-cid-j7pv25f6> <div class="demo-idle" data-own-idle data-astro-cid-j7pv25f6>reflex path<br data-astro-cid-j7pv25f6>Runs automatically when scrolled into view</div> </div> <div class="demo-card__footer" data-astro-cid-j7pv25f6> <span class="demo-card__footer-value" data-own-ms-big data-astro-cid-j7pv25f6>0.5</span> <span class="demo-card__footer-unit" data-astro-cid-j7pv25f6>ms</span> <span class="demo-card__footer-note" data-astro-cid-j7pv25f6>Cumulative response processing time<br data-astro-cid-j7pv25f6>No LLM inference / CPU only</span> </div> </div> <div class="demo-card is-cloud" data-astro-cid-j7pv25f6> <div class="demo-card__head" data-astro-cid-j7pv25f6> <span class="demo-card__dot" data-astro-cid-j7pv25f6></span> <span class="demo-card__title" data-astro-cid-j7pv25f6>Cloud LLM Inference</span> <span class="demo-card__badge" data-astro-cid-j7pv25f6>gpt-oss:20b-cloud</span> <span class="demo-card__turnlabel" data-cloud-turn-label data-astro-cid-j7pv25f6>Third-party DC / full generation every time</span> </div> <div class="demo-card__body" data-scroll="cloud" id="demo-cloud-body" data-astro-cid-j7pv25f6> <div class="demo-idle" data-cloud-idle data-astro-cid-j7pv25f6>cloud inference<br data-astro-cid-j7pv25f6>Waits in real time, exactly as measured</div> </div> <div class="demo-card__footer" data-astro-cid-j7pv25f6> <span class="demo-card__footer-value" data-cloud-sec-big data-astro-cid-j7pv25f6>9.5</span> <span class="demo-card__footer-unit" data-astro-cid-j7pv25f6>s</span> <span class="demo-card__footer-note" data-astro-cid-j7pv25f6>Elapsed time since conversation start<br data-astro-cid-j7pv25f6>(measured 9.5&ndash;22.9 sec / response)</span> </div> </div> </div> <p class="section-lede on-dark" style="margin-top:22px;font-size:12.5px;line-height:1.9;color:var(--color-dark-muted);max-width:96ch" data-astro-cid-j7pv25f6>&#8251; This demo is a simulation reproducing our own measured values (2026-08-05). The right panel&rsquo;s wait time is real time at 1x speed (9.5&ndash;18.7 sec per response). It replays automatically once the conversation ends. The left panel returns a fixed response from cache, while the right panel performs full generation each time &mdash; the underlying processing differs. The left panel&rsquo;s typing effect is a display presentation for readability; the actual response processing completes in the 0.5ms range.</p> <details class="note-details on-dark" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ Notes on measurement conditions, measured values, and the asymmetry of this comparison (4 items)</summary> <div class="note-grid" data-astro-cid-j7pv25f6> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>Measurement conditions:</strong> Measured on 2026-08-05 with the same prompt, &ldquo;What is the response speed of the Green AI Cloud?&rdquo; Our side measures server-internal processing time via the CPU cache response path (<span style="font-family:var(--font-mono)" data-astro-cid-j7pv25f6>source: cache</span>, a fixed response with no LLM inference). The gpt-oss:20b-cloud side measures total wall time from request to completed response via `eai-ext-ollama` (Ollama&rsquo;s cloud inference backend, confirmed to use no local VRAM). Measured ranges are 0.5&ndash;1.0 ms versus 9.5&ndash;22.9 sec. The gpt-oss:20b-cloud figures represent the total time for full generation (including the reasoning process) of 1126&ndash;1929 output tokens.</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>About gpt-oss:</strong> gpt-oss is an open-source large language model released by OpenAI, distinct from that company&rsquo;s commercial APIs (ChatGPT, GPT-4/GPT-5, etc.). Here we measured `gpt-oss:20b-cloud` (via Ollama&rsquo;s cloud inference backend) as one example of a cloud-LLM-API-based agent.</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>Asymmetry of this comparison:</strong> Our side returns a fixed response from cache, while gpt-oss:20b-cloud performs full generation inference every time &mdash; the underlying processing differs. The main driver of the response-time gap is simply &ldquo;whether inference happens at all.&rdquo; The ratio ranges from a minimum of about 9,500x (9.5s &divide; 1.0ms) to a maximum of about 45,800x (22.9s &divide; 0.5ms).</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>Future expansion:</strong> As we do not yet have direct access set up to commercial cloud APIs (Claude, GPT proper, etc.), we currently show only measured cloud-inference figures for an open-source model. Wait times for the second demo turn onward are estimated values within this measured range.</p> </div> </details> </div> </section>  <section id="problem" class="section-light" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>Our Approach</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>Intelligence is now a given.<br data-astro-cid-j7pv25f6>We design for speed and power.</h2> <p class="section-lede reveal" data-reveal data-delay="140" data-astro-cid-j7pv25f6>
+Model intelligence is advancing rapidly across the industry. Building on that, what a platform needs for agents to keep working day after day is response speed, power consumption, and transparency in power sourcing. We made these three things our design targets.
+</p> <div class="problem-grid" data-astro-cid-j7pv25f6> <div class="problem-card reveal" data-reveal data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>01 / SPEED</div> <h3 data-astro-cid-j7pv25f6>Designing for response speed</h3> <p data-astro-cid-j7pv25f6>Routine responses are returned on the CPU, removing LLM inference and network round-trips from the path entirely. For use cases with many back-and-forth exchanges, this one decision directly determines the quality of the experience.</p> </div> <div class="problem-card reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>02 / POWER</div> <h3 data-astro-cid-j7pv25f6>Designing for power consumption</h3> <p data-astro-cid-j7pv25f6>We concentrate inference only where it&rsquo;s truly needed and handle everything else on the CPU. Shrinking the actual power draw pays off for both cost and environmental impact.</p> </div> <div class="problem-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>03 / TRANSPARENCY</div> <h3 data-astro-cid-j7pv25f6>Disclosing our power sourcing</h3> <p data-astro-cid-j7pv25f6>Because inference completes entirely within our own green data center, we can explain the origin of our power ourselves. We operate on the premise of maintaining the audit trails needed to support ESG/CSR requirements.</p> </div> </div> </div> </section>  <section id="architecture" class="section-dark" data-astro-cid-j7pv25f6> <div class="section-inner arch-flex" data-astro-cid-j7pv25f6> <div class="arch-col-main" data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>Architecture</div> <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)" data-astro-cid-j7pv25f6>The thinking brain and the reflexive nerves<br data-astro-cid-j7pv25f6>are joined within a single conversation.</h2> <div class="arch-sub reveal" data-reveal data-delay="120" data-astro-cid-j7pv25f6>Cerebral AI &times; Agent Spinal Reflex technology</div> <p class="section-lede on-dark reveal" data-reveal data-delay="160" data-astro-cid-j7pv25f6>
+This is a two-layer structure modeled on the human nervous system. What matters is not the split itself, but that the two layers stay joined as a single, continuous conversation. The person talking never notices which response came from a CPU reflex and where it switched over to GPU-based thought. That handoff is powered by our compilation technology, which converts a design into an executable (currently semi-automatic &mdash; we are expanding the range it can handle as we operate it).
+</p> <div class="arch-card-list" data-astro-cid-j7pv25f6> <div class="arch-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>01</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Cerebral AI &mdash; deliberate thinking</h3> <p data-astro-cid-j7pv25f6>Complex judgment and generation are handled by a local LLM running inside our own green data center. Because it never goes through a cloud LLM (via a third-party data center), the power sourcing stays entirely within our own renewable energy.</p> </div> </div> <div class="arch-connector" data-astro-cid-j7pv25f6> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> <span class="arch-connector-label" data-astro-cid-j7pv25f6>SEAMLESS</span> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> </div> <div class="arch-card reveal" data-reveal data-delay="250" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>02</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Compilation technology &mdash; from design to executable</h3> <p data-astro-cid-j7pv25f6>Our proprietary technology splits the &ldquo;design&rdquo; that the Cerebral AI carefully thought through into a lightweight, CPU-only executable and the parts that still require inference. This is currently a semi-automatic process run alongside human oversight, and we are gradually raising the share of CPU execution as we operate it, expanding the range that can be run cheaply and repeatedly. The idea: &ldquo;train once on high-performance compute, then run inference daily in an energy-efficient environment.&rdquo;</p> </div> </div> <div class="arch-connector" data-astro-cid-j7pv25f6> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> <span class="arch-connector-label" data-astro-cid-j7pv25f6>SEAMLESS</span> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> </div> <div class="arch-card is-highlight reveal" data-reveal data-delay="300" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>03</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Agent Spinal Reflex technology</h3> <p data-astro-cid-j7pv25f6>Routine responses run on the CPU with no LLM inference, in a process equivalent to a spinal reflex that never involves the brain. This executable is exactly the program that the compilation technology generates. Any question the reflex can&rsquo;t handle is handed straight over to the Cerebral AI &mdash; the conversation never breaks.</p> </div> </div> </div> </div> <div class="arch-sidebar reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="arch-sidebar__label" data-astro-cid-j7pv25f6>Reflex path</div> <div class="arch-sidebar__metric" data-astro-cid-j7pv25f6> <span class="arch-sidebar__value" data-astro-cid-j7pv25f6>0.5</span> <span class="arch-sidebar__unit" data-astro-cid-j7pv25f6>ms</span> </div> <p class="arch-sidebar__desc" data-astro-cid-j7pv25f6>The response execution time of the Agent Spinal Reflex technology (self-measured). Questions the reflex can answer stay on the CPU; questions that need thought go to the Cerebral AI &mdash; the switch happens automatically, behind the scenes of the conversation.</p> <div class="arch-sidebar__list" data-astro-cid-j7pv25f6> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>LLM inference</span><span class="v" data-astro-cid-j7pv25f6>none</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Network hop</span><span class="v" data-astro-cid-j7pv25f6>in-house</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Compute</span><span class="v" data-astro-cid-j7pv25f6>CPU / GPU auto</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Power source</span><span class="v is-green" data-astro-cid-j7pv25f6>renewable</span></div> </div> <details class="arch-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ Notes on these figures and our &ldquo;compilation technology&rdquo;</summary> <p data-astro-cid-j7pv25f6>&ldquo;0.5ms&rdquo; is our self-measured execution time for the low-latency response path in our own agent platform. We plan to increase the transparency of our measurement conditions going forward; for now we present it as an internal, self-measured figure. It does not guarantee that every request will respond at this figure. &ldquo;Compilation technology&rdquo; refers to our proprietary mechanism for converting part of a design into an executable program. It is currently not fully automatic but a semi-automatic process run alongside human oversight, and the range of processing it can convert is being expanded progressively. The detailed conversion method is not disclosed.</p> </details> </div> </div> </section>  <section id="green" class="section-light" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>Green Infrastructure</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>The ceiling on our power supply<span class="accent" data-astro-cid-j7pv25f6> became our design philosophy.</span></h2> <p class="section-lede reveal" data-reveal data-delay="140" data-astro-cid-j7pv25f6>
+Working within the finite power available from solar self-generation plus renewable energy contracts is what gave rise to our hybrid Cerebral AI &times; Agent Spinal Reflex architecture.
+</p> <div class="green-grid" data-astro-cid-j7pv25f6> <div class="green-card reveal" data-reveal data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>PV</div> <h3 data-astro-cid-j7pv25f6>Our own green data center</h3> <p data-astro-cid-j7pv25f6>We operate on power from solar self-generation and renewable energy contracts (e.g. Aqua Energy 100).</p> </div> <div class="green-card reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>A2A</div> <h3 data-astro-cid-j7pv25f6>Removing external dependencies from the path</h3> <p data-astro-cid-j7pv25f6>We eliminate round-trip calls to external cloud LLMs and dependence on other companies&rsquo; data center power mixes, keeping our power sourcing entirely in-house.</p> </div> <div class="green-card reveal" data-reveal data-delay="150" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>kW</div> <h3 data-astro-cid-j7pv25f6>An ultra-low-power technology born from constraints</h3> <p data-astro-cid-j7pv25f6>Renewable power comes with constraints on output and supply. The need to cut power consumption to the absolute minimum is what led us to develop our hybrid architecture in-house.</p> </div> <div class="green-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>ESG</div> <h3 data-astro-cid-j7pv25f6>Transparency built on audit trails</h3> <p data-astro-cid-j7pv25f6>We disclose our power sourcing externally and make our &ldquo;green&rdquo; claims on the premise of maintaining supporting audit trails.</p> </div> </div> <details class="note-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ Notes on &ldquo;effectively 100% renewable&rdquo;</summary> <p data-astro-cid-j7pv25f6>This claim is based on self-generation from our own solar facilities and our renewable energy contracts. We are continuing to refine the definition of &ldquo;effectively&rdquo; and the granularity of our disclosures toward greater external transparency. For detailed evidence on individual contracts, please contact us and we will explain to the extent we can.</p> </details> <div class="flow-box reveal" data-reveal data-delay="240" data-astro-cid-j7pv25f6> <div class="eyebrow" data-astro-cid-j7pv25f6>Why Green AI Cloud</div> <h3 data-astro-cid-j7pv25f6>The constraint is what made both possible.</h3> <div class="flow-steps" data-astro-cid-j7pv25f6> <div class="flow-step" data-astro-cid-j7pv25f6>Output &amp; supply constraints on renewable power</div> <span class="flow-arrow" data-astro-cid-j7pv25f6>→</span> <div class="flow-step" data-astro-cid-j7pv25f6>Need to cut power consumption to the limit</div> <span class="flow-arrow" data-astro-cid-j7pv25f6>→</span> <div class="flow-step" data-astro-cid-j7pv25f6>Developed ultra-low-power technology in-house</div> <span class="flow-arrow is-accent" data-astro-cid-j7pv25f6>→</span> <div class="flow-step is-final" data-astro-cid-j7pv25f6>Ultra-low power &times; ultra-fast &times; green, all at once</div> </div> </div> </div> </section>  <div class="cta-wrap" data-astro-cid-j7pv25f6> <div class="cta-box reveal" data-reveal id="contact" data-astro-cid-j7pv25f6> <div class="cta-box__text" data-astro-cid-j7pv25f6> <h2 data-astro-cid-j7pv25f6>Get both speed<br data-astro-cid-j7pv25f6>and power accountability, at once.</h2> <p data-astro-cid-j7pv25f6>We welcome adoption inquiries and joint research consultations from IT procurement leads and ESG/CSR leads.</p> </div> <div class="cta-box__actions" data-astro-cid-j7pv25f6> <button type="button" class="cta-btn-primary" id="chat-preview-open-cta" data-astro-cid-j7pv25f6>Talk to Us →</button> <button type="button" class="cta-btn-secondary" id="chat-preview-open" data-astro-cid-j7pv25f6>Ask the AI</button>   </div> </div> </div>  <section id="about" class="section-dark" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>About</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>Taruishi Digital Technology Research Institute LLC (TDRI)</h2> <div class="about-grid" data-astro-cid-j7pv25f6> <div class="about-card reveal" data-reveal data-delay="120" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Company Overview</h3> <p data-astro-cid-j7pv25f6>
+Taruishi Digital Technology Research Institute LLC (TDRI) is a technology company
+            based in Shiroi City, Chiba Prefecture, founded in 2018 and incorporated
+            in December 2021. With the fusion of renewable energy and IT as our core
+            business pillar, we research, develop, and operate the EntreprenAIs
+            platform, which places AI agents at the core of management.
+</p> <p data-astro-cid-j7pv25f6>
+We have zero human employees. Eight AI agents (a C-Suite Agent Fleet
+            comprising CFO, CTO, CPO, CLO, CHRO, CISO, COO, and Auditor) run the
+            management &mdash; a company practicing multi-agent management.
+</p> </div> <div class="about-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Why We Started</h3> <p data-astro-cid-j7pv25f6>
+Our representative, Masato Taruishi, whose paternal family home is in
+            Iwaki City, Fukushima Prefecture, keenly felt his responsibility as
+            one of the people who made Japan a country dependent on electricity
+            following the 2011 Great East Japan Earthquake. He founded this
+            institute with the goal of establishing digital technology for the
+            stable use of renewable energy.
+</p> </div> <div class="about-card reveal" data-reveal data-delay="280" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Representative Profile</h3> <p data-astro-cid-j7pv25f6>
+Representative Partner Masato Taruishi worked as an engineer on large-scale
+            distributed systems at a foreign-affiliated IT company, Google Japan, and
+            Rakuten, then served as CTO of Retty through its listing on the Tokyo
+            Stock Exchange Mothers market. He currently serves as CTO of a major
+            group company while continuing research as a visiting researcher at
+            Waseda University&rsquo;s Institute for Data Science. He incorporated TDRI
+            in 2021 and personally practices and researches multi-agent management
+            alongside the EntreprenAIs C-Suite Agent Fleet.
+</p> </div> </div> </div> </section>  <section id="news" class="section-light" style="display:none" aria-hidden="true" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>News</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>News</h2> <ul class="news-list" id="cloud-news-list" data-astro-cid-j7pv25f6></ul> <div class="news-more reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <a class="cta-btn-secondary" href="/news/" style="display:inline-block" data-astro-cid-j7pv25f6>View all news &rarr;</a> </div> </div> </section>  <footer data-astro-cid-j7pv25f6> <div class="footer-inner" data-astro-cid-j7pv25f6> <div class="footer-top" data-astro-cid-j7pv25f6> <div class="footer-brand" data-astro-cid-j7pv25f6> <span class="footer-brand__mark" aria-hidden="true" data-astro-cid-j7pv25f6>T</span> <div data-astro-cid-j7pv25f6> <p class="footer-brand__name" data-astro-cid-j7pv25f6>Taruishi Digital Technology Research Institute LLC</p> <p class="footer-brand__name-en" data-astro-cid-j7pv25f6>Taruishi Digital Research Institute, LLC</p> </div> </div> <nav aria-label="Footer navigation" data-astro-cid-j7pv25f6> <ul class="footer-nav-list" data-astro-cid-j7pv25f6> <li data-astro-cid-j7pv25f6><a href="/news/" data-astro-cid-j7pv25f6>News</a></li> <li data-astro-cid-j7pv25f6><a href="/eai/" data-astro-cid-j7pv25f6>EntreprenAIs</a></li> <li data-astro-cid-j7pv25f6><a href="/agents/" data-astro-cid-j7pv25f6>Agents</a></li> <li data-astro-cid-j7pv25f6><a href="/vertical/" data-astro-cid-j7pv25f6>Vertical</a></li> <li data-astro-cid-j7pv25f6><a href="/eai/showcase/" data-astro-cid-j7pv25f6>Showcase</a></li> <li data-astro-cid-j7pv25f6><a href="/terms/" data-astro-cid-j7pv25f6>Terms of Use</a></li> <li data-astro-cid-j7pv25f6><a href="/privacy/" data-astro-cid-j7pv25f6>Privacy Policy</a></li> </ul> </nav> </div> <div class="footer-bottom" data-astro-cid-j7pv25f6> <span data-astro-cid-j7pv25f6>&copy; Taruishi Digital Technology Research Institute LLC &mdash; EntreprenAIs Cloud</span> <span class="mono" data-astro-cid-j7pv25f6>Internet of Agents · Edge-First · Zero Emission</span> </div> </div> </footer>           </body> </html>

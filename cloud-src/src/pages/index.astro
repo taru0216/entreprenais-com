@@ -98,6 +98,36 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       letter-spacing: 0.02em;
     }
     .nav-cta:hover { color: #fff; background: var(--color-accent2); }
+    /* #376: 言語切替導線。日本語（root）/ 英語（/en/）/ 中国語（/zh/）の
+       3ページ間を行き来できるよう nav 右端（CTA の左）に配置する。
+       旧トップページの .lang-nav（style.css）は暗背景トークンで /cloud の
+       ライトテーマ（.site-nav）とは配色が異なるため、cloud 側の
+       --color-* トークンに合わせて新規に定義する。 */
+    .cloud-lang-nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: 8px;
+      flex: none;
+    }
+    .cloud-lang-nav a {
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--color-muted);
+      border: 1px solid transparent;
+      transition: opacity 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .cloud-lang-nav a:hover { color: var(--color-accent2); }
+    .cloud-lang-nav a[aria-current="page"] {
+      color: var(--color-text);
+      border-color: var(--color-border);
+      font-weight: 700;
+    }
+    @media (max-width: 720px) {
+      .cloud-lang-nav { display: none; }
+    }
 
     /* ============ HERO ============ */
     .hero {
@@ -1241,6 +1271,16 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         <li><a href="#architecture">アーキテクチャ</a></li>
         <li><a href="#green">グリーン</a></li>
       </ul>
+      {/* #376: 言語切替導線は root 配信（BASE === ''）時のみ表示する。
+           /cloud サブパス版は絶対パス /en/ /zh/ が別コンテキスト（旧トップページの
+           翻訳版）を指してしまい導線として機能しないため非表示のまま維持する。 */}
+      {BASE === '' && (
+        <nav class="cloud-lang-nav" aria-label="言語切り替え">
+          <a href="/" hreflang="ja" aria-current="page">日本語</a>
+          <a href="/en/" hreflang="en">English</a>
+          <a href="/zh/" hreflang="zh">中文</a>
+        </nav>
+      )}
       <a href="#contact" class="nav-cta">導入を相談する →</a>
     </div>
   </nav>

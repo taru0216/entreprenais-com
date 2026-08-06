@@ -1,738 +1,666 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0d0f12" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="robots" content="index,follow" />
-  <title>智能体互联网 | 樽石数字技术研究所合同公司 (TDRI)</title>
-  <meta name="description" content="EntreprenAIs — 迈向在边缘自主运行的AI智能体时代。TDRI正在研究开发一个由绿色能源持续驱动的平台。" />
-  <link rel="canonical" href="https://entreprenais.com/zh/" />
+<!DOCTYPE html><html lang="zh"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="「超高速、超低功耗」绿色AI云「EntreprenAIs Cloud」正式登场。这是一个运行于自有绿色数据中心的智能体执行平台，兼具0.5毫秒超高速响应、成本效率与电力来源透明性。"><title>绿色AI云 | EntreprenAIs</title><meta property="og:title" content="绿色AI云 | EntreprenAIs"><meta property="og:description" content="「超高速、超低功耗」绿色AI云「EntreprenAIs Cloud」正式登场。这是一个运行于自有绿色数据中心的智能体执行平台，兼具0.5毫秒超高速响应、成本效率与电力来源透明性。"><meta property="og:type" content="website"><meta name="theme-color" content="#0d0f12"><meta name="format-detection" content="telephone=no"><meta name="robots" content="index,follow"><link rel="canonical" href="https://entreprenais.com/zh/"><meta property="og:locale" content="zh_CN"><meta property="og:site_name" content="EntreprenAIs / 樽石数字技术研究所合同公司"><meta property="og:url" content="https://entreprenais.com/zh/"><meta property="og:image" content="https://entreprenais.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://entreprenais.com/og.png"><link rel="alternate" hreflang="ja" href="https://entreprenais.com/"><link rel="alternate" hreflang="en" href="https://entreprenais.com/en/"><link rel="alternate" hreflang="zh" href="https://entreprenais.com/zh/"><link rel="alternate" hreflang="x-default" href="https://entreprenais.com/"><link rel="shortcut icon" href="/favicon.ico"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest"><script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script><script>(function(){const gaId = "G-ND9RLH0NT3";
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="zh_CN" />
-  <meta property="og:site_name" content="EntreprenAIs / 樽石数字技术研究所合同公司" />
-  <meta property="og:url" content="https://entreprenais.com/zh/" />
-  <meta property="og:title" content="智能体互联网 | 樽石数字技术研究所合同公司 (TDRI)" />
-  <meta property="og:description" content="EntreprenAIs — 迈向在边缘自主运行的AI智能体时代。TDRI正在研究开发一个由绿色能源持续驱动的平台。" />
-  <meta property="og:image" content="https://entreprenais.com/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        })();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/index.DoYvECpy.css"><script type="module">
+      (function () {
+        // On reveal, animate KPI meter (.kpi-meter__fill) width from 0 to data-fill (or inline --fill)
+        function fillKpiMeters(root) {
+          var meters = (root || document).querySelectorAll(".kpi-meter__fill");
+          meters.forEach(function (el) {
+            requestAnimationFrame(function () {
+              el.classList.add("is-filled");
+            });
+          });
+        }
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="智能体互联网 | 樽石数字技术研究所合同公司 (TDRI)" />
-  <meta name="twitter:description" content="EntreprenAIs — 迈向在边缘自主运行的AI智能体时代。TDRI正在研究开发一个由绿色能源持续驱动的平台。" />
-  <meta name="twitter:image" content="https://entreprenais.com/og.png" />
+        // Reveal on scroll — same IntersectionObserver setup as the top page main.js
+        var reveals = document.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window)) {
+          reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          fillKpiMeters();
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+              setTimeout(function () {
+                el.classList.add("is-visible");
+                if (el.classList.contains("kpi-card")) fillKpiMeters(el);
+              }, isNaN(delay) ? 0 : delay);
+              io.unobserve(el);
+            });
+          }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+          reveals.forEach(function (el) { io.observe(el); });
+        }
 
-  <!-- hreflang alternates -->
-  <link rel="alternate" hreflang="ja" href="https://entreprenais.com/" />
-  <link rel="alternate" hreflang="en" href="https://entreprenais.com/en/" />
-  <link rel="alternate" hreflang="zh" href="https://entreprenais.com/zh/" />
-  <link rel="alternate" hreflang="x-default" href="https://entreprenais.com/" />
+        // Subtle parallax for hero glows — same logic as the top page main.js
+        var glowA = document.querySelector(".hero-glow--a");
+        var glowB = document.querySelector(".hero-glow--b");
+        if (glowA && glowB && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          var onMove = function () {
+            var y = Math.min(window.scrollY, 800);
+            glowA.style.transform = "translate3d(0," + (y * 0.18) + "px, 0)";
+            glowB.style.transform = "translate3d(0," + (y * -0.12) + "px, 0)";
+          };
+          window.addEventListener("scroll", onMove, { passive: true });
+        }
+      })();
+    </script><script type="module">(function () {
+    'use strict';
 
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-  <link rel="manifest" href="/site.webmanifest" />
+    var SCRIPT = [
+      { q: '绿色AI云的响应速度是多少？', own: '反射响应约为 0.5ms。通过 CPU 缓存路径（不经过大模型推理）返回固定响应。', cloud: '绿色AI云的响应速度会因架构和测量条件而异，一般云端推理的响应时间预计在数秒到数十秒之间。', cloudMs: 9500 },
+      { q: '电力来自哪里？', own: '来自太阳能自发电与可再生能源购电合同（如 Aqua Energy 100 等）。我们以实质可再生能源100%运行。', cloud: '一般云服务的电力结构因运营商和地区而异，仅凭公开信息通常难以准确判断其可再生能源比例。', cloudMs: 11800 },
+      { q: '会使用云端大模型吗？', own: '不会。推理完全在自有绿色数据中心内完成，电力来源也由我们自行管理。', cloud: '是否使用云端大模型取决于具体架构，但许多AI智能体平台通常会通过外部大语言模型 API 进行处理。', cloudMs: 9900 },
+      { q: '为什么速度这么快？', own: '我们将大模型推理与网络往返从处理路径中剔除，直接在 CPU 上运行已编译的可执行程序。', cloud: '响应速度受模型规模、量化方式、GPU 代际、批处理大小、网络路径等多种因素影响，难以一概而论，但一般而言推理处理本身是主要因素。', cloudMs: 14200 },
+      { q: '这与传统的云端大模型运营方式有何不同？', own: '我们不依赖大型 GPU 数据中心的电力与网络往返。可以同时摆脱成本、环境负荷与响应速度的制约。', cloud: '在一般的云端大模型运营中，推理运行在远程 GPU 集群上，因此会受到网络往返和排队的影响，但具体情况因架构而异。', cloudMs: 12900 },
+      { q: '「大脑AI」负责什么工作？', own: '只负责复杂的判断与生成。由于是在自有数据中心内运行的本地大模型，电力来源也完全自主可控。', cloud: '您提到的「大脑AI」并非通用技术术语，准确定义需要参考提供方的资料，但可能是指分层推理架构。', cloudMs: 16400 },
+      { q: '将设计图转换为可执行程序的技术是什么？', own: '这是我们的编译技术。它将大脑AI写出的「设计图」拆分为仅需 CPU 即可运行的可执行程序，以及仍需推理的部分。目前该流程仍为人机协同的半自动阶段，我们正逐步提高 CPU 执行的比例。', cloud: '将大模型输出转换为代码或工作流的方法已有多种提议，包括代码生成、提示缓存、向规则系统蒸馏等，但具体实现因厂商而异。', cloudMs: 18700 },
+      { q: '是电力制约在先吗？', own: '是的。可再生能源的输出上限是最先存在的制约。正是出于将耗电量降至极限的需求，才诞生了这一混合架构。', cloud: '可再生能源的输出通常会波动，因此以电力制约为前提的算力设计可能是必要的，但具体设计决策取决于各厂商的方针。', cloudMs: 11200 },
+      { q: '能否提供可用于 ESG 报告的凭证？', own: '可以。我们对外披露电力结构，并以留存凭证为前提运营。个别合同的披露粒度请垂询咨询。', cloud: '电力凭证的披露范围取决于所用云服务商公开的信息，因此有时可能无法提供详细明细。', cloudMs: 10600 },
+      { q: '可以咨询导入事宜吗？', own: '可以。我们欢迎 IT 采购负责人、ESG/CSR 推广负责人咨询导入及共同研究事宜。', cloud: '关于导入咨询窗口，建议查阅提供方的公开信息以确保准确。通常会提供咨询表单或销售窗口。', cloudMs: 9800 }
+    ];
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+    var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
 
-  <!-- News section styles (LP) -->
-  <style>
-    .news-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    var root = document.getElementById('live-demo-root');
+    if (!root) return;
+
+    var ownBody = document.getElementById('demo-own-body');
+    var cloudBody = document.getElementById('demo-cloud-body');
+    var ownIdleEl = ownBody.querySelector('[data-own-idle]');
+    var cloudIdleEl = cloudBody.querySelector('[data-cloud-idle]');
+    var ownTurnLabelEl = document.querySelector('[data-own-turn-label]');
+    var cloudTurnLabelEl = document.querySelector('[data-cloud-turn-label]');
+    var ownMsBigEl = document.querySelector('[data-own-ms-big]');
+    var cloudSecBigEl = document.querySelector('[data-cloud-sec-big]');
+
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var ownMsTotal = 0;
+    var cloudTotalStart = 0;
+    var cloudTotalIv = null;
+    var stickOwn = true;
+    var stickCloud = true;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
     }
-    .news-list--lp {
-      margin-bottom: 2.5rem;
+
+    function watchScroll(el, key) {
+      if (el.dataset.watched) return;
+      el.dataset.watched = '1';
+      el.addEventListener('scroll', function () {
+        var atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 48;
+        if (key === 'own') stickOwn = atBottom; else stickCloud = atBottom;
+      }, { passive: true });
     }
-    .news-card {
-      position: relative;
-      background: var(--paper);
-      border: 1px solid var(--line-soft);
-      border-radius: 22px;
-      padding: 1.6rem 2rem;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 1.6rem;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    watchScroll(ownBody, 'own');
+    watchScroll(cloudBody, 'cloud');
+
+    function maybeStick() {
+      if (stickOwn) ownBody.scrollTop = ownBody.scrollHeight;
+      if (stickCloud) cloudBody.scrollTop = cloudBody.scrollHeight;
     }
-    .news-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 1.6rem;
-      right: 1.6rem;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
-      border-radius: 999px;
-      opacity: 0;
-      transition: opacity 0.4s var(--ease);
+
+    function appendUserBubble(body, text) {
+      var div = document.createElement('div');
+      div.className = 'demo-bubble--user';
+      div.textContent = text;
+      body.appendChild(div);
     }
-    .news-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 18px 42px -22px rgba(42, 45, 124, 0.30);
+
+    function ownTurn(i) {
+      if (i >= SCRIPT.length) return;
+      var step = SCRIPT[i];
+      appendUserBubble(ownBody, step.q);
+      ownTurnLabelEl.textContent = '响应中';
+      maybeStick();
+
+      var t1 = setTimeout(function () {
+        ownMsTotal = Math.round((ownMsTotal + 0.5) * 10) / 10;
+        ownMsBigEl.textContent = ownMsTotal.toFixed(1);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        var caret = document.createElement('span');
+        caret.className = 'demo-caret';
+        bubble.appendChild(caret);
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        ownBody.appendChild(wrap);
+        maybeStick();
+
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 2;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) { bubble.appendChild(caret); }
+          else { meta.textContent = 'source: cache · 0.5 ms'; }
+          maybeStick();
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () {
+              var nextI = i + 1;
+              if (nextI >= SCRIPT.length) {
+                ownTurnLabelEl.textContent = '对话完成';
+              } else {
+                ownTurn(nextI);
+              }
+            }, 700);
+            timers.push(t2);
+          }
+        }, 14);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
     }
-    .news-card:hover::before {
-      opacity: 0.85;
-    }
-    .news-card__meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .news-card__date {
-      font-family: var(--serif);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-    .news-card__badge {
-      display: inline-block;
-      font-family: var(--serif);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(42, 45, 124, 0.08);
-      border: 1px solid rgba(42, 45, 124, 0.22);
-      border-radius: 999px;
-      padding: 0.2rem 0.65rem;
-    }
-    .news-card__title {
-      font-family: var(--jp);
-      font-weight: 700;
-      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-      line-height: 1.45;
-      letter-spacing: -0.005em;
-      color: var(--ink);
-      margin: 0;
-      text-wrap: balance;
-    }
-    .news-card__summary {
-      font-size: 0.93rem;
-      line-height: 1.85;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-    .news-card__cta {
-      margin-top: 0.5rem;
-      font-family: var(--serif);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: color 0.2s var(--ease);
-    }
-    .news-card:hover .news-card__cta {
-      color: var(--accent-bright);
-    }
-    .news-card__thumb {
-      flex: none;
-      width: 90px;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 12px;
-      background: var(--paper-soft);
-      display: block;
-    }
-    .news-card__thumb-placeholder {
-      flex: none;
-      width: 90px;
-      aspect-ratio: 3 / 4;
-      border-radius: 12px;
-      background: var(--paper-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      opacity: 0.38;
-    }
-    .news-card__body {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .news-more {
-      text-align: center;
-      padding-top: 0.5rem;
-    }
-    @media (max-width: 720px) {
-      .news-card {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.4rem 1.5rem;
+
+    function cloudTurn(i) {
+      if (i >= SCRIPT.length) {
+        cloudTurnLabelEl.textContent = '对话完成';
+        if (cloudTotalIv) { clearInterval(cloudTotalIv); cloudTotalIv = null; }
+        var replay = setTimeout(runDemo, 3200);
+        timers.push(replay);
+        return;
       }
-      .news-card__thumb,
-      .news-card__thumb-placeholder {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-      }
+      var step = SCRIPT[i];
+      appendUserBubble(cloudBody, step.q);
+      cloudTurnLabelEl.textContent = '生成中';
+      maybeStick();
+
+      var waiting = document.createElement('div');
+      waiting.className = 'demo-waiting';
+      waiting.innerHTML = '<span class="demo-spinner"></span><span class="txt">generating… <span data-cur-sec>0.0</span> s</span>';
+      cloudBody.appendChild(waiting);
+      maybeStick();
+      var curSecEl = waiting.querySelector('[data-cur-sec]');
+
+      var t0 = CLOCK();
+      var iv2 = setInterval(function () {
+        curSecEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(iv2);
+
+      var c1 = setTimeout(function () {
+        clearInterval(iv2);
+        var idx = intervals.indexOf(iv2);
+        if (idx >= 0) intervals.splice(idx, 1);
+        if (waiting.parentNode) waiting.parentNode.removeChild(waiting);
+
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-bubble-wrap';
+        var bubble = document.createElement('div');
+        bubble.className = 'demo-bubble--ai';
+        bubble.textContent = step.cloud;
+        var meta = document.createElement('span');
+        meta.className = 'demo-bubble__meta';
+        meta.textContent = 'source: cloud-inference · ' + (step.cloudMs / 1000).toFixed(1) + ' s';
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        cloudBody.appendChild(wrap);
+        maybeStick();
+
+        var c2 = setTimeout(function () { cloudTurn(i + 1); }, 700);
+        timers.push(c2);
+      }, step.cloudMs);
+      timers.push(c1);
     }
-  </style>
 
-  <!-- Google Analytics 4 (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ND9RLH0NT3');
-  </script>
+    function runDemo() {
+      clearAllTimers();
+      stickOwn = true;
+      stickCloud = true;
+      started = true;
+      ownMsTotal = 0;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = '响应中';
+      cloudTurnLabelEl.textContent = '生成中';
 
-  <!-- JSON-LD: Organization + WebSite -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://entreprenais.com/#organization",
-        "name": "樽石数字技术研究所合同公司",
-        "alternateName": ["TDRI", "樽石デジタル技術研究所合同会社"],
-        "url": "https://entreprenais.com/",
-        "logo": "https://entreprenais.com/og.png",
-        "sameAs": [
-          "https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/",
-          "https://github.com/taru0216"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://entreprenais.com/#website",
-        "url": "https://entreprenais.com/",
-        "name": "EntreprenAIs",
-        "description": "在边缘自主运行的AI智能体平台",
-        "publisher": { "@id": "https://entreprenais.com/#organization" },
-        "inLanguage": "zh-CN"
+      var t0 = CLOCK();
+      cloudTotalIv = setInterval(function () {
+        cloudSecBigEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(cloudTotalIv);
+
+      ownTurn(0);
+      cloudTurn(0);
+    }
+
+    function resetDemo() {
+      clearAllTimers();
+      started = false;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownBody.appendChild(ownIdleEl);
+      cloudBody.appendChild(cloudIdleEl);
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+      ownTurnLabelEl.textContent = '自有绿色数据中心 / 反射路径';
+      cloudTurnLabelEl.textContent = '第三方数据中心 / 每次完整生成';
+    }
+
+    var demoSection = document.getElementById('demo');
+    if (demoSection && typeof IntersectionObserver === 'function') {
+      var demoIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) runDemo();
+          } else if (started) {
+            resetDemo();
+          }
+        });
+      }, { threshold: 0.35 });
+      demoIo.observe(demoSection);
+    } else if (demoSection) {
+      runDemo();
+    }
+
+    // Hero iPhone frame autoplay: replays the "own" side of the shared SCRIPT
+    // array using the same typewriter effect as ownTurn(), lightweight and
+    // without the cloud-side comparison (which stays LIVE-DEMO-only). Starts
+    // when the hero section scrolls into view and resets when it scrolls out.
+    (function () {
+      var msgsEl = document.getElementById('hero-phone-msgs');
+      var msValueEl = document.getElementById('hero-phone-ms-value');
+    if (!msgsEl || !msValueEl) return;
+
+    var idleHtml = msgsEl.innerHTML;
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var msTotal = 0;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function appendUserBubble(text) {
+      var div = document.createElement('div');
+      div.className = 'hero-phone-mock__msg hero-phone-mock__msg--in';
+      div.textContent = text;
+      msgsEl.appendChild(div);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    }
+
+    function heroPhoneTurn(i) {
+      if (i >= SCRIPT.length) {
+        var replay = setTimeout(function () { heroPhoneRun(); }, 3200);
+        timers.push(replay);
+        return;
       }
-    ]
-  }
-  </script>
-</head>
-<body>
+      var step = SCRIPT[i];
+      appendUserBubble(step.q);
 
-  <!-- Fixed nav -->
-  <nav class="nav" id="nav">
-    <div class="nav__inner">
-      <a class="nav__brand" href="#hero">
-        <span class="nav__mark" aria-hidden="true">
-          <span class="nav__mark-bar"></span>
-          <span class="nav__mark-dot"></span>
-        </span>
-        <span class="nav__name">TDRI</span>
-      </a>
-      <ul class="nav__links">
-        <li><a href="#mission">Mission</a></li>
-        <li><a href="#approach">Approach</a></li>
-        <li><a href="#works">Roadmap</a></li>
-        <li><a href="#showcase">Showcase</a></li>
-        <li><a href="/news">News</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <nav class="lang-nav" aria-label="语言切换">
-        <a href="/" hreflang="ja">日本語</a>
-        <a href="/en/" hreflang="en">English</a>
-        <a href="/zh/" hreflang="zh" aria-current="page">中文</a>
-      </nav>
-    </div>
-  </nav>
+      var t1 = setTimeout(function () {
+        msTotal = Math.round((msTotal + 0.5) * 10) / 10;
+        msValueEl.textContent = msTotal.toFixed(1);
 
-  <!-- Hero -->
-  <section id="hero" class="hero">
-    <div class="hero__bg" aria-hidden="true">
-      <span class="hero__grid"></span>
-      <span class="hero__glow hero__glow--a"></span>
-      <span class="hero__glow hero__glow--b"></span>
-    </div>
-    <a class="hero__news-pill" href="/news/cpu-skill-execution/zh/">
-      <time>2026-05-24</time>
-      <span>确立仅凭CPU执行智能体技能的独有技术</span>
-      <span aria-hidden="true">&rarr;</span>
-    </a>
-    <div class="hero__content">
-      <p class="hero__eyebrow reveal" data-reveal>智能体互联网</p>
-      <h1 class="hero__title">
-        <span class="reveal" data-reveal data-delay="100">由可再生能源驱动，</span>
-        <span class="reveal hero__title--accent" data-reveal data-delay="200">AI智能体自主运行的时代已经到来。</span>
-      </h1>
-      <p class="hero__lead reveal" data-reveal data-delay="350">
-        从万物互联的IoT，迈向智能体协作的IoA时代。
-      </p>
-      <div class="hero__cta reveal" data-reveal data-delay="500">
-        <a class="btn btn--primary" href="#mission">了解愿景 &rarr;</a>
-        <a class="btn btn--ghost" href="#contact">联系我们 &darr;</a>
-      </div>
-    </div>
-    <div class="hero__scroll" aria-hidden="true">
-      <span>SCROLL</span>
-      <span class="hero__scroll-line"></span>
-    </div>
-  </section>
+        var bubble = document.createElement('div');
+        bubble.className = 'hero-phone-mock__msg hero-phone-mock__msg--out';
+        var caret = document.createElement('span');
+        caret.className = 'hero-phone-caret';
+        bubble.appendChild(caret);
+        msgsEl.appendChild(bubble);
+        msgsEl.scrollTop = msgsEl.scrollHeight;
 
-  <!-- Mission -->
-  <section id="mission" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>01 / 使命</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        从边缘出发，构建<span class="accent">IoA</span>的实现平台。
-      </h2>
-      <div class="mission__grid">
-        <p class="mission__lead reveal" data-reveal data-delay="200">
-          樽石数字技术研究所合同公司（TDRI）提供实现智能体互联网（IoA）的平台。我们以软件形式设计基础设施，打造一个AI智能体安全运行、相互委托协作的世界。
-        </p>
-        <p class="mission__body reveal" data-reveal data-delay="300">
-          如果说IoT是"连接万物、传输数据"的网络，那么IoA则是"智能体之间自主发起请求、委托与协商"的自律协调网络。不依赖单一的中央云端，分布在边缘的AI节点就地思考、就地决策，仅在必要时进行协调。TDRI正以EntreprenAIs平台的形式，研究开发这一执行基础设施。
-        </p>
-      </div>
-    </div>
-  </section>
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 3;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, n);
+          if (!done) bubble.appendChild(caret);
+          msgsEl.scrollTop = msgsEl.scrollHeight;
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () { heroPhoneTurn(i + 1); }, 900);
+            timers.push(t2);
+          }
+        }, 16);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
+    }
 
-  <!-- Approach (3 pillars) -->
-  <section id="approach" class="section">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>02 / 方法论</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        支撑IoA的三大支柱
-      </h2>
-      <div class="cards">
-        <article class="card reveal" data-reveal data-delay="150">
-          <p class="card__num">A.</p>
-          <h3 class="card__title">边缘优先</h3>
-          <p class="card__lead">分布于边缘的智能体节点</p>
-          <p class="card__body">
-            通过Desktop、Server、Connect三种形态，
-            将智能体节点从个人设备分布式部署到现场服务器。
-          </p>
-        </article>
-        <article class="card reveal" data-reveal data-delay="250">
-          <p class="card__num">B.</p>
-          <h3 class="card__title">零排放</h3>
-          <p class="card__lead">由绿色电力持续驱动的推理</p>
-          <p class="card__body">
-            将本地LLM<sup class="card__ref">*</sup>推理集中在太阳能和蓄电池余量充足的时段，
-            逐步将智能体运行与化石燃料脱钩。
-          </p>
-        </article>
-        <article class="card reveal" data-reveal data-delay="350">
-          <p class="card__num">C.</p>
-          <h3 class="card__title">智能体间协作</h3>
-          <p class="card__lead">智能体之间的自主协调</p>
-          <p class="card__body">
-            通过A2A协议，智能体之间自主发起请求、委托与协商，
-            让人类能够专注于方向和价值观的决策。
-          </p>
-        </article>
-      </div>
+    function heroPhoneRun() {
+      clearAllTimers();
+      started = true;
+      msTotal = 0;
+      msgsEl.innerHTML = '';
+      msValueEl.textContent = '0.5';
+      heroPhoneTurn(0);
+    }
 
-      <aside class="cards__note reveal" data-reveal data-delay="500" aria-label="关于零排放选项的补充说明">
-        <p class="cards__note-label">补充说明</p>
-        <p class="cards__note-body">
-          EntreprenAIs目前使用云端大型语言模型（<strong>Claude</strong>）作为AI的推理核心。由于我们无法管理云端侧的电力来源，因此零排放选项的目标是<strong>边缘侧的本地LLM基础设施</strong>以及连接智能体的机制（<strong>智能体互联网</strong>）。
-        </p>
-        <p class="cards__note-body">
-          我们的长期目标是提高边缘本地LLM的使用比例，逐步实现AI运行本身完全由可再生能源驱动。
-        </p>
-      </aside>
+    function heroPhoneReset() {
+      clearAllTimers();
+      started = false;
+      msgsEl.innerHTML = idleHtml;
+      msValueEl.textContent = '0.5';
+    }
 
-      <!-- Product Preview — A2A in action -->
-      <div class="preview reveal" data-reveal data-delay="450">
-        <figure class="preview__device">
-          <div class="preview__phone phone-mock">
-            <span class="preview__notch phone-mock__notch" aria-hidden="true"></span>
-            <img
-              class="preview__img phone-mock__img"
-              src="/img/chat-preview-iphone.png"
-              alt="EntreprenAIs chat-app — FC与C-Suite Agent交互的界面截图"
-              loading="lazy"
-              width="380"
-              height="800"
-            />
-          </div>
-        </figure>
-        <figcaption class="preview__caption">
-          <p class="preview__eyebrow">产品预览</p>
-          <h3 class="preview__title">FC与C-Suite Agent对话的日常</h3>
-          <p class="preview__body">
-            针对自然语言提问，智能体自主启动调研任务，
-            并通过进度卡片实时返回状态。这就是EntreprenAIs的A2A聊天体验。
-          </p>
-          <a class="btn btn--ghost preview__cta" href="/eai/">了解详情 &rarr;</a>
-        </figcaption>
-      </div>
-    </div>
-  </section>
+    var heroSection = document.querySelector('.hero');
+    if (heroSection && typeof IntersectionObserver === 'function' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var heroIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) heroPhoneRun();
+          } else if (started) {
+            heroPhoneReset();
+          }
+        });
+      }, { threshold: 0.35 });
+      heroIo.observe(heroSection);
+    }
+    // When prefers-reduced-motion is set, keep the static idle markup as-is
+    })();
+  })();
+  </script><script type="module">
 
-  <!-- Roadmap (timeline) -->
-  <section id="works" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>03 / 路线图</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        迈向IoA的路径
-      </h2>
-      <ol class="timeline">
-        <li class="timeline__item reveal" data-reveal data-delay="150">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">当前</span>
-            <h3 class="timeline__title">Desktop + Connect</h3>
-          </div>
-          <p class="timeline__body">
-            将个人工作站作为"经营节点"连接的EntreprenAIs Connect
-            Phase 1 / Phase 2正在推进中。我们正在边缘端建立最初的智能体节点。
-          </p>
-        </li>
-        <li class="timeline__item reveal" data-reveal data-delay="250">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">下一步</span>
-            <h3 class="timeline__title">零排放选项 / A2A</h3>
-          </div>
-          <p class="timeline__body">
-            推进绿色电力余量时段集中推理的零排放选项PoC、
-            智能体间协议A2A的标准化，以及聊天室UX的完善。
-          </p>
-        </li>
-        <li class="timeline__item reveal" data-reveal data-delay="350">
-          <span class="timeline__marker"></span>
-          <div class="timeline__head">
-            <span class="timeline__phase">未来</span>
-            <h3 class="timeline__title">碳感知集群 &amp; IoA网格</h3>
-          </div>
-          <p class="timeline__body">
-            碳感知调度的Edge-First K8s集群、
-            智能体跨越边界协作的IoA网格，以及智能体市场。
-          </p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Showcase -->
-  <section id="showcase" class="section">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>04 / 案例展示</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        运行中的AI智能体
-      </h2>
-      <p class="showcase-lead reveal" data-reveal data-delay="150">
-        在EntreprenAIs Runtime上运行的实际智能体
-      </p>
-      <div class="showcase-cards">
-
-        <!-- Card 1: 咨询AI -->
-        <article class="showcase-card reveal" data-reveal data-delay="200">
-          <div class="showcase-card__header">
-            <span class="showcase-card__status" aria-label="运行中">
-              <span class="showcase-card__status-dot" aria-hidden="true"></span>
-              运行中
-            </span>
-          </div>
-          <h3 class="showcase-card__title">咨询AI</h3>
-          <p class="showcase-card__body">
-            嵌入本站的公开咨询智能体。
-            使用边缘本地LLM（ollama）进行推理，
-            根据EntreprenAIs.com的信息回答用户问题。
-          </p>
-          <ul class="showcase-card__tags" aria-label="技术标签">
-            <li>EntreprenAIs Contact AI</li>
-            <li>边缘推理</li>
-            <li>MacBook驱动</li>
-          </ul>
-          <div class="showcase-card__cta">
-            <button class="btn btn--primary showcase-card__btn-open" type="button"
-              aria-label="打开右下角的AI聊天控件">
-              向AI提问 &rarr;
-            </button>
-          </div>
-        </article>
-
-        <!-- Card 2: C-Suite Agent Fleet -->
-        <article class="showcase-card reveal" data-reveal data-delay="300">
-          <div class="showcase-card__header">
-            <span class="showcase-card__status" aria-label="运行中">
-              <span class="showcase-card__status-dot" aria-hidden="true"></span>
-              运行中
-            </span>
-          </div>
-          <h3 class="showcase-card__title">C-Suite Agent Fleet</h3>
-          <p class="showcase-card__body">
-            负责经营决策、代码实现、法务、财务的8位经营AI智能体团队。
-            并行支持FC（Fleet Commander）的日常工作，
-            通过聊天自主执行任务。
-          </p>
-          <ul class="showcase-card__tags" aria-label="技术标签">
-            <li>经营AI</li>
-            <li>多智能体</li>
-            <li>边缘优先</li>
-          </ul>
-          <div class="showcase-card__cta">
-            <a class="btn btn--ghost" href="/eai/">了解详情 &rarr;</a>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section section--dark">
-    <div class="section__inner">
-      <p class="section__num reveal" data-reveal>05 / 关于我们</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        樽石数字技术研究所合同公司（TDRI）
-      </h2>
-      <div class="about__grid">
-        <div class="about__block reveal" data-reveal data-delay="150">
-          <h3 class="about__heading">公司概况</h3>
-          <p class="about__body">
-            樽石数字技术研究所合同公司（TDRI）于2018年创立，2021年12月正式法人化，
-            是一家位于日本千叶县白井市的科技公司。
-            以可再生能源与IT融合为业务核心，
-            研究开发并运营以AI智能体为经营中枢的EntreprenAIs平台。
-          </p>
-          <p class="about__body">
-            员工人数为0。由CFO、CTO、CPO、CLO、CHRO、CISO、COO、Auditor
-            共8个AI智能体（C-Suite Agent Fleet）承担公司经营，
-            是一家实践多智能体经营的企业。
-          </p>
-        </div>
-        <div class="about__block reveal" data-reveal data-delay="250">
-          <h3 class="about__heading">创业初心</h3>
-          <p class="about__body">
-            代表人樽石将人的祖籍位于福岛县磐城市。
-            2011年东日本大地震后，他深感作为"使用电力之国的当事人"所承担的责任，
-            立志开发稳定利用可再生能源的数字技术，
-            由此创立了本研究所。
-          </p>
-        </div>
-        <div class="about__block reveal" data-reveal data-delay="350">
-          <h3 class="about__heading">代表简介</h3>
-          <p class="about__body">
-            代表社员樽石将人曾在外资IT企业、谷歌日本、乐天担任工程师，
-            从事大规模分布式系统开发，后担任Retty CTO，
-            带领公司在东京证券交易所Mothers板块成功上市。
-            目前担任大型集团公司CTO，同时以客座研究员身份在早稻田大学数据科学研究所开展研究。
-            2021年创立TDRI，亲身实践并研究与EntreprenAIs C-Suite Agent Fleet的多智能体经营模式。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="section section--accent">
-    <div class="section__inner contact">
-      <p class="section__num reveal" data-reveal>06 / 联系我们</p>
-      <h2 class="section__title reveal" data-reveal data-delay="100">
-        联系我们
-      </h2>
-      <p class="contact__lead reveal" data-reveal data-delay="200">
-        有关IoA / 零排放选项的联合研究、导入咨询或招募，请通过代表的LinkedIn与我们联系。
-      </p>
-      <a class="contact__mail reveal" data-reveal data-delay="300" href="https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/" target="_blank" rel="noopener noreferrer">
-        LinkedIn — 樽石将人
-      </a>
-      <p class="contact__note reveal" data-reveal data-delay="400">
-        ※ 本站为TDRI企业官方网站。回复可能需要一定时间。专用联系邮箱正在筹备中。
-      </p>
-      <button class="btn btn--ghost contact__ai-btn reveal" data-reveal data-delay="500" type="button">
-        向AI提问 &rarr;
-      </button>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <span class="footer__mark" aria-hidden="true">
-          <span class="footer__mark-bar"></span>
-          <span class="footer__mark-dot"></span>
-        </span>
-        <div>
-          <p class="footer__name">樽石数字技术研究所合同公司</p>
-          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
-        </div>
-      </div>
-      <div class="footer__meta">
-        <p class="footer__copy">
-          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
-          This site is part of EntreprenAIs IoA platform
-        </p>
-        <nav class="footer__nav" aria-label="页脚导航">
-          <ul class="footer__nav-list">
-            <li><a href="/news/" class="footer__link">News</a></li>
-            <li><a href="/eai/" class="footer__link">EntreprenAIs</a></li>
-            <li><a href="/eai/showcase/" class="footer__link">Showcase</a></li>
-            <li><a href="/terms/" class="footer__link">使用条款</a></li>
-            <li><a href="/privacy/" class="footer__link">隐私政策</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
-  <script src="/main.js" defer></script>
-
-  <!-- EntreprenAIs Contact AI widget — dynamic load with offline fallback -->
-  <script>
   (function () {
     'use strict';
-    var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+    var section = document.getElementById('news');
+    var list = document.getElementById('cloud-news-list');
+    if (!section || !list) return;
 
-    function showOfflineBadge() {
-      if (document.getElementById('__eai-offline-badge')) return;
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-      if (window.gtag) {
-        gtag('event', 'ai_offline', {
-          event_category: 'contact_agent',
-          event_label: 'offline_badge_shown',
-          non_interaction: true
+    function renderCard(item) {
+      var li = document.createElement('li');
+      var thumbHtml = item.thumbnail
+        ? '<img class="news-card__thumb" src="' + escHtml(item.thumbnail) + '" alt="' + escHtml(item.title) + '" loading="lazy" />'
+        : '<div class="news-card__thumb-placeholder" aria-hidden="true">&#128240;</div>';
+      var extAttrs = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      li.innerHTML = '<a class="news-card" href="' + escHtml(item.url) + '"' + extAttrs + '>'
+        + thumbHtml
+        + '<div class="news-card__body">'
+        +   '<div class="news-card__meta">'
+        +     '<span class="news-card__date">' + escHtml(item.date) + '</span>'
+        +     '<span class="news-card__badge">' + escHtml(item.badge) + '</span>'
+        +   '</div>'
+        +   '<h3 class="news-card__title">' + escHtml(item.title) + '</h3>'
+        +   '<p class="news-card__summary">' + escHtml(item.summary) + '</p>'
+        +   '<span class="news-card__cta">' + escHtml(item.cta) + ' &rarr;</span>'
+        + '</div>'
+        + '</a>';
+      return li;
+    }
+
+    fetch('/data/news-zh.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items.slice(0, 3);
+        latest.forEach(function (item) {
+          list.appendChild(renderCard(item));
+        });
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep section hidden on fetch failure (avoid breaking the LP UX)
+      });
+  })();
+  
+</script><script type="module">
+
+  (function () {
+    'use strict';
+    var pill = document.getElementById('hero-news-pill');
+    var dateEl = document.getElementById('hero-news-pill-date');
+    var titleEl = document.getElementById('hero-news-pill-title');
+    if (!pill || !dateEl || !titleEl) return;
+
+    fetch('/data/news-zh.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (items) {
+        var latest = items && items[0];
+        if (!latest) return;
+        dateEl.textContent = latest.date;
+        titleEl.textContent = latest.title;
+        pill.href = latest.url;
+        pill.style.display = '';
+        pill.removeAttribute('aria-hidden');
+      })
+      .catch(function () {
+        // Keep hidden on fetch failure (avoid breaking the LP UX)
+      });
+  })();
+  
+</script><script type="module">
+
+    (function () {
+      'use strict';
+      var WIDGET_URL = 'https://entreprenais-contact-agent-50c427d5.pub.entreprenais.com/widget.js';
+
+      // Show an "AI Resting" badge in the bottom right (when contact-agent is down)
+      function showOfflineBadge() {
+        if (document.getElementById('__eai-offline-badge')) return;
+
+        if (window.gtag) {
+          gtag('event', 'ai_offline', {
+            event_category: 'contact_agent',
+            event_label: 'offline_badge_shown',
+            non_interaction: true
+          });
+        }
+
+        var style = document.createElement('style');
+        style.textContent = [
+          '#__eai-offline-badge {',
+          '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
+          '  height: 44px; padding: 0 16px;',
+          '  border-radius: 22px; white-space: nowrap;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.65);',
+          '  border: 1px solid rgba(247,246,241,0.10);',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
+          '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
+          '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
+          '  transition: background 0.2s, color 0.2s;',
+          '}',
+          '#__eai-offline-badge:hover {',
+          '  background: #2a2d34; color: rgba(247,246,241,0.88);',
+          '}',
+          '#__eai-offline-toast {',
+          '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
+          '  background: #1a1d22; color: rgba(247,246,241,0.82);',
+          '  padding: 12px 16px; border-radius: 10px;',
+          '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  font-size: 13px; line-height: 1.5;',
+          '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
+          '  border: 1px solid rgba(247,246,241,0.08);',
+          '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
+          '}',
+          '#__eai-offline-toast.visible { opacity: 1; }',
+        ].join('\n');
+        document.head.appendChild(style);
+
+        var badge = document.createElement('button');
+        badge.id = '__eai-offline-badge';
+        badge.innerHTML = '&#x1F319; AI 休息中';
+        badge.setAttribute('aria-label', 'AI 目前正在休息');
+        badge.setAttribute('title', 'AI 目前正在休息');
+
+        var toast = document.createElement('div');
+        toast.id = '__eai-offline-toast';
+        toast.textContent = 'AI 目前正在休息，待阳光重新出现后将恢复运行。';
+
+        badge.addEventListener('click', function () {
+          toast.classList.add('visible');
+          setTimeout(function () { toast.classList.remove('visible'); }, 3500);
+        });
+
+        document.body.appendChild(badge);
+        document.body.appendChild(toast);
+
+        // Switch in-page "Ask AI" buttons to offline state (no matching elements
+        // exist on /cloud, but we keep the same logic as the top page for easier future sync)
+        ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
+          var btns = document.querySelectorAll('.' + cls);
+          btns.forEach(function(btn) {
+            btn.textContent = 'AI 休息中';
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            btn.onclick = null;
+          });
         });
       }
 
-      var style = document.createElement('style');
-      style.textContent = [
-        '#__eai-offline-badge {',
-        '  position: fixed; bottom: 24px; right: 24px; z-index: 9998;',
-        '  height: 44px; padding: 0 16px;',
-        '  border-radius: 22px; white-space: nowrap;',
-        '  background: #1a1d22; color: rgba(247,246,241,0.65);',
-        '  border: 1px solid rgba(247,246,241,0.10);',
-        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
-        '  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;',
-        '  cursor: pointer; display: flex; align-items: center; gap: 6px;',
-        '  box-shadow: 0 4px 12px rgba(13,15,18,0.2);',
-        '  transition: background 0.2s, color 0.2s;',
-        '}',
-        '#__eai-offline-badge:hover {',
-        '  background: #2a2d34; color: rgba(247,246,241,0.88);',
-        '}',
-        '#__eai-offline-toast {',
-        '  position: fixed; bottom: 82px; right: 24px; max-width: 260px;',
-        '  background: #1a1d22; color: rgba(247,246,241,0.82);',
-        '  padding: 12px 16px; border-radius: 10px;',
-        '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
-        '  font-size: 13px; line-height: 1.5;',
-        '  box-shadow: 0 4px 16px rgba(13,15,18,0.28); z-index: 9999;',
-        '  border: 1px solid rgba(247,246,241,0.08);',
-        '  opacity: 0; transition: opacity 0.25s; pointer-events: none;',
-        '}',
-        '#__eai-offline-toast.visible { opacity: 1; }',
-      ].join('\n');
-      document.head.appendChild(style);
+      // Check reachability on page load (verify widget.js is reachable)
+      function checkAiOnline(cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', WIDGET_URL, true);
+        xhr.timeout = 5000;
+        xhr.onload = function() { cb(xhr.status < 400); };
+        xhr.onerror = function() { cb(false); };
+        xhr.ontimeout = function() { cb(false); };
+        xhr.send();
+      }
 
-      var badge = document.createElement('button');
-      badge.id = '__eai-offline-badge';
-      badge.innerHTML = '&#x1F319; AI离线中';
-      badge.setAttribute('aria-label', 'AI当前处于离线状态');
-      badge.setAttribute('title', 'AI当前处于离线状态');
+      // Dynamically load widget.js (show offline badge on error)
+      function loadWidget() {
+        var s = document.createElement('script');
+        s.src = WIDGET_URL;
+        s.async = true;
+        s.onerror = function () {
+          showOfflineBadge();
+        };
+        document.body.appendChild(s);
+      }
 
-      var toast = document.createElement('div');
-      toast.id = '__eai-offline-toast';
-      toast.textContent = 'AI当前离线中。等太阳出来后即可恢复运行。';
-
-      badge.addEventListener('click', function () {
-        toast.classList.add('visible');
-        setTimeout(function () { toast.classList.remove('visible'); }, 3500);
-      });
-
-      document.body.appendChild(badge);
-      document.body.appendChild(toast);
-
-      ['showcase-card__btn-open', 'contact__ai-btn'].forEach(function(cls) {
-        var btns = document.querySelectorAll('.' + cls);
-        btns.forEach(function(btn) {
-          btn.textContent = 'AI离线中';
-          btn.disabled = true;
-          btn.style.opacity = '0.5';
-          btn.style.cursor = 'not-allowed';
-          btn.onclick = null;
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          checkAiOnline(function(online) {
+            if (!online) showOfflineBadge();
+          });
+          loadWidget();
         });
-      });
-    }
-
-    function checkAiOnline(cb) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', WIDGET_URL, true);
-      xhr.timeout = 5000;
-      xhr.onload = function() { cb(xhr.status < 400); };
-      xhr.onerror = function() { cb(false); };
-      xhr.ontimeout = function() { cb(false); };
-      xhr.send();
-    }
-
-    function loadWidget() {
-      var s = document.createElement('script');
-      s.src = WIDGET_URL;
-      s.async = true;
-      s.onerror = function () {
-        showOfflineBadge();
-      };
-      document.body.appendChild(s);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
+      } else {
         checkAiOnline(function(online) {
           if (!online) showOfflineBadge();
         });
         loadWidget();
-      });
-    } else {
-      checkAiOnline(function(online) {
-        if (!online) showOfflineBadge();
-      });
-      loadWidget();
-    }
-  })();
-  </script>
+      }
 
-  <!-- Anchor scroll offset fix for mobile browsers -->
-  <script>
-  (function () {
-    'use strict';
-    if (!location.hash) return;
-    window.addEventListener('load', function () {
-      var hash = location.hash;
-      var target = document.querySelector(hash);
-      if (!target) return;
-      var nav = document.querySelector('.nav');
-      var navH = nav ? nav.getBoundingClientRect().height : 0;
-      var offset = 16;
-      var targetTop = target.getBoundingClientRect().top + window.scrollY;
-      var htmlEl = document.documentElement;
-      var prevBehavior = htmlEl.style.scrollBehavior;
-      htmlEl.style.scrollBehavior = 'auto';
-      window.scrollTo({ top: targetTop - navH - offset, behavior: 'instant' });
-      htmlEl.style.scrollBehavior = prevBehavior;
-    });
-  })();
-  </script>
-</body>
-</html>
+      // Opens the real widget's floating button (the .__eai-widget-btn generated
+      // by widget.js) from the hero chat preview's "try asking" button. Same pattern
+      // as openWidgetBtn on the top page. Factored into a shared function so it can
+      // be reused by the CTA section's launch button (chat-preview-open-cta) too.
+      function openContactWidget() {
+        var widgetBtn = document.querySelector('.__eai-widget-btn');
+        if (widgetBtn) {
+          widgetBtn.click();
+        } else {
+          // If widget.js is still loading, wait briefly and retry
+          setTimeout(function () {
+            var retryBtn = document.querySelector('.__eai-widget-btn');
+            if (retryBtn) retryBtn.click();
+          }, 800);
+        }
+      }
+      // The dedicated hero iPhone-frame CTA was removed to save space; the path
+      // to the real widget is kept via the button group below (hero-cta-open-widget
+      // launches openContactWidget() instead of anchoring to #demo).
+      ['chat-preview-open', 'chat-preview-open-cta', 'hero-cta-open-widget'].forEach(function (id) {
+        var btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', openContactWidget);
+      });
+    })();
+    
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://entreprenais.com/#organization",
+      "name": "樽石数字技术研究所合同公司",
+      "alternateName": ["TDRI", "Taruishi Digital Research Institute, LLC"],
+      "url": "https://entreprenais.com/",
+      "logo": "https://entreprenais.com/og.png",
+      "sameAs": [
+        "https://www.linkedin.com/in/%E5%B0%86%E4%BA%BA-%E6%A8%BD%E7%9F%B3-76896/",
+        "https://github.com/taru0216"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://entreprenais.com/#website",
+      "url": "https://entreprenais.com/zh/",
+      "name": "EntreprenAIs",
+      "description": "在边缘自主运行的AI智能体平台",
+      "publisher": { "@id": "https://entreprenais.com/#organization" },
+      "inLanguage": "zh-CN"
+    }
+  ]
+}
+</script></head> <body>      <nav class="site-nav" data-astro-cid-j7pv25f6> <div class="nav-inner" data-astro-cid-j7pv25f6> <div class="nav-logo" data-astro-cid-j7pv25f6> <span class="nav-logo__t" data-astro-cid-j7pv25f6>T</span><span class="nav-logo__dot" data-astro-cid-j7pv25f6></span> <span class="nav-logo__tdri" data-astro-cid-j7pv25f6>TDRI</span> <span class="nav-logo__sep" data-astro-cid-j7pv25f6></span> <span class="nav-logo__product" data-astro-cid-j7pv25f6>EntreprenAIs Cloud</span> </div> <ul class="nav-links" data-astro-cid-j7pv25f6> <li data-astro-cid-j7pv25f6><a href="#demo" data-astro-cid-j7pv25f6>实时演示</a></li> <li data-astro-cid-j7pv25f6><a href="#problem" data-astro-cid-j7pv25f6>我们的理念</a></li> <li data-astro-cid-j7pv25f6><a href="#architecture" data-astro-cid-j7pv25f6>技术架构</a></li> <li data-astro-cid-j7pv25f6><a href="#green" data-astro-cid-j7pv25f6>绿色能源</a></li> </ul>  <nav class="cloud-lang-nav" aria-label="语言切换" data-astro-cid-j7pv25f6> <a href="/" hreflang="ja">日本語</a> <a href="/en/" hreflang="en">English</a> <a href="/zh/" hreflang="zh" aria-current="page" data-astro-cid-j7pv25f6>中文</a> </nav> <a href="#contact" class="nav-cta" data-astro-cid-j7pv25f6>咨询导入 →</a> </div> </nav>  <section class="hero" data-astro-cid-j7pv25f6> <div class="hero-bg" aria-hidden="true" data-astro-cid-j7pv25f6> <div class="hero-glow--a" data-astro-cid-j7pv25f6></div> <img class="hero-photo-bg hero-photo-bg--desktop" src="/images/hero-photo-bg-desktop.jpg" alt="" loading="eager" data-astro-cid-j7pv25f6> <img class="hero-photo-bg hero-photo-bg--mobile" src="/images/hero-photo-bg-mobile.jpg" alt="" loading="eager" data-astro-cid-j7pv25f6> </div> <div class="hero-inner" data-astro-cid-j7pv25f6>  <a class="hero-news-pill" id="hero-news-pill" href="#" style="display:none" aria-hidden="true" data-astro-cid-j7pv25f6> <time id="hero-news-pill-date" data-astro-cid-j7pv25f6></time> <span class="hero-news-pill__title" id="hero-news-pill-title" data-astro-cid-j7pv25f6></span> <span aria-hidden="true" data-astro-cid-j7pv25f6>&rarr;</span> </a> <div class="hero-eyebrow-row reveal" data-reveal data-astro-cid-j7pv25f6> <span class="hero-eyebrow" data-astro-cid-j7pv25f6>Green AI Cloud</span> <span class="hero-eyebrow-rule" data-astro-cid-j7pv25f6></span> <span class="hero-live-badge" data-astro-cid-j7pv25f6><span class="hero-live-dot" data-astro-cid-j7pv25f6></span>由太阳能 + 水力驱动运行中</span> </div> <div class="hero-flex" data-astro-cid-j7pv25f6> <div class="hero-col-text reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <h1 data-astro-cid-j7pv25f6>「超高速、超低功耗」<span class="hero-h1-line2" data-astro-cid-j7pv25f6><span class="accent" data-astro-cid-j7pv25f6>绿色AI云</span>，正式启动</span></h1> <p class="hero-lede" data-astro-cid-j7pv25f6>
+运行于自有绿色数据中心的智能体平台。响应以<strong data-astro-cid-j7pv25f6>毫秒</strong>完成，电力则完全由<strong data-astro-cid-j7pv25f6>自有可再生能源</strong>供给。
+</p> <div class="hero-cta" data-astro-cid-j7pv25f6>  <button type="button" class="btn btn-primary" id="hero-cta-open-widget" data-astro-cid-j7pv25f6>体验 0.5ms →</button> <a href="#architecture" class="btn btn-secondary" data-astro-cid-j7pv25f6>查看技术架构</a> </div> </div>  <div class="hero-col-phone reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="hero-metric-standalone" data-astro-cid-j7pv25f6> <span class="hero-metric-standalone__value" data-astro-cid-j7pv25f6>0.5</span> <span class="hero-metric-standalone__unit" data-astro-cid-j7pv25f6>ms</span> <span class="hero-metric-standalone__note" data-astro-cid-j7pv25f6>智能体脊髄反射技术<br data-astro-cid-j7pv25f6>响应执行时间（自有实测值 · 不经过大模型推理）</span> </div> <div class="hero-phone-mock" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__notch" aria-hidden="true" data-astro-cid-j7pv25f6></span> <div class="hero-phone-mock__screen" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__badge" data-astro-cid-j7pv25f6> <span class="hero-live-dot" style="background:var(--color-accent-light)" data-astro-cid-j7pv25f6></span>
+EntreprenAIs Cloud
+</span> <div class="hero-phone-mock__msgs" id="hero-phone-msgs" data-astro-cid-j7pv25f6> <div class="hero-phone-mock__msg hero-phone-mock__msg--in" data-astro-cid-j7pv25f6>绿色AI云的响应速度是多少？</div> <div class="hero-phone-mock__msg hero-phone-mock__msg--out" data-astro-cid-j7pv25f6>反射响应约为 0.5ms。通过 CPU 缓存路径（不经过大模型推理）返回固定响应。</div> </div> <div class="hero-phone-mock__ms" data-astro-cid-j7pv25f6> <span class="hero-phone-mock__ms-value" id="hero-phone-ms-value" data-astro-cid-j7pv25f6>0.5</span> <span class="hero-phone-mock__ms-label" data-astro-cid-j7pv25f6>ms 级反射响应<br data-astro-cid-j7pv25f6>超低功耗 · 实质可再生能源100%运行</span> </div> </div> </div> <p class="hero-phone-note" data-astro-cid-j7pv25f6>这是实际运行中的「智能咨询AI」。将自动播放与实时演示相同的对话。</p> </div> </div> <details class="hero-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ 关于数值的测量条件与披露范围</summary> <p data-astro-cid-j7pv25f6>仪表与数值均为基于自有实测值的趋势参考值。「0.5ms」是智能体脊髄反射技术（完全在 CPU 上完成的低延迟响应路径）执行时间的自有实测值，并不保证所有请求都以此数值响应。测量条件（响应定义、基准测试环境、可复现性）以及「实质可再生能源100%」的定义与披露粒度，我们正持续完善以提升对外透明度。</p> </details> </div> </section>  <section id="demo" class="section-dark" style="margin-top:120px" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="demo-head" data-astro-cid-j7pv25f6> <div data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>Live Demo</div> <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)" data-astro-cid-j7pv25f6>速度，唯有在对话中才能真切感受。</h2> <p class="section-lede on-dark reveal" data-reveal data-delay="140" style="max-width:60ch" data-astro-cid-j7pv25f6>
+左侧为自有智能体平台的反射响应。右侧则将同一提示发送至云端大模型推理（gpt-oss:20b-cloud）。<strong style="color:var(--color-dark-text);font-weight:700" data-astro-cid-j7pv25f6>右侧面板按实测值以真实时间等待</strong>——当左侧已完成整场对话时，右侧可能仍在编写第一条回复。
+</p> </div> </div> <div class="demo-grid reveal" data-reveal data-delay="200" id="live-demo-root" data-astro-cid-j7pv25f6> <div class="demo-card is-ours" data-astro-cid-j7pv25f6> <div class="demo-card__head" data-astro-cid-j7pv25f6> <span class="demo-card__dot" data-astro-cid-j7pv25f6></span> <span class="demo-card__title" data-astro-cid-j7pv25f6>EntreprenAIs Cloud</span> <span class="demo-card__badge" data-astro-cid-j7pv25f6>cache</span> <span class="demo-card__turnlabel" data-own-turn-label data-astro-cid-j7pv25f6>自有绿色数据中心 / 反射路径</span> </div> <div class="demo-card__body" data-scroll="own" id="demo-own-body" data-astro-cid-j7pv25f6> <div class="demo-idle" data-own-idle data-astro-cid-j7pv25f6>reflex path<br data-astro-cid-j7pv25f6>滚动至可视区域后自动执行</div> </div> <div class="demo-card__footer" data-astro-cid-j7pv25f6> <span class="demo-card__footer-value" data-own-ms-big data-astro-cid-j7pv25f6>0.5</span> <span class="demo-card__footer-unit" data-astro-cid-j7pv25f6>ms</span> <span class="demo-card__footer-note" data-astro-cid-j7pv25f6>响应处理时间累计<br data-astro-cid-j7pv25f6>不经过大模型推理 / 仅使用 CPU</span> </div> </div> <div class="demo-card is-cloud" data-astro-cid-j7pv25f6> <div class="demo-card__head" data-astro-cid-j7pv25f6> <span class="demo-card__dot" data-astro-cid-j7pv25f6></span> <span class="demo-card__title" data-astro-cid-j7pv25f6>云端大模型推理</span> <span class="demo-card__badge" data-astro-cid-j7pv25f6>gpt-oss:20b-cloud</span> <span class="demo-card__turnlabel" data-cloud-turn-label data-astro-cid-j7pv25f6>经由第三方数据中心 / 每次完整生成</span> </div> <div class="demo-card__body" data-scroll="cloud" id="demo-cloud-body" data-astro-cid-j7pv25f6> <div class="demo-idle" data-cloud-idle data-astro-cid-j7pv25f6>cloud inference<br data-astro-cid-j7pv25f6>按实测值以真实时间等待</div> </div> <div class="demo-card__footer" data-astro-cid-j7pv25f6> <span class="demo-card__footer-value" data-cloud-sec-big data-astro-cid-j7pv25f6>9.5</span> <span class="demo-card__footer-unit" data-astro-cid-j7pv25f6>s</span> <span class="demo-card__footer-note" data-astro-cid-j7pv25f6>自对话开始的经过时间<br data-astro-cid-j7pv25f6>（实测 9.5&ndash;22.9 秒 / 次响应）</span> </div> </div> </div> <p class="section-lede on-dark" style="margin-top:22px;font-size:12.5px;line-height:1.9;color:var(--color-dark-muted);max-width:96ch" data-astro-cid-j7pv25f6>&#8251; 本演示为再现自有实测值（2026-08-05）的模拟，右侧面板的等待时间为不倍速的真实时间（每次响应 9.5&ndash;18.7 秒）。对话结束后将自动重播。左侧为从缓存返回固定响应的处理，右侧为每次完整生成的推理处理，两者处理内容不同。左侧的逐字显示效果是为提升可读性而设计的展示效果，实际响应处理本身在 0.5ms 级别内完成。</p> <details class="note-details on-dark" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ 关于测量条件、实测值与比较不对称性的说明（4条）</summary> <div class="note-grid" data-astro-cid-j7pv25f6> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>测量条件：</strong>于2026年8月5日，使用相同提示「绿色AI云的响应速度是多少？」进行测量。自有侧测量的是 CPU 缓存响应路径（<span style="font-family:var(--font-mono)" data-astro-cid-j7pv25f6>source: cache</span>，不经过大模型推理的固定响应）的服务器内部处理时间；gpt-oss:20b-cloud 侧测量的是经由 `eai-ext-ollama`（Ollama 公司的云端推理基础设施，已确认不占用本地显存）从发送请求到响应完成的总耗时（wall time）。实测区间为 0.5&ndash;1.0 ms 对 9.5&ndash;22.9 秒。gpt-oss:20b-cloud 侧为输出 1126&ndash;1929 个 token 的完整生成（含推理过程）所耗费的总时间。</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>关于 gpt-oss：</strong>gpt-oss 是 OpenAI 公司公开的开源大语言模型，与该公司的商用 API（ChatGPT、GPT-4/GPT-5 等）不同。本次测量以 `gpt-oss:20b-cloud`（经由 Ollama 公司的云端推理基础设施）作为经由云端大模型 API 的智能体示例。</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>比较的不对称性：</strong>自有侧为来自缓存的固定响应，gpt-oss:20b-cloud 侧为每次完整生成的推理，处理内容并不相同。响应时间差异的主因正是「是否存在推理」本身。倍率范围为最小约 9,500 倍（9.5s &divide; 1.0ms）到最大约 45,800 倍（22.9s &divide; 0.5ms）。</p> <p data-astro-cid-j7pv25f6><strong data-astro-cid-j7pv25f6>后续扩展：</strong>目前尚未建立对商用云端 API（Claude、GPT 官方等）的直接访问手段，因此仅展示开源模型的云端推理实测数据。演示第2轮及以后的等待时间，为该实测区间内的预估值。</p> </div> </details> </div> </section>  <section id="problem" class="section-light" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>Our Approach</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>智能已成为前提。<br data-astro-cid-j7pv25f6>我们设计的是速度与电力。</h2> <p class="section-lede reveal" data-reveal data-delay="140" data-astro-cid-j7pv25f6>
+模型的智能水平正在全行业快速进步。在此基础上，支撑智能体日常持续工作的基础平台真正需要的，是响应速度、功耗与电力来源的透明性。我们将这三者作为设计目标。
+</p> <div class="problem-grid" data-astro-cid-j7pv25f6> <div class="problem-card reveal" data-reveal data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>01 / SPEED</div> <h3 data-astro-cid-j7pv25f6>设计响应速度</h3> <p data-astro-cid-j7pv25f6>定型化响应将大模型推理与网络往返从处理路径中剔除，直接在 CPU 上返回。在需要多轮往复对话的场景中，这一设计直接决定了体验的好坏。</p> </div> <div class="problem-card reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>02 / POWER</div> <h3 data-astro-cid-j7pv25f6>设计功耗</h3> <p data-astro-cid-j7pv25f6>将推理集中在真正需要的场景，其余部分完全由 CPU 完成。降低实际用电量本身，对成本与环境负荷都能同时产生效果。</p> </div> <div class="problem-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="problem-card__label" data-astro-cid-j7pv25f6>03 / TRANSPARENCY</div> <h3 data-astro-cid-j7pv25f6>披露电力结构</h3> <p data-astro-cid-j7pv25f6>由于推理完全在自有绿色数据中心内完成，我们能够自行说明电力的来源。运营以留存 ESG/CSR 要求所需的凭证为前提。</p> </div> </div> </div> </section>  <section id="architecture" class="section-dark" data-astro-cid-j7pv25f6> <div class="section-inner arch-flex" data-astro-cid-j7pv25f6> <div class="arch-col-main" data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>Architecture</div> <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)" data-astro-cid-j7pv25f6>思考的大脑，与反射的神经，<br data-astro-cid-j7pv25f6>在同一场对话中彼此相连。</h2> <div class="arch-sub reveal" data-reveal data-delay="120" data-astro-cid-j7pv25f6>大脑AI × 智能体脊髄反射技术</div> <p class="section-lede on-dark reveal" data-reveal data-delay="160" data-astro-cid-j7pv25f6>
+这是借鉴人体神经系统的两层结构。关键并不在于「分离」本身，而在于分离之后仍以同一场对话彼此相连。哪个响应来自 CPU 的反射，又从哪里切换为 GPU 的深度思考，对话的一方完全不会察觉。承担这一切换的，正是将设计图转换为可执行程序的编译技术（目前仍为半自动——我们正在运营中逐步扩大其可处理的范围）。
+</p> <div class="arch-card-list" data-astro-cid-j7pv25f6> <div class="arch-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>01</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>大脑AI — 深思熟虑</h3> <p data-astro-cid-j7pv25f6>复杂的判断与生成由运行在自有绿色数据中心内的本地大模型负责。由于不经过云端大模型（第三方数据中心），电力来源完全由自有可再生能源支撑。</p> </div> </div> <div class="arch-connector" data-astro-cid-j7pv25f6> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> <span class="arch-connector-label" data-astro-cid-j7pv25f6>SEAMLESS</span> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> </div> <div class="arch-card reveal" data-reveal data-delay="250" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>02</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>编译技术 — 从设计图到可执行程序</h3> <p data-astro-cid-j7pv25f6>这是我们的自主技术：将大脑AI深思熟虑后写出的「设计图」，拆分为仅需 CPU 即可运行的轻量级可执行程序，以及仍需推理的部分。目前该流程为人机协同的半自动阶段，我们正在运营中逐步提高 CPU 执行的比例，扩大可低成本重复运行的范围。其理念是「训练在高性能算力上完成一次，推理则在节能环境中日常进行」。</p> </div> </div> <div class="arch-connector" data-astro-cid-j7pv25f6> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> <span class="arch-connector-label" data-astro-cid-j7pv25f6>SEAMLESS</span> <span class="arch-connector-line" data-astro-cid-j7pv25f6></span> </div> <div class="arch-card is-highlight reveal" data-reveal data-delay="300" data-astro-cid-j7pv25f6> <div class="arch-card__icon" data-astro-cid-j7pv25f6>03</div> <div data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>智能体脊髄反射技术</h3> <p data-astro-cid-j7pv25f6>定型化响应无需经过「大脑」，以相当于脊髄反射的处理方式，在 CPU 上完成，不经过大模型推理。这一可执行程序，正是编译技术所生成的执行程序。反射无法应对的问题，将直接交由大脑AI接手——对话不会中断。</p> </div> </div> </div> </div> <div class="arch-sidebar reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="arch-sidebar__label" data-astro-cid-j7pv25f6>Reflex path</div> <div class="arch-sidebar__metric" data-astro-cid-j7pv25f6> <span class="arch-sidebar__value" data-astro-cid-j7pv25f6>0.5</span> <span class="arch-sidebar__unit" data-astro-cid-j7pv25f6>ms</span> </div> <p class="arch-sidebar__desc" data-astro-cid-j7pv25f6>智能体脊髄反射技术的响应执行时间（自有实测值）。反射能够回答的问题由 CPU 处理，需要思考的问题则交由大脑AI——切换在对话背后自动发生。</p> <div class="arch-sidebar__list" data-astro-cid-j7pv25f6> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>LLM inference</span><span class="v" data-astro-cid-j7pv25f6>none</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Network hop</span><span class="v" data-astro-cid-j7pv25f6>in-house</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Compute</span><span class="v" data-astro-cid-j7pv25f6>CPU / GPU auto</span></div> <div class="arch-sidebar__row" data-astro-cid-j7pv25f6><span data-astro-cid-j7pv25f6>Power source</span><span class="v is-green" data-astro-cid-j7pv25f6>renewable</span></div> </div> <details class="arch-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ 关于数值与「编译技术」的说明</summary> <p data-astro-cid-j7pv25f6>「0.5ms」是我们自有智能体平台中低延迟响应路径执行时间的自有实测值。我们计划今后进一步提升测量条件的对外披露透明度，目前以内部实测值的形式呈现。并不保证所有请求都以此数值响应。「编译技术」是指以我们自有机制完成设计图到可执行程序转换的部分技术。目前并非全自动，而是人机协同的半自动流程，可转换的处理范围正在逐步扩大。详细的转换方式不予公开。</p> </details> </div> </div> </section>  <section id="green" class="section-light" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>Green Infrastructure</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>电力的上限，<span class="accent" data-astro-cid-j7pv25f6>直接化作了我们的设计理念</span></h2> <p class="section-lede reveal" data-reveal data-delay="140" data-astro-cid-j7pv25f6>
+正是在太阳能自发电与可再生能源购电合同这一有限电力的约束下，诞生了大脑AI×智能体脊髄反射技术的混合架构。
+</p> <div class="green-grid" data-astro-cid-j7pv25f6> <div class="green-card reveal" data-reveal data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>PV</div> <h3 data-astro-cid-j7pv25f6>自有绿色数据中心</h3> <p data-astro-cid-j7pv25f6>我们以太阳能自发电与可再生能源购电合同（如 Aqua Energy 100 等）的电力运营。</p> </div> <div class="green-card reveal" data-reveal data-delay="100" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>A2A</div> <h3 data-astro-cid-j7pv25f6>从路径中剔除外部依赖</h3> <p data-astro-cid-j7pv25f6>剔除与外部云端大模型的通信往返，以及对第三方数据中心电源结构的依赖，将电力来源完全掌控在自身范围内。</p> </div> <div class="green-card reveal" data-reveal data-delay="150" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>kW</div> <h3 data-astro-cid-j7pv25f6>约束催生的超低功耗技术</h3> <p data-astro-cid-j7pv25f6>可再生能源在输出与供给量上存在约束。正是出于将耗电量降至极限的需求，我们自主研发了这一混合架构。</p> </div> <div class="green-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <div class="green-card__icon" data-astro-cid-j7pv25f6>ESG</div> <h3 data-astro-cid-j7pv25f6>以凭证为前提的透明性</h3> <p data-astro-cid-j7pv25f6>我们对外披露电力结构，并以留存凭证为前提，进行具有透明度的「绿色」宣传。</p> </div> </div> <details class="note-details" data-astro-cid-j7pv25f6> <summary data-astro-cid-j7pv25f6>+ 关于「实质可再生能源100%」的说明</summary> <p data-astro-cid-j7pv25f6>这一表述基于自有太阳能发电设施的自发电及可再生能源购电合同。关于「实质」的定义与披露粒度，我们正持续推进完善，以提升对外公开的透明度。关于个别合同的详细凭证披露，欢迎垂询，我们将在可能范围内予以说明。</p> </details> <div class="flow-box reveal" data-reveal data-delay="240" data-astro-cid-j7pv25f6> <div class="eyebrow" data-astro-cid-j7pv25f6>Why Green AI Cloud</div> <h3 data-astro-cid-j7pv25f6>正是约束，成就了兼得。</h3> <div class="flow-steps" data-astro-cid-j7pv25f6> <div class="flow-step" data-astro-cid-j7pv25f6>可再生能源的输出与供给约束</div> <span class="flow-arrow" data-astro-cid-j7pv25f6>→</span> <div class="flow-step" data-astro-cid-j7pv25f6>需要将功耗降至极限</div> <span class="flow-arrow" data-astro-cid-j7pv25f6>→</span> <div class="flow-step" data-astro-cid-j7pv25f6>自主研发超低功耗技术</div> <span class="flow-arrow is-accent" data-astro-cid-j7pv25f6>→</span> <div class="flow-step is-final" data-astro-cid-j7pv25f6>超低功耗 × 超高速 × 绿色，三者兼得</div> </div> </div> </div> </section>  <div class="cta-wrap" data-astro-cid-j7pv25f6> <div class="cta-box reveal" data-reveal id="contact" data-astro-cid-j7pv25f6> <div class="cta-box__text" data-astro-cid-j7pv25f6> <h2 data-astro-cid-j7pv25f6>同时拥有速度，<br data-astro-cid-j7pv25f6>与电力的问责透明。</h2> <p data-astro-cid-j7pv25f6>欢迎 IT 导入负责人、ESG/CSR 推进负责人咨询导入及共同研究事宜。</p> </div> <div class="cta-box__actions" data-astro-cid-j7pv25f6> <button type="button" class="cta-btn-primary" id="chat-preview-open-cta" data-astro-cid-j7pv25f6>咨询导入 →</button> <button type="button" class="cta-btn-secondary" id="chat-preview-open" data-astro-cid-j7pv25f6>向AI提问</button>   </div> </div> </div>  <section id="about" class="section-dark" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow on-dark reveal" data-reveal data-astro-cid-j7pv25f6>About</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>樽石数字技术研究所合同公司（TDRI）</h2> <div class="about-grid" data-astro-cid-j7pv25f6> <div class="about-card reveal" data-reveal data-delay="120" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>公司概况</h3> <p data-astro-cid-j7pv25f6>
+樽石数字技术研究所合同公司（TDRI）是一家总部位于千叶县白井市的科技公司，
+            创立于2018年，并于2021年12月完成法人设立。以可再生能源与 IT 的融合
+            为事业支柱，从事以 AI 智能体为经营核心的 EntreprenAIs 平台的
+            研究开发与运营工作。
+</p> <p data-astro-cid-j7pv25f6>
+员工人数为 0 人。由 CFO、CTO、CPO、CLO、CHRO、CISO、COO、Auditor
+            共 8 个 AI 智能体（C-Suite Agent Fleet）承担经营职责，
+            是一家践行多智能体经营模式的企业。
+</p> </div> <div class="about-card reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>创业初心</h3> <p data-astro-cid-j7pv25f6>
+代表樽石将人的父系老家位于福岛县磐城市，2011年东日本大地震让他深切
+            体会到「作为让国家依赖用电的当事者所应承担的责任」，
+            为确立能够稳定利用可再生能源的数字技术，
+            他创立了本研究所。
+</p> </div> <div class="about-card reveal" data-reveal data-delay="280" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>代表简介</h3> <p data-astro-cid-j7pv25f6>
+代表合伙人樽石将人曾在外资 IT 企业、Google Japan、乐天担任工程师，
+            从事大规模分布式系统的开发工作，其后作为 Retty 的 CTO 经历了公司在东京证券
+            交易所 Mothers 板块的上市。目前担任大型集团公司 CTO 负责经营，
+            同时继续担任早稻田大学数据科学研究所客座研究员从事研究活动。
+            他于2021年将 TDRI 完成法人设立，并亲自实践与研究
+            与 EntreprenAIs C-Suite Agent Fleet 共同进行的多智能体经营模式。
+</p> </div> </div> </div> </section>  <section id="news" class="section-light" style="display:none" aria-hidden="true" data-astro-cid-j7pv25f6> <div class="section-inner" data-astro-cid-j7pv25f6> <div class="eyebrow reveal" data-reveal data-astro-cid-j7pv25f6>News</div> <h2 class="headline narrow reveal" data-reveal data-delay="80" data-astro-cid-j7pv25f6>新闻</h2> <ul class="news-list" id="cloud-news-list" data-astro-cid-j7pv25f6></ul> <div class="news-more reveal" data-reveal data-delay="200" data-astro-cid-j7pv25f6> <a class="cta-btn-secondary" href="/news/" style="display:inline-block" data-astro-cid-j7pv25f6>查看全部新闻 &rarr;</a> </div> </div> </section>  <footer data-astro-cid-j7pv25f6> <div class="footer-inner" data-astro-cid-j7pv25f6> <div class="footer-top" data-astro-cid-j7pv25f6> <div class="footer-brand" data-astro-cid-j7pv25f6> <span class="footer-brand__mark" aria-hidden="true" data-astro-cid-j7pv25f6>T</span> <div data-astro-cid-j7pv25f6> <p class="footer-brand__name" data-astro-cid-j7pv25f6>樽石数字技术研究所合同公司</p> <p class="footer-brand__name-en" data-astro-cid-j7pv25f6>Taruishi Digital Research Institute, LLC</p> </div> </div> <nav aria-label="页脚导航" data-astro-cid-j7pv25f6> <ul class="footer-nav-list" data-astro-cid-j7pv25f6> <li data-astro-cid-j7pv25f6><a href="/news/" data-astro-cid-j7pv25f6>News</a></li> <li data-astro-cid-j7pv25f6><a href="/eai/" data-astro-cid-j7pv25f6>EntreprenAIs</a></li> <li data-astro-cid-j7pv25f6><a href="/agents/" data-astro-cid-j7pv25f6>Agents</a></li> <li data-astro-cid-j7pv25f6><a href="/vertical/" data-astro-cid-j7pv25f6>Vertical</a></li> <li data-astro-cid-j7pv25f6><a href="/eai/showcase/" data-astro-cid-j7pv25f6>Showcase</a></li> <li data-astro-cid-j7pv25f6><a href="/terms/" data-astro-cid-j7pv25f6>Terms of Use</a></li> <li data-astro-cid-j7pv25f6><a href="/privacy/" data-astro-cid-j7pv25f6>Privacy Policy</a></li> </ul> </nav> </div> <div class="footer-bottom" data-astro-cid-j7pv25f6> <span data-astro-cid-j7pv25f6>&copy; 樽石数字技术研究所合同公司 &mdash; EntreprenAIs Cloud</span> <span class="mono" data-astro-cid-j7pv25f6>Internet of Agents · Edge-First · Zero Emission</span> </div> </div> </footer>           </body> </html>
