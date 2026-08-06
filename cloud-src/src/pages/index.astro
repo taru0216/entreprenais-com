@@ -312,13 +312,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       background: rgba(247, 246, 241, 0.08);
       z-index: 2;
     }
+    /* #362: FC指摘「会話のたびにiPhoneが縦に伸びていきます。iPhoneは固定で中の
+       チャットが動くんですよね」。min-height のみでは上限がなく、
+       .hero-phone-mock__msgs の内容が増えるたびに .hero-phone-mock__screen
+       （ひいては外枠 .hero-phone-mock 全体）が伸び続けていた。
+       LIVE DEMO の .demo-card__body（height 固定 + overflow-y:auto）と同じ
+       パターンに揃え、height を固定してフレームサイズを不変にする。 */
     .hero-phone-mock__screen {
       position: relative;
       border-radius: 26px;
       background: var(--color-dark-bg);
       overflow: hidden;
       padding: 30px 14px 16px;
-      min-height: 360px;
+      height: 360px;
       display: flex;
       flex-direction: column;
     }
@@ -909,7 +915,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     @media (max-width: 420px) {
       .hero-phone-mock { max-width: 260px; }
-      .hero-phone-mock__screen { min-height: 320px; }
+      .hero-phone-mock__screen { height: 320px; }
     }
   </style>
 
