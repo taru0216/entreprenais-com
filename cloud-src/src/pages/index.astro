@@ -21,7 +21,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <style>
     /* ============ NAV ============ */
-    nav {
+    /* #372: タグセレクタ `nav` はフッタ内の <nav aria-label="フッターナビゲーション">
+       にも継承され、ダーク背景のフッタにライトベージュの半透明ボックスが誤って
+       浮いて見える不具合の原因だった。ヘッダー専用の .site-nav クラスにスコープを
+       限定し、フッタの <nav> には影響しないようにする。 */
+    nav.site-nav {
       position: sticky;
       top: 0;
       z-index: 100;
@@ -1160,6 +1164,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
     }
     .news-card:hover { transform: translateY(-3px); border-color: var(--color-accent); color: inherit; }
+    /* #372: .news-card__thumb（実画像）と .news-card__thumb-placeholder（画像なし時の
+       絵文字プレースホルダー）を同一セレクタにまとめていたため、プレースホルダー専用の
+       opacity: 0.4 が実サムネイル画像にも適用され半透明化していた。root（トップページ）
+       の実装に合わせ、共通レイアウトのみ共有しopacityはプレースホルダーのみに限定する。 */
     .news-card__thumb,
     .news-card__thumb-placeholder {
       flex: none;
@@ -1172,6 +1180,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       align-items: center;
       justify-content: center;
       font-size: 1.4rem;
+    }
+    .news-card__thumb-placeholder {
       opacity: 0.4;
     }
     .news-card__body { flex: 1; min-width: 0; }
@@ -1198,7 +1208,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   </style>
 
   <!-- NAV -->
-  <nav>
+  <nav class="site-nav">
     <div class="nav-inner">
       <div class="nav-logo">
         <span class="nav-logo__t">T</span><span class="nav-logo__dot"></span>
