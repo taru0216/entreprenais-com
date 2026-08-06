@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0f12" />
+  <meta name="robots" content="index,follow" />
+  <title>绿色AI云「EntreprenAIs Cloud」正式上线 | EntreprenAIs</title>
+  <meta name="description" content="我们正式推出兼具超高速与超低功耗的绿色AI云「EntreprenAIs Cloud」。采用「大脑AI」（本地大模型深度思考）与「智能体脊髓反射」技术（CPU瞬时响应）的混合架构，并由自有绿色数据中心提供透明的电力来源。" />
+  <link rel="canonical" href="https://entreprenais.com/zh/news/entreprenais-cloud-launch/" />
+
+  <!-- hreflang alternates -->
+  <link rel="alternate" hreflang="ja" href="https://entreprenais.com/news/entreprenais-cloud-launch/" />
+  <link rel="alternate" hreflang="en" href="https://entreprenais.com/en/news/entreprenais-cloud-launch/" />
+  <link rel="alternate" hreflang="zh" href="https://entreprenais.com/zh/news/entreprenais-cloud-launch/" />
+  <link rel="alternate" hreflang="x-default" href="https://entreprenais.com/news/entreprenais-cloud-launch/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:site_name" content="EntreprenAIs / 樽石数字技术研究所合同公司" />
+  <meta property="og:url" content="https://entreprenais.com/zh/news/entreprenais-cloud-launch/" />
+  <meta property="og:title" content="绿色AI云「EntreprenAIs Cloud」正式上线" />
+  <meta property="og:description" content="我们正式推出兼具超高速与超低功耗的绿色AI云「EntreprenAIs Cloud」，由自有绿色数据中心提供透明的电力来源。" />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <style>
+    .news-article { padding: 8rem var(--gutter) 6rem; background: var(--paper); }
+    .news-article__inner { max-width: 760px; margin: 0 auto; }
+    .news-article__back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--serif); font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--muted); margin-bottom: 3rem;
+      transition: color 0.2s var(--ease); text-decoration: none;
+    }
+    .news-article__back:hover { color: var(--accent); }
+    .news-article__back::before { content: "←"; font-size: 1em; }
+    .news-article__meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.4rem; }
+    .news-article__date { font-family: var(--serif); font-size: 0.82rem; letter-spacing: 0.08em; color: var(--muted); }
+    .news-article__badge {
+      display: inline-block; font-family: var(--serif); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+      background: rgba(42, 45, 124, 0.08); border: 1px solid rgba(42, 45, 124, 0.22);
+      border-radius: 999px; padding: 0.2rem 0.65rem;
+    }
+    .news-article__title {
+      font-family: var(--jp); font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.3; letter-spacing: -0.005em; margin: 0 0 2.5rem; color: var(--ink); text-wrap: balance;
+    }
+    .news-article__divider {
+      width: 3rem; height: 2px; background: linear-gradient(90deg, var(--accent-bright), transparent);
+      border: none; margin: 0 0 2.5rem;
+    }
+    .news-article__body { font-size: 1rem; line-height: 2; color: var(--ink-soft); }
+    .news-article__body p { margin: 0 0 1.6rem; }
+    .news-article__body p:last-child { margin-bottom: 0; }
+    .news-article__body h2 { font-family: var(--jp); font-size: 1.25rem; font-weight: 700; color: var(--ink); margin: 2.4rem 0 1.2rem; }
+    .news-article__body a {
+      color: var(--accent); border-bottom: 1px solid rgba(42, 45, 124, 0.35); padding-bottom: 1px;
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .news-article__body a:hover { color: var(--accent-bright); border-bottom-color: var(--accent-bright); }
+    .news-article__note {
+      margin: 0 0 1.6rem; padding: 1rem 1.2rem; background: rgba(42, 45, 124, 0.05);
+      border: 1px solid rgba(42, 45, 124, 0.14); border-radius: 8px; font-size: 0.85rem;
+      line-height: 1.8; color: var(--muted);
+    }
+    .news-article__footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--line-soft); }
+    @media (max-width: 720px) { .news-article { padding: 6rem var(--gutter) 4rem; } }
+  </style>
+
+  <!-- JSON-LD: NewsArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "绿色AI云「EntreprenAIs Cloud」正式上线",
+    "datePublished": "2026-08-06",
+    "publisher": {
+      "@type": "Organization",
+      "name": "樽石数字技术研究所合同公司",
+      "url": "https://entreprenais.com/"
+    },
+    "url": "https://entreprenais.com/zh/news/entreprenais-cloud-launch/"
+  }
+  </script>
+
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ND9RLH0NT3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ND9RLH0NT3');
+  </script>
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/zh/">
+        <span class="nav__mark" aria-hidden="true">
+          <span class="nav__mark-bar"></span>
+          <span class="nav__mark-dot"></span>
+        </span>
+        <span class="nav__name">TDRI</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#problem">理念</a></li>
+        <li><a href="/#architecture">架构</a></li>
+        <li><a href="/#green">绿色</a></li>
+        <li><a href="/#about">关于我们</a></li>
+      </ul>
+      <nav class="lang-nav" aria-label="语言切换">
+        <a href="/news/entreprenais-cloud-launch/" hreflang="ja">日本語</a>
+        <a href="/en/news/entreprenais-cloud-launch/" hreflang="en">English</a>
+        <a href="/zh/news/entreprenais-cloud-launch/" hreflang="zh" aria-current="page">中文</a>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- Article -->
+  <article class="news-article">
+    <div class="news-article__inner">
+
+      <a class="news-article__back" href="/news/">新闻列表</a>
+
+      <div class="news-article__meta">
+        <span class="news-article__date">2026-08-06</span>
+        <span class="news-article__badge">Press</span>
+      </div>
+
+      <h1 class="news-article__title">
+        绿色AI云「EntreprenAIs Cloud」正式上线
+      </h1>
+
+      <hr class="news-article__divider" />
+
+      <div class="news-article__body">
+        <p>
+          樽石数字技术研究所合同公司（TDRI）今日正式推出兼具超高速与超低功耗的绿色AI云「EntreprenAIs Cloud」。该服务运行于自有绿色数据中心，以电力来源的透明性为设计前提。
+        </p>
+
+        <figure style="margin:2rem 0;text-align:center;">
+          <img src="/og.png" alt="绿色AI云「EntreprenAIs Cloud」" style="max-width:100%;border-radius:8px;" loading="lazy">
+        </figure>
+
+        <h2>「大脑AI」× 「智能体脊髄反射」技术的混合架构</h2>
+        <p>
+          EntreprenAIs Cloud 借鉴人体神经系统的两层结构：负责复杂判断与生成的「大脑AI」（在自有绿色数据中心内运行的本地大模型，进行深度思考），与无需大模型推理、仅在 CPU 上瞬时完成定型响应的「智能体脊髄反射」技术。两者在同一场对话中无缝切换——当反射响应无法满足需求时，会话会自动交由大脑AI接手，对话不会中断。
+        </p>
+        <p>
+          支撑这一切换的，是我们自主研发的编译技术：将大脑AI深思熟虑后写出的「设计图」（SKILL.md）转换为仅需 CPU 即可运行的轻量级可执行程序（skill.py），这是实现高速化的另一大支柱。目前该流程仍为人机协同的半自动阶段，我们正持续扩大其可处理的范围。
+        </p>
+
+        <h2>自有绿色数据中心带来的电力来源透明性</h2>
+        <p>
+          EntreprenAIs Cloud 运行于依靠太阳能自发电与可再生能源购电合同供电的自有绿色数据中心。通过消除对外部云端大模型的往返通信，以及对其他公司数据中心电源结构的依赖，我们致力于将电力来源完全掌控在自身范围内，并以可验证的信息披露为前提，追求透明的「绿色」运营。
+        </p>
+        <p>
+          可再生能源在出力与供应量上存在客观制约。EntreprenAIs Cloud 的混合架构正是在这一制约下、为将功耗降至极限而催生的成果——「超高速」与「超低功耗」的兼得，是围绕这一约束条件进行设计后的必然结果，而非事后附加的独立功能。
+        </p>
+
+        <div class="news-article__note">
+          <strong>关于数值与宣传表述的说明：</strong>「超高速」「超低功耗」以及「智能体脊髄反射」技术响应时间等性能表述，均基于我们自身的内部实测数据与自定测试条件，并不保证在所有请求或使用环境下均能达到相同性能。「实质可再生能源100%」等电力来源相关表述，基于自有太阳能发电设施的自发电及可再生能源购电合同。我们将持续完善测量条件与信息披露的透明度。详情请参阅首页的<a href="/#architecture">架构</a>与<a href="/#green">绿色</a>相关章节。
+        </div>
+
+        <p>
+          如需咨询导入方案，请通过<a href="/#contact">联系表单</a>与我们联系。
+        </p>
+      </div>
+
+      <div class="news-article__footer">
+        <a class="news-article__back" href="/news/">新闻列表</a>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark" aria-hidden="true">
+          <span class="footer__mark-bar"></span>
+          <span class="footer__mark-dot"></span>
+        </span>
+        <div>
+          <p class="footer__name">樽石数字技术研究所合同公司</p>
+          <p class="footer__name-en">Taruishi Digital Research Institute, LLC</p>
+        </div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__copy">
+          &copy; <span id="year">2026</span> Taruishi Digital Research Institute, LLC &middot;
+          This site is part of EntreprenAIs IoA platform
+        </p>
+        <p class="footer__legal">
+          <a href="/terms/" class="footer__link">Terms of Use</a>
+          &middot;
+          <a href="/privacy/" class="footer__link">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
