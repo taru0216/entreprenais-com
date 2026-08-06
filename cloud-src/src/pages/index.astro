@@ -317,14 +317,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        .hero-phone-mock__msgs の内容が増えるたびに .hero-phone-mock__screen
        （ひいては外枠 .hero-phone-mock 全体）が伸び続けていた。
        LIVE DEMO の .demo-card__body（height 固定 + overflow-y:auto）と同じ
-       パターンに揃え、height を固定してフレームサイズを不変にする。 */
+       パターンに揃え、height を固定してフレームサイズを不変にする。
+       #362 追加調整: FC指摘「iPhoneの高さが少し低いよね。もう少し縦長に」を
+       受け、360px→460px に拡大（実機のiPhone比率 約1:2.16 には寄せすぎず、
+       .hero-metric-standalone・見出し・本文とのバランスを保てる範囲で調整）。 */
     .hero-phone-mock__screen {
       position: relative;
       border-radius: 26px;
       background: var(--color-dark-bg);
       overflow: hidden;
       padding: 30px 14px 16px;
-      height: 360px;
+      height: 460px;
       display: flex;
       flex-direction: column;
     }
@@ -915,7 +918,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     @media (max-width: 420px) {
       .hero-phone-mock { max-width: 260px; }
-      .hero-phone-mock__screen { height: 320px; }
+      .hero-phone-mock__screen { height: 400px; }
     }
   </style>
 
