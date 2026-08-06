@@ -255,15 +255,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       display: inline-block;
       border-radius: 999px;
       font-weight: 700;
+      font-family: inherit;
       text-align: center;
       transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
     }
     .btn-primary {
       padding: 16px 30px;
       background: var(--color-text);
+      border: none;
       color: #fff;
       font-size: 15px;
       letter-spacing: 0.02em;
+      cursor: pointer;
     }
     .btn-primary:hover { background: var(--color-accent2); color: #fff; transform: translateY(-2px); }
     .btn-secondary {
@@ -321,13 +324,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        #362 追加調整: FC指摘「iPhoneの高さが少し低いよね。もう少し縦長に」を
        受け、360px→460px に拡大（実機のiPhone比率 約1:2.16 には寄せすぎず、
        .hero-metric-standalone・見出し・本文とのバランスを保てる範囲で調整）。 */
+    /* #366: FC指摘「もう一段縦長に」（#362 で360px→460pxに拡大済み）。
+       実機iPhoneの比率（約1:2.16）に近づけ、580pxへ再拡大。 */
     .hero-phone-mock__screen {
       position: relative;
       border-radius: 26px;
       background: var(--color-dark-bg);
       overflow: hidden;
       padding: 30px 14px 16px;
-      height: 460px;
+      height: 580px;
       display: flex;
       flex-direction: column;
     }
@@ -360,33 +365,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       scrollbar-width: none;
     }
     .hero-phone-mock__msgs::-webkit-scrollbar { display: none; }
-    .hero-phone-mock__msg {
-      padding: 10px 13px;
-      border-radius: 14px;
-      font-size: 12.5px;
-      line-height: 1.6;
-      max-width: 88%;
-    }
-    .hero-phone-mock__msg--in {
-      align-self: flex-start;
-      background: var(--color-dark-surface);
-      color: var(--color-dark-text-soft);
-      border-bottom-left-radius: 4px;
-    }
-    .hero-phone-mock__msg--out {
-      align-self: flex-end;
-      background: var(--color-accent);
-      color: #fff;
-      border-bottom-right-radius: 4px;
-    }
-    .hero-phone-caret {
-      display: inline-block;
-      width: 6px; height: 13px;
-      margin-left: 2px;
-      background: rgba(255,255,255,0.85);
-      vertical-align: -2px;
-      animation: eaiCaret 900ms step-end infinite;
-    }
+    /* #366: FC指摘「iPhone の中身が真っ暗です」。.hero-phone-mock__msg 以下
+       （吹き出し本体）は JS（heroPhoneTurn）が document.createElement で動的生成する
+       要素であり、Astro の scoped CSS（コンパイル時に静的要素へ注入される
+       data-astro-cid-* 属性ベースのセレクタ）が一切マッチせず、背景色・文字色が
+       無効化されていた（DOM上は正しく存在するが computed style が
+       background:transparent + 暗い文字色になり、暗いフレーム背景と同化して不可視化）。
+       Issue #347（LIVE DEMOの .demo-bubble--user/--ai で発生した同一パターン）と
+       同じ原因のため、同じ対応（is:global ブロックへの切り出し）を適用する。
+       定義は下記の <style is:global> ブロックを参照。 */
     .hero-phone-mock__ms {
       margin-top: 14px;
       padding-top: 14px;
@@ -918,7 +905,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     @media (max-width: 420px) {
       .hero-phone-mock { max-width: 260px; }
-      .hero-phone-mock__screen { height: 400px; }
+      .hero-phone-mock__screen { height: 500px; }
     }
   </style>
 
@@ -978,6 +965,37 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       flex: none;
     }
     .demo-waiting span.txt { font-family: var(--font-mono); font-size: 12px; color: var(--color-dark-muted2); }
+
+    /* #366: ヒーロー iPhone フレーム内チャット吹き出し（heroPhoneTurn が動的生成）。
+       LIVE DEMO の .demo-bubble--* と同じ理由（scoped CSS が動的要素にマッチしない）
+       で is:global 化。 */
+    .hero-phone-mock__msg {
+      padding: 10px 13px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      max-width: 88%;
+    }
+    .hero-phone-mock__msg--in {
+      align-self: flex-start;
+      background: var(--color-dark-surface);
+      color: var(--color-dark-text-soft);
+      border-bottom-left-radius: 4px;
+    }
+    .hero-phone-mock__msg--out {
+      align-self: flex-end;
+      background: var(--color-accent);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .hero-phone-caret {
+      display: inline-block;
+      width: 6px; height: 13px;
+      margin-left: 2px;
+      background: rgba(255,255,255,0.85);
+      vertical-align: -2px;
+      animation: eaiCaret 900ms step-end infinite;
+    }
   </style>
 
   <!-- NAV -->
@@ -1020,7 +1038,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
             自社グリーンデータセンターで動くエージェント基盤。応答は<strong>ミリ秒</strong>、電力は<strong>自社の再エネ</strong>で完結する。
           </p>
           <div class="hero-cta">
-            <a href="#demo" class="btn btn-primary">0.5ms を体験する →</a>
+            <!-- #366: FC指示「0.5ms を体験する → というファーストビューのボタンは
+                 右下のAIに聞くチャットぼっとを立ち上げるのが良い」。#demo への
+                 アンカーリンクから、既存の openContactWidget() 導線（BaseLayout.astro
+                 の chat-preview-open 系ボタン群）を起動するボタンに変更。 -->
+            <button type="button" class="btn btn-primary" id="hero-cta-open-widget">0.5ms を体験する →</button>
             <a href="#architecture" class="btn btn-secondary">アーキテクチャを見る</a>
           </div>
         </div>
