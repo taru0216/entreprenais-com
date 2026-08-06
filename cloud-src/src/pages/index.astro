@@ -1079,7 +1079,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="eyebrow on-dark reveal" data-reveal>Live Demo</div>
           <h2 class="headline reveal" data-reveal data-delay="80" style="color:var(--color-dark-text)">速さは、会話でしか伝わらない。</h2>
           <p class="section-lede on-dark reveal" data-reveal data-delay="140" style="max-width:60ch">
-            左は自社エージェント基盤の反射応答。右は同一プロンプトをクラウドLLM推論（gpt-oss:20b）へ。<strong style="color:var(--color-dark-text);font-weight:700">右パネルは実測どおり実時間で待ちます</strong>——左が会話を終えても、右はまだ最初の返答を書いています。
+            左は自社エージェント基盤の反射応答。右は同一プロンプトをクラウドLLM推論（gpt-oss:20b-cloud）へ。<strong style="color:var(--color-dark-text);font-weight:700">右パネルは実測どおり実時間で待ちます</strong>——左が会話を終えても、右はまだ最初の返答を書いています。
           </p>
         </div>
       </div>
@@ -1106,7 +1106,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="demo-card__head">
             <span class="demo-card__dot"></span>
             <span class="demo-card__title">クラウドLLM推論</span>
-            <span class="demo-card__badge">gpt-oss:20b</span>
+            <span class="demo-card__badge">gpt-oss:20b-cloud</span>
             <span class="demo-card__turnlabel" data-cloud-turn-label>他社DC経由 / 毎回フル生成</span>
           </div>
           <div class="demo-card__body" data-scroll="cloud" id="demo-cloud-body">
@@ -1125,9 +1125,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <details class="note-details on-dark">
         <summary>＋ 計測条件・実測値・比較の非対称性についての注記（4件）</summary>
         <div class="note-grid">
-          <p><strong>計測条件:</strong> 2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」で計測。自社側は CPU キャッシュ応答経路（<span style="font-family:var(--font-mono)">source: cache</span>、LLM推論を介さず固定応答）のサーバー内部処理時間、gpt-oss 側はローカルLLM実行基盤（Ollama）経由でクラウド推論として実行した際のリクエスト送信〜応答完了の総時間。実測レンジは 0.5〜1.0 ms 対 9.5〜22.9 秒。</p>
-          <p><strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、同社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回はクラウドLLM API経由エージェントの一例として計測しました。</p>
-          <p><strong>比較の非対称性:</strong> 自社側はキャッシュからの固定応答、gpt-oss 側は毎回フル生成の推論であり処理内容が異なります。応答時間差の主因は「推論の有無」そのものです。倍率は最小差（9.5s ÷ 1.0ms ≒ 9,500倍）〜最大差（22.9s ÷ 0.5ms ≒ 45,800倍）の範囲です。</p>
+          <p><strong>計測条件:</strong> 2026年8月5日、同一プロンプト「グリーンAIクラウドの応答速度は？」で計測。自社側は CPU キャッシュ応答経路（<span style="font-family:var(--font-mono)">source: cache</span>、LLM推論を介さず固定応答）のサーバー内部処理時間、gpt-oss:20b-cloud 側は `eai-ext-ollama` 経由（Ollama社のクラウド推論基盤、ローカルVRAM不使用を確認）でリクエスト送信〜応答完了までの総時間（wall time）。実測レンジは 0.5〜1.0 ms 対 9.5〜22.9 秒。gpt-oss:20b-cloud 側は出力トークン数1126〜1929のフル生成（reasoning過程を含む）にかかった総時間です。</p>
+          <p><strong>gpt-oss について:</strong> gpt-oss は OpenAI 社が公開したオープンソースの大規模言語モデルであり、同社の商用API（ChatGPT・GPT-4/GPT-5等）とは異なります。今回は `gpt-oss:20b-cloud`（Ollama社のクラウド推論基盤経由）をクラウドLLM API経由エージェントの一例として計測しました。</p>
+          <p><strong>比較の非対称性:</strong> 自社側はキャッシュからの固定応答、gpt-oss:20b-cloud 側は毎回フル生成の推論であり処理内容が異なります。応答時間差の主因は「推論の有無」そのものです。倍率は最小差（9.5s ÷ 1.0ms ≒ 9,500倍）〜最大差（22.9s ÷ 0.5ms ≒ 45,800倍）の範囲です。</p>
           <p><strong>今後の拡張:</strong> 現時点では商用クラウドAPI（Claude・GPT本家等）への直接アクセス手段が未整備のため、オープンソースモデルのクラウド推論実測のみを掲載しています。デモ2ターン目以降の待ち時間は、この実測レンジ内の想定値です。</p>
         </div>
       </details>
