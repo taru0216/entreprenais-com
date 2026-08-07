@@ -1579,10 +1579,16 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- GREEN -->
   <section id="green" class="section-light">
     <div class="section-inner">
+      <!-- #397: FC指摘「まずグリーンであることの説明とそれの価値を全面に打ち出して。
+           裏側の制約は小さく書いておけば良い」。旧版は見出し・リード文が「電力の上限
+           （制約）」を主語にしており、価値訴求より先に技術的な成り立ちの説明が来て
+           いた。見出し・リード文を「グリーンで稼働している事実」「どうやって実現して
+           いるか」「その価値」を前面に出す構成に書き換える。計測条件・開示粒度等の
+           留保事項は既存の .note-details（折りたたみ注記）で小さく扱う構成を維持。 -->
       <div class="eyebrow reveal" data-reveal>Green Infrastructure</div>
-      <h2 class="headline narrow reveal" data-reveal data-delay="80">電力の上限が、<span class="accent">そのまま設計思想になった</span></h2>
+      <h2 class="headline narrow reveal" data-reveal data-delay="80"><span class="accent">太陽光と水力</span>で動く、グリーンAIクラウド</h2>
       <p class="section-lede reveal" data-reveal data-delay="140">
-        太陽光自家発電＋再エネ電力契約という有限な電力の中から、大脳AI×エージェント脊髄反射技術のハイブリッド構成が生まれました。
+        自社グリーンデータセンター内で、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力のみでAI推論を完結。外部クラウドLLM・他社データセンターを経由しないため、電力起源を自社で説明でき、環境負荷とコストを同時に抑えられます。
       </p>
 
       <div class="green-grid">
@@ -1598,8 +1604,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="green-card reveal" data-reveal data-delay="150">
           <div class="green-card__icon">kW</div>
-          <h3>制約が生んだ超省電力技術</h3>
-          <p>再エネ電力には出力・供給量の制約がある。消費電力を極限まで下げる必要から、ハイブリッドアーキテクチャを自社開発しました。</p>
+          <h3>自社開発の超省電力技術</h3>
+          <p>再エネ電力の出力・供給量には限りがあるため、消費電力を極限まで下げるハイブリッドアーキテクチャを自社開発しました。</p>
         </div>
         <div class="green-card reveal" data-reveal data-delay="200">
           <div class="green-card__icon">ESG</div>
