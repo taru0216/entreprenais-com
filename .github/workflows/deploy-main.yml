@@ -88,13 +88,33 @@ jobs:
             -not -name "redirect-cloud.html" \
             -exec cp {} _site/ \;
           # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page
-          for dir in img en zh news eai agents privacy terms data _i18n vertical legacy; do
+          # #393: en/ zh/ はここでは一旦除外する（後述の CSS ハッシュ同期処理の
+          # 対象のため、cloud-src ビルド成果物の配置後に個別コピーする）。
+          for dir in img news eai agents privacy terms data _i18n vertical legacy; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           # Cloud build output (root) — #374: entreprenais.com トップページを
           # /cloud の内容に差替え。index.html を含む root ビルド成果物一式で
           # 上記 Root static files の index.html を上書きする。
           cp -r cloud-src/dist/. _site/
+          # #393: en/index.html・zh/index.html は cloud-src の静的コミット済み
+          # 翻訳版で、Astro ビルドのハッシュ付き CSS ファイル名
+          # （/_astro/index.[hash].css）をハードコードして参照している。
+          # Astro のコンテンツハッシュはビルドごとに変わりうるため、コミット時点の
+          # ハッシュと今回のビルドで実際に生成されたハッシュが食い違うと
+          # en/ zh/ のスタイルが 404 で全面的に崩れる（本番インシデントで発覚）。
+          # ここで実際に生成された CSS ファイル名を検出し、en/ zh/ コピー前に
+          # HTML 内の参照を書き換えて同期する。
+          ACTUAL_CSS=$(basename "$(ls cloud-src/dist/_astro/index.*.css | head -1)")
+          echo "Detected cloud-src CSS asset: ${ACTUAL_CSS}"
+          for dir in en zh; do
+            if [ -d "$dir" ]; then
+              cp -r "$dir" _site/
+              if [ -f "_site/${dir}/index.html" ]; then
+                sed -i -E "s#_astro/index\.[A-Za-z0-9]+\.css#_astro/${ACTUAL_CSS}#g" "_site/${dir}/index.html"
+              fi
+            fi
+          done
           # Astro subsites (built output)
           mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger
           cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
