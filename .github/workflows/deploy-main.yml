@@ -64,20 +64,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: cloud-src/package-lock.json
 
-      - name: Build cloud (/cloud サブパス版 — 従来どおり維持 #303)
-        working-directory: cloud-src
-        run: npm ci && npm run build
-        env:
-          ASTRO_BASE: /cloud
-
-      - name: Stash /cloud build output
-        run: |
-          # 直後の root ビルドが dist/ を上書きするため、/cloud 用の成果物を退避する
-          mv cloud-src/dist /tmp/cloud-dist
-
       - name: Build cloud (root 版 — #374 トップページ差替え)
         working-directory: cloud-src
-        run: npm run build
+        run: npm ci && npm run build
         env:
           ASTRO_BASE: /
 
@@ -91,9 +80,12 @@ jobs:
           # サイト全体で共有される旧アセットのため、cloud-src 側とファイル名が
           # 衝突せず（cloud 側は _astro/ 配下にハッシュ付き名で出力）、意図せず
           # 上書きされることはない。
+          # #388: redirect-cloud.html は _site/cloud/index.html 専用の素材であり
+          # ルート直下にそのまま公開すべきではないため、この find の対象から除外する。
           find . -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
             -o -name "*.xml" -o -name "*.txt" -o -name "*.ico" -o -name "*.svg" \
             -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
+            -not -name "redirect-cloud.html" \
             -exec cp {} _site/ \;
           # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page
           for dir in img en zh news eai agents privacy terms data _i18n vertical legacy; do
@@ -104,10 +96,15 @@ jobs:
           # 上記 Root static files の index.html を上書きする。
           cp -r cloud-src/dist/. _site/
           # Astro subsites (built output)
-          mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger _site/cloud
+          mkdir -p _site/sites/banwaen-ikebukuro _site/sites/taruishi-burger
           cp -r sites/banwaen-ikebukuro/dist/. _site/sites/banwaen-ikebukuro/
           cp -r sites/taruishi-burger/dist/. _site/sites/taruishi-burger/
-          cp -r /tmp/cloud-dist/. _site/cloud/
+          # #388: /cloud サブパスは #374 で / に統一済みのため重複公開を解消する。
+          # 404 ではなく / への静的リダイレクトを設置し、既存の外部リンク・
+          # ブックマーク・過去 SNS シェア URL を破壊しない（GitHub Pages は
+          # サーバーサイドリダイレクト不可のため meta refresh + JS で代替）。
+          mkdir -p _site/cloud
+          cp redirect-cloud.html _site/cloud/index.html
           # Other sites (non-Astro static HTML). Astro source dirs are detected
           # automatically via package.json presence and skipped here — they are
           # already built and placed above. This keeps the loop correct as new
