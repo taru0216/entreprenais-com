@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+  #388: /cloud は #374（2026-08-06）で entreprenais.com のトップページ（/）に
+  統一済み。旧パス /cloud への既存アクセス（外部リンク・ブックマーク・過去の
+  SNS シェア URL）を 404 にせず / へ誘導するための静的リダイレクトページ。
+  GitHub Pages は静的ホスティングのためサーバーサイドリダイレクト
+  （301 等）は使えず、meta refresh + JS + canonical タグで代替する。
+-->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=https://entreprenais.com/" />
+  <link rel="canonical" href="https://entreprenais.com/" />
+  <meta name="robots" content="noindex,follow" />
+  <title>グリーンAIクラウド | EntreprenAIs</title>
+  <meta property="og:title" content="グリーンAIクラウド | EntreprenAIs" />
+  <meta property="og:image" content="https://entreprenais.com/og.png" />
+  <script>
+    location.replace('https://entreprenais.com/' + location.hash);
+  </script>
+</head>
+<body>
+  <p>このページは <a href="https://entreprenais.com/">https://entreprenais.com/</a> に移動しました。自動的に転送されない場合はリンクをクリックしてください。</p>
+</body>
+</html>

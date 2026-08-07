@@ -130,9 +130,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     /* ============ HERO ============ */
+    /* #387: FC指摘「トップページがファーストビューに入りきらない」。
+       ノートPC相当のビューポート（1280x800〜1440x900 程度）で CTA ボタンが
+       画面外に見切れていた。padding-top の clamp 上限を 150px→116px に、
+       下限を 108px→88px に縮小し、後続の見出し・余白調整と合わせて
+       ファーストビューの縦幅を圧縮する（デスクトップの見た目バランスは
+       維持しつつ全体を詰める方向で調整）。 */
     .hero {
       position: relative;
-      padding: clamp(108px, 13vw, 150px) clamp(20px, 4vw, 40px) 0;
+      padding: clamp(88px, 10vw, 116px) clamp(20px, 4vw, 40px) 0;
       overflow: hidden;
     }
     .hero-bg {
@@ -163,11 +169,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       margin: 0 auto;
       z-index: 1;
     }
+    /* #387: margin-bottom 30px→20px（ファーストビュー高さ圧縮の一環） */
     .hero-eyebrow-row {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .hero-eyebrow {
       font-size: 11px;
@@ -275,19 +282,22 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
        に分色するため、行分離用の .hero-h1-line2 と、色指定用の .accent を分離する。 */
     .hero h1 .hero-h1-line2 { display: block; color: var(--color-text); }
     .hero h1 .accent { color: var(--color-accent); }
+    /* #387: margin-top 30px→18px、line-height 1.85→1.7（ファーストビュー高さ圧縮） */
     .hero-lede {
-      margin: 30px 0 0;
+      margin: 18px 0 0;
       max-width: 46ch;
       font-size: 19px;
-      line-height: 1.85;
+      line-height: 1.7;
       color: var(--color-text-soft);
     }
     .hero-lede strong { color: var(--color-text); font-weight: 700; }
+    /* #387: margin-top 38px→24px（ファーストビュー高さ圧縮。CTAボタンが
+       ノートPC相当ビューポートで画面外に見切れていた問題への対応） */
     .hero-cta {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 38px;
+      margin-top: 24px;
     }
     /* #354/#358: FC指摘「0.5msが小さくなった。独立して拡大・強調」
        →「右上にスペースがあるのでここが良さそう」を受け、ヒーロー右上
