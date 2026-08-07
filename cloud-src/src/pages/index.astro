@@ -1076,8 +1076,19 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .nav-logo__t { font-size: 17px; }
       .nav-logo__product { display: none; }
       .nav-cta { margin-left: auto; padding: 9px 14px; font-size: 11.5px; white-space: nowrap; }
-      .hero { padding: 96px 20px 0; }
-      .hero-flex { flex-direction: column; align-items: flex-start; }
+      /* #391: FC指摘「スマホの下が見切れている」「白背景の部分が全部入るように」。
+         .hero セクション全体（白背景が続く範囲）の総高さがビューポート高さ
+         （iPhone実機 667px〜932px 相当）の2倍近くあり、電話モックアップは
+         おろか CTA ボタンすら収まっていなかった（実測: 375x667 で .hero
+         総高さ 1345px）。padding-top をさらに圧縮する。 */
+      .hero { padding: 28px 20px 0; }
+      .hero-flex { flex-direction: column; align-items: flex-start; gap: 10px; }
+      /* #391: .hero-col-text の flex-basis（480px、デスクトップの横幅用）が
+         flex-direction:column 化後は「高さ」として解釈され、実コンテンツ
+         （約326px）より大きい見えない余白が生じていた（実測で確認）。
+         column レイアウトでは flex-basis をリセットし、コンテンツの
+         自然な高さに委ねる。 */
+      .hero-col-text { flex: 0 1 auto; }
       /* #356: FC指摘「レスポンシブでiPhoneが左に寄っちゃってる」。
          .hero-col-phone は max-width:300px（デフォルト定義）を持つため、
          width:100% を指定しても実際のボックス幅は 300px に収まる。
@@ -1086,22 +1097,45 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
          .hero-col-phone コンテナ自体を親フレックス内で中央寄せする
          （width:100% は撤去 — align-self:center + max-width:300px の
          組み合わせで意図通り中央に収まる）。 */
-      .hero-col-phone { align-self: center; align-items: center; }
+      /* #391: .hero-col-text と同根の問題。.hero-col-phone の flex-basis
+         （300px、デスクトップの横幅用）が flex-direction:column 化後は
+         「高さ」として解釈され、実コンテンツ（電話モック本体）より大きい
+         見えない余白（約70px）が生じていた。column レイアウトでは
+         flex-basis をリセットする。 */
+      .hero-col-phone { align-self: center; align-items: center; flex: 0 1 auto; }
       .hero h1 { max-width: none; }
       /* #377: FC指摘「レスモバイルビューがごちゃごちゃしてる」への対応。
          タグライン（見出し）を主役にし、他の要素は相対的に控えめにすることで
          情報階層にメリハリを付ける。値は既存の clamp() レンジを踏襲しつつ
          モバイル固有の上書きとして追加する（デスクトップの見た目は変更しない）。 */
-      .hero h1 { font-size: 42px; line-height: 1.2; }
-      .hero-eyebrow-row { gap: 8px; margin-bottom: 20px; }
+      /* #391: 「グリーンAIクラウド、始動」が幅375pxで折り返され合計4行に
+         なっていた（34px時点でも解消せず）。28pxまで下げて2行（各行1行）に
+         収め、line-height も詰める。 */
+      .hero h1 { font-size: 26px; line-height: 1.2; }
+      .hero-eyebrow-row { gap: 8px; margin-bottom: 10px; }
       .hero-eyebrow { font-size: 10px; }
       .hero-live-badge { font-size: 10px; padding: 5px 12px 5px 10px; }
-      .hero-lede { font-size: 15px; line-height: 1.7; margin-top: 20px; }
-      .hero-metric-standalone__value { font-size: 40px; }
-      .hero-metric-standalone__unit { font-size: 15px; }
-      .hero-metric-standalone__note { font-size: 9.5px; }
+      .hero-lede { font-size: 14px; line-height: 1.5; margin-top: 6px; }
+      /* #391: CTA ボタン下の縦積みマージンを縮小（38px→24pxは #387 で対応済み。
+         モバイルはさらに詰める）。ボタン自体の padding もモバイル専用に
+         縮小し、縦積み2個分の高さを抑える（デスクトップは変更しない）。 */
+      .hero-cta { margin-top: 14px; gap: 8px; }
+      .hero-cta .btn-primary, .hero-cta .btn-secondary { padding: 10px 22px; font-size: 13.5px; }
+      /* #391: 「0.5ms」独立強調表示（電話モック上部）はモバイルでは電話モック
+         内の吹き出しと情報が重複するため非表示にし、縦幅を確保する。 */
+      .hero-metric-standalone { display: none; }
       .hero-photo-bg--desktop { display: none; }
       .hero-photo-bg--mobile { display: block; }
+      /* #391: 電話モック配下の注記・詳細開示アコーディオンはモバイルでは
+         非表示にし（内容の重要度が低く、白背景セクション全体をファースト
+         ビューに収めるための優先度調整）、縦幅を確保する。 */
+      .hero-phone-note { display: none; }
+      details.hero-details { display: none; }
+      /* #391: 電話モックアップ本体（.hero-phone-mock__screen）は 580px
+         固定（デスクトップ値を継承）だったため、モバイルでは画面の大半を
+         占めていた。320px まで縮小し、フレーム自体も一回り小さくする。 */
+      .hero-phone-mock { max-width: 170px; }
+      .hero-phone-mock__screen { height: 195px; padding: 14px 8px 8px; }
       .section-light, .section-dark { padding: 56px 20px; }
       .arch-flex { flex-direction: column; }
       .arch-sidebar { position: static; max-width: none; width: 100%; }
@@ -1112,8 +1146,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .btn, .cta-btn-primary, .cta-btn-secondary { width: 100%; }
     }
     @media (max-width: 420px) {
-      .hero-phone-mock { max-width: 260px; }
-      .hero-phone-mock__screen { height: 500px; }
+      /* #391: 720px ブレークポイント側で 190px/230px まで縮小済みのため
+         420px 以下専用の追加縮小は不要（旧値 200px/280px は 720px 側の
+         現行値より大きく矛盾していたため撤去）。 */
     }
   </style>
 
