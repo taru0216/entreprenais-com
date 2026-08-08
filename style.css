@@ -3058,6 +3058,32 @@ body.fleet-page {
   }
 }
 
+/* #428: FC指摘「太陽光発電はスマホでもファーストビューに」。
+   .staff__hero-visual は flex-direction:column で HTML 出現順
+   （metric → phone-mock → photo）のまま縦積みされる。.staff__hero-grid
+   が900px以下で1カラム化すると、.staff__hero-copy（見出し・リード文・
+   バッジ4つ・CTA）が先に表示され尽くしてから .staff__hero-visual が
+   続くため、photo に到達するには実測で追加約500pxのスクロールが必要
+   だった（Playwright実機レンダリングで確認、ビューポート844pxに対し
+   photo.top=1344px）。
+   HTML構造・デスクトップ表示（copy→visualの2カラム、visual内部は
+   metric→phone-mock→photoの縦順）は変更せず、モバイル幅でのみ
+   .staff__hero-visual 内の並び順を flex の order で
+   「metric → photo → phone-mock」に入れ替える。phone-mock は
+   4ターンの会話ログを含み縦に長い（実測 580px 前後）ため、これを
+   photo より後ろに回すことで photo までのスクロール量を大幅に短縮する。 */
+@media (max-width: 900px) {
+  .staff__hero-metric {
+    order: 1;
+  }
+  .staff__hero-photo {
+    order: 2;
+  }
+  .feature__phone.phone-mock {
+    order: 3;
+  }
+}
+
 /* ============================================================
    EcoBot AI theme (products/ecobot-ai) — #418
    FC-requested rebrand: dark/tech tone -> bright green, illustrative tone,
