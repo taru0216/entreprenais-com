@@ -257,6 +257,64 @@
       </div>
     </section>
 
+    <!-- 01.5 / Speed Demo -->
+    <!-- #436: FC指摘「エコボットAIのイメージがまったく速さを表現出来てない。トップページの
+         デモをみて」を受け、トップページ（cloud-src/src/pages/index.astro の #demo LIVE
+         DEMOセクション）にある「自社の反射応答 vs 一般的なクラウドLLM推論」の視覚的対比
+         デモを、本ページ（.ecobot-page の明るいグリーン基調イラスト調トーン）専用に
+         再実装する。Why Green セクション（04）には速度訴求を戻さない（#434 の方針を
+         維持）— 電力の文脈では速度を主役にしないという方針と、ページ全体としては速さも
+         視覚的に伝わるべきという今回の指示は別軸のため、本セクションを Why Green とは
+         独立した場所（Concept の前）に新設する。表示する数値は既存サイトで確立済みの
+         実測値（0.5ms 反射応答 / 一般的なクラウドLLM推論は 9.5〜22.9 秒）のみを使用。 -->
+    <section class="fleet__section speed-demo">
+      <div class="fleet__inner">
+        <p class="section__num" style="color: var(--ink);">Speed</p>
+        <h2 class="section__title" style="color: var(--ink);">速さは、会話でしか伝わらない。</h2>
+        <p class="cycle__lead" style="color: var(--ink-soft);">
+          左はエコボットAIの反射応答（CPUキャッシュ経路・LLM推論なし）。右は同じ質問を一般的なクラウドLLM推論に送った場合の実測どおりの待ち時間です。左が会話をすべて終える頃、右はまだ最初の返信を書いている最中です。
+        </p>
+
+        <div class="speed-demo__grid" id="speed-demo-root">
+          <div class="speed-demo__card speed-demo__card--ours">
+            <div class="speed-demo__head">
+              <span class="speed-demo__dot" aria-hidden="true">&#x1F343;</span>
+              <span class="speed-demo__title">エコボットAI</span>
+              <span class="speed-demo__badge">reflex path</span>
+            </div>
+            <div class="speed-demo__body" id="speed-demo-own-body">
+              <div class="speed-demo__idle">画面に入ると自動で再生します</div>
+            </div>
+            <div class="speed-demo__foot">
+              <span class="speed-demo__foot-value" data-own-ms-big>0.5</span>
+              <span class="speed-demo__foot-unit">ms</span>
+              <span class="speed-demo__foot-note">応答処理時間（LLM推論なし・CPUのみ）</span>
+            </div>
+          </div>
+
+          <div class="speed-demo__card speed-demo__card--cloud">
+            <div class="speed-demo__head">
+              <span class="speed-demo__dot" aria-hidden="true">&#x2601;&#xFE0F;</span>
+              <span class="speed-demo__title">一般的なクラウドLLM推論</span>
+              <span class="speed-demo__badge">毎回フル生成</span>
+            </div>
+            <div class="speed-demo__body" id="speed-demo-cloud-body">
+              <div class="speed-demo__idle">実測どおり実時間で待機します</div>
+            </div>
+            <div class="speed-demo__foot">
+              <span class="speed-demo__foot-value" data-cloud-sec-big>9.5</span>
+              <span class="speed-demo__foot-unit">s</span>
+              <span class="speed-demo__foot-note">会話開始からの経過時間（実測 9.5〜22.9 秒/応答）</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="speed-demo__disclaimer">
+          &#x203B; デモは自社実測値を再現したシミュレーションで、右パネルの待ち時間は倍速なしの実時間です。左は固定応答をキャッシュから返す処理、右は毎回フル生成する推論処理で、処理内容が異なります。会話が終わると自動でリプレイします。
+        </p>
+      </div>
+    </section>
+
     <!-- 02 / Concept -->
     <section class="fleet__section fleet__section--dark">
       <div class="fleet__inner">
@@ -699,6 +757,185 @@
         });
       }, { threshold: 0.35 });
       io.observe(heroSection);
+    }
+    // prefers-reduced-motion: reduce の場合は静的な idle 表示（既存マークアップ）のまま
+  })();
+  </script>
+
+  <!-- #436: 「01.5 / Speed Demo」自社 vs 一般的なクラウドLLM推論の対比デモ。
+       トップページ（cloud-src/src/pages/index.astro）の #demo LIVE DEMOセクション
+       （own側は固定タイプライター演出・cloud側は実測どおりの実時間待機 + カウントアップ）
+       の対比ロジックを、本ページ専用の vanilla JS として再実装する。cloud-src は Astro
+       ビルド成果物でありビルド系統が別のため直接流用はできず、演出パターン・数値のみを
+       踏襲する（数値は既存サイトで確立済みの実測値: own 0.5ms / cloud 9.5〜22.9秒）。
+       上の #ecobot-hero-msgs アニメーション（#432/#433）と同じ IntersectionObserver
+       パターンを使い、画面内に入ったら自動再生、画面外に出たらリセットする。 -->
+  <script>
+  (function () {
+    'use strict';
+
+    var root = document.getElementById('speed-demo-root');
+    if (!root) return;
+
+    // 台本: own側は反射応答、cloud側は一般的なクラウドLLM推論の実測レンジ内の想定待ち時間
+    // （トップページ #demo の SCRIPT と同じ実測レンジ 9.5〜18.7 秒を使用。新規数値の
+    // 捏造はしない）。
+    var SCRIPT = [
+      { q: 'エコボットAIの応答速度は？', own: '反射応答で 0.5ms 台です。CPUキャッシュ経路（LLM推論なし）で固定応答を返しています。', cloud: '一般的なクラウド推論では、モデルサイズやネットワーク経路により数秒〜数十秒程度の応答時間が想定されます。', cloudMs: 9500 },
+      { q: '24時間動かしても電力は大丈夫？', own: '定型的な質問はCPUだけで完結する軽量経路で処理するため、24時間稼働でも電力消費を抑えられます。', cloud: '一般的なクラウドLLM運用では、質問のたびに大規模GPUクラスタへ都度問い合わせるため、稼働時間が長いほど電力消費が積み上がります。', cloudMs: 12900 },
+      { q: '深夜の問い合わせにも即答できますか？', own: 'できます。人手を介さず、深夜・早朝でも同じ反射速度で一次対応します。', cloud: '構成によりますが、都度クラウド推論を経由する場合は時間帯にかかわらず生成待ちが発生します。', cloudMs: 11200 }
+    ];
+
+    var CLOCK = function () { return (typeof performance !== 'undefined') ? performance.now() : Date.now(); };
+
+    var ownBody = document.getElementById('speed-demo-own-body');
+    var cloudBody = document.getElementById('speed-demo-cloud-body');
+    var ownIdleEl = ownBody.querySelector('.speed-demo__idle');
+    var cloudIdleEl = cloudBody.querySelector('.speed-demo__idle');
+    var ownMsBigEl = root.querySelector('[data-own-ms-big]');
+    var cloudSecBigEl = root.querySelector('[data-cloud-sec-big]');
+
+    var timers = [];
+    var intervals = [];
+    var started = false;
+    var ownMsTotal = 0;
+    var cloudTotalIv = null;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function appendUserBubble(body, text) {
+      var div = document.createElement('div');
+      div.className = 'speed-demo__bubble speed-demo__bubble--user';
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function ownTurn(i) {
+      if (i >= SCRIPT.length) return;
+      var step = SCRIPT[i];
+      appendUserBubble(ownBody, step.q);
+
+      var t1 = setTimeout(function () {
+        ownMsTotal = Math.round((ownMsTotal + 0.5) * 10) / 10;
+        ownMsBigEl.textContent = ownMsTotal.toFixed(1);
+
+        var bubble = document.createElement('div');
+        bubble.className = 'speed-demo__bubble speed-demo__bubble--ai';
+        var caret = document.createElement('span');
+        caret.className = 'speed-demo__caret';
+        bubble.appendChild(caret);
+        ownBody.appendChild(bubble);
+        ownBody.scrollTop = ownBody.scrollHeight;
+
+        var n = 0;
+        var typer = setInterval(function () {
+          n += 2;
+          var done = n >= step.own.length;
+          bubble.textContent = step.own.slice(0, done ? step.own.length : n);
+          if (!done) { bubble.appendChild(caret); }
+          ownBody.scrollTop = ownBody.scrollHeight;
+          if (done) {
+            clearInterval(typer);
+            var idx = intervals.indexOf(typer);
+            if (idx >= 0) intervals.splice(idx, 1);
+            var t2 = setTimeout(function () { ownTurn(i + 1); }, 700);
+            timers.push(t2);
+          }
+        }, 14);
+        intervals.push(typer);
+      }, 130);
+      timers.push(t1);
+    }
+
+    function cloudTurn(i) {
+      if (i >= SCRIPT.length) {
+        var replay = setTimeout(runDemo, 3200);
+        timers.push(replay);
+        return;
+      }
+      var step = SCRIPT[i];
+      appendUserBubble(cloudBody, step.q);
+
+      var waiting = document.createElement('div');
+      waiting.className = 'speed-demo__waiting';
+      waiting.innerHTML = '<span class="speed-demo__spinner"></span><span>generating&hellip; <span data-cur-sec>0.0</span> s</span>';
+      cloudBody.appendChild(waiting);
+      cloudBody.scrollTop = cloudBody.scrollHeight;
+      var curSecEl = waiting.querySelector('[data-cur-sec]');
+
+      var t0 = CLOCK();
+      var iv2 = setInterval(function () {
+        curSecEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(iv2);
+
+      var c1 = setTimeout(function () {
+        clearInterval(iv2);
+        var idx = intervals.indexOf(iv2);
+        if (idx >= 0) intervals.splice(idx, 1);
+        if (waiting.parentNode) waiting.parentNode.removeChild(waiting);
+
+        var bubble = document.createElement('div');
+        bubble.className = 'speed-demo__bubble speed-demo__bubble--ai';
+        bubble.textContent = step.cloud;
+        cloudBody.appendChild(bubble);
+        cloudBody.scrollTop = cloudBody.scrollHeight;
+
+        var c2 = setTimeout(function () { cloudTurn(i + 1); }, 700);
+        timers.push(c2);
+      }, step.cloudMs);
+      timers.push(c1);
+    }
+
+    function runDemo() {
+      clearAllTimers();
+      started = true;
+      ownMsTotal = 0;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+
+      var t0 = CLOCK();
+      cloudTotalIv = setInterval(function () {
+        cloudSecBigEl.textContent = ((CLOCK() - t0) / 1000).toFixed(1);
+      }, 100);
+      intervals.push(cloudTotalIv);
+
+      ownTurn(0);
+      cloudTurn(0);
+    }
+
+    function resetDemo() {
+      clearAllTimers();
+      started = false;
+      ownBody.innerHTML = '';
+      cloudBody.innerHTML = '';
+      ownBody.appendChild(ownIdleEl);
+      cloudBody.appendChild(cloudIdleEl);
+      ownMsBigEl.textContent = '0.5';
+      cloudSecBigEl.textContent = '9.5';
+    }
+
+    var demoSection = root.closest('.speed-demo');
+    if (demoSection && typeof IntersectionObserver === 'function' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var demoIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) runDemo();
+          } else if (started) {
+            resetDemo();
+          }
+        });
+      }, { threshold: 0.35 });
+      demoIo.observe(demoSection);
     }
     // prefers-reduced-motion: reduce の場合は静的な idle 表示（既存マークアップ）のまま
   })();
