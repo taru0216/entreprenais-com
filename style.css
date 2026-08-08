@@ -1581,8 +1581,41 @@ body.fleet-page {
   font-size: 1.02rem;
   line-height: 1.85;
   color: rgba(247, 246, 241, 0.78);
-  margin: 0 0 3rem;
+  margin: 0 0 1.5rem;
 }
+
+/* Keyword badges — same chip pattern as .staff__hero-badges, reused for
+   dark .cycle__lead sections so remaining facts (freshness, 24/7 hours)
+   read as scannable chips instead of a long paragraph (#437). */
+.cycle__badges {
+  list-style: none;
+  margin: 0 0 3rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.cycle__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(107, 207, 127, 0.3);
+  font-family: var(--jp);
+  font-size: 0.85rem;
+  color: rgba(247, 246, 241, 0.85);
+}
+.cycle__badge strong {
+  color: #8fe0a0;
+  font-weight: 700;
+}
+.cycle__badge-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .cycle__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(280px, 1fr));
