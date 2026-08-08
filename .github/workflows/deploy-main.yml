@@ -87,10 +87,12 @@ jobs:
             -o -name "*.png" -o -name "*.webmanifest" -o -name "_headers" \) \
             -not -name "redirect-cloud.html" \
             -exec cp {} _site/ \;
-          # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page
+          # Root directories (static content) — vertical/ added for #274, agents/ added for /agents/ product page,
+          # products/ added for /products/ product pages (#407: green-ai-staff 404 — was silently
+          # dropped because this list was not updated when products/ was introduced in #405/#406).
           # #393: en/ zh/ はここでは一旦除外する（後述の CSS ハッシュ同期処理の
           # 対象のため、cloud-src ビルド成果物の配置後に個別コピーする）。
-          for dir in img news eai agents privacy terms data _i18n vertical legacy; do
+          for dir in img news eai agents privacy terms data _i18n vertical legacy products; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           # Cloud build output (root) — #374: entreprenais.com トップページを
