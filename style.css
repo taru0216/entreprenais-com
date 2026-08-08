@@ -3196,10 +3196,38 @@ body.fleet-page {
 .ecobot-page .fleet__section--dark .energy__lead {
   color: rgba(247, 246, 241, 0.85);
 }
-.ecobot-page .cycle__card,
+.ecobot-page .fleet__section--dark .cycle__card,
 .ecobot-page .trust__barrier {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(107, 207, 127, 0.3);
+}
+/* #426: FC指摘「EC業界 — 24時間カスタマーサポート」が読めない — 監査により
+   判明した根本原因: .cycle__card/.cycle__title/.cycle__body は元々ダーク
+   セクション専用コンポーネント（白文字前提）だが、「06 / Use Cases」だけは
+   .fleet__section--features（明るい紙色背景 var(--paper)）の中でこの
+   コンポーネントを再利用していた。旧 `.ecobot-page .cycle__card` は
+   親セクションのdark/light種別を問わず無条件で適用されるセレクタだった
+   ため、ライト背景側では「ほぼ透明な白カード」+「明るい文字色」という
+   最悪の組み合わせになり、計算上のコントラスト比が約1.0（実質不可視）
+   まで低下していた。前回のコントラスト監査（#420）はこのセクション修飾子
+   ×コンポーネントの組み合わせを見落としていた（ダークセクション内の
+   .cycle__* だけを確認し、.fleet__section--features 内の同名クラスの
+   実際の computed background/color を確認していなかったため）。
+   .fleet__section--features 専用に、白背景+緑縁取りの明色カードとして
+   再定義し、文字色も --ink 系に上書きする（.staff__card 等と同じ
+   ライトカード言語に統一。算出コントラスト比: タイトル/本文とも
+   10以上）。 */
+.ecobot-page .fleet__section--features .cycle__card {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  box-shadow: 0 10px 24px -20px rgba(22, 61, 36, 0.3);
+}
+.ecobot-page .fleet__section--features .cycle__title {
+  color: var(--ink);
+}
+.ecobot-page .fleet__section--features .cycle__body {
+  color: var(--muted);
 }
 .ecobot-page .pain__card {
   background: rgba(255, 255, 255, 0.07);
