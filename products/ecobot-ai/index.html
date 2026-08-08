@@ -439,8 +439,23 @@
         <h2 class="section__title">24時間稼働させるほど、電力の話から逃げられない。</h2>
 
         <p class="energy__lead">
-          多くのAIチャットスタッフは、質問のたびにクラウドの先にある大きなAIへ都度問い合わせる仕組みで動いており、24時間稼働させ続けるほど電力消費が積み上がります。エコボットAIは、大脳AIとエージェント脊髄反射技術という2層構成により、定型的な質問は<strong>LLMを使わずCPUだけで完結する軽量経路</strong>で処理し、複雑な判断が必要な質問だけをローカルLLM（大脳AI）に振り分けます。電力消費の大きいLLM推論を呼び出す場面そのものを最小限に絞り込むことで、24時間稼働しても電力消費を抑えられる設計です。
+          多くのAIチャットスタッフは、質問のたびにクラウドの大きなAIへ問い合わせるため、稼働時間が長いほど電力消費が積み上がります。エコボットAIは2層構成で、定型的な質問は<strong>LLMを使わずCPUだけの軽量経路</strong>で処理します。
         </p>
+
+        <ul class="cycle__badges" aria-label="エコボットAIの省電力の仕組み">
+          <li class="cycle__badge">
+            <span class="cycle__badge-icon" aria-hidden="true">&#x1F9E0;</span>
+            大脳AI&times;エージェント脊髄反射技術の<strong>2層構成</strong>
+          </li>
+          <li class="cycle__badge">
+            <span class="cycle__badge-icon" aria-hidden="true">&#x1F500;</span>
+            複雑な判断だけローカルLLMに振り分け
+          </li>
+          <li class="cycle__badge">
+            <span class="cycle__badge-icon" aria-hidden="true">&#x1F343;</span>
+            LLM呼び出しを最小化し<strong>電力消費を抑制</strong>
+          </li>
+        </ul>
 
         <div class="trust__barrier">
           <div class="trust__barrier-icon" aria-hidden="true">&#x2600;&#xFE0F;</div>
@@ -457,7 +472,7 @@
         </div>
 
         <p class="compliance__notice">
-          メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術（CPU上で完結する低遅延応答経路）の実行時間の自社計測値であり、すべてのリクエストがこの数値で応答することを保証するものではありません。計測条件（レスポンスの定義・ベンチマーク環境・再現性）および「実質再エネ100%」の定義・開示粒度は、対外開示の透明性向上に向けて継続整備中です。
+          メーター・数値は自社計測値にもとづく傾向値です。「0.5ms」はエージェント脊髄反射技術の実行時間の自社計測値で、すべてのリクエストでの応答を保証するものではありません。計測条件・「実質再エネ100%」の定義は継続整備中です。
         </p>
       </div>
     </section>
