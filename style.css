@@ -3112,6 +3112,7 @@ body.fleet-page {
     grid-template-columns: 1fr;
     grid-template-areas:
       "eyebrow"
+      "product-name"
       "title"
       "photo"
       "lead"
@@ -3132,6 +3133,9 @@ body.fleet-page {
 
   .ecobot__eyebrow {
     grid-area: eyebrow;
+  }
+  .ecobot__product-name {
+    grid-area: product-name;
   }
   .fleet__hero-title {
     grid-area: title;
@@ -3225,6 +3229,32 @@ body.fleet-page {
 }
 .ecobot-page .fleet__hero-title .accent {
   color: var(--accent);
+}
+
+/* Product name lockup (#444): eyebrow はカテゴリ名（"Green AI Cloud
+   Product"）であり固有プロダクト名ではないため、正式名称「エコボットAI」を
+   ロゴ風に大きく表示する専用行を eyebrow と見出しの間に追加する。
+   トップページのブランドロゴ（"T. TDRI"）や旧デザインリファレンスの
+   「EcoBot AI」ヘッダーロゴを踏襲し、ファーストビューで一目でプロダクト名が
+   認識できるようにする。 */
+.ecobot-page .ecobot__product-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.1rem;
+  font-family: var(--jp);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1;
+}
+.ecobot-page .ecobot__product-name .accent {
+  color: var(--accent);
+}
+.ecobot-page .ecobot__product-name-leaf {
+  font-size: 1.15em;
+  line-height: 1;
 }
 
 /* Rounded, filled CTA buttons instead of the flat dark/outline pair. */
