@@ -3164,6 +3164,14 @@ body.fleet-page {
   background: #ffffff;
   color: var(--ink);
 }
+/* #420 コントラスト点検: .line-mock__header は半透明の黒オーバーレイ
+   （rgba(13,15,18,0.18)）+ .line-mock の背景色の組み合わせで実効色が決まる。
+   .ecobot-page で .line-mock 背景を --accent の緑にした結果、算出コントラスト
+   比が約4.47とWCAG AA基準（4.5:1）をわずかに下回っていたため、オーバーレイを
+   少し濃くして安全マージンを確保する。 */
+.ecobot-page .line-mock__header {
+  background: rgba(13, 15, 18, 0.32);
+}
 
 /* Dark sections (.fleet__section--dark) become deep-green instead of
    near-black, keeping the same paper-on-dark contrast pattern the
@@ -3171,6 +3179,22 @@ body.fleet-page {
    read var(--ink)/var(--paper) already, so no markup change needed). */
 .ecobot-page .fleet__section--dark {
   background: linear-gradient(160deg, var(--ink) 0%, var(--ink-soft) 100%);
+}
+
+/* #420: FC指摘「いかがの文言が背景色と似ていて読めない」— .energy__lead
+   (04/Why Green セクション本文) は、他のダークセクション用テキストクラス
+   （.cycle__lead/.pain__body/.cycle__body/.trust__barrier-body 等、いずれも
+   rgba(247,246,241,x) の paper 系明色）と異なり、単独で color: var(--ink-soft)
+   を直接指定していた（style.css の元定義、.demo__lead と共有）。
+   green-ai-staff（ダークテーマ）では --ink-soft が #1a1d22 で背景 --ink
+   (#0d0f12) とわずかに差があり視認できていたが、.ecobot-page では
+   --ink-soft を #1f5230 に変更しており、.fleet__section--dark の背景
+   グラデーション終点（同じ --ink-soft）とほぼ同色化してコントラスト比
+   1.0〜1.34（WCAG AA 4.5:1を大幅未達）まで低下していた。
+   他のダークセクション用テキストクラスと揃え、paper 系の明色で上書きする
+   （算出コントラスト比: 背景グラデーション端点に対し約8.4〜11.2）。 */
+.ecobot-page .fleet__section--dark .energy__lead {
+  color: rgba(247, 246, 241, 0.85);
 }
 .ecobot-page .cycle__card,
 .ecobot-page .trust__barrier {
