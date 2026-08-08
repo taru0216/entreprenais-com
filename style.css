@@ -2783,3 +2783,64 @@ body.fleet-page {
     grid-template-columns: 1fr;
   }
 }
+
+/* Pain points (products/green-ai-staff) — problem-first section placed
+   directly after Hero, before .cycle__grid (Concept). Reuses the dark
+   .cycle__card visual language (rgba white-on-ink surface) so the
+   problem→solution narrative reads as one continuous dark block, but
+   uses a 5-item asymmetric grid since the 5th item (energy concern) is
+   this page's unique differentiator foreshadowing the Green section. */
+.pain__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+@media (max-width: 820px) {
+  .pain__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.pain__card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(110, 114, 240, 0.22);
+  padding: 1.8rem 1.8rem;
+  border-radius: 20px;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: transform 0.4s var(--ease), background 0.3s;
+}
+.pain__card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+}
+.pain__card--energy {
+  grid-column: 1 / -1;
+  background: rgba(164, 224, 101, 0.08);
+  border-color: rgba(164, 224, 101, 0.32);
+}
+.pain__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(110, 114, 240, 0.16);
+}
+.pain__card--energy .pain__icon {
+  background: rgba(164, 224, 101, 0.18);
+}
+.pain__body {
+  font-size: 0.95rem;
+  color: rgba(247, 246, 241, 0.82);
+  line-height: 1.8;
+  margin: 0;
+}
+.pain__body strong {
+  color: var(--paper);
+  font-weight: 600;
+}
