@@ -3435,3 +3435,204 @@ body.fleet-page {
   color: var(--muted);
   text-align: center;
 }
+
+/* #436: 「01.5 / Speed Demo」— エコボットAI（自社反射応答）vs 一般的なクラウドLLM推論の
+   視覚的対比デモ。トップページ（cloud-src/src/pages/index.astro）の #demo LIVE DEMO
+   セクション（.demo-card/.demo-grid 等、ダーク背景・紫アクセント）と同じ対比構造を、
+   .ecobot-page の明るいグリーン基調イラスト調トーンで再実装する。ライト背景の
+   .fleet__section（Why Green のようなダークセクションではない）に配置するため、
+   カード自体は白背景+緑縁取りの「リーフカード」言語（.staff__card 等と同系統）を
+   踏襲しつつ、対比を強調するため cloud 側だけ枠線をグレー/オレンジ系に落として
+   「待たされている」トーンを出す。 */
+.speed-demo__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+@media (max-width: 900px) {
+  .speed-demo__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.speed-demo__card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px -20px rgba(22, 61, 36, 0.3);
+}
+.ecobot-page .speed-demo__card--ours {
+  border: 2px solid var(--accent);
+}
+.ecobot-page .speed-demo__card--cloud {
+  border: 1px solid var(--line-soft);
+  opacity: 0.92;
+}
+.speed-demo__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.ecobot-page .speed-demo__card--ours .speed-demo__head {
+  background: rgba(63, 185, 85, 0.1);
+}
+.ecobot-page .speed-demo__card--cloud .speed-demo__head {
+  background: rgba(77, 107, 82, 0.06);
+}
+.speed-demo__dot {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.speed-demo__title {
+  min-width: 0;
+  font-family: var(--jp);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.speed-demo__badge {
+  margin-left: auto;
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.ecobot-page .speed-demo__card--ours .speed-demo__badge {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.ecobot-page .speed-demo__card--cloud .speed-demo__badge {
+  border: 1px solid var(--line-soft);
+  color: var(--muted);
+}
+.speed-demo__body {
+  height: 240px;
+  overflow-y: auto;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  scrollbar-width: none;
+}
+.speed-demo__body::-webkit-scrollbar {
+  display: none;
+}
+.speed-demo__idle {
+  margin: auto;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.speed-demo__bubble {
+  max-width: 88%;
+  padding: 0.5rem 0.8rem;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.speed-demo__bubble--user {
+  align-self: flex-end;
+  background: var(--paper-soft);
+  color: var(--ink);
+  border-bottom-right-radius: 4px;
+}
+.speed-demo__bubble--ai {
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.ecobot-page .speed-demo__card--ours .speed-demo__bubble--ai {
+  background: rgba(63, 185, 85, 0.14);
+  color: var(--ink);
+}
+.ecobot-page .speed-demo__card--cloud .speed-demo__bubble--ai {
+  background: #f1f1ee;
+  color: var(--ink-soft);
+}
+.speed-demo__caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: -0.15em;
+  animation: speed-demo-caret-blink 0.8s step-end infinite;
+}
+@keyframes speed-demo-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.speed-demo__waiting {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.speed-demo__spinner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--line-soft);
+  border-top-color: var(--muted);
+  animation: speed-demo-spin 0.8s linear infinite;
+}
+@keyframes speed-demo-spin {
+  to { transform: rotate(360deg); }
+}
+.speed-demo__foot {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.8rem 1.1rem;
+  border-top: 1px solid var(--line-soft);
+}
+.speed-demo__foot-value {
+  font-family: var(--jp);
+  font-size: 1.9rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.ecobot-page .speed-demo__card--ours .speed-demo__foot-value {
+  color: var(--accent);
+}
+.ecobot-page .speed-demo__card--cloud .speed-demo__foot-value {
+  color: var(--muted);
+}
+.speed-demo__foot-unit {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--ink);
+}
+.speed-demo__foot-note {
+  margin-left: 0.5rem;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+@media (max-width: 900px) {
+  .speed-demo__foot-note {
+    display: block;
+    margin-left: 0;
+    margin-top: 0.2rem;
+  }
+}
+.speed-demo__disclaimer {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .speed-demo__caret,
+  .speed-demo__spinner {
+    animation: none;
+  }
+}
