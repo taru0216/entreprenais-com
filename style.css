@@ -2715,8 +2715,10 @@ body.fleet-page {
 
 /* Staff feature grid (products/green-ai-staff) — 3-column card grid for
    enumerating a longer feature list than .cycle__grid/.compliance__grid
-   (both fixed 2-col) comfortably support. Neutral surface so it reads on
-   both --paper (light) and --ink (dark) section backgrounds. */
+   (both fixed 2-col) comfortably support. Used inside .fleet__section
+   (no --dark modifier), i.e. a light --paper section background, so card
+   surface/text colors follow the light-card pattern (.card / .card__body)
+   rather than the dark-section pattern (.cycle__card). */
 .staff__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -2733,18 +2735,18 @@ body.fleet-page {
   }
 }
 .staff__card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(110, 114, 240, 0.22);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-soft);
   padding: 1.8rem 1.6rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: transform 0.4s var(--ease), background 0.3s;
+  transition: transform 0.4s var(--ease), border-color 0.3s;
 }
 .staff__card:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
 }
 .staff__icon {
   font-size: 1.6rem;
@@ -2763,11 +2765,11 @@ body.fleet-page {
   font-size: 1rem;
   margin: 0;
   letter-spacing: -0.005em;
-  color: var(--paper);
+  color: var(--ink);
 }
 .staff__body {
   font-size: 0.88rem;
-  color: rgba(247, 246, 241, 0.78);
+  color: var(--muted);
   line-height: 1.8;
   margin: 0;
 }
