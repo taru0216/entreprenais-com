@@ -3057,3 +3057,151 @@ body.fleet-page {
     align-self: center;
   }
 }
+
+/* ============================================================
+   EcoBot AI theme (products/ecobot-ai) — #418
+   FC-requested rebrand: dark/tech tone -> bright green, illustrative tone,
+   modeled on a shared "EcoBot AI" design reference (light green gradient,
+   rounded badges/CTAs, leaf/solar/wind iconography). Scoped entirely under
+   body.ecobot-page so it only affects this one page: every other page
+   (root index.html, news articles, etc.) keeps the existing dark/paper
+   theme untouched, because CSS custom properties only cascade from the
+   scoping selector down and no rule outside this block touches
+   :root or unscoped selectors.
+   Structure: this page reuses the same section/component classes as
+   /products/green-ai-staff/ did (.fleet__section--dark, .staff__grid,
+   .cycle__card, .pain__card, .solve__row, .faq__item, ...) — only the
+   color tokens and a handful of decorative/shape rules are overridden
+   here, so the information architecture built up across #410/#412/#414/
+   #416 is preserved by construction (same markup, different skin). */
+.ecobot-page {
+  --ink:        #163d24;
+  --ink-soft:   #1f5230;
+  --paper:      #f4fbf3;
+  --paper-soft: #e3f5e1;
+  --line:       #bfe6bd;
+  --line-soft:  #bfe6bd;
+  --accent:     #2f9e44;
+  --accent-bright: #3fb955;
+  --accent-soft:#6bcf7f;
+  --muted:      #4d6b52;
+}
+
+/* Hero: light green gradient background with large soft circles, echoing
+   the reference image's rounded blob decoration behind the copy. */
+.ecobot-page .fleet__hero {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(63, 185, 85, 0.16), transparent 42%),
+    radial-gradient(circle at 88% 6%, rgba(107, 207, 127, 0.22), transparent 38%),
+    linear-gradient(180deg, #eafaea 0%, #f7fdf6 60%, var(--paper) 100%);
+  border-bottom: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.ecobot-page .ecobot__hero-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(63, 185, 85, 0.14) 0%, transparent 70%),
+    radial-gradient(circle, rgba(191, 230, 189, 0.5) 0%, transparent 70%);
+  background-size: 460px 460px, 300px 300px;
+  background-position: -120px -80px, 92% 110%;
+  background-repeat: no-repeat;
+}
+.ecobot-page .ecobot__eyebrow {
+  color: var(--accent);
+}
+.ecobot-page .ecobot__eyebrow::before {
+  background: var(--accent-bright);
+}
+.ecobot-page .fleet__hero-title .accent {
+  color: var(--accent);
+}
+
+/* Rounded, filled CTA buttons instead of the flat dark/outline pair. */
+.ecobot-page .btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  border: none;
+}
+.ecobot-page .btn--primary:hover {
+  background: var(--accent-bright);
+}
+.ecobot-page .btn--ghost {
+  border-radius: 999px;
+  border: 1px solid var(--accent-soft);
+  color: var(--ink-soft);
+}
+.ecobot-page .btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Keyword badges: leaf-tinted chips instead of neutral paper-soft. */
+.ecobot-page .staff__hero-badge {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 6px 14px -10px rgba(47, 158, 68, 0.35);
+}
+
+/* Chat mock frame: swap the near-black device frame for a soft green one,
+   and re-tint the LINE-style bubble palette to match the light theme. */
+.ecobot-page .phone-mock {
+  background: #eafaea;
+  border-color: rgba(63, 185, 85, 0.35);
+  box-shadow:
+    0 32px 60px -30px rgba(47, 158, 68, 0.35),
+    0 12px 24px -14px rgba(22, 61, 36, 0.18);
+}
+.ecobot-page .phone-mock__notch {
+  background: rgba(22, 61, 36, 0.14);
+}
+.ecobot-page .line-mock {
+  background: var(--accent);
+}
+.ecobot-page .line-mock__bubble--bot {
+  background: #ffffff;
+  color: var(--ink);
+}
+
+/* Dark sections (.fleet__section--dark) become deep-green instead of
+   near-black, keeping the same paper-on-dark contrast pattern the
+   existing markup relies on (.section__title, .cycle__card, etc. all
+   read var(--ink)/var(--paper) already, so no markup change needed). */
+.ecobot-page .fleet__section--dark {
+  background: linear-gradient(160deg, var(--ink) 0%, var(--ink-soft) 100%);
+}
+.ecobot-page .cycle__card,
+.ecobot-page .trust__barrier {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(107, 207, 127, 0.3);
+}
+.ecobot-page .pain__card {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(107, 207, 127, 0.28);
+}
+.ecobot-page .pain__card--energy {
+  background: rgba(255, 214, 102, 0.1);
+  border-color: rgba(255, 214, 102, 0.35);
+}
+
+/* Feature cards: white surface + green outline (illustrative "leaf card"
+   look) instead of the neutral paper-soft surface. */
+.ecobot-page .staff__card,
+.ecobot-page .faq__item,
+.ecobot-page .solve__row {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  box-shadow: 0 10px 24px -20px rgba(22, 61, 36, 0.3);
+}
+.ecobot-page .solve__row--energy {
+  background: #fff8e6;
+  border-color: #ffdf99;
+}
+.ecobot-page .staff__icon,
+.ecobot-page .cycle__icon,
+.ecobot-page .pain__icon {
+  background: rgba(63, 185, 85, 0.16);
+}
