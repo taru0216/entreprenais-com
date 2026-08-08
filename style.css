@@ -3058,29 +3058,68 @@ body.fleet-page {
   }
 }
 
-/* #428: FC指摘「太陽光発電はスマホでもファーストビューに」。
-   .staff__hero-visual は flex-direction:column で HTML 出現順
-   （metric → phone-mock → photo）のまま縦積みされる。.staff__hero-grid
-   が900px以下で1カラム化すると、.staff__hero-copy（見出し・リード文・
-   バッジ4つ・CTA）が先に表示され尽くしてから .staff__hero-visual が
-   続くため、photo に到達するには実測で追加約500pxのスクロールが必要
-   だった（Playwright実機レンダリングで確認、ビューポート844pxに対し
-   photo.top=1344px）。
-   HTML構造・デスクトップ表示（copy→visualの2カラム、visual内部は
-   metric→phone-mock→photoの縦順）は変更せず、モバイル幅でのみ
-   .staff__hero-visual 内の並び順を flex の order で
-   「metric → photo → phone-mock」に入れ替える。phone-mock は
-   4ターンの会話ログを含み縦に長い（実測 580px 前後）ため、これを
-   photo より後ろに回すことで photo までのスクロール量を大幅に短縮する。 */
+/* #428/#430: FC指摘「太陽光発電はスマホでもファーストビューに」→
+   「タグラインのすぐ下で」。
+   #429 では .staff__hero-visual 内部の並び順のみを order で
+   「metric → photo → phone-mock」に変更したが、.staff__hero-copy
+   （タグライン・リード文・バッジ4つ・CTA）全体が先に表示され尽くして
+   から .staff__hero-visual（photo を含む）が続くという DOM 構造その
+   ものは変わらず、photo はタグライン直後ではなくリード文・バッジ・
+   CTA の後に表示されていた。
+   .staff__hero-visual 内部の order 調整はその要素の内部でしか効かず、
+   .staff__hero-copy と .staff__hero-visual という2つの兄弟コンテナを
+   跨いだ並び替えはできないため、今回は .staff__hero-grid 自体を
+   grid-template-areas 化し、.staff__hero-copy / .staff__hero-visual を
+   display:contents にして中の孫要素を直接 grid アイテム化する。
+   これにより HTML の入れ子構造・デスクトップの2カラムレイアウトは
+   変えずに、モバイル幅だけタグライン直後に photo を配置できる。 */
 @media (max-width: 900px) {
-  .staff__hero-metric {
-    order: 1;
+  .staff__hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "eyebrow"
+      "title"
+      "photo"
+      "lead"
+      "badges"
+      "cta"
+      "metric"
+      "phone-mock";
+  }
+  /* 中間ラッパー（.staff__hero-copy / .staff__hero-visual）を
+     レイアウトツリーから除去し、孫要素を .staff__hero-grid の
+     直接の grid アイテムにする。display:contents は要素自体の
+     ボックスを生成しないため、アクセシビリティツリー上の意味は
+     子要素にそのまま引き継がれる（div はそもそも意味を持たない）。 */
+  .staff__hero-copy,
+  .staff__hero-visual {
+    display: contents;
+  }
+
+  .ecobot__eyebrow {
+    grid-area: eyebrow;
+  }
+  .fleet__hero-title {
+    grid-area: title;
   }
   .staff__hero-photo {
-    order: 2;
+    grid-area: photo;
+  }
+  .fleet__hero-lead {
+    grid-area: lead;
+  }
+  .staff__hero-badges {
+    grid-area: badges;
+  }
+  .fleet__hero-cta {
+    grid-area: cta;
+  }
+  .staff__hero-metric {
+    grid-area: metric;
   }
   .feature__phone.phone-mock {
-    order: 3;
+    grid-area: phone-mock;
   }
 }
 
