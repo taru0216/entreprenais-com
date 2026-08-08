@@ -157,7 +157,7 @@
             <span class="feature__notch phone-mock__notch" aria-hidden="true"></span>
             <div class="line-mock">
               <div class="line-mock__header">&#x1F343; エコボットAI（イメージ）</div>
-              <div class="line-mock__body">
+              <div class="line-mock__body" id="ecobot-hero-msgs">
                 <div class="line-mock__bubble line-mock__bubble--user">深夜なんだけど、営業時間を教えて</div>
                 <div class="line-mock__bubble line-mock__bubble--bot">24時間365日、いつでもご案内できます。ほかにご質問はありますか？&#x1F31F;</div>
                 <div class="line-mock__bubble line-mock__bubble--user">電力とか環境負荷は大丈夫？</div>
@@ -584,5 +584,127 @@
   </footer>
 
   <script src="/main.js" defer></script>
+
+  <!-- #432: ヒーローチャットモック自動再生アニメーション。
+       トップページ（cloud-src/src/pages/index.astro）の #hero-phone-msgs
+       IntersectionObserver + タイプライター演出パターンを、このページ専用の
+       vanilla JS として再実装する（cloud-src は Astro ビルド成果物であり
+       本ページとはビルド系統が別のため、ビルド済み JS の直接流用は不可）。
+       既存の静的な会話4ターン（line-mock__bubble--user/--bot が交互）を
+       台本として読み取り、初回表示は静的 HTML のまま（no-JS フォールバック）、
+       JS 実行後は同じ内容を時間差タイプライターで再生し直す。 -->
+  <script>
+  (function () {
+    var msgsEl = document.getElementById('ecobot-hero-msgs');
+    if (!msgsEl) return;
+
+    // 台本は既存の静的マークアップから読み取る（HTML の会話内容を単一の
+    // ソースとして維持し、JS 側に会話文を二重管理しない）。
+    var staticBubbles = msgsEl.querySelectorAll('.line-mock__bubble');
+    var script = [];
+    staticBubbles.forEach(function (el) {
+      script.push({
+        role: el.classList.contains('line-mock__bubble--user') ? 'user' : 'bot',
+        text: el.textContent
+      });
+    });
+    if (script.length === 0) return;
+
+    var idleHtml = msgsEl.innerHTML;
+    var timers = [];
+    var intervals = [];
+    var started = false;
+
+    function clearAllTimers() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      intervals.forEach(function (t) { clearInterval(t); });
+      timers = [];
+      intervals = [];
+    }
+
+    function appendBubble(role, text, useTypewriter) {
+      var div = document.createElement('div');
+      div.className = 'line-mock__bubble line-mock__bubble--' + role;
+      msgsEl.appendChild(div);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+
+      if (!useTypewriter) {
+        div.textContent = text;
+        return;
+      }
+
+      var caret = document.createElement('span');
+      caret.className = 'ecobot-hero-caret';
+      div.appendChild(caret);
+
+      var n = 0;
+      var typer = setInterval(function () {
+        n += 2;
+        var done = n >= text.length;
+        div.textContent = text.slice(0, done ? text.length : n);
+        if (!done) div.appendChild(caret);
+        msgsEl.scrollTop = msgsEl.scrollHeight;
+        if (done) {
+          clearInterval(typer);
+          var idx = intervals.indexOf(typer);
+          if (idx >= 0) intervals.splice(idx, 1);
+          var t = setTimeout(function () { playTurn(playTurn.nextIndex); }, 900);
+          timers.push(t);
+        }
+      }, 24);
+      intervals.push(typer);
+    }
+
+    function playTurn(i) {
+      if (i >= script.length) {
+        var replay = setTimeout(function () { runAnimation(); }, 3200);
+        timers.push(replay);
+        return;
+      }
+      var step = script[i];
+      playTurn.nextIndex = i + 1;
+
+      if (step.role === 'user') {
+        appendBubble('user', step.text, false);
+        var t = setTimeout(function () { playTurn(i + 1); }, 500);
+        timers.push(t);
+      } else {
+        var t2 = setTimeout(function () {
+          appendBubble('bot', step.text, true);
+        }, 300);
+        timers.push(t2);
+      }
+    }
+
+    function runAnimation() {
+      clearAllTimers();
+      started = true;
+      msgsEl.innerHTML = '';
+      playTurn(0);
+    }
+
+    function resetAnimation() {
+      clearAllTimers();
+      started = false;
+      msgsEl.innerHTML = idleHtml;
+    }
+
+    var heroSection = document.querySelector('.ecobot__hero');
+    if (heroSection && typeof IntersectionObserver === 'function' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!started) runAnimation();
+          } else if (started) {
+            resetAnimation();
+          }
+        });
+      }, { threshold: 0.35 });
+      io.observe(heroSection);
+    }
+    // prefers-reduced-motion: reduce の場合は静的な idle 表示（既存マークアップ）のまま
+  })();
+  </script>
 </body>
 </html>

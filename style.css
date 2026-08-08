@@ -3103,8 +3103,18 @@ body.fleet-page {
   .fleet__hero-title {
     grid-area: title;
   }
+  /* #432: FC指摘「太陽光の画像が中央になってない。その下のチャット画面も」。
+     .staff__hero-photo（max-width: 300px）と .feature__phone.phone-mock
+     （max-width: 340px）はどちらも幅制限された固定幅カードだが、
+     display:contents 経由で .staff__hero-grid の孫要素が直接 grid item
+     化されているため、grid item のデフォルト justify-self: stretch が
+     効き、1fr カラム幅いっぱいの領域の左端に固定幅ボックスが配置されて
+     いた（margin:0 のため自動中央寄せもされない）。justify-self: center
+     を明示することで、grid item の割当領域内で固定幅ボックスを水平
+     中央に配置する。 */
   .staff__hero-photo {
     grid-area: photo;
+    justify-self: center;
   }
   .fleet__hero-lead {
     grid-area: lead;
@@ -3119,6 +3129,7 @@ body.fleet-page {
     grid-area: metric;
   }
   .feature__phone.phone-mock {
+    justify-self: center;
     grid-area: phone-mock;
   }
 }
@@ -3236,6 +3247,44 @@ body.fleet-page {
    少し濃くして安全マージンを確保する。 */
 .ecobot-page .line-mock__header {
   background: rgba(13, 15, 18, 0.32);
+}
+
+/* #432: チャットモック（#ecobot-hero-msgs）会話アニメーション。
+   トップページ（cloud-src/src/pages/index.astro）の #hero-phone-msgs
+   自動再生パターンを、本ページ専用の vanilla JS（products/ecobot-ai/
+   index.html 末尾 <script>）で再現する。cloud-src は Astro ビルド成果物
+   であり本ページ（プレーン静的 HTML）とはビルド系統が別のため JS の
+   直接流用はできず、演出パターンのみを踏襲する。
+   .line-mock__body は元々 overflow: hidden の固定高さ領域だが、アニメ
+   ーションでメッセージが1件ずつ積み上がるため、このページに限り
+   overflow-y: auto に変更し古いメッセージは上にスクロールアウトさせる
+   （デスクトップ含む他ページの .line-mock は影響を受けない — スコープは
+   #ecobot-hero-msgs の ID セレクタのみ）。 */
+#ecobot-hero-msgs {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+#ecobot-hero-msgs::-webkit-scrollbar {
+  display: none;
+}
+.line-mock__bubble--bot .ecobot-hero-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: -0.15em;
+  animation: ecobot-hero-caret-blink 0.8s step-end infinite;
+}
+@keyframes ecobot-hero-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .line-mock__bubble--bot .ecobot-hero-caret {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* Dark sections (.fleet__section--dark) become deep-green instead of
