@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e9f7ea" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Instagram 連携の認可 | EntreprenAIs</title>
+
+  <!--
+    Instagram Business Login の redirect URI 用ランディングページ。
+    店舗さまが Instagram の認可を完了すると ?code=... 付きでこのページに戻ってくる。
+    受け取った認可コードを画面に表示し、担当者へ送っていただくための導線を提供する。
+
+    このページは意図的に「外部への通信をひとつも行わない」。認可コードは URL の
+    クエリに乗って戻ってくるため、外部リソース（Web フォント・アナリティクス等）を
+    読み込むと Referer ヘッダ経由でコードが第三者に渡りうる。そのため:
+      - Google Fonts / Google Analytics を読み込まない（他ページとの差分はこれが理由）
+      - <meta name="referrer" content="no-referrer"> を指定する
+      - スタイル・スクリプトはすべてこのファイル内に閉じる
+    認可コードは 1 時間・1 回限り有効。サーバへは送らず、画面に表示するだけにとどめる。
+  -->
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
+  <style>
+    :root {
+      --bg: #f6f8f6;
+      --surface: #ffffff;
+      --ink: #16241a;
+      --ink-muted: #56685b;
+      --line: #dde5df;
+      --accent: #1f7a3d;
+      --accent-soft: #e9f7ea;
+      --warn-bg: #fff6e5;
+      --warn-line: #f0d08a;
+      --warn-ink: #6b4a06;
+      --err-bg: #fdecec;
+      --err-line: #f0b4b4;
+      --err-ink: #8a1f1f;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo",
+                   system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.8;
+      -webkit-text-size-adjust: 100%;
+    }
+    .wrap { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .brand {
+      font-size: .8125rem; letter-spacing: .08em; color: var(--ink-muted);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: .75rem; padding: 1.5rem 1.25rem;
+    }
+    h1 { font-size: 1.375rem; line-height: 1.5; margin: 0 0 .75rem; }
+    h2 { font-size: 1rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1rem; }
+    .lead { color: var(--ink-muted); font-size: .9375rem; }
+    .badge {
+      display: inline-block; background: var(--accent-soft); color: var(--accent);
+      border-radius: 999px; padding: .125rem .75rem; font-size: .8125rem;
+      font-weight: 700; margin-bottom: .75rem;
+    }
+    .code-label { font-size: .8125rem; color: var(--ink-muted); margin-bottom: .375rem; }
+    textarea#code {
+      width: 100%; min-height: 5.5rem; resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .875rem; line-height: 1.6; word-break: break-all;
+      padding: .75rem; border: 1px solid var(--line); border-radius: .5rem;
+      background: #fbfdfb; color: var(--ink);
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; align-items: center; }
+    button {
+      font: inherit; font-weight: 700; cursor: pointer;
+      background: var(--accent); color: #fff; border: 0;
+      border-radius: .5rem; padding: .625rem 1.25rem;
+    }
+    button:hover { filter: brightness(1.08); }
+    button:active { transform: translateY(1px); }
+    .copied { color: var(--accent); font-size: .875rem; font-weight: 700; }
+    .note {
+      background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-ink);
+      border-radius: .5rem; padding: .75rem 1rem; font-size: .875rem; margin-top: 1.25rem;
+    }
+    .error {
+      background: var(--err-bg); border: 1px solid var(--err-line); color: var(--err-ink);
+      border-radius: .5rem; padding: 1rem; font-size: .9375rem;
+    }
+    ol { padding-left: 1.25rem; margin: 0 0 1rem; }
+    li { margin-bottom: .375rem; }
+    footer { margin-top: 2.5rem; font-size: .8125rem; color: var(--ink-muted); }
+    footer a { color: var(--accent); }
+    [hidden] { display: none !important; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #12160f; --surface: #1b211a; --ink: #e8efe6; --ink-muted: #a3b3a5;
+        --line: #2e382d; --accent: #6cc48a; --accent-soft: #1f2c22;
+        --warn-bg: #2b2312; --warn-line: #5b4a1e; --warn-ink: #f0d9a4;
+        --err-bg: #2c1717; --err-line: #5e2a2a; --err-ink: #f0b4b4;
+      }
+      textarea#code { background: #151b14; }
+      button { color: #10160f; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">EntreprenAIs</div>
+
+    <!-- 認可成功: 認可コードを表示する -->
+    <section class="card" id="ok" hidden>
+      <div class="badge">連携の認可が完了しました</div>
+      <h1>認可コードを担当者へお送りください</h1>
+      <p class="lead">
+        Instagram との連携の「お客さま側でのお手続き」はこれで完了です。
+        下のコードをコピーして、担当者へお送りください。
+      </p>
+
+      <div class="code-label">認可コード</div>
+      <textarea id="code" readonly spellcheck="false" aria-label="認可コード"></textarea>
+      <div class="actions">
+        <button type="button" id="copy">コードをコピー</button>
+        <span class="copied" id="copied" hidden>コピーしました</span>
+      </div>
+
+      <div class="note">
+        <strong>このコードは約 1 時間で使えなくなります。</strong>
+        お手数ですが、そのままお送りください。時間が過ぎてしまった場合は、
+        担当者から新しいリンクをお送りしますので、もう一度お手続きをお願いします。
+      </div>
+
+      <h2>このコードについて</h2>
+      <p class="lead">
+        コードは 1 回だけ使える一時的なもので、投稿の権限そのものではありません。
+        Instagram のパスワードが担当者に伝わることはありません。
+        連携はいつでも Instagram の「設定 → アプリとウェブサイト」から解除できます。
+      </p>
+    </section>
+
+    <!-- 認可が拒否された / エラー -->
+    <section class="card" id="ng" hidden>
+      <h1>連携が完了しませんでした</h1>
+      <div class="error" id="ngdetail"></div>
+      <p class="lead" style="margin-top:1rem">
+        お手数ですが、担当者へその旨お知らせください。もう一度お試しいただく場合は、
+        お送りしたリンクをもう一度開いてください。
+      </p>
+    </section>
+
+    <!-- 直接アクセスされた場合 -->
+    <section class="card" id="none" hidden>
+      <h1>Instagram 連携の認可ページ</h1>
+      <p class="lead">
+        このページは、担当者からお送りしたリンクから Instagram の連携を許可したあとに
+        自動的に表示されるページです。
+      </p>
+      <ol>
+        <li>担当者からお送りしたリンクを開く</li>
+        <li>連携したい Instagram アカウントでログインする</li>
+        <li>表示された内容を確認して「許可」する</li>
+        <li>このページに戻ってきたら、表示されるコードを担当者へ送る</li>
+      </ol>
+      <p class="lead">
+        リンクをお持ちでない場合は、担当者へお問い合わせください。
+      </p>
+    </section>
+
+    <footer>
+      <a href="/">EntreprenAIs</a> ／ 樽石デジタル技術研究所合同会社
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var code = params.get('code');
+      var error = params.get('error');
+      var errorDesc = params.get('error_description') || params.get('error_reason');
+
+      function show(id) { document.getElementById(id).hidden = false; }
+
+      if (code) {
+        // Instagram の redirect は code の末尾に "#_" を付けて返すことがある。
+        // location.hash 側に落ちる場合もあるため、両方の形を取り除く。
+        code = code.replace(/#_$/, '').replace(/#$/, '');
+        var box = document.getElementById('code');
+        box.value = code;
+        show('ok');
+
+        document.getElementById('copy').addEventListener('click', function () {
+          var done = function () {
+            var flag = document.getElementById('copied');
+            flag.hidden = false;
+            setTimeout(function () { flag.hidden = true; }, 2500);
+          };
+          box.focus();
+          box.select();
+          box.setSelectionRange(0, box.value.length); // iOS Safari 対策
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(box.value).then(done, function () {
+              // クリップボード API が拒否された場合は選択状態のままにして手動コピーに委ねる
+              try { document.execCommand('copy'); done(); } catch (e) { /* noop */ }
+            });
+          } else {
+            try { document.execCommand('copy'); done(); } catch (e) { /* noop */ }
+          }
+        });
+      } else if (error) {
+        var msg = (error === 'access_denied')
+          ? '連携が許可されませんでした。'
+          : 'エラーが発生しました。';
+        if (errorDesc) { msg += '（' + errorDesc + '）'; }
+        document.getElementById('ngdetail').textContent = msg;
+        show('ng');
+      } else {
+        show('none');
+      }
+    })();
+  </script>
+</body>
+</html>
