@@ -293,7 +293,13 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     .hero-lede strong { color: var(--color-text); font-weight: 700; }
     /* #450: 「Green AI Cloud」の green は "green by AI"（AIで何かをグリーンにする）
        ではなく "greening of AI"（AI そのものをグリーンにする）の意。ブランド名は
-       温存したまま、ファーストビューで一行だけ意味を明示する。 */
+       温存したまま、ファーストビューで一行だけ意味を明示する。
+       #452: FC指摘「この文いらなくない？」。日本語ページでは直下のリード文
+       （自社グリーンデータセンターで動く〜）で green by AI とは読まれず、英語概念を
+       持ち出して否定する注釈がかえって冗長なため、ja の hero からは撤去した。
+       en/zh は bare な "Green AI" の誤読リスクが実在するため hero に残しており、
+       それらは静的コミット済み HTML から本ビルドの CSS を参照する（deploy-main.yml
+       の #393 ハッシュ同期）。よって .hero-tagline のスタイル定義はここに残す。 */
     .hero-tagline {
       margin: 12px 0 0;
       max-width: 46ch;
@@ -1339,7 +1345,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <p class="hero-lede">
             自社グリーンデータセンターで動くエージェント基盤。応答は<strong>ミリ秒</strong>、電力は<strong>自社の再エネ</strong>で完結する。
           </p>
-          <p class="hero-tagline"><strong>Greening of AI.</strong> AIで何かをグリーンにする（green by AI）のではなく、AI そのものをグリーンにする。</p>
           <div class="hero-cta">
             <!-- #366: FC指示「0.5ms を体験する → というファーストビューのボタンは
                  右下のAIに聞くチャットぼっとを立ち上げるのが良い」。#demo への
