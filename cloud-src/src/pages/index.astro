@@ -291,6 +291,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       color: var(--color-text-soft);
     }
     .hero-lede strong { color: var(--color-text); font-weight: 700; }
+    /* #450: 「Green AI Cloud」の green は "green by AI"（AIで何かをグリーンにする）
+       ではなく "greening of AI"（AI そのものをグリーンにする）の意。ブランド名は
+       温存したまま、ファーストビューで一行だけ意味を明示する。 */
+    .hero-tagline {
+      margin: 12px 0 0;
+      max-width: 46ch;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-text-soft);
+    }
+    .hero-tagline strong {
+      color: var(--color-accent2);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
     /* #387: margin-top 38px→24px（ファーストビュー高さ圧縮。CTAボタンが
        ノートPC相当ビューポートで画面外に見切れていた問題への対応） */
     .hero-cta {
@@ -1097,6 +1112,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       .hero-eyebrow { font-size: 10px; }
       .hero-live-badge { font-size: 10px; padding: 5px 12px 5px 10px; }
       .hero-lede { font-size: 15px; line-height: 1.7; margin-top: 20px; }
+      .hero-tagline { font-size: 12.5px; margin-top: 10px; }
       .hero-metric-standalone__value { font-size: 40px; }
       .hero-metric-standalone__unit { font-size: 15px; }
       .hero-metric-standalone__note { font-size: 9.5px; }
@@ -1323,6 +1339,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <p class="hero-lede">
             自社グリーンデータセンターで動くエージェント基盤。応答は<strong>ミリ秒</strong>、電力は<strong>自社の再エネ</strong>で完結する。
           </p>
+          <p class="hero-tagline"><strong>Greening of AI.</strong> AIで何かをグリーンにする（green by AI）のではなく、AI そのものをグリーンにする。</p>
           <div class="hero-cta">
             <!-- #366: FC指示「0.5ms を体験する → というファーストビューのボタンは
                  右下のAIに聞くチャットぼっとを立ち上げるのが良い」。#demo への
@@ -1553,7 +1570,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="eyebrow reveal" data-reveal>Green Infrastructure</div>
       <h2 class="headline narrow reveal" data-reveal data-delay="80"><span class="accent">太陽光と水力</span>で動く、グリーンAIクラウド</h2>
       <p class="section-lede reveal" data-reveal data-delay="140">
-        自社グリーンデータセンター内で、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力のみでAI推論を完結。外部クラウドLLM・他社データセンターを経由しないため、電力起源を自社で説明でき、環境負荷とコストを同時に抑えられます。
+        自社グリーンデータセンター内で、太陽光自家発電と再エネ電力契約（アクアエナジー100等）による電力のみでAI推論を完結。外部クラウドLLM・他社データセンターを経由しないため、電力起源を自社で説明でき、環境負荷とコストを同時に抑えられます。私たちが掲げる「グリーン」は、AIを使って何かをグリーンにすること（green by AI）ではなく、AI そのものをグリーンにすること（greening of AI）を指します。
       </p>
 
       <div class="green-grid">
